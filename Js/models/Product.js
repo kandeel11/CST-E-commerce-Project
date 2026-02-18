@@ -11,7 +11,7 @@ export class Product {
     #createdDate;
 
     constructor(productName, productDescription, productPrice, sellerID, imageUrl, stockQuantity){
-        this.#productID = generateID();
+        this.#productID = generateID('PRODUCT');
         this.ProductName = productName;
         this.ProductDescription = productDescription;
         this.ProductPrice = productPrice;

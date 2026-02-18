@@ -9,7 +9,7 @@ export class User{
     #status;
 
     constructor(email, name, password, role, status='active'){
-        this.#id = idGenerator.generateID();
+        this.#id = generateID('USER');
         this.Email = email;
         this.Name = name;
         this.Password = password;

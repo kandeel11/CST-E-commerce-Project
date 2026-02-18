@@ -15,23 +15,28 @@ export class Order{
         this.#createdDate = new Date();
     }
 
+    addItem(orderItem) {
+        this.#items.push(orderItem);
+        this.#totalPrice += orderItem.PriceAtPurchase * orderItem.Quantity;
+    }
+
     get ID() {
         return this.#id;
     }
 
-    get customerId() {
+    get CustomerId() {
         return this.#customerId;
     }
 
-    get items() {
+    get Items() {
         return [...this.#items];
     }
 
-    get totalPrice() {
+    get TotalPrice() {
         return this.#totalPrice;
     }
 
-    get createdDate() {
+    get CreatedDate() {
         return this.#createdDate;
     }
 }

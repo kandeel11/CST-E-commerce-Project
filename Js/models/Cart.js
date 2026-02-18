@@ -11,15 +11,19 @@ export class Cart {
         this.#cartItems = [];
     }
 
-    get cartID() {
+    addCartItem(cartItem) {
+        this.#cartItems.push(cartItem);
+    }
+
+    get CartID() {
         return this.#cartID;
     }
 
-    get customerID() {
+    get CustomerID() {
         return this.#customerID;
     }
 
-    get cartItems() {
+    get CartItems() {
         return [...this.#cartItems];
     }
 }

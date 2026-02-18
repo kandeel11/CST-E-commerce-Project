@@ -3,17 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Register Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <main>
-        <section class="container mt-5">
-            <h3 class="text-center mb-4">Welcome back to Our E-commerce Platform</h3>
-
-            <div class="row justify-content-center">
+        <h3 class="text-center my-4">Create a new account</h3>
+        <div class="row justify-content-center">
                 <div class="col-12 col-md-6">
-                    <form class="bg-light p-4 border rounded shadow-sm" id="loginForm">
+                    <form class="bg-light p-4 border rounded shadow-sm" id="registerForm">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control"
+                                id="username"
+                                name="username"
+                                placeholder="Username"
+                                required>
+                            <label for="username">Name</label>
+                        </div>
+
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control"
                                 id="email"
@@ -32,24 +39,22 @@
                             <label for="password">Password</label>
                         </div>
 
-                        <!--<div class="mb-3">
+                        <div class="mb-3">
                             <label for="selectrole" class="form-label">Account Type</label>
-                            <select name="selectrole" id="selectrole" class="form-select" required>
+                            <select name="selectrole" id="role" class="form-select" required>
                                 <option value="" selected disabled>Select Option</option>
-                                <option value="admin">Admin</option>
                                 <option value="customer">Customer</option>
                                 <option value="seller">Seller</option>
                             </select>
-                        </div>-->
+                        </div>
 
-                        <button type="submit" class="btn btn-primary w-100"> Login </button>
+                        <button type="submit" class="btn btn-primary w-100"> Register </button>
                     </form>
-                    <a class="small" href="Register.html">Don't have an account? Register here</a>
+                    <a class="small" href="Login.html">You have an account? Login here</a>
                 </div>
             </div>
-        </section>
     </main>
-
-    <script type="module" src="../Js/services/Login.js"></script>
+        
+    <script type="module" src="../Js/services/Register.js"></script>
 </body>
 </html>

@@ -1,21 +1,40 @@
-export class Customer extends User{
-    #cartID;
-    #orderHistory; //array of order IDs
+import { User } from "./User.js";
 
-    constructor(id, name, email, password, role, status, cartID, orderHistory=[]){
-        super(id, name, email, password, role, status);
-        this.CartID = cartID;
-        this.#orderHistory = orderHistory;
-    }
+export class Customer extends User {
+    #orderHistory;
 
-    set CartID(c){
-        this.#cartID = c;
-    }
-    get CartID(){
-        return this.#cartID;
+    constructor(name, email, password, status) {
+        super(email, name, password, "customer", status);
+        this.#orderHistory = [];
     }
 
-    get OrderHistory(){
-        return this.#orderHistory;
+    get OrderHistory() {
+        return [...this.#orderHistory];
     }
+
+    
+    toJSON() {
+        return {
+            id: this.ID,
+            name: this.Name,
+            email: this.Email,
+            password: this.Password,
+            role: "customer",
+            status: this.Status,
+            orderHistory: this.OrderHistory
+        };
+    }
+
+    /*
+    static fromJSON(obj) {
+        const customer = new Customer(
+            obj.name,
+            obj.email,
+            obj.password,
+            obj.status
+        );
+        customer.#orderHistory = obj.orderHistory || [];
+        return customer;
+    }
+        */
 }
