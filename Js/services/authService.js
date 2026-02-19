@@ -35,18 +35,20 @@ export function register(name, email, password, role){
         return;
     }
 
+    let newUser;
     switch(role){
         case "customer":
-            let newCustomer = new Customer(name, email, password);
-            users.push(newCustomer.toJSON());
+            newUser = new Customer(name, email, password);
+            users.push(newUser.toJSON());
             break;
         case "seller":
-            let newSeller = new Seller(name, email, password);
-            users.push(newSeller.toJSON());
+            newUser = new Seller(name, email, password);
+            users.push(newUser.toJSON());
             break;
     }
 
     saveUsers(users);
+    sessionStorage.setItem("pageUser", JSON.stringify(newUser.toJSON()));
     redirectByRole(role);
 }
 
@@ -54,6 +56,7 @@ export function login(email, password){
     let users = getAllUsers();
     let correctUser = users.find(u => u.email === email && u.password === password);
     if(correctUser){
+        sessionStorage.setItem("pageUser", JSON.stringify(correctUser));
         redirectByRole(correctUser.role);
     }
     else{

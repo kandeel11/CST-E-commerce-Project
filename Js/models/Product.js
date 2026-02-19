@@ -73,4 +73,17 @@ export class Product {
     get CreatedDate(){
         return this.#createdDate;
     }
+
+    toJSON(){
+        return{
+            productID : this.ProductID,
+            productName : this.ProductName,
+            productDescription : this.ProductDescription,
+            productPrice : this.ProductPrice,
+            sellerID : this.SellerID,
+            imageUrl : this.ImageUrl,
+            stockQuantity : this.StockQuantity,
+            createdDate : this.CreatedDate
+        }
+    }
 }

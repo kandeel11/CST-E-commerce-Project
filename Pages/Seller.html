@@ -1,11 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seller Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seller Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
 </head>
+
 <body>
-    <h1>Welcome to the Seller Page</h1>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#" id="storeName">Store_name</a>
+
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-muted" id="sellerName">Seller_name</span>
+        <button class="btn btn-outline-danger btn-sm" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- Sidebar -->
+      <aside class="col-md-3 col-lg-2 border-end min-vh-100 p-3 d-none d-md-block">
+        <div class="list-group">
+          <button class="list-group-item list-group-item-action active" data-section="products">
+            Products
+          </button>
+          <button class="list-group-item list-group-item-action" data-section="orders">
+            Orders
+          </button>
+          <button class="list-group-item list-group-item-action" data-section="analytics">
+            Analytics
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="col-12 col-md-9 col-lg-10 p-4">
+        <!-- PRODUCTS SECTION -->
+        <section id="section-products">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Products</h4>
+            <button class="btn btn-primary" id="openAddProductModalBtn"> + Add Product </button>
+          </div>
+
+          <!-- Search / filter -->
+          <div class="row g-2 mb-3">
+            <div class="col-12 col-md-6">
+              <input class="form-control" id="productSearch" placeholder="Search products...">
+            </div>
+            <div class="col-12 col-md-3">
+              <select class="form-select" id="productStatusFilter">
+                <option value="all">All</option>
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped align-middle">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th class="text-end d-none d-lg-table-cell">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsTbody">
+                <!-- sellerController.js appears rows here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ORDERS SECTION -->
+        <section id="section-orders" class="d-none">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Orders</h4>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTbody">
+                <!-- sellerController.js renders orders here -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ANALYTICS SECTION -->
+        <section id="section-analytics" class="d-none">
+          <h4 class="mb-3">Analytics</h4>
+
+          <!-- KPI cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-12 col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="text-muted small">Total Revenue</div>
+                  <div class="h4 mb-0" id="kpiRevenue">$0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="text-muted small">Orders</div>
+                  <div class="h4 mb-0" id="kpiOrders">0</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="text-muted small">Products</div>
+                  <div class="h4 mb-0" id="kpiProducts">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart area -->
+          <div class="card">
+            <div class="card-body">
+              <h6 class="card-title">Sales Over Time</h6>
+              <canvas id="salesChart" height="120"></canvas>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ADD/EDIT PRODUCT MODAL -->
+  <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <form id="productForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productModalTitle">Add Product</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label">Name</label>
+                <input class="form-control" id="productName" required>
+              </div>
+
+              <div class="col-12 col-md-3">
+                <label class="form-label">Price</label>
+                <input type="number" class="form-control" id="productPrice" min="0" step="0.01" required>
+              </div>
+
+              <div class="col-12 col-md-3">
+                <label class="form-label">Stock</label>
+                <input type="number" class="form-control" id="productStock" min="0" step="1" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Image URL</label>
+                <input class="form-control" id="productImageUrl" required>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" id="productDescription" rows="3" required></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="modalSaveBtn">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="../Js/controllers/sellerController.js"></script>
 </body>
 </html>
