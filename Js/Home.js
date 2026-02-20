@@ -28,7 +28,7 @@ function initCountdown() {
 
 function loadComponents() {
     // 1. Load Navbar
-    fetch('navbar.html')
+    fetch('NavBar.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
@@ -36,7 +36,7 @@ function loadComponents() {
         .catch(error => console.error('Error loading navbar:', error));
 
     // 2. Load Footer
-    fetch('footer.html')
+    fetch('Footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
@@ -46,7 +46,7 @@ function loadComponents() {
 
 // Fetch JSON data and render sections
 function loadData() {
-    fetch('js/ecobazar.json')
+    fetch('../Js/ecobazar.json')
         .then(response => response.json())
         .then(data => {
             renderCategories(data);
