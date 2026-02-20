@@ -1,0 +1,221 @@
+<header class="navbar-header">
+
+    <!-- TOP BAR: grey/dark with location + language + sign in -->
+    <div class="navbar-topbar">
+        <div class="container-fluid px-4 d-flex justify-content-between align-items-center">
+            <div><i class="fas fa-map-marker-alt me-1"></i> Store Location: Egypt,Gherbia,Tanta</div>
+            <div class="d-flex align-items-center gap-3">
+                <a href="#" class="btn btn-sm btn-outline-light rounded-pill px-3">Sign In</a>
+                <a href="#" class="btn btn-sm btn-signup rounded-pill px-3"
+                    style="background-color: var(--primary-green); color: #fff;">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MIDDLE BAR: white background - logo, search, wishlist/cart -->
+    <div class="navbar-middle bg-white">
+        <div class="container-fluid px-4 py-3">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2 class="fw-bold d-flex align-items-center mb-0 flex-shrink-0" style="color: #1A1A1A;">
+                    <i class="fas fa-leaf me-2" style="color: #00B207;"></i> Ecobazar
+                </h2>
+                <div class="mx-auto" style="max-width: 500px; width: 100%;">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
+                        <input type="text" class="form-control border-start-0 border-end-0" placeholder="Search">
+                        <button class="btn px-4" type="button"
+                            style="background-color: #00B207; border: none; color: #fff;">Search</button>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3 flex-shrink-0">
+                    <button class="wishlist-btn" title="Wishlist">
+                        <i class="far fa-heart fa-lg"></i>
+                    </button>
+                    <button class="cart-btn d-flex align-items-center">
+                        <div class="position-relative me-2">
+                            <i class="fas fa-shopping-bag fa-lg"></i>
+                            <span
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">0</span>
+                        </div>
+                        <div class="text-start lh-1 small">
+                            <div class="text-muted">Shopping cart:</div>
+                            <div class="fw-bold">$00.00</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAV: white/light background with nav links -->
+    <div class="navbar-bottom">
+        <div class="container-fluid px-4">
+            <nav class="navbar navbar-expand-lg p-0">
+                <!-- Hamburger button: visible on md/sm/xs -->
+                <button class="navbar-toggler border-0 py-2" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#mainNavCollapse" aria-controls="mainNavCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-bars fa-lg"></i> <span class="ms-2 fw-bold small">MENU</span>
+                </button>
+
+                <!-- Phone number visible on mobile next to hamburger -->
+                <div class="fw-bold d-lg-none ms-auto">
+                    <i class="fas fa-phone-alt me-1" style="color: #00B207;"></i>
+                    <span class="small">(219) 555-0114</span>
+                </div>
+
+                <!-- Collapsible nav content -->
+                <div class="collapse navbar-collapse" id="mainNavCollapse">
+                    <ul class="navbar-nav me-auto py-2 py-lg-0 gap-lg-3">
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold active" href="#"
+                                style="color: var(--primary-green);">Home</a>
+                        </li>
+
+                        <!-- SHOP: hover mega-menu on desktop, collapsible arrow on mobile -->
+                        <li class="nav-item dropdown position-static shop-nav-item">
+                            <div class="d-flex align-items-center">
+                                <a class="nav-link text-muted" href="#">Shop</a>
+                                <!-- Arrow toggle: visible only on mobile -->
+                                <button class="btn btn-sm border-0 d-lg-none mobile-dropdown-arrow collapsed"
+                                    type="button" data-bs-toggle="collapse" data-bs-target="#shopMobileCollapse"
+                                    aria-expanded="false" aria-controls="shopMobileCollapse">
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <!-- Desktop dropdown-toggle caret (hidden on mobile) -->
+                                <span class="dropdown-toggle d-none d-lg-inline-block" id="shopDropdown"
+                                    data-bs-toggle="dropdown" style="cursor:pointer;"></span>
+                            </div>
+
+                            <!-- Desktop mega-menu (hover, hidden on mobile via media query) -->
+                            <div class="dropdown-menu w-100 mt-0 shadow-lg border-0 rounded-0 p-4 mega-menu"
+                                aria-labelledby="shopDropdown">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img src="imgs/fruit.jpg" class="img-fluid mb-3 rounded" alt="Collection 1">
+                                            <h6 class="fw-bold text-success">Fresh Fruit</h6>
+                                            <ul class="list-unstyled small text-muted lh-lg">
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Apples
+                                                        & Pears</a></li>
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Berries</a>
+                                                </li>
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Citrus
+                                                        Fruit</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="imgs/vegetables.jpg" class="img-fluid mb-3 rounded"
+                                                alt="Collection 2">
+                                            <h6 class="fw-bold text-success">Vegetables</h6>
+                                            <ul class="list-unstyled small text-muted lh-lg">
+                                                <li><a href="#" class="text-decoration-none text-muted hover-green">Root
+                                                        Vegetables</a></li>
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Leafy
+                                                        Greens</a></li>
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Beans
+                                                        & Peas</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="imgs/beverages.jpg" class="img-fluid mb-3 rounded"
+                                                alt="Collection 3">
+                                            <h6 class="fw-bold text-success">Beverages</h6>
+                                            <ul class="list-unstyled small text-muted lh-lg">
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Water</a>
+                                                </li>
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Juices</a>
+                                                </li>
+                                                <li><a href="#" class="text-decoration-none text-muted hover-green">Soda
+                                                        & Energy</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <img src="imgs/meatfish.jpg" class="img-fluid mb-3 rounded"
+                                                alt="Collection 4">
+                                            <h6 class="fw-bold text-success">Meat & Fish</h6>
+                                            <ul class="list-unstyled small text-muted lh-lg">
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Fresh
+                                                        Meat</a></li>
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Frozen
+                                                        Meat</a></li>
+                                                <li><a href="#"
+                                                        class="text-decoration-none text-muted hover-green">Seafood</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mobile collapsible sub-menu (visible only on mobile) -->
+                            <div class="collapse d-lg-none" id="shopMobileCollapse">
+                                <ul class="list-unstyled ps-3 pb-2 mobile-sub-menu">
+                                    <li><a href="#"
+                                            class="text-decoration-none text-muted d-block py-1 hover-green">Fresh
+                                            Fruit</a></li>
+                                    <li><a href="#"
+                                            class="text-decoration-none text-muted d-block py-1 hover-green">Vegetables</a>
+                                    </li>
+                                    <li><a href="#"
+                                            class="text-decoration-none text-muted d-block py-1 hover-green">Beverages</a>
+                                    </li>
+                                    <li><a href="#"
+                                            class="text-decoration-none text-muted d-block py-1 hover-green">Meat &
+                                            Fish</a></li>
+                                    <li><a href="#"
+                                            class="text-decoration-none text-muted d-block py-1 hover-green">Bread &
+                                            Bakery</a></li>
+                                    <li><a href="#"
+                                            class="text-decoration-none text-muted d-block py-1 hover-green">Beauty &
+                                            Health</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-muted" href="#">Pages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-muted" href="#">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-muted" href="#">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-muted" href="#">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Phone number: desktop only -->
+                <div class="fw-bold d-none d-lg-block">
+                    <i class="fas fa-phone-alt me-2" style="color: #00B207;"></i> (219) 555-0114
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Breadcrumb Section -->
+<div class="breadcrumb-section" id="breadcrumb-section">
+    <div class="container-fluid px-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 py-2" id="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="home.html"><i class="fas fa-home"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-current">Home</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<script src="js/navbar.js"></script>

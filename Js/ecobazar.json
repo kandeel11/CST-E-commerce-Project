@@ -1,0 +1,1636 @@
+{
+    "Fruits": [
+        {
+            "product_id": 1,
+            "name": "Fresh Organic Bananas",
+            "img": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400",
+            "price": 1.99,
+            "oldPrice": 2.99,
+            "discount": 33,
+            "rating": 5,
+            "stock": 120,
+            "seller_id": 1,
+            "brand": "Nature's Best",
+            "description": "Sweet and ripe organic bananas, perfect for smoothies and snacking.",
+            "category": "Fruits",
+            "unit": "Bunch",
+            "weight": "1 kg",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 1,
+                    "rating": 5,
+                    "comment": "Always fresh and perfectly ripe when delivered. My kids love them!"
+                },
+                {
+                    "user_id": 2,
+                    "rating": 4,
+                    "comment": "Great quality organic bananas at a reasonable price."
+                },
+                {
+                    "user_id": 3,
+                    "rating": 5,
+                    "comment": "Best bananas I've bought online. Will definitely order again."
+                }
+            ]
+        },
+        {
+            "product_id": 2,
+            "name": "Organic Avocados",
+            "img": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400",
+            "price": 5.99,
+            "oldPrice": 7.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 65,
+            "seller_id": 1,
+            "brand": "Nature's Best",
+            "description": "Creamy Hass avocados, perfect for guacamole, toast, and salads.",
+            "category": "Fruits",
+            "unit": "Pack of 4",
+            "weight": "800g",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 7,
+                    "rating": 5,
+                    "comment": "Perfect ripeness every time. Great for avocado toast!"
+                },
+                {
+                    "user_id": 8,
+                    "rating": 5,
+                    "comment": "Creamy and delicious. The best avocados I've found online."
+                },
+                {
+                    "user_id": 9,
+                    "rating": 4,
+                    "comment": "Fresh and tasty, though sometimes they arrive a bit firm."
+                }
+            ]
+        },
+        {
+            "product_id": 3,
+            "name": "Fresh Strawberries",
+            "img": "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400",
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 80,
+            "seller_id": 2,
+            "brand": "Berry Fields",
+            "description": "Juicy, hand-picked strawberries bursting with flavor.",
+            "category": "Fruits",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 10,
+                    "rating": 5,
+                    "comment": "Incredibly sweet and fresh! Tastes like they were just picked."
+                },
+                {
+                    "user_id": 11,
+                    "rating": 5,
+                    "comment": "My family goes through these so fast. Amazing quality."
+                },
+                {
+                    "user_id": 12,
+                    "rating": 4,
+                    "comment": "Great for smoothies. Love the organic certification."
+                }
+            ]
+        },
+        {
+            "product_id": 4,
+            "name": "Organic Blueberries",
+            "img": "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400",
+            "price": 5.49,
+            "oldPrice": 7.49,
+            "discount": 27,
+            "rating": 5,
+            "stock": 55,
+            "seller_id": 2,
+            "brand": "Berry Fields",
+            "description": "Plump organic blueberries, rich in antioxidants.",
+            "category": "Fruits",
+            "unit": "Pack",
+            "weight": "300g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 22,
+                    "rating": 5,
+                    "comment": "Sweet, plump, and perfect for my morning oatmeal!"
+                },
+                {
+                    "user_id": 23,
+                    "rating": 5,
+                    "comment": "The best blueberries I've ever ordered. So flavorful."
+                },
+                {
+                    "user_id": 24,
+                    "rating": 4,
+                    "comment": "Great for baking muffins. Fresh and delicious."
+                }
+            ]
+        },
+        {
+            "product_id": 5,
+            "name": "Green Apples",
+            "img": "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 4,
+            "stock": 200,
+            "seller_id": 3,
+            "brand": "Orchard Fresh",
+            "description": "Crisp and tart green apples, great for snacking, baking, and salads.",
+            "category": "Fruits",
+            "unit": "Pack",
+            "weight": "1 kg",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 25,
+                    "rating": 4,
+                    "comment": "Perfectly crisp and tart. Great for apple pie!"
+                },
+                {
+                    "user_id": 26,
+                    "rating": 5,
+                    "comment": "Fresh and crunchy every time. My favorite snack."
+                },
+                {
+                    "user_id": 27,
+                    "rating": 4,
+                    "comment": "Nice flavor and good value for the quantity."
+                }
+            ]
+        },
+        {
+            "product_id": 6,
+            "name": "Fresh Mango",
+            "img": "https://images.unsplash.com/photo-1553279768-865429fa0078?w=400",
+            "price": 3.49,
+            "oldPrice": 4.99,
+            "discount": 30,
+            "rating": 5,
+            "stock": 40,
+            "seller_id": 1,
+            "brand": "Tropical Bliss",
+            "description": "Sweet and juicy ripe mangoes imported from tropical farms.",
+            "category": "Fruits",
+            "unit": "Piece",
+            "weight": "350g",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 28,
+                    "rating": 5,
+                    "comment": "The sweetest mangoes! Reminds me of fresh tropical fruit."
+                },
+                {
+                    "user_id": 29,
+                    "rating": 5,
+                    "comment": "Perfect for mango smoothies. Always ripe on delivery."
+                },
+                {
+                    "user_id": 30,
+                    "rating": 4,
+                    "comment": "Juicy and flavorful. Great quality imported fruit."
+                }
+            ]
+        },
+        {
+            "product_id": 7,
+            "name": "Red Grapes Seedless",
+            "img": "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400",
+            "price": 3.99,
+            "oldPrice": 5.29,
+            "discount": 25,
+            "rating": 4,
+            "stock": 90,
+            "seller_id": 3,
+            "brand": "Orchard Fresh",
+            "description": "Sweet and seedless red grapes, perfect for snacking and fruit platters.",
+            "category": "Fruits",
+            "unit": "Bunch",
+            "weight": "500g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 31,
+                    "rating": 4,
+                    "comment": "Sweet and juicy. Great for the kids' lunchboxes."
+                },
+                {
+                    "user_id": 32,
+                    "rating": 5,
+                    "comment": "Perfect grapes for a cheese board. Loved them!"
+                },
+                {
+                    "user_id": 33,
+                    "rating": 4,
+                    "comment": "Fresh and seedless, just the way we like them."
+                }
+            ]
+        },
+        {
+            "product_id": 8,
+            "name": "Organic Lemons",
+            "img": "https://images.unsplash.com/photo-1590502593747-42a996133562?w=400",
+            "price": 1.99,
+            "oldPrice": 2.79,
+            "discount": 29,
+            "rating": 4,
+            "stock": 150,
+            "seller_id": 1,
+            "brand": "Nature's Best",
+            "description": "Bright organic lemons, ideal for cooking, baking, and fresh lemonade.",
+            "category": "Fruits",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 34,
+                    "rating": 4,
+                    "comment": "Zesty and fresh. Perfect for my lemon water."
+                },
+                {
+                    "user_id": 35,
+                    "rating": 5,
+                    "comment": "Great for baking lemon tarts. Very juicy."
+                },
+                {
+                    "user_id": 36,
+                    "rating": 4,
+                    "comment": "Good organic lemons at a fair price."
+                }
+            ]
+        }
+    ],
+    "Vegetables": [
+        {
+            "product_id": 9,
+            "name": "Red Bell Peppers",
+            "img": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400",
+            "price": 3.49,
+            "oldPrice": 4.99,
+            "discount": 30,
+            "rating": 4,
+            "stock": 75,
+            "seller_id": 4,
+            "brand": "Green Valley",
+            "description": "Crisp and colorful red bell peppers, great for salads and stir-fry.",
+            "category": "Vegetables",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 4,
+                    "rating": 5,
+                    "comment": "So fresh and crunchy! Perfect for my salads every day."
+                },
+                {
+                    "user_id": 5,
+                    "rating": 4,
+                    "comment": "Good quality, vibrant color. A staple in my kitchen."
+                },
+                {
+                    "user_id": 6,
+                    "rating": 4,
+                    "comment": "These peppers are sweet and delicious when roasted."
+                }
+            ]
+        },
+        {
+            "product_id": 10,
+            "name": "Organic Baby Spinach",
+            "img": "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400",
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 4,
+            "stock": 100,
+            "seller_id": 4,
+            "brand": "Green Valley",
+            "description": "Tender baby spinach leaves, pre-washed and ready to eat.",
+            "category": "Vegetables",
+            "unit": "Bag",
+            "weight": "250g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 13,
+                    "rating": 4,
+                    "comment": "Very fresh and tender. Great for quick salads."
+                },
+                {
+                    "user_id": 14,
+                    "rating": 5,
+                    "comment": "Love the convenience of pre-washed spinach."
+                },
+                {
+                    "user_id": 15,
+                    "rating": 4,
+                    "comment": "Healthy and delicious. A must-have in my fridge."
+                }
+            ]
+        },
+        {
+            "product_id": 11,
+            "name": "Organic Tomatoes on the Vine",
+            "img": "https://www.abelandcole.co.uk/media/3183_50361_m.jpg",
+            "price": 3.99,
+            "oldPrice": 5.49,
+            "discount": 27,
+            "rating": 5,
+            "stock": 60,
+            "seller_id": 5,
+            "brand": "Sun Harvest",
+            "description": "Vine-ripened organic tomatoes with rich flavor.",
+            "category": "Vegetables",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 16,
+                    "rating": 5,
+                    "comment": "These tomatoes taste like summer! So much flavor."
+                },
+                {
+                    "user_id": 17,
+                    "rating": 5,
+                    "comment": "Perfect for homemade pasta sauce. Highly recommend!"
+                },
+                {
+                    "user_id": 18,
+                    "rating": 4,
+                    "comment": "Fresh and juicy. The vine-ripened taste makes a difference."
+                }
+            ]
+        },
+        {
+            "product_id": 12,
+            "name": "Fresh Broccoli",
+            "img": "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400",
+            "price": 2.49,
+            "oldPrice": 3.29,
+            "discount": 24,
+            "rating": 4,
+            "stock": 110,
+            "seller_id": 4,
+            "brand": "Green Valley",
+            "description": "Crisp and nutritious broccoli florets, packed with vitamins.",
+            "category": "Vegetables",
+            "unit": "Head",
+            "weight": "350g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 19,
+                    "rating": 4,
+                    "comment": "Always fresh and green. Great for steaming."
+                },
+                {
+                    "user_id": 20,
+                    "rating": 5,
+                    "comment": "Kids actually love this broccoli! Very fresh."
+                },
+                {
+                    "user_id": 21,
+                    "rating": 4,
+                    "comment": "Good quality and great value for the price."
+                }
+            ]
+        },
+        {
+            "product_id": 13,
+            "name": "Organic Carrots",
+            "img": "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400",
+            "price": 1.99,
+            "oldPrice": 2.79,
+            "discount": 29,
+            "rating": 5,
+            "stock": 130,
+            "seller_id": 5,
+            "brand": "Sun Harvest",
+            "description": "Sweet and crunchy organic carrots, great for snacking and cooking.",
+            "category": "Vegetables",
+            "unit": "Bunch",
+            "weight": "500g",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 37,
+                    "rating": 5,
+                    "comment": "Sweetest carrots ever! My kids eat them raw like snacks."
+                },
+                {
+                    "user_id": 38,
+                    "rating": 5,
+                    "comment": "Perfect for juicing. Fresh and organic quality."
+                },
+                {
+                    "user_id": 39,
+                    "rating": 4,
+                    "comment": "Great for soups and stews. Always fresh on delivery."
+                }
+            ]
+        },
+        {
+            "product_id": 14,
+            "name": "Fresh Cucumber",
+            "img": "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400",
+            "price": 1.49,
+            "oldPrice": 1.99,
+            "discount": 25,
+            "rating": 4,
+            "stock": 140,
+            "seller_id": 4,
+            "brand": "Green Valley",
+            "description": "Crisp and refreshing cucumbers, perfect for salads and sandwiches.",
+            "category": "Vegetables",
+            "unit": "Piece",
+            "weight": "300g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 40,
+                    "rating": 4,
+                    "comment": "Crisp and refreshing. Perfect for summer salads."
+                },
+                {
+                    "user_id": 41,
+                    "rating": 5,
+                    "comment": "Love these in my smoothies. Always fresh."
+                },
+                {
+                    "user_id": 42,
+                    "rating": 4,
+                    "comment": "Good quality cucumbers at a great price."
+                }
+            ]
+        },
+        {
+            "product_id": 15,
+            "name": "Sweet Potatoes",
+            "img": "https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=400",
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 95,
+            "seller_id": 5,
+            "brand": "Sun Harvest",
+            "description": "Naturally sweet and nutritious sweet potatoes, great baked or mashed.",
+            "category": "Vegetables",
+            "unit": "Pack",
+            "weight": "1 kg",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 43,
+                    "rating": 5,
+                    "comment": "Perfect for baking! So naturally sweet and creamy."
+                },
+                {
+                    "user_id": 44,
+                    "rating": 5,
+                    "comment": "Best sweet potatoes I've found. Great for meal prep."
+                },
+                {
+                    "user_id": 45,
+                    "rating": 4,
+                    "comment": "Nutritious and delicious. A healthy dinner staple."
+                }
+            ]
+        },
+        {
+            "product_id": 16,
+            "name": "Fresh Mushrooms Mix",
+            "img": "https://images.unsplash.com/photo-1504545102780-26774c1bb073?w=400",
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 4,
+            "stock": 50,
+            "seller_id": 4,
+            "brand": "Green Valley",
+            "description": "A mix of fresh button, cremini, and shiitake mushrooms.",
+            "category": "Vegetables",
+            "unit": "Pack",
+            "weight": "300g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 46,
+                    "rating": 4,
+                    "comment": "Great variety of mushrooms. Perfect for stir-fry."
+                },
+                {
+                    "user_id": 47,
+                    "rating": 5,
+                    "comment": "Love the shiitake in this mix. Amazing flavor!"
+                },
+                {
+                    "user_id": 48,
+                    "rating": 4,
+                    "comment": "Fresh and well-packaged. Use them for pasta every week."
+                }
+            ]
+        }
+    ],
+    "Meat": [
+        {
+            "product_id": 17,
+            "name": "Grass-Fed Beef Ribeye Steak",
+            "img": "https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=400",
+            "price": 14.99,
+            "oldPrice": 19.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 30,
+            "seller_id": 6,
+            "brand": "Prairie Ranch",
+            "description": "Premium grass-fed ribeye steak with rich marbling.",
+            "category": "Meat",
+            "unit": "Piece",
+            "weight": "350g",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 49,
+                    "rating": 5,
+                    "comment": "The marbling on this steak is incredible. Best beef I've cooked at home!"
+                },
+                {
+                    "user_id": 50,
+                    "rating": 5,
+                    "comment": "Melt-in-your-mouth tender. Restaurant quality at home."
+                },
+                {
+                    "user_id": 51,
+                    "rating": 4,
+                    "comment": "Great flavor. A bit pricey but worth it for special occasions."
+                }
+            ]
+        },
+        {
+            "product_id": 18,
+            "name": "Organic Free-Range Chicken Breast",
+            "img": "https://images.unsplash.com/photo-1604503468506-a8da13d82571?w=400",
+            "price": 8.99,
+            "oldPrice": 11.99,
+            "discount": 25,
+            "rating": 4,
+            "stock": 70,
+            "seller_id": 7,
+            "brand": "Happy Farm",
+            "description": "Boneless, skinless chicken breast from free-range organic chickens.",
+            "category": "Meat",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 52,
+                    "rating": 4,
+                    "comment": "Really tender and flavorful compared to regular chicken."
+                },
+                {
+                    "user_id": 53,
+                    "rating": 5,
+                    "comment": "Love that it's free-range. You can taste the difference."
+                },
+                {
+                    "user_id": 54,
+                    "rating": 4,
+                    "comment": "Great for meal prep. Consistent quality every time."
+                }
+            ]
+        },
+        {
+            "product_id": 19,
+            "name": "Lamb Chops Premium Cut",
+            "img": "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400",
+            "price": 16.99,
+            "oldPrice": 22.99,
+            "discount": 26,
+            "rating": 4,
+            "stock": 25,
+            "seller_id": 6,
+            "brand": "Prairie Ranch",
+            "description": "Premium lamb chops, perfect for grilling and roasting.",
+            "category": "Meat",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 55,
+                    "rating": 5,
+                    "comment": "These lamb chops are incredible! So tender and juicy."
+                },
+                {
+                    "user_id": 56,
+                    "rating": 4,
+                    "comment": "Great for a special dinner. Excellent quality meat."
+                },
+                {
+                    "user_id": 57,
+                    "rating": 4,
+                    "comment": "Premium quality at a fair price. My favorite cut."
+                }
+            ]
+        },
+        {
+            "product_id": 20,
+            "name": "Ground Turkey Organic",
+            "img": "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400",
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 4,
+            "stock": 85,
+            "seller_id": 7,
+            "brand": "Happy Farm",
+            "description": "Lean organic ground turkey, perfect for burgers and meatballs.",
+            "category": "Meat",
+            "unit": "Pack",
+            "weight": "450g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 58,
+                    "rating": 4,
+                    "comment": "Lean and flavorful. Perfect for healthy turkey burgers."
+                },
+                {
+                    "user_id": 59,
+                    "rating": 5,
+                    "comment": "Great substitute for ground beef. My family loves it."
+                },
+                {
+                    "user_id": 60,
+                    "rating": 4,
+                    "comment": "Good quality organic ground turkey at a fair price."
+                }
+            ]
+        },
+        {
+            "product_id": 21,
+            "name": "Beef Mince Lean",
+            "img": "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400",
+            "price": 9.49,
+            "oldPrice": 12.49,
+            "discount": 24,
+            "rating": 5,
+            "stock": 60,
+            "seller_id": 6,
+            "brand": "Prairie Ranch",
+            "description": "Premium lean beef mince, ideal for bolognese, burgers, and chili.",
+            "category": "Meat",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": false,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 61,
+                    "rating": 5,
+                    "comment": "Makes the best homemade burgers. Lean but juicy!"
+                },
+                {
+                    "user_id": 62,
+                    "rating": 5,
+                    "comment": "Perfect for spaghetti bolognese. Great quality mince."
+                },
+                {
+                    "user_id": 63,
+                    "rating": 4,
+                    "comment": "Good lean mince with no excess fat. Highly recommend."
+                }
+            ]
+        },
+        {
+            "product_id": 22,
+            "name": "Chicken Drumsticks",
+            "img": "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400",
+            "price": 5.99,
+            "oldPrice": 7.99,
+            "discount": 25,
+            "rating": 4,
+            "stock": 90,
+            "seller_id": 7,
+            "brand": "Happy Farm",
+            "description": "Juicy chicken drumsticks, perfect for roasting, grilling, or frying.",
+            "category": "Meat",
+            "unit": "Pack of 6",
+            "weight": "750g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 64,
+                    "rating": 4,
+                    "comment": "Great for BBQ night. Juicy and flavorful every time."
+                },
+                {
+                    "user_id": 65,
+                    "rating": 5,
+                    "comment": "Kids love these drumsticks. Easy to cook and delicious."
+                },
+                {
+                    "user_id": 66,
+                    "rating": 4,
+                    "comment": "Good portion size and quality. Fair price for the pack."
+                }
+            ]
+        }
+    ],
+    "Fish": [
+        {
+            "product_id": 23,
+            "name": "Fresh Atlantic Salmon Fillet",
+            "img": "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400",
+            "price": 12.99,
+            "oldPrice": 16.99,
+            "discount": 24,
+            "rating": 5,
+            "stock": 35,
+            "seller_id": 8,
+            "brand": "Ocean Fresh",
+            "description": "Wild-caught Atlantic salmon fillet, rich in omega-3.",
+            "category": "Fish",
+            "unit": "Fillet",
+            "weight": "300g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 67,
+                    "rating": 5,
+                    "comment": "Absolutely fresh and buttery. Makes amazing baked salmon."
+                },
+                {
+                    "user_id": 68,
+                    "rating": 5,
+                    "comment": "The best salmon I've bought online. Perfectly portioned."
+                },
+                {
+                    "user_id": 69,
+                    "rating": 4,
+                    "comment": "Great quality fish. My family loves salmon night now!"
+                }
+            ]
+        },
+        {
+            "product_id": 24,
+            "name": "Fresh Jumbo Shrimp",
+            "img": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400",
+            "price": 11.49,
+            "oldPrice": 14.99,
+            "discount": 23,
+            "rating": 5,
+            "stock": 45,
+            "seller_id": 8,
+            "brand": "Ocean Fresh",
+            "description": "Large wild-caught shrimp, peeled and deveined.",
+            "category": "Fish",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": false,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 70,
+                    "rating": 5,
+                    "comment": "Huge shrimp with amazing flavor. Restaurant quality!"
+                },
+                {
+                    "user_id": 71,
+                    "rating": 5,
+                    "comment": "So convenient being pre-peeled. Taste is fantastic."
+                },
+                {
+                    "user_id": 72,
+                    "rating": 4,
+                    "comment": "Great for shrimp scampi. Fresh and well-packaged."
+                }
+            ]
+        },
+        {
+            "product_id": 25,
+            "name": "Sea Bass Fillet",
+            "img": "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=400",
+            "price": 13.99,
+            "oldPrice": 17.99,
+            "discount": 22,
+            "rating": 5,
+            "stock": 20,
+            "seller_id": 9,
+            "brand": "Coastal Catch",
+            "description": "Delicate sea bass fillet with mild, sweet flavor. Perfect pan-seared.",
+            "category": "Fish",
+            "unit": "Fillet",
+            "weight": "250g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 73,
+                    "rating": 5,
+                    "comment": "Incredibly delicate and flavorful. Cooked perfectly in 10 min."
+                },
+                {
+                    "user_id": 74,
+                    "rating": 5,
+                    "comment": "Restaurant-quality sea bass at home. Highly recommend!"
+                },
+                {
+                    "user_id": 75,
+                    "rating": 4,
+                    "comment": "Great fish for a healthy dinner. Mild and delicious."
+                }
+            ]
+        },
+        {
+            "product_id": 26,
+            "name": "Fresh Tuna Steak",
+            "img": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400",
+            "price": 15.49,
+            "oldPrice": 19.99,
+            "discount": 23,
+            "rating": 4,
+            "stock": 18,
+            "seller_id": 9,
+            "brand": "Coastal Catch",
+            "description": "Sushi-grade tuna steak, perfect seared rare or for poke bowls.",
+            "category": "Fish",
+            "unit": "Steak",
+            "weight": "300g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 76,
+                    "rating": 5,
+                    "comment": "Sushi-grade quality! Made amazing tuna poke bowls at home."
+                },
+                {
+                    "user_id": 77,
+                    "rating": 4,
+                    "comment": "Great for searing. Fresh and high quality."
+                },
+                {
+                    "user_id": 78,
+                    "rating": 4,
+                    "comment": "Excellent tuna steak. Best I've ordered online."
+                }
+            ]
+        },
+        {
+            "product_id": 27,
+            "name": "Cod Fillets",
+            "img": "https://images.unsplash.com/photo-1510130113700-4e24ede24f2c?w=400",
+            "price": 9.99,
+            "oldPrice": 12.99,
+            "discount": 23,
+            "rating": 4,
+            "stock": 40,
+            "seller_id": 8,
+            "brand": "Ocean Fresh",
+            "description": "Flaky white cod fillets, mild flavor, perfect for fish and chips.",
+            "category": "Fish",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": false,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 79,
+                    "rating": 4,
+                    "comment": "Perfect for homemade fish and chips. Flaky and fresh."
+                },
+                {
+                    "user_id": 80,
+                    "rating": 5,
+                    "comment": "Great mild flavor that the whole family enjoys."
+                },
+                {
+                    "user_id": 81,
+                    "rating": 4,
+                    "comment": "Consistent quality cod. Always well-packaged."
+                }
+            ]
+        }
+    ],
+    "Dairy": [
+        {
+            "product_id": 28,
+            "name": "Organic Whole Milk",
+            "img": "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400",
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 150,
+            "seller_id": 10,
+            "brand": "Green Pastures",
+            "description": "Fresh organic whole milk from grass-fed cows. Rich and creamy.",
+            "category": "Dairy",
+            "unit": "Bottle",
+            "weight": "1 Liter",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 82,
+                    "rating": 5,
+                    "comment": "The creamiest milk I've ever tasted. Love the organic quality!"
+                },
+                {
+                    "user_id": 83,
+                    "rating": 5,
+                    "comment": "My kids can taste the difference. They refuse regular milk now."
+                },
+                {
+                    "user_id": 84,
+                    "rating": 4,
+                    "comment": "Rich and delicious. Perfect for coffee and cereal."
+                }
+            ]
+        },
+        {
+            "product_id": 29,
+            "name": "Greek Yogurt Natural",
+            "img": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400",
+            "price": 3.99,
+            "oldPrice": 5.29,
+            "discount": 25,
+            "rating": 5,
+            "stock": 100,
+            "seller_id": 10,
+            "brand": "Green Pastures",
+            "description": "Thick and creamy Greek yogurt, high in protein.",
+            "category": "Dairy",
+            "unit": "Tub",
+            "weight": "500g",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 85,
+                    "rating": 5,
+                    "comment": "Incredibly thick and creamy. Best Greek yogurt I've tried!"
+                },
+                {
+                    "user_id": 86,
+                    "rating": 5,
+                    "comment": "Perfect with fresh fruit and honey. So satisfying."
+                },
+                {
+                    "user_id": 87,
+                    "rating": 4,
+                    "comment": "High protein and great taste. A healthy snack staple."
+                }
+            ]
+        },
+        {
+            "product_id": 30,
+            "name": "Artisan Cheddar Cheese Block",
+            "img": "https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=400",
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 4,
+            "stock": 55,
+            "seller_id": 11,
+            "brand": "Countryside Dairy",
+            "description": "Aged artisan cheddar cheese with sharp, complex flavor.",
+            "category": "Dairy",
+            "unit": "Block",
+            "weight": "350g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 88,
+                    "rating": 5,
+                    "comment": "Rich and sharp flavor. This cheddar elevates any dish!"
+                },
+                {
+                    "user_id": 89,
+                    "rating": 4,
+                    "comment": "Great for mac and cheese. Real artisan quality."
+                },
+                {
+                    "user_id": 90,
+                    "rating": 4,
+                    "comment": "Tastes amazing on crackers. Proper aged cheddar flavor."
+                }
+            ]
+        },
+        {
+            "product_id": 31,
+            "name": "Farm Fresh Eggs Free-Range",
+            "img": "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400",
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 5,
+            "stock": 200,
+            "seller_id": 7,
+            "brand": "Happy Farm",
+            "description": "Dozen free-range eggs from pasture-raised hens.",
+            "category": "Dairy",
+            "unit": "Dozen",
+            "weight": "12 pcs",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 91,
+                    "rating": 5,
+                    "comment": "The yolks are so golden and rich! You can taste the quality."
+                },
+                {
+                    "user_id": 92,
+                    "rating": 5,
+                    "comment": "Best eggs I've ever bought. My omelets have never been better."
+                },
+                {
+                    "user_id": 93,
+                    "rating": 4,
+                    "comment": "Fresh and ethically raised. Worth every penny."
+                }
+            ]
+        },
+        {
+            "product_id": 32,
+            "name": "Organic Butter Unsalted",
+            "img": "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400",
+            "price": 3.99,
+            "oldPrice": 4.99,
+            "discount": 20,
+            "rating": 4,
+            "stock": 80,
+            "seller_id": 10,
+            "brand": "Green Pastures",
+            "description": "Pure organic unsalted butter from grass-fed cows.",
+            "category": "Dairy",
+            "unit": "Block",
+            "weight": "250g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 94,
+                    "rating": 5,
+                    "comment": "This butter makes everything taste better. So creamy!"
+                },
+                {
+                    "user_id": 95,
+                    "rating": 4,
+                    "comment": "Perfect for baking. My pastries have improved so much."
+                },
+                {
+                    "user_id": 96,
+                    "rating": 4,
+                    "comment": "Great organic option for everyday cooking."
+                }
+            ]
+        },
+        {
+            "product_id": 33,
+            "name": "Fresh Mozzarella Ball",
+            "img": "https://images.unsplash.com/photo-1634487359989-3e90c9432133?w=400",
+            "price": 5.49,
+            "oldPrice": 6.99,
+            "discount": 21,
+            "rating": 5,
+            "stock": 45,
+            "seller_id": 11,
+            "brand": "Countryside Dairy",
+            "description": "Soft, creamy fresh mozzarella for Caprese salad and pizza.",
+            "category": "Dairy",
+            "unit": "Ball",
+            "weight": "250g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 97,
+                    "rating": 5,
+                    "comment": "Softest mozzarella ever! Makes my homemade pizza amazing."
+                },
+                {
+                    "user_id": 98,
+                    "rating": 5,
+                    "comment": "Perfect for Caprese salad. So fresh and milky."
+                },
+                {
+                    "user_id": 99,
+                    "rating": 4,
+                    "comment": "Great quality fresh mozzarella. Tastes authentic."
+                }
+            ]
+        }
+    ],
+    "Bakery": [
+        {
+            "product_id": 34,
+            "name": "Artisan Sourdough Bread",
+            "img": "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?w=400",
+            "price": 5.99,
+            "oldPrice": 7.49,
+            "discount": 20,
+            "rating": 5,
+            "stock": 40,
+            "seller_id": 12,
+            "brand": "Golden Crust",
+            "description": "Handcrafted sourdough bread with a crispy crust and tangy interior.",
+            "category": "Bread & Bakery",
+            "unit": "Loaf",
+            "weight": "500g",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 100,
+                    "rating": 5,
+                    "comment": "The best sourdough I've ever had! Crusty outside, soft inside."
+                },
+                {
+                    "user_id": 101,
+                    "rating": 5,
+                    "comment": "Smells incredible and tastes even better. Artisan quality."
+                },
+                {
+                    "user_id": 102,
+                    "rating": 4,
+                    "comment": "Perfect tang and texture. Great with butter or for toast."
+                }
+            ]
+        },
+        {
+            "product_id": 35,
+            "name": "Organic Whole Wheat Bread",
+            "img": "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
+            "price": 3.99,
+            "oldPrice": 4.99,
+            "discount": 20,
+            "rating": 4,
+            "stock": 65,
+            "seller_id": 12,
+            "brand": "Golden Crust",
+            "description": "Nutritious whole wheat bread made with 100% organic flour.",
+            "category": "Bread & Bakery",
+            "unit": "Loaf",
+            "weight": "400g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 103,
+                    "rating": 4,
+                    "comment": "Healthy and delicious. Perfect for sandwiches."
+                },
+                {
+                    "user_id": 104,
+                    "rating": 5,
+                    "comment": "Love that it's 100% whole grain. Tastes great toasted."
+                },
+                {
+                    "user_id": 105,
+                    "rating": 4,
+                    "comment": "Soft texture for whole wheat bread. My family loves it."
+                }
+            ]
+        },
+        {
+            "product_id": 36,
+            "name": "French Butter Croissants",
+            "img": "https://images.unsplash.com/photo-1555507036-ab1f4038024a?w=400",
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 5,
+            "stock": 30,
+            "seller_id": 13,
+            "brand": "Parisian Delights",
+            "description": "Flaky, buttery croissants made with premium French butter.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 4",
+            "weight": "320g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 106,
+                    "rating": 5,
+                    "comment": "Flakiest croissants outside of Paris! Absolutely divine."
+                },
+                {
+                    "user_id": 107,
+                    "rating": 5,
+                    "comment": "Buttery perfection. Best croissants I've had in this country."
+                },
+                {
+                    "user_id": 108,
+                    "rating": 4,
+                    "comment": "Great with coffee in the morning. Premium quality."
+                }
+            ]
+        },
+        {
+            "product_id": 37,
+            "name": "Chocolate Chip Cookies",
+            "img": "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400",
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 50,
+            "seller_id": 14,
+            "brand": "Sweet Harvest",
+            "description": "Soft-baked chocolate chip cookies made with Belgian chocolate.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 6",
+            "weight": "250g",
+            "organic": false,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 109,
+                    "rating": 5,
+                    "comment": "These cookies are dangerously good! Can't stop eating them."
+                },
+                {
+                    "user_id": 110,
+                    "rating": 5,
+                    "comment": "Soft, chewy, and loaded with chocolate. Heavenly!"
+                },
+                {
+                    "user_id": 111,
+                    "rating": 4,
+                    "comment": "Best store-bought cookies I've ever tasted. Real chocolate!"
+                }
+            ]
+        },
+        {
+            "product_id": 38,
+            "name": "Multigrain Bagels",
+            "img": "https://images.unsplash.com/photo-1585535738259-4148514e40f0?w=400",
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 4,
+            "stock": 55,
+            "seller_id": 12,
+            "brand": "Golden Crust",
+            "description": "Chewy multigrain bagels packed with seeds and grains.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 4",
+            "weight": "400g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 112,
+                    "rating": 4,
+                    "comment": "Love the seeds and texture. Great toasted with cream cheese."
+                },
+                {
+                    "user_id": 113,
+                    "rating": 5,
+                    "comment": "Hearty and filling. My go-to breakfast option."
+                },
+                {
+                    "user_id": 114,
+                    "rating": 4,
+                    "comment": "Good flavor and nutritious. A healthy start to the day."
+                }
+            ]
+        },
+        {
+            "product_id": 39,
+            "name": "Blueberry Muffins",
+            "img": "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=400",
+            "price": 5.49,
+            "oldPrice": 6.99,
+            "discount": 21,
+            "rating": 5,
+            "stock": 35,
+            "seller_id": 14,
+            "brand": "Sweet Harvest",
+            "description": "Moist blueberry muffins bursting with real blueberries.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 4",
+            "weight": "350g",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 115,
+                    "rating": 5,
+                    "comment": "Loaded with real blueberries! So moist and delicious."
+                },
+                {
+                    "user_id": 116,
+                    "rating": 5,
+                    "comment": "Perfect breakfast treat. Tastes homemade."
+                },
+                {
+                    "user_id": 117,
+                    "rating": 4,
+                    "comment": "Great muffins, not too sweet. Real bakery quality."
+                }
+            ]
+        }
+    ],
+    "Beverages": [
+        {
+            "product_id": 40,
+            "name": "Cold Pressed Orange Juice",
+            "img": "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400",
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 5,
+            "stock": 80,
+            "seller_id": 15,
+            "brand": "Sunrise Juices",
+            "description": "100% pure cold-pressed orange juice with no added sugar.",
+            "category": "Beverages",
+            "unit": "Bottle",
+            "weight": "1 Liter",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 118,
+                    "rating": 5,
+                    "comment": "Tastes like freshly squeezed oranges! No added sugar is a plus."
+                },
+                {
+                    "user_id": 119,
+                    "rating": 5,
+                    "comment": "My morning isn't complete without this juice. So refreshing!"
+                },
+                {
+                    "user_id": 120,
+                    "rating": 4,
+                    "comment": "Great natural flavor. Love that it's cold-pressed."
+                }
+            ]
+        },
+        {
+            "product_id": 41,
+            "name": "Organic Green Tea Matcha",
+            "img": "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400",
+            "price": 8.99,
+            "oldPrice": 11.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 60,
+            "seller_id": 16,
+            "brand": "Zen Garden",
+            "description": "Premium ceremonial grade matcha green tea powder.",
+            "category": "Beverages",
+            "unit": "Tin",
+            "weight": "100g",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 121,
+                    "rating": 5,
+                    "comment": "Best matcha I've tried! Smooth with no bitterness at all."
+                },
+                {
+                    "user_id": 122,
+                    "rating": 5,
+                    "comment": "Genuine ceremonial grade. Makes perfect lattes every time."
+                },
+                {
+                    "user_id": 123,
+                    "rating": 4,
+                    "comment": "Great energy boost without the coffee jitters. Love it!"
+                }
+            ]
+        },
+        {
+            "product_id": 42,
+            "name": "Sparkling Water Variety Pack",
+            "img": "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400",
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 4,
+            "stock": 120,
+            "seller_id": 17,
+            "brand": "Crystal Springs",
+            "description": "Naturally flavored sparkling water in assorted flavors.",
+            "category": "Beverages",
+            "unit": "Pack of 6",
+            "weight": "6 × 330ml",
+            "organic": false,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 124,
+                    "rating": 4,
+                    "comment": "Refreshing flavors without the guilt. My soda replacement!"
+                },
+                {
+                    "user_id": 125,
+                    "rating": 5,
+                    "comment": "Love the variety pack. Lime is my favorite flavor."
+                },
+                {
+                    "user_id": 126,
+                    "rating": 4,
+                    "comment": "Clean taste with just the right amount of fizz."
+                }
+            ]
+        },
+        {
+            "product_id": 43,
+            "name": "Organic Almond Milk",
+            "img": "https://images.unsplash.com/photo-1600788886242-5c96aabe3757?w=400",
+            "price": 3.99,
+            "oldPrice": 5.29,
+            "discount": 25,
+            "rating": 5,
+            "stock": 95,
+            "seller_id": 10,
+            "brand": "Green Pastures",
+            "description": "Creamy unsweetened almond milk, dairy-free and vegan.",
+            "category": "Beverages",
+            "unit": "Carton",
+            "weight": "1 Liter",
+            "organic": true,
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 127,
+                    "rating": 5,
+                    "comment": "Creamiest almond milk I've found. Perfect in my coffee!"
+                },
+                {
+                    "user_id": 128,
+                    "rating": 5,
+                    "comment": "No weird aftertaste like other brands. Simply delicious."
+                },
+                {
+                    "user_id": 129,
+                    "rating": 4,
+                    "comment": "Great dairy-free option. Works perfectly for baking too."
+                }
+            ]
+        },
+        {
+            "product_id": 44,
+            "name": "Herbal Chamomile Tea",
+            "img": "https://images.unsplash.com/photo-1597481499750-3bc118571f41?w=400",
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 4,
+            "stock": 70,
+            "seller_id": 16,
+            "brand": "Zen Garden",
+            "description": "Soothing organic chamomile tea bags for relaxation.",
+            "category": "Beverages",
+            "unit": "Box",
+            "weight": "20 Bags",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                {
+                    "user_id": 130,
+                    "rating": 5,
+                    "comment": "The most relaxing tea ever. Helps me sleep so well."
+                },
+                {
+                    "user_id": 131,
+                    "rating": 4,
+                    "comment": "Gentle and calming flavor. A great bedtime ritual."
+                },
+                {
+                    "user_id": 132,
+                    "rating": 4,
+                    "comment": "Love the organic quality. Mild and soothing taste."
+                }
+            ]
+        },
+        {
+            "product_id": 45,
+            "name": "Fresh Coconut Water",
+            "img": "https://images.unsplash.com/photo-1536591375668-3991f05e827f?w=400",
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 5,
+            "stock": 110,
+            "seller_id": 15,
+            "brand": "Tropical Bliss",
+            "description": "100% pure coconut water with natural electrolytes.",
+            "category": "Beverages",
+            "unit": "Bottle",
+            "weight": "500ml",
+            "organic": true,
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                {
+                    "user_id": 133,
+                    "rating": 5,
+                    "comment": "So refreshing after a workout! Natural hydration at its best."
+                },
+                {
+                    "user_id": 134,
+                    "rating": 5,
+                    "comment": "Tastes like cracking open a fresh coconut. Pure and delicious."
+                },
+                {
+                    "user_id": 135,
+                    "rating": 4,
+                    "comment": "Great natural alternative to sports drinks. Love it!"
+                }
+            ]
+        }
+    ]
+}
