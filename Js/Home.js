@@ -46,7 +46,7 @@ function loadComponents() {
 
 // Fetch JSON data and render sections
 function loadData() {
-    fetch('../Js/ecobazar.json')
+    fetch('../Data/ecobazar.json')
         .then(response => response.json())
         .then(data => {
             renderCategories(data);
@@ -107,7 +107,7 @@ function renderProducts(data) {
     const featured = allProducts.slice(0, 10);
 
     container.innerHTML = featured.map(product => {
-        const imgSrc = product.img || product.image || '';
+        const imgSrc = product.img || product.image || (product.images && product.images[0]) || '';
         const name = product.name || 'Product';
         const price = product.price || 0;
         const oldPrice = product.oldPrice || null;
@@ -182,7 +182,7 @@ function renderHotDeals(data) {
     }
 
     // Featured card (left)
-    const featImg = featured.img || featured.image || '';
+    const featImg = featured.img || featured.image || (featured.images && featured.images[0]) || '';
     const featReviewCount = featured.reviews ? featured.reviews.length * 100 + 24 : 0;
     const featuredHtml = `
         <div class="col-lg-5">
@@ -224,7 +224,7 @@ function renderHotDeals(data) {
 
     // Grid cards (right)
     const gridHtml = gridProducts.map(p => {
-        const img = p.img || p.image || '';
+        const img = p.img || p.image || (p.images && p.images[0]) || '';
         const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through">$${p.oldPrice.toFixed(2)}</small>` : '';
         const saleBadge = p.discount > 28 ? `<span class="badge bg-danger position-absolute top-0 start-0 m-2" style="font-size:0.65rem;">Sale ${p.discount}%</span>` : '';
         return `
