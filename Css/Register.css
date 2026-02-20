@@ -20,15 +20,23 @@
     max-width: 520px;
     text-align: center;
     padding: 10px;
-
-
 }
 
 #email,
-#password {
+#password,
+#name,
+#confirmPassword,
+#role {
     width: 472px;
     padding: 10px;
     margin: 0px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#role {
+    padding: 10px;
+    margin: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -42,7 +50,8 @@
     margin: 20px 0;
 }
 
-#togglePassword {
+#togglePassword,
+#toggleConfirmPassword {
     position: relative;
     top: -30px;
     right: -213px;
@@ -77,9 +86,6 @@ h2 {
     text-align: left;
 
 }
-
-
-
 
 #loginButton {
     margin: 5px;
