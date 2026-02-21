@@ -32,6 +32,11 @@ function loadComponents() {
         .then(response => response.text())
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
+
+            // Re-run NavBar initialization since the HTML is dynamically loaded
+            if (window.initNavBarAuth) window.initNavBarAuth();
+            if (window.initBreadcrumb) window.initBreadcrumb();
+            if (window.updateCartBadge) window.updateCartBadge();
         })
         .catch(error => console.error('Error loading navbar:', error));
 
@@ -72,7 +77,7 @@ function renderCategories(data) {
     const container = document.getElementById('categories-container');
     if (!container) return;
 
-    const categoryKeys = Object.keys(data).filter(key => Array.isArray(data[key]));
+    const categoryKeys = Object.keys(data).filter(key => Array.isArray(data[key]) && key !== 'Sellers');
 
     container.innerHTML = categoryKeys.map(key => {
         const meta = categoryMeta[key] || { name: key, icon: "fa-box" };
@@ -98,7 +103,7 @@ function renderProducts(data) {
     // Collect all products from all categories
     let allProducts = [];
     for (const category in data) {
-        if (Array.isArray(data[category])) {
+        if (Array.isArray(data[category]) && category !== 'Sellers') {
             allProducts = allProducts.concat(data[category]);
         }
     }
@@ -148,7 +153,7 @@ function renderProducts(data) {
                                 ${oldPriceHtml}
                                 <div class="small">${starsHtml}</div>
                             </div>
-                            <button class="add-btn-circle"><i class="fas fa-shopping-bag"></i></button>
+                            <button class="add-btn-circle" onclick="window.addToCartData(event, ${product.product_id || 0}, '${encodeURIComponent(name).replace(/'/g, "%27")}', ${price}, '${imgSrc}')"><i class="fas fa-shopping-bag"></i></button>
                         </div>
                     </div>
                 </div>
@@ -165,7 +170,7 @@ function renderHotDeals(data) {
     // Collect all products and sort by discount descending
     let allProducts = [];
     for (const category in data) {
-        if (Array.isArray(data[category])) {
+        if (Array.isArray(data[category]) && category !== 'Sellers') {
             allProducts = allProducts.concat(data[category]);
         }
     }
@@ -195,7 +200,7 @@ function renderHotDeals(data) {
                     <img src="${featImg}" class="w-100 rounded" alt="${featured.name}" style="height: 260px; object-fit: contain;">
                     <div class="d-flex align-items-center gap-2 mt-3">
                         <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;"><i class="far fa-heart"></i></button>
-                        <a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;">
+                        <a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;" onclick="window.addToCartData(event, ${featured.product_id || 0}, '${encodeURIComponent(featured.name).replace(/'/g, "%27")}', ${featured.price}, '${featImg}')">
                             <i class="fas fa-shopping-bag me-1"></i> Add to Cart
                         </a>
                         <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;"><i class="far fa-eye"></i></button>
@@ -240,7 +245,7 @@ function renderHotDeals(data) {
                             <div>
                                 <span class="fw-bold small">$${p.price.toFixed(2)}</span> ${oldPriceHtml}
                             </div>
-                            <button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;"><i class="fas fa-shopping-bag"></i></button>
+                            <button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>
                         </div>
                         <div>${starsHtml(p.rating)}</div>
                     </div>
@@ -296,7 +301,7 @@ function renderTestimonials(data) {
     // Collect all reviews from all products across all categories
     let allReviews = [];
     for (const category in data) {
-        if (!Array.isArray(data[category])) continue;
+        if (!Array.isArray(data[category]) || category === 'Sellers') continue;
         data[category].forEach(product => {
             if (product.reviews && product.reviews.length > 0) {
                 product.reviews.forEach(review => {
