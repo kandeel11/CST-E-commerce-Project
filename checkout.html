@@ -1,0 +1,147 @@
+<html>
+
+<head>
+    <title>Checkout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        <style>
+            #summarydiv{
+                border: 1px solid #ccc;
+
+            }
+            #summarydiv table tr{
+                border-bottom: 1px solid #ccc;
+            }
+        </style>
+</head>
+
+<body>
+    <section class="container">
+        <div class="row">
+            <form class="col-7 row g-3 needs-validation" novalidate>
+                <h4>Billing Information</h4>
+                <div class="col-4">
+                    <label for="validationCustom01" class="form-label">First name</label>
+                    <input type="text" class="form-control" id="validationCustom01" value=""
+                        placeholder="Enter your First name" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="validationCustom02" class="form-label">Last name</label>
+                    <input type="text" class="form-control" id="validationCustom02" value=""
+                        placeholder="Enter your Last name" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="validationCustom02" class="form-label">Company name <span>(optional)</span></label>
+                    <input type="text" class="form-control" id="validationCustom02" value=""
+                        placeholder="Enter company name">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-12">
+                    <label for="validationCustom02" class="form-label">Street Address</label>
+                    <input type="text" class="form-control" id="validationCustom02" value=""
+                        placeholder="Enter your Street Address" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="validationCustom03" class="form-label">Country / Region</label>
+                    <input type="text" class="form-control" id="validationCustom03" placeholder="Country name" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid country.
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="validationCustom04" class="form-label">State</label>
+                    <select class="form-select" id="validationCustom04" required>
+                        <option selected disabled value="">Choose...</option>
+                        <option>...</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a valid state.
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label for="validationCustom05" class="form-label">Zip</label>
+                    <input type="text" class="form-control" id="validationCustom05" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid zip.
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="validationCustom05" class="form-label">Email</label>
+                    <input type="text" class="form-control" id="validationCustom05" placeholder="Enter your email"
+                        required>
+                    <div class="invalid-feedback">
+                        Please provide a valid Email.
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="validationCustom05" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="validationCustom05" placeholder="Enter phone number"
+                        required>
+                    <div class="invalid-feedback">
+                        Please provide a valid phone.
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                        <label class="form-check-label" for="invalidCheck">
+                            You must agree before submitting.
+                        </label>
+                        <div class="invalid-feedback">
+                            You must agree before submitting.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label for="orderNotes" class="form-label">Order Notes</label>
+                    <textarea class="form-control" id="orderNotes" placeholder="(optional)" rows="4"></textarea>
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary" type="submit">Confirm form</button>
+                </div>
+            </form>
+            <div class="col-4" id="summarydiv">
+                <h6>Order Summary</h6>
+                <table>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="3">Cart Total</th>
+                        </tr>
+                        <tr>
+
+                            <td colspan="2">Subtotal:</td>
+                            <td id="subtotal" class="totalcart"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Shipping:</td>
+                            <td class="totalcart">Free</td>
+                        </tr>
+                        <tr class="last">
+                            <td colspan="2">Total:</td>
+                            <td id="total" class="totalcart"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+    </section>
+    <script src="checkout.js"></script>
+</body>
+
+</html>
