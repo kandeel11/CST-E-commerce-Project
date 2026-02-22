@@ -1,6 +1,6 @@
 function loadComponents() {
     // 1. Load Navbar
-    fetch('NavBar.html')
+    fetch('../Pages/NavBar.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
@@ -13,7 +13,7 @@ function loadComponents() {
         .catch(error => console.error('Error loading navbar:', error));
 
     // 2. Load Footer
-    fetch('Footer.html')
+    fetch('../Pages/Footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
