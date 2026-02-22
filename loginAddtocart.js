@@ -3,11 +3,11 @@ import { Cart } from "./cart.js";
 
 var btnlogin = document.getElementById("btnlogin");
 btnlogin.addEventListener("click", function () {
-    var currentuser = {id: 200, name: 'alaa', email: 'alaa@gmail.com'};//JSON.parse(localStorage.getItem("currentUser"));
-    //console.log(currentuser);
+    var currentuser = JSON.parse(localStorage.getItem("currentUser"));
     if(!currentuser){return;}
     var userid = currentuser.id;
     var mycart = Cart.createcart(userid);
+    localStorage.setItem("MyCart",JSON.stringify(mycart));
     console.log(mycart);
 });
 //import{addProductToTable} from 'cart.js';
