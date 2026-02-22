@@ -5,9 +5,20 @@ const Email = document.querySelector('#email');
 const LoginButton = document.querySelector('#loginButton');
 const RemembertUser = JSON.parse(localStorage.getItem("RememberedUser")) || null;
 const CurrentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+const toastLiveExample = document.getElementById('liveToast');
+const toastbody = toastLiveExample.querySelector('.toast-body');
+const toastcontainer = document.querySelector('.toast-container');
 
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('registered') === 'true') {
+    toastLiveExample.style.backgroundColor = 'rgb(111, 246, 111)';
+    setInterval(() => {
+        toastLiveExample.style.backgroundColor = 'rgb(246, 111, 111)';
+    }, 5000);
+    toastbody.textContent = "Registration successful! You can now log in with your credentials.";
 
-
+    new bootstrap.Toast(toastLiveExample).show();
+}
 import { User } from './Classes/User.js';
 if (CurrentUser) {
     window.location.href = `../Pages/Home.html`;
@@ -68,8 +79,8 @@ passwordField.addEventListener("blur", function () {
     }
 });
 passwordField.addEventListener("input", function () {
-    passwordField.classList.remove('is-invalid');
 
+    passwordField.classList.remove('is-invalid');
     passwordError.style.display = 'none';
 });
 
@@ -83,17 +94,18 @@ LoginButton.addEventListener('click', function (event) {
     for (let i = 0; i < users.length; i++) {
         if (emailValue == users[i].Email && passwordValue == users[i].password) {
             if (!users[i].Active) {
-                alert("Your account is inactive. Please contact support.");
+                toastbody.textContent = "Your account is inactive. Please contact support.";
+                new bootstrap.Toast(toastLiveExample).show();
                 return;
             }
             if (users[i].Role === "Admin") {
-                alert(`welcome back ${users[i].name} ${users[i].Role}!`);
-                window.location.href = `../Pages/AdminDashboard.html?name=${users[i].name}`;
+                localStorage.setItem("currentAdmin", JSON.stringify(users[i]));
+                window.location.href = `../Pages/AdminDashboard.html`;
                 isUserFound = true;
                 break;
             }
             else if (users[i].Role === "User") {
-                alert(`welcome back ${users[i].name} ${users[i].Role}!`);
+
                 localStorage.setItem("currentUser", JSON.stringify(users[i]));
                 if (rememberMeCheckbox.checked) {
                     localStorage.setItem("RememberedUser", JSON.stringify(users[i]));
@@ -106,9 +118,8 @@ LoginButton.addEventListener('click', function (event) {
                 break;
             }
             else if (users[i].Role === "Seller") {
-                alert(`welcome back ${users[i].name} ${users[i].Role}!`);
-                // window.location.href = `../Pages/SellerDashboard.html`;
                 localStorage.setItem("currentSeller", JSON.stringify(users[i]));
+                window.location.href = `../Pages/SellerDashboard.html`;
                 isUserFound = true;
                 break;
             }
@@ -117,7 +128,10 @@ LoginButton.addEventListener('click', function (event) {
         }
     }
     if (!isUserFound) {
-        alert("Invalid email or password.");
+        toastbody.textContent = "Invalid email or password. Please try again.";
+        new bootstrap.Toast(toastLiveExample).show();
+
+
         event.preventDefault(); // Prevent form submission
     }
 

@@ -6,9 +6,12 @@ const passwordInput = document.getElementById('password');
 const confirmPasswordInput = document.getElementById('confirmPassword');
 const togglePassword = document.querySelector('#togglePassword');
 const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
-
 import { User } from "./Classes/User.js";
 nameInput.focus();
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if (currentUser) {
+    window.location.href = "../Pages/home.html";
+}
 
 togglePassword.addEventListener('click', function () {
     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -166,11 +169,8 @@ registerForm.addEventListener('submit', function (e) {
     const newUser = new User(name, role, email, password);
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-    alert("Registration successful! now you can log in with your credentials.");
-    window.location.href = "../Pages/Login.html";
+    window.location.href = "../Pages/Login.html?registered=true";
     // Clear form fields after registration
-
-
 });
 
 
