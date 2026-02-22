@@ -15,9 +15,89 @@
         *{
             box-sizing: border-box !important;
         }
+
+        :root {
+    --primary-green: #00B207;
+    --primary-green-hover: #009106;
+    --dark-text: #1A1A1A;
+    --gray-text: #808080;
+    --light-bg: #F2F2F2;
+    --soft-border: #E6E6E6;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-text);
+}
+
+        .breadcrumb-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+        url('https://images.unsplash.com/photo-1542838132-92c53300491e?w=1600') center/cover no-repeat;
+    padding: 10px 0;
+}
+
+.breadcrumb-section .breadcrumb {
+    margin-bottom: 0;
+}
+
+.breadcrumb-section .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+}
+
+.breadcrumb-section .breadcrumb-item a:hover {
+    color: #fff;
+}
+
+.breadcrumb-section .breadcrumb-item.active {
+    color: var(--primary-green);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.breadcrumb-section .breadcrumb-item+.breadcrumb-item::before {
+    color: rgba(255, 255, 255, 0.5);
+    content: ">";
+}
     </style>
 </head>
 <body>
+
+
+    <!--header-->
+<div class="navbar-topbar">
+        <div class="container-fluid px-4 d-flex justify-content-between align-items-center">
+            <div><i class="fas fa-map-marker-alt me-1"></i> Store Location: Egypt,Gherbia,Tanta</div>
+            <div class="d-flex align-items-center gap-3" id="nav-auth-container">
+                <a href="Login.html" class="btn btn-sm  rounded-pill px-3">Sign In</a>
+                <a href="Register.html" class="btn btn-sm btn-signup rounded-pill px-3"
+                    style="background-color: var(--primary-green); color: #0cf06b;">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+    <!--breadcrumb section-->
+<div class="breadcrumb-section" id="breadcrumb-section">
+    <div class="container-fluid px-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 py-2" id="breadcrumb-list">
+                <li class="breadcrumb-item"><a href="WishList.html"><i class="fa-solid fa-heart"> </i></a></li>
+                <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-current">My Wish List</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+    <!--end of breadcrumb section-->
+
+
+
+
+
+
+
+    <!--end of header-->
 
     <div class="container ">
 <h3 class="text-center fw-bolder">My wishlist</h3>
@@ -111,6 +191,9 @@
     </div>
     </div>
     </div>
+
+    <!--footer-->
+    <!--end of footer-->
      
         
     
