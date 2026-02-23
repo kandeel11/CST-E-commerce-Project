@@ -1,6 +1,6 @@
 let users = JSON.parse(localStorage.getItem("users")) || [];
 export class User {
-    constructor(name, Role, Email, password, Active = true) {
+    constructor(Fname, Lname, Role, Email, password, street, city, country, Phone, Active = true) {
         if (users.length > 0) {
             for (let user of users) {
                 if (user.Email === Email) {
@@ -8,8 +8,12 @@ export class User {
                 }
             }
             this.id = User.generateId(Role);
-            this.name = name;
+            this.Fname = Fname;
+            this.Lname = Lname;
             this.dateCreated = new Date().toString();
+
+            this.address = `${street}, ${city}, ${country}`;
+            this.Phone = Phone;
             if (Role === "Admin") {
                 this.Role = "Admin";
             }
@@ -29,7 +33,10 @@ export class User {
         }
         else {
             this.id = User.generateId(Role);
-            this.name = name;
+            this.Fname = Fname;
+            this.Lname = Lname;
+            this.Phone = Phone;
+            this.address = `${street}, ${city}, ${country}`;
             this.dateCreated = new Date().toString();
             if (Role === "Admin") {
                 this.Role = "Admin";
@@ -41,10 +48,7 @@ export class User {
 
                 this.Role = "Seller";
                 this.rating = 0;
-                this.location = "";
                 this.totalProducts = 0;
-                this.description = "";
-
             }
             this.Email = Email;
             this.password = password;
@@ -55,23 +59,30 @@ export class User {
 
         if (users.length === 0) {
             if (Role === "Admin") {
-                return `Admin${1}`;
+                return `Admin-${1}`;
             }
             else if (Role === "User") {
-                return `Us${1}`;
+                return `Us-${1}`;
             }
             else if (Role === "Seller") {
-                return `SLR${1}`;
+                return `SLR-${1}`;
             }
         } else {
             if (Role === "Admin") {
-                return `Admin${users.filter(u => u.Role === "Admin").length + 1}`;
+                users = users.map
+                    (u => u.Role === "Admin" ? parseInt(u.id.split("-")[1]) : 0);
+                return `Admin-${Math.max(...users) + 1}`;
+                //
             }
             else if (Role === "User") {
-                return `Us${users.filter(u => u.Role === "User").length + 1}`;
+                users = users.map
+                    (u => u.Role === "User" ? parseInt(u.id.split("-")[1]) : 0);
+                return `Us-${Math.max(...users) + 1}`;
             }
             else if (Role === "Seller") {
-                return `SLR${users.filter(u => u.Role === "Seller").length + 1}`;
+                users = users.map
+                    (u => u.Role === "Seller" ? parseInt(u.id.split("-")[1]) : 0);
+                return `SLR-${Math.max(...users) + 1}`;
             }
         }
     }

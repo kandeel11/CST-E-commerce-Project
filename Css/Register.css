@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 70px auto;
+    margin: 20px auto;
 }
 
 .login-form {
@@ -17,34 +17,25 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 520px;
+    max-width: 800px;
+    height: 80px;
     text-align: center;
     padding: 10px;
 }
-
-#email,
-#password,
-#name,
-#confirmPassword,
-#role {
-    width: 472px;
-    padding: 10px;
-    margin: 0px 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+#liveToast {
+    background-color: rgb(246, 111, 111);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-align: center;
+    width: 400px;
 }
 
-#role {
-    padding: 10px;
-    margin: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
 
-#password {
-    padding-right: 30px;
-    margin: 0px 20px;
-}
+
+
 
 .form-group {
     margin: 20px 0;
@@ -59,7 +50,7 @@
 }
 
 h2 {
-    margin: 20px 0;
+    margin: 10px 0;
     font-weight: 700;
     font-family: "Poppins";
 
@@ -70,10 +61,12 @@ h2 {
     color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 43px;
-    width: 472px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 16px;
+    font-weight: 600;
+    font-family: "Poppins";
+    font-size: 30px;
+    height: 60px;
 }
 
 .error-message {
