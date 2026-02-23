@@ -3,8 +3,10 @@ import { Cart } from "./cart.js";
 
 var btnlogin = document.getElementById("btnlogin");
 btnlogin.addEventListener("click", function () {
-    var currentuser = JSON.parse(localStorage.getItem("currentUser"));
-    if(!currentuser){return;}
+    //{id: 111, name: "yoy", email: "yo@gmail.com"};
+    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if(!currentUser){return;}
+    localStorage.setItem("currentUser",JSON.stringify(currentUser));
     var userid = currentuser.id;
     var mycart = Cart.createcart(userid);
     localStorage.setItem("MyCart",JSON.stringify(mycart));
@@ -12,8 +14,8 @@ btnlogin.addEventListener("click", function () {
 });
 //import{addProductToTable} from 'cart.js';
  let products = [
-    { id: 1, name: "Shirt2", price: 300, image: "shirt.jpg" },
-    { id: 2, name: "Shoes2", price: 500, image: "shoes.jpg" }
+    { product_id: 1, name: "Shirt2", price: 300, image: "shirt.jpg" },
+    { product_id: 2, name: "Shoes2", price: 500, image: "shoes.jpg" }
 ];
 
 if(!localStorage.getItem("products")){
@@ -35,7 +37,7 @@ storedProducts.forEach(product => {
             <div class="card-body">
                 <h5 class="card-title">${product.name}</h5>
                 <p class="card-text">Price: ${product.price}</p>
-                <button class="btn btn-primary btnaddtocart" data-id="${product.id}">Add to Cart</button>
+                <button class="btn btn-primary btnaddtocart" data-id="${product.product_id}">Add to Cart</button>
             </div>
         </div>
     `;
@@ -49,28 +51,23 @@ for (let i = 0; i < btnAdd.length; i++) {
         if (!e.target.classList.contains("btnaddtocart")) return;
 
         let productId = parseInt(e.target.dataset.id);
-
         let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-        if (!currentUser) return;
+        if (!currentUser) {
+            alert("Please login first!");
+            return;
+        }
+        let mycart = JSON.parse(localStorage.getItem("MyCart")) || new Cart(currentUser.id);
 
-        let userId = currentUser.id;
-        let cartKey = "cart_" + userId;
-
-        let userCart = JSON.parse(localStorage.getItem(cartKey)) || {
-            userid: userId,
-            items: []
-        };
-
-        let selectedProduct = storedProducts.find(p => p.id === productId);
+        let selectedProduct = storedProducts.find(p => p.product_id === productId);
         if (!selectedProduct) return;
 
-        let findItem = userCart.items.find(i => i.id === productId);
+        let findItem = mycart.items.find(i => i.product_id === productId);
 
         if (findItem) {
             findItem.quantity += 1;
         } else {
-            userCart.items.push({
-                id: selectedProduct.id,
+            mycart.items.push({
+                product_id: selectedProduct.product_id,
                 name: selectedProduct.name,
                 price: selectedProduct.price,
                 image: selectedProduct.image,
@@ -78,9 +75,9 @@ for (let i = 0; i < btnAdd.length; i++) {
             });
         }
 
-        localStorage.setItem(cartKey, JSON.stringify(userCart));
+        localStorage.setItem("MyCart", JSON.stringify(mycart));
         localStorage.setItem("cartUpdated", Date.now());
 
-        console.log(userCart);
+        console.log(mycart);
     });
 }
