@@ -1,5 +1,4 @@
 var carts = JSON.parse(localStorage.getItem("cart")) || [];
-
 export class Cart {
   constructor(userid) {
     this.userid = userid;
@@ -36,7 +35,8 @@ export class Cart {
         var quantitytd = document.createElement("td");
         var subtotatd = document.createElement("td");
         var daletetd = document.createElement("td");
-        producttd.innerHTML = `<img src="${mycart.items[i].image}" width="50px" height="50px" /">
+       // <img src="${mycart.items[i].image}" width="50px" height="50px" /">
+        producttd.innerHTML = `
         <span>${mycart.items[i].name}</span>
         `;
         pricetd.innerHTML = `${mycart.items[i].price}`;
@@ -44,7 +44,7 @@ export class Cart {
               <span class="qty"> ${mycart.items[i].quantity} </span>
               <button class="maxnum" data-productid="${mycart.items[i].product_id}">+</button>`;
 
-        subtotatd.innerHTML = `${mycart.items[i].price * mycart.items[i].quantity}`;
+        subtotatd.innerHTML = `<span class="spansub">${mycart.items[i].price * mycart.items[i].quantity}</span>`;
         subtotatd.classList.add("calcsubtotal");
         daletetd.innerHTML = `<button class="deletebtn" data-productid="${mycart.items[i].product_id}">x</button>`;
         newrow.appendChild(producttd);
@@ -64,7 +64,6 @@ export class Cart {
       row.appendChild(newrow);
     }
   }
-
   static MinQuantity() {
     var mycart = Cart.GetCurrentUserCart();
     if (mycart.items.length == 0) {
@@ -104,7 +103,6 @@ export class Cart {
       });
     }
   }
-
   static MaxQuantity() {
     var mycart = Cart.GetCurrentUserCart();
     if (mycart.items.length == 0) {
@@ -182,40 +180,61 @@ export class Cart {
         });
     }
   }
+  static totalcal(){
+  let mycart = Cart.GetCurrentUserCart();
+  var rows = document.querySelectorAll("tbody tr");
+  if(rows.length == 0){return;}
+  var SumSubtotal=0;
+  for(var i =0;i<rows.length;i++){
+    var innersubtotal = rows[i].querySelector(".spansub");
+    if(innersubtotal){
+       SumSubtotal+= parseInt(innersubtotal.innerHTML);
+    }
+  }
+  if(mycart.items.length > 0){
+     var subtotaldiv = document.getElementById("subtotal");
+   subtotaldiv.innerHTML= SumSubtotal;
+   var totaldiv = document.getElementById("total");
+   totaldiv.innerText = SumSubtotal;
+  }else{
+     subtotaldiv.innerHTML = `${0}`;
+      totaldiv.innerHTML = `${0}`;
+  }
+  
+  // if (mycart.items.length > 0) {
+  //   var subtotaldiv = document.getElementById("subtotal");
+  //   var subtotals = document.getElementsByClassName("calcsubtotal");
+  //   var totaldiv = document.getElementById("total");
+  //   var sum = 0;
+  //   for (var j = 0; j < subtotals.length; j++) {
+  //     sum += parseInt(subtotals[j].innerText);
+  //   }
+  //   subtotaldiv.innerHTML = `${sum}`;
+  //   totaldiv.innerHTML = `${sum}`;
+  // } else {
+  //   subtotaldiv.innerHTML = `${0}`;
+  //   totaldiv.innerHTML = `${0}`;
+  // }
+}
 }
 Cart.AddItemstoTable();
 Cart.MinQuantity();
 Cart.MaxQuantity();
 Cart.DeteleProductinCart();
+Cart.totalcal();
 //reload page after any change in local storage
 window.addEventListener("storage", function (e) {
   if (e.key === "cartUpdated") {
     location.reload();
   }
 });
-
-// static totalcal(){
-//   let mycart = Cart.GetCurrentUserCart();
-//   if (mycart.items.length != 0) {
-//     var subtotaldiv = document.getElementById("subtotal");
-//     var subtotals = document.getElementsByClassName("calcsubtotal");
-//     var totaldiv = document.getElementById("total");
-//     var sum = 0;
-//     for (var j = 0; j < subtotals.length; j++) {
-//       sum += parseInt(subtotals[j].innerText);
-//     }
-//     subtotaldiv.innerHTML = `${sum}`;
-//     totaldiv.innerHTML = `${sum}`;
-//   } else {
-//     subtotaldiv.innerHTML = `${0}`;
-//     totaldiv.innerHTML = `${0}`;
-//   }
-// }
-
-// button return to shop
-// var returnbtn = document.getElementById("returnbtn");
-//     returnbtn.addEventListener("click", function () {
-//       window.location.href = "product.html";
-//     });
+//button return to shop
+var returnbtn = document.getElementById("returnbtn");
+if(returnbtn){
+  returnbtn.addEventListener("click", function () {
+      window.location.href = "loginAddtocart.html";
+    });
+}
+    
 
 
