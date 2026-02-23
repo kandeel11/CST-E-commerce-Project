@@ -9,6 +9,52 @@ const CurrentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
 
 
 import { User } from './Classes/User.js';
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem("showRegistrationToast") === "true") {
+        showSuccessToast("Registration successful! Now you can log in with your credentials.");
+        localStorage.removeItem("showRegistrationToast");
+    }
+});
+
+function showSuccessToast(message) {
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        toastContainer.style.zIndex = '1055';
+        document.body.appendChild(toastContainer);
+    }
+
+    const toastEl = document.createElement('div');
+    toastEl.className = `toast align-items-center text-white bg-success border-0 fade show`;
+    toastEl.setAttribute('role', 'alert');
+    toastEl.setAttribute('aria-live', 'assertive');
+    toastEl.setAttribute('aria-atomic', 'true');
+
+    toastEl.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">
+          ${message}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    `;
+
+    const closeBtn = toastEl.querySelector('.btn-close');
+    closeBtn.addEventListener('click', () => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    });
+
+    toastContainer.appendChild(toastEl);
+
+    setTimeout(() => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    }, 4000);
+}
+
 if (CurrentUser) {
     window.location.href = `../Pages/Home.html`;
 }
@@ -87,13 +133,12 @@ LoginButton.addEventListener('click', function (event) {
                 return;
             }
             if (users[i].Role === "Admin") {
-                alert(`welcome back ${users[i].name} ${users[i].Role}!`);
+                localStorage.setItem("showLoginToast", "true");
                 window.location.href = `../Pages/AdminDashboard.html?name=${users[i].name}`;
                 isUserFound = true;
                 break;
             }
             else if (users[i].Role === "User") {
-                alert(`welcome back ${users[i].name} ${users[i].Role}!`);
                 localStorage.setItem("currentUser", JSON.stringify(users[i]));
                 if (rememberMeCheckbox.checked) {
                     localStorage.setItem("RememberedUser", JSON.stringify(users[i]));
@@ -101,14 +146,15 @@ LoginButton.addEventListener('click', function (event) {
                 else {
                     localStorage.removeItem("RememberedUser");
                 }
+                localStorage.setItem("showLoginToast", "true");
                 window.location.href = `../Pages/Home.html`;
                 isUserFound = true;
                 break;
             }
             else if (users[i].Role === "Seller") {
-                alert(`welcome back ${users[i].name} ${users[i].Role}!`);
-                // window.location.href = `../Pages/SellerDashboard.html`;
                 localStorage.setItem("currentSeller", JSON.stringify(users[i]));
+                localStorage.setItem("showLoginToast", "true");
+                window.location.href = `../Pages/Home.html`;
                 isUserFound = true;
                 break;
             }

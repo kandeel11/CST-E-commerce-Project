@@ -191,6 +191,62 @@ body {
     color: white;
 }
 
+/* Product Card Action Icons (Wishlist & Quick View) */
+.product-action-icons {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .product-action-icons,
+.hot-deal-card:hover .product-action-icons {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.action-icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--soft-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--dark-text);
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.action-icon-btn:hover {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    color: white;
+}
+
+/* Uniform Sale Badge */
+.sale-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #EA2B0F;
+    /* Ecobazar Red */
+    color: white;
+    padding: 5px 12px;
+    border-radius: 8px 0 8px 0;
+    font-size: 0.8rem;
+    font-weight: 500;
+    z-index: 5;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 /* MEGA MENU HOVER EFFECT */
 
 /* 1. Make the parent item static so the dropdown can be full-width */

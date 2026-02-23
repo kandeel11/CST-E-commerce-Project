@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecobazar - Product Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Css/ProductDetails.css">
+    <link rel="stylesheet" href="../Css/Home.css">
+</head>
+
+<body>
+    <div id="navbar-placeholder" class="navbar-placeholder" style="z-index: 1020;"></div>
+
+    <!-- Product Main Details -->
+    <section class="container mb-5" id="product-main">
+        <div class="row g-5">
+            <!-- Gallery -->
+            <div class="col-md-6">
+                <div class="d-flex gx-3 h-100 flex-column flex-md-row">
+                    <div class="thumbnail-list d-flex flex-row flex-md-column gap-2 order-2 order-md-1 mt-3 mt-md-0 me-md-3 overflow-auto"
+                        id="thumbnail-container" style="max-height: 400px; scrollbar-width: none;">
+                        <!-- Thumbnails loaded dynamically -->
+                    </div>
+                    <div class="main-image-container flex-grow-1 d-flex align-items-center justify-content-center p-3 order-1 order-md-2 overflow-hidden image-zoom-container"
+                        style="background-color: #f6f6f6; border-radius: 8px;">
+                        <img src="" alt="Main Product" id="main-product-image" class="img-fluid zoom-img"
+                            style="max-height: 400px; mix-blend-mode: darken; transition: transform 0.3s ease;">
+                    </div>
+                </div>
+            </div>
+            <!-- Info -->
+            <div class="col-md-6">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <h2 class="fw-bold mb-0 text-dark" id="product-title">Loading...</h2>
+                    <span class="badge bg-success-subtle text-success py-2 px-3 fw-medium" id="stock-status">In
+                        Stock</span>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 mb-4 text-muted small border-bottom pb-4">
+                    <div id="product-stars" class="d-flex align-items-center gap-1">
+                        <!-- Stars -->
+                    </div>
+                    <span><span id="review-count">0</span> Review</span>
+                    <span>•</span>
+                    <span><span class="fw-semibold text-dark">SKU:</span> <span id="product-sku">2,51,594</span></span>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <span class="text-muted text-decoration-line-through fs-5" id="product-old-price"></span>
+                    <span class="fw-bold fs-3 text-green" id="product-price"></span>
+                    <span class="badge bg-danger ms-2 px-2 py-1 fs-6 rounded-pill d-none" id="product-discount"></span>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center py-3 border-bottom mb-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="text-muted small">Brand:</span>
+                        <div class="brand-logo border rounded p-1 d-flex align-items-center justify-content-center bg-white"
+                            style="width: 50px; height: 35px;">
+                            <i class="fas fa-leaf text-green" id="product-brand-logo"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="text-muted small">Share item:</span>
+                        <a href="#" class="share-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="share-icon"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="share-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+
+
+                <div class="d-flex align-items-center gap-3 mb-4 pb-4 border-bottom">
+                    <div class="quantity-selector d-flex align-items-center border rounded-pill px-2 py-1"
+                        style="background-color: #f6f6f6;">
+                        <button class="btn btn-link text-decoration-none text-dark p-2 qty-btn" id="qty-minus"><i
+                                class="fas fa-minus fs-6"></i></button>
+                        <input type="text" value="1"
+                            class="form-control border-0 bg-transparent text-center fw-bold fs-6" style="width: 50px;"
+                            id="qty-input" readonly>
+                        <button class="btn btn-link text-decoration-none text-dark p-2 qty-btn" id="qty-plus"><i
+                                class="fas fa-plus fs-6"></i></button>
+                    </div>
+                    <button
+                        class="btn bg-green text-white fw-semibold flex-grow-1 rounded-pill py-3 px-4 d-flex justify-content-center align-items-center gap-2 add-cart-btn"
+                        id="add-to-cart-btn">
+                        Add to Cart <i class="fas fa-shopping-bag"></i>
+                    </button>
+                    <button
+                        class="btn btn-light border rounded-circle d-flex justify-content-center align-items-center wishlist-btn"
+                        style="width: 50px; height: 50px;">
+                        <i class="far fa-heart fs-5 text-dark"></i>
+                    </button>
+                </div>
+
+                <div class="text-dark small">
+                    <p class="mb-2"><span class="fw-semibold">Category:</span> <span id="product-category"
+                            class="text-muted"></span></p>
+                    <p class="mb-0"><span class="fw-semibold">Tag:</span> <span id="product-tags"
+                            class="text-muted"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Section -->
+    <section class="container mb-5">
+        <ul class="nav nav-tabs justify-content-center border-bottom-0 product-tabs mb-4 px-3" id="myTab"
+            role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="desc-tab" data-bs-toggle="tab" data-bs-target="#desc-pane"
+                    type="button" role="tab" aria-controls="desc-pane" aria-selected="true">Descriptions</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link mx-md-4" id="add-info-tab" data-bs-toggle="tab" data-bs-target="#add-info-pane"
+                    type="button" role="tab" aria-controls="add-info-pane" aria-selected="false">Additional
+                    Information</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback-pane"
+                    type="button" role="tab" aria-controls="feedback-pane" aria-selected="false">Customer
+                    Feedback</button>
+            </li>
+        </ul>
+
+        <!-- Subtle separator -->
+        <hr class="mt-0 mb-4" style="opacity: 0.1;">
+
+        <div class="tab-content pt-3" id="myTabContent">
+            <!-- Descriptions Tab -->
+            <div class="tab-pane fade show active" id="desc-pane" role="tabpanel" aria-labelledby="desc-tab"
+                tabindex="0">
+                <div class="row align-items-start g-5">
+                    <div class="col-12 text-muted lh-lg" id="tab-description-content">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information Tab -->
+            <div class="tab-pane fade" id="add-info-pane" role="tabpanel" aria-labelledby="add-info-tab" tabindex="0">
+                <div class="row">
+                    <div class="col-md-7 col-lg-5" id="additional-info-container">
+                        <table class="table table-borderless text-muted mb-0 table-sm">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2" style="width: 150px;">Weight:</td>
+                                    <td id="info-weight" class="py-2">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Type:</td>
+                                    <td id="info-type" class="py-2">Organic</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Category:</td>
+                                    <td id="info-category" class="py-2">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Stock Status:</td>
+                                    <td id="info-stock" class="py-2">Available</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Tags:</td>
+                                    <td id="info-tags" class="py-2">--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Feedback Tab -->
+            <div class="tab-pane fade" id="feedback-pane" role="tabpanel" aria-labelledby="feedback-tab" tabindex="0">
+                <div class="row">
+                    <div class="col-md-8" id="reviews-container">
+                        <!-- Reviews dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="container mb-5 pb-4">
+        <h3 class="fw-bold fs-2 text-center mb-5 font-poppins">Related Products</h3>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="related-products-container">
+            <!-- Related products dynamically loaded -->
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Js/NavBar.js"></script>
+    <script src="../Js/ProductDetails.js"></script>
+</body>
+
+</html>

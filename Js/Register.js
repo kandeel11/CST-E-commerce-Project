@@ -166,7 +166,7 @@ registerForm.addEventListener('submit', function (e) {
     const newUser = new User(name, role, email, password);
     users.push(newUser);
     localStorage.setItem("users", JSON.stringify(users));
-    alert("Registration successful! now you can log in with your credentials.");
+    localStorage.setItem("showRegistrationToast", "true");
     window.location.href = "../Pages/Login.html";
     // Clear form fields after registration
 
