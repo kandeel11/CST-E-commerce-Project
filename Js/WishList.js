@@ -1,9 +1,12 @@
-wishlist_arr=[];
+wishlist_arr=wishlist_arr=JSON.parse(localStorage.getItem('WishLists')) || [];
 
 
 
 
 window.addEventListener('load',function(){
+    id=5;
+    wishlist_arr=wishlist_arr=JSON.parse(localStorage.getItem('WishLists')) || [];
+
 
     loadComponents();
 
@@ -97,7 +100,21 @@ window.addEventListener('load',function(){
         }]
 
 
-loadProducts();
+//loadProducts();
+Restore_data(id);
+user_wish=new WishList();
+if(wishlist_arr.length>0){
+//user_wish.userid=((wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))].userid) || id)
+if(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))]){
+    user_wish.userid=(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))].userid)
+}
+else{user_wish.userid=id;}
+//user_wish.wish_prod=(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))].wish_prod) || []
+user_wish.wish_prod=(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))]|| []) .wish_prod ||[]
+
+}
+
+
  
 
 
@@ -162,12 +179,7 @@ class WishList{
      const exists = this.wish_prod.some(item => item.product_id === productId);
 
     if (!exists) {
-       this.wish_prod.push({
-            product_id: product.product_id,
-            name: product.name,
-            price: product.price,
-            image: product.images[0]
-        });
+       this.wish_prod.push(product);
          createProductCard(product);
     document.getElementById('table_data').innerHTML=createProductCard(product)+document.getElementById('table_data').innerHTML;
        // localStorage.setItem('wishlist', JSON.stringify(this.wish_prod));
@@ -200,13 +212,16 @@ localStorage.setItem('WishLists', JSON.stringify(wishlist_arr));
 
 }
 
+ 
+
+
 
 }
 but=document.querySelector('#adding');
 
 
-user_wish=new WishList(5);
-
+//user_wish=new WishList(5);
+user_wish=wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===this.userid))]
 
 
     //user_wish.wish_prod.push(product);
@@ -268,6 +283,7 @@ del_buttons=document.querySelectorAll('.canceling');
     console.log(event)
     console.log(event.target)
     console.log(event.target.parentElement.parentElement.dataset.id)
+    console.log(this)
      console.log(user_wish)
 
 user_wish.delete(Number(event.target.parentElement.parentElement.dataset.id));
@@ -281,3 +297,26 @@ user_wish.delete(Number(event.target.parentElement.parentElement.dataset.id));
         user_wish.addToWishlist(37)
         user_wish.addToWishlist(38)
     }
+
+current_wishlist=new WishList();
+    function Restore_data(id) {
+    wishlist_arr=JSON.parse(localStorage.getItem('WishLists')) || [];
+    let user_index=wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id));
+
+    if(!wishlist_arr){ return;
+    }
+    if(user_index!=-1){
+    current_wishlist=wishlist_arr[user_index];
+for(let i=0;i<current_wishlist.wish_prod.length;i++){
+        createProductCard(current_wishlist.wish_prod[i]);
+        document.getElementById('table_data').innerHTML=createProductCard(current_wishlist.wish_prod[i])+document.getElementById('table_data').innerHTML;
+
+    }}  
+}
+
+function display(current_wishlist){
+    for(let i=0;i<current_wishlist.wish_prod.length;i++){
+        createProductCard(current_wishlist.wish_prod[i])
+    }
+}
+    
