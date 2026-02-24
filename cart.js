@@ -87,6 +87,9 @@ export class Cart {
         if (!qtySpan) {
           return;
         }
+        var toastEl = document.getElementById("myToast");
+          var toast = new bootstrap.Toast(toastEl);
+         
         btnMin.addEventListener("click", function () {
           var innerqty = +qtySpan.innerText;
           if (innerqty > 1) {
@@ -98,6 +101,11 @@ export class Cart {
             localStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
             location.reload();
+          }else{
+             var toastEl = document.getElementById("myToastt");
+             var toast = new bootstrap.Toast(toastEl);
+             toast.show();
+         
           }
         });
       });
@@ -124,17 +132,23 @@ export class Cart {
         btnMax.addEventListener("click", function () {
           var qtySpan = row.querySelector(".qty");
           var innerqty = +qtySpan.innerText;
-          if (!qtySpan) {
-          return;}
-            innerqty++;
+          var productid = btnMax.dataset.productid;
+          var finditem = mycart.items.find((p) => p.product_id == productid);
+          if (!qtySpan) {return;}
+          var toastEl = document.getElementById("myToast");
+          var toast = new bootstrap.Toast(toastEl);
+          if(finditem.stock == finditem.quantity){
+             toast.show();
+          }else{
+             innerqty++;
             qtySpan.innerText = innerqty;
-            var productid = btnMax.dataset.productid;
-            var finditem = mycart.items.find((p) => p.product_id == productid);
             console.log(finditem);
             finditem.quantity = innerqty;
             localStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
-            location.reload();
+          }
+           
+            //location.reload();
         });
       });
     }
