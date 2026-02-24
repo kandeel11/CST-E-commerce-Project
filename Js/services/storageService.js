@@ -1,23 +1,36 @@
+//  product helpers 
+const PRODUCTS_KEY = "products";
+
 export function addProductToStorage(product) {
-    let products = JSON.parse(localStorage.getItem("products")) || [];
+    const products = getAllProducts();
     products.push(product.toJSON());
-    localStorage.setItem("products", JSON.stringify(products));
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
 }
 
-function getProductsBySeller(sellerID) {
-    let products = JSON.parse(localStorage.getItem("products")) || [];
-    return products.filter(p => p.sellerID === sellerID);
+export function getAllProducts() {
+    return JSON.parse(localStorage.getItem(PRODUCTS_KEY)) || [];
+}
+
+export function saveProducts(products) {
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+}
+
+export function getProductById(id) {
+    return getAllProducts().find(p => p.id === id) || null;
+}
+
+export function loadProductsForSeller(sellerID) {
+    renderProductsTable(getAllProducts().filter(p => p.sellerID === sellerID));
 }
 
 function renderProductsTable(products) {
-    let tableBody = document.getElementById('productsTbody');
+    const tableBody = document.getElementById("productsTbody");
+    if (!tableBody) return;
     tableBody.innerHTML = "";
-
-    //let addedProduct = products[products.length - 1];
     products.forEach(product => {
-        let row = document.createElement('tr');
+        const row = document.createElement("tr");
         row.innerHTML = `
-            <td><img src="${product.imageUrl}" alt="${product.productName}" class="img-fluid" style="max-height: 100px;"></td>
+            <td><img src="${product.imageUrl}" alt="${product.productName}" class="img-fluid" style="max-height:80px"></td>
             <td>${product.productName}</td>
             <td>$${Number(product.productPrice).toFixed(2)}</td>
             <td>${product.stockQuantity}</td>
@@ -31,7 +44,59 @@ function renderProductsTable(products) {
     });
 }
 
-export function loadProductsForSeller(sellerID) {
-    let products = getProductsBySeller(sellerID);
-    renderProductsTable(products);
+//  wishlist helpers  
+const WISHLIST_KEY = "wishlists";
+
+export function getWishlist() {
+    return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+}
+
+export function isInWishlist(productId) {
+    return getWishlist().some(item => item.product_id === productId);
+}
+
+export function addToWishlist(product) {
+    const wishlist = getWishlist();
+    if (!wishlist.some(item => item.product_id === product.product_id)) {
+        wishlist.push(product);
+        localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+        return true;
+    }
+    return false;
+}
+
+export function removeFromWishlist(productId) {
+    const wishlist = getWishlist().filter(item => item.product_id !== productId);
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+}
+
+export function toggleWishlist(product) {
+    if (isInWishlist(product.product_id)) {
+        removeFromWishlist(product.product_id);
+        return false; 
+    }
+    addToWishlist(product);
+    return true; 
+}
+
+//  cart helpers 
+const CART_KEY = "cart";
+
+export function getCart() {
+    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+}
+
+export function addToCart(product) {
+    const cart = getCart();
+    const existing = cart.find(item => item.product_id === product.product_id);
+    if (existing) {
+        existing.quantity = (existing.quantity || 1) + 1;
+    } else {
+        cart.push({ ...product, quantity: 1 });
+    }
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+}
+
+export function getCartCount() {
+    return getCart().reduce((sum, item) => sum + (item.quantity || 1), 0);
 }

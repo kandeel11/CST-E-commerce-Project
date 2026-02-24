@@ -3,6 +3,7 @@ import {generateID} from './idGenerator.js';
 export class Product {
     #productID;
     #productName;
+    #procuctCategory;
     #productDescription;
     #productPrice;
     #sellerID;
@@ -10,9 +11,10 @@ export class Product {
     #stockQuantity;
     #createdDate;
 
-    constructor(productName, productDescription, productPrice, sellerID, imageUrl, stockQuantity){
+    constructor(productName, procuctCategory, productDescription, productPrice, sellerID, imageUrl, stockQuantity){
         this.#productID = generateID('PRODUCT');
         this.ProductName = productName;
+        this.ProcuctCategory = procuctCategory;
         this.ProductDescription = productDescription;
         this.ProductPrice = productPrice;
         this.SellerID = sellerID;
@@ -74,10 +76,18 @@ export class Product {
         return this.#createdDate;
     }
 
+    set ProcuctCategory(category){
+        this.#procuctCategory = category;
+    }
+    get ProcuctCategory(){
+        return this.#procuctCategory;
+    }
+
     toJSON(){
         return{
             productID : this.ProductID,
             productName : this.ProductName,
+            procuctCategory : this.ProcuctCategory,
             productDescription : this.ProductDescription,
             productPrice : this.ProductPrice,
             sellerID : this.SellerID,
