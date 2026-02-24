@@ -1,32 +1,91 @@
-var carts = JSON.parse(localStorage.getItem("cart")) || [];
 export class Cart {
     constructor(userid) {
         this.userid = userid;
         this.items = [];
         this.createddate = new Date().toString();
     }
+
+
+    static GetAllCarts() {
+        return JSON.parse(localStorage.getItem("cart")) || [];
+    }
+
+    static SaveAllCarts(carts) {
+        localStorage.setItem("cart", JSON.stringify(carts));
+    }
+
+    static GetCurrentUserId() {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        return currentUser ? currentUser.id : null;
+    }
+
     static createcart(userid) {
-        let carts = JSON.parse(localStorage.getItem("cart")) || [];
-        let usercart = carts.find((p) => p.userid === userid);
+
+        let carts = Cart.GetAllCarts();
+        let usercart = carts.find(c => c.userid === userid);
+
         if (!usercart) {
-            let newcart = new Cart(userid);
-            carts.push(newcart);
-            localStorage.setItem("cart", JSON.stringify(carts));
-            return newcart;
-        } else {
-            return usercart;
+            usercart = new Cart(userid);
+            carts.push(usercart);
+            Cart.SaveAllCarts(carts);
         }
+        return usercart;
     }
+
     static GetCurrentUserCart() {
-        let mycart = JSON.parse(localStorage.getItem("MyCart")) || [];
-        return mycart;
+        const userid = Cart.GetCurrentUserId();
+        if (!userid) return null;
+        return Cart.createcart(userid);
     }
+
+
+    static UpdateCartAndSave(updatedCart) {
+        let carts = Cart.GetAllCarts();
+        let index = carts.findIndex(c => c.userid === updatedCart.userid);
+        if (index !== -1) {
+            carts[index] = updatedCart;
+        } else {
+            carts.push(updatedCart);
+        }
+        Cart.SaveAllCarts(carts);
+    }
+
+
+    static GetItem(cart, productId) {
+        if (!cart || !cart.items) return null;
+        return cart.items.find(item => item.product_id == productId);
+    }
+
+    static AddOrUpdateItem(cart, item) {
+        if (!cart.items) cart.items = [];
+        let existing = cart.items.find(i => i.product_id == item.product_id);
+        if (existing) {
+            existing.quantity += (item.quantity || 1);
+        } else {
+            cart.items.push(item);
+        }
+        Cart.UpdateCartAndSave(cart);
+        return cart;
+    }
+
+    static RemoveItem(cart, productId) {
+        if (!cart || !cart.items) return cart;
+        let index = cart.items.findIndex(i => i.product_id == productId);
+        if (index !== -1) {
+            cart.items.splice(index, 1);
+        }
+        Cart.UpdateCartAndSave(cart);
+        return cart;
+    }
+
+
     static AddItemstoTable() {
         var row = document.getElementsByTagName("tbody")[0];
-        if (!row) {
-            return;
-        }
+        if (!row) return;
+
         let mycart = Cart.GetCurrentUserCart();
+        if (!mycart) return;
+
         if (mycart.items && mycart.items.length > 0) {
             for (let i = 0; i < mycart.items.length; i++) {
                 var newrow = document.createElement("tr");
@@ -35,7 +94,7 @@ export class Cart {
                 var quantitytd = document.createElement("td");
                 var subtotatd = document.createElement("td");
                 var daletetd = document.createElement("td");
-                // <img src="${mycart.items[i].image}" width="50px" height="50px" /">
+
                 producttd.innerHTML = `<span>${mycart.items[i].name}</span>`;
                 pricetd.innerHTML = `$${mycart.items[i].price}`;
                 pricetd.classList.add("price-col");
@@ -65,109 +124,95 @@ export class Cart {
             row.appendChild(newrow);
         }
     }
+
     static MinQuantity() {
-        var mycart = Cart.GetCurrentUserCart();
-        if (mycart.items.length == 0) {
-            return;
-        }
+        let mycart = Cart.GetCurrentUserCart();
+        if (!mycart || !mycart.items || mycart.items.length === 0) return;
+
         var rows = document.querySelectorAll("tbody tr");
         if (rows.length > 0) {
-            rows.forEach((row, index) => {
+            rows.forEach((row) => {
                 var btnMin = row.querySelector(".minnum");
-                if (!btnMin) {
-                    return;
-                }
-                // Styles handled by CSS
+                if (!btnMin) return;
 
                 var qtySpan = row.querySelector(".qty");
+                if (!qtySpan) return;
 
-                if (!qtySpan) {
-                    return;
-                }
                 btnMin.addEventListener("click", function () {
+                    let freshCart = Cart.GetCurrentUserCart();
                     var innerqty = +qtySpan.innerText;
                     if (innerqty > 1) {
                         innerqty--;
-                        qtySpan.innerText = innerqty;
                         var productid = btnMin.dataset.productid;
-                        var finditem = mycart.items.find((p) => p.product_id == productid);
+                        var finditem = Cart.GetItem(freshCart, productid);
+                        if (finditem) {
+                            finditem.quantity = innerqty;
+                            Cart.UpdateCartAndSave(freshCart);
+                            location.reload();
+                        }
+                    }
+                });
+            });
+        }
+    }
+
+    static MaxQuantity() {
+        let mycart = Cart.GetCurrentUserCart();
+        if (!mycart || !mycart.items || mycart.items.length === 0) return;
+
+        var rows = document.querySelectorAll("tbody tr");
+        if (rows.length > 0) {
+            rows.forEach((row) => {
+                var btnMax = row.querySelector(".maxnum");
+                if (!btnMax) return;
+
+                btnMax.addEventListener("click", function () {
+                    var qtySpan = row.querySelector(".qty");
+                    if (!qtySpan) return;
+
+                    let freshCart = Cart.GetCurrentUserCart();
+                    var innerqty = +qtySpan.innerText;
+                    innerqty++;
+                    var productid = btnMax.dataset.productid;
+                    var finditem = Cart.GetItem(freshCart, productid);
+                    if (finditem) {
                         finditem.quantity = innerqty;
-                        localStorage.setItem("MyCart", JSON.stringify(mycart));
-                        localStorage.setItem("cart", JSON.stringify(carts));
+                        Cart.UpdateCartAndSave(freshCart);
                         location.reload();
                     }
                 });
             });
         }
     }
-    static MaxQuantity() {
-        var mycart = Cart.GetCurrentUserCart();
-        if (mycart.items.length == 0) {
-            return;
-        }
-        var rows = document.querySelectorAll("tbody tr");
-        if (rows.length > 0) {
-            rows.forEach((row) => {
-                var btnMax = row.querySelector(".maxnum");
-                if (!btnMax) {
-                    return;
-                }
-                // Styles handled by CSS
 
-                btnMax.addEventListener("click", function () {
-                    var qtySpan = row.querySelector(".qty");
-                    var innerqty = +qtySpan.innerText;
-                    if (!qtySpan) {
-                        return;
-                    }
-                    innerqty++;
-                    qtySpan.innerText = innerqty;
-                    var productid = btnMax.dataset.productid;
-                    var finditem = mycart.items.find((p) => p.product_id == productid);
-                    console.log(finditem);
-                    finditem.quantity = innerqty;
-                    localStorage.setItem("MyCart", JSON.stringify(mycart));
-                    localStorage.setItem("cart", JSON.stringify(carts));
-                    location.reload();
-                });
-            });
-        }
-    }
     static DeteleProductinCart() {
-        var mycart = Cart.GetCurrentUserCart();
-        if (mycart.items.length == 0) {
-            return;
-        }
+        let mycart = Cart.GetCurrentUserCart();
+        if (!mycart || !mycart.items || mycart.items.length === 0) return;
+
         var rows = document.querySelectorAll("tbody tr");
         if (rows.length > 0) {
             rows.forEach((row) => {
                 var deletebtn = row.querySelector(".deletebtn");
-                if (!deletebtn) {
-                    return;
-                }
-                // Styles & hover handled by CSS
+                if (!deletebtn) return;
 
-                //deletebtn.style.borderRadius = "50%";
-                // deletebtn.style.width = "28px";
-                //  deletebtn.style.fontSize = "18px";
-
-                deletebtn.addEventListener("click", function (e) {
+                deletebtn.addEventListener("click", function () {
+                    // Re-read from storage
+                    let freshCart = Cart.GetCurrentUserCart();
                     var productid = deletebtn.dataset.productid;
-                    var finditem = mycart.items.findIndex(
-                        (p) => p.product_id == productid,
-                    );
-                    mycart.items.splice(finditem, 1);
-                    localStorage.setItem("MyCart", JSON.stringify(mycart));
-                    localStorage.setItem("cart", JSON.stringify(carts));
+                    Cart.RemoveItem(freshCart, productid);
                     location.reload();
                 });
             });
         }
     }
+
     static totalcal() {
         let mycart = Cart.GetCurrentUserCart();
+        if (!mycart) return;
+
         var rows = document.querySelectorAll("tbody tr");
-        if (rows.length == 0) { return; }
+        if (rows.length === 0) return;
+
         var SumSubtotal = 0;
         for (var i = 0; i < rows.length; i++) {
             var innersubtotal = rows[i].querySelector(".spansub");
@@ -175,44 +220,31 @@ export class Cart {
                 SumSubtotal += parseInt(innersubtotal.innerHTML.replace("$", ""));
             }
         }
-        if (mycart.items.length > 0) {
-            var subtotaldiv = document.getElementById("subtotal");
-            subtotaldiv.innerHTML = `$${SumSubtotal}`;
-            var totaldiv = document.getElementById("total");
-            totaldiv.innerText = `$${SumSubtotal}`;
-        } else {
-            subtotaldiv.innerHTML = `$0`;
-            totaldiv.innerHTML = `$0`;
-        }
 
-        // if (mycart.items.length > 0) {
-        //   var subtotaldiv = document.getElementById("subtotal");
-        //   var subtotals = document.getElementsByClassName("calcsubtotal");
-        //   var totaldiv = document.getElementById("total");
-        //   var sum = 0;
-        //   for (var j = 0; j < subtotals.length; j++) {
-        //     sum += parseInt(subtotals[j].innerText);
-        //   }
-        //   subtotaldiv.innerHTML = `${sum}`;
-        //   totaldiv.innerHTML = `${sum}`;
-        // } else {
-        //   subtotaldiv.innerHTML = `${0}`;
-        //   totaldiv.innerHTML = `${0}`;
-        // }
+        var subtotaldiv = document.getElementById("subtotal");
+        var totaldiv = document.getElementById("total");
+        if (mycart.items && mycart.items.length > 0) {
+            if (subtotaldiv) subtotaldiv.innerText = `$${SumSubtotal}`;
+            if (totaldiv) totaldiv.innerText = `$${SumSubtotal}`;
+        } else {
+            if (subtotaldiv) subtotaldiv.innerText = `$0`;
+            if (totaldiv) totaldiv.innerText = `$0`;
+        }
     }
 }
+
 Cart.AddItemstoTable();
 Cart.MinQuantity();
 Cart.MaxQuantity();
 Cart.DeteleProductinCart();
 Cart.totalcal();
-//reload page after any change in local storage
+
 window.addEventListener("storage", function (e) {
     if (e.key === "cartUpdated") {
         location.reload();
     }
 });
-//button return to shop
+
 var returnbtn = document.getElementById("returnbtn");
 if (returnbtn) {
     returnbtn.addEventListener("click", function () {
