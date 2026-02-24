@@ -217,14 +217,6 @@ function renderProductDetails(product) {
         }
 
         if (breadcrumbSection) {
-            // Add the background to the breadcrumb section without the dark overlay
-            breadcrumbSection.classList.add('text-white', 'mb-5');
-            breadcrumbSection.style.backgroundImage = "url('https://images.unsplash.com/photo-1601648764658-cf37e8c89b70?w=1600')";
-            breadcrumbSection.style.backgroundSize = "cover";
-            breadcrumbSection.style.backgroundPosition = "center";
-            breadcrumbSection.style.padding = "40px 0";
-
-            // Override text colors that might be set by NavBar.css
             const texts = breadcrumbSection.querySelectorAll('.text-muted, .text-dark');
             texts.forEach(t => {
                 t.classList.remove('text-muted', 'text-dark');
@@ -234,7 +226,6 @@ function renderProductDetails(product) {
     };
 
     updateBreadcrumbUI();
-    // Try again after short delays in case NavBar.html was still being compiled/fetched
     setTimeout(updateBreadcrumbUI, 100);
     setTimeout(updateBreadcrumbUI, 500);
 }
