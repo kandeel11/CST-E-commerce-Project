@@ -1,3 +1,8 @@
+wishlist_arr=[];
+
+
+
+
 window.addEventListener('load',function(){
 
     loadComponents();
@@ -124,12 +129,14 @@ function loadComponents() {
 class WishList{
     userid
     wish_prod=[]
-    wishes_ids=[]
-
-    constructor(x){
-        this.userid=x;
+   
+    constructor(user_id,product){
+        this.userid=user_id;
+       if(product) {this.wish_prod.push(product)}
        
     }
+
+   
 
 /*add(productId){
     const product = allProducts.find(p => p.product_id === productId);
@@ -147,7 +154,8 @@ class WishList{
 
  addToWishlist(productId){
      const product = allProducts.find(p => p.product_id === productId);
-    if (!product) return;
+     
+    if (!product) return; 
    
 
   //  p_id=product.product_id;
@@ -165,11 +173,16 @@ class WishList{
        // localStorage.setItem('wishlist', JSON.stringify(this.wish_prod));
       
 
-
+    let user_index=wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===this.userid));
+    console.log(this.userid)
+    console.log(user_index)
+     if(user_index!=-1){wishlist_arr[user_index].wish_prod.push(product);} //update
+     else{wishlist_arr.push(new WishList(this.userid,product))} //create
         //alert(`${product.name} added to wishlist! ♥`);
     } else {
         alert('Already in wishlist!');
     }
+    localStorage.setItem('WishLists', JSON.stringify(wishlist_arr));
 }
 
 delete(productId){
@@ -177,9 +190,12 @@ delete(productId){
     if (!product) return;
     let index=this.wish_prod.indexOf(product);
     this.wish_prod.splice(index, 1); //removing from data
+    let user_index=wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===this.userid));
+    wishlist_arr[user_index].wish_prod.splice(index, 1);
     //let deleted_item=document.querySelectorAll((`[data-id="${productId}"]`))[0]
 if(document.querySelectorAll((`[data-id="${productId}"]`))[0]){ //removing from layout
 document.querySelectorAll((`[data-id="${productId}"]`))[0].remove();}
+localStorage.setItem('WishLists', JSON.stringify(wishlist_arr));
 
 
 }
@@ -189,7 +205,7 @@ document.querySelectorAll((`[data-id="${productId}"]`))[0].remove();}
 but=document.querySelector('#adding');
 
 
-user_wish=new WishList();
+user_wish=new WishList(5);
 
 
 
