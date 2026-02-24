@@ -90,6 +90,7 @@ export class Cart {
         var toastEl = document.getElementById("myToast");
           var toast = new bootstrap.Toast(toastEl);
          
+          
         btnMin.addEventListener("click", function () {
           var innerqty = +qtySpan.innerText;
           if (innerqty > 1) {
