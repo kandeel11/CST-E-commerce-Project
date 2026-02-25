@@ -1,10 +1,23 @@
+
+
+current_user={"id":"Us-1","Fname":"mohamed","Lname":"Kandeel",
+    "Phone":"01014867453","address":"22 Abo halmous, Tanta, Egypt",
+    "dateCreated":"Mon Feb 23 2026 23:38:49 GMT+0200 (Eastern European Standard Time)",
+    "Role":"User","Email":"Kandeel241@gmail.com","password":"123456789",
+    "Active":true,"name":"Mohamed Khaled Kandeel"}
+
+    localStorage.setItem('CurrentUser', JSON.stringify(current_user));
+
+    current_user_Id=JSON.parse(localStorage.getItem('CurrentUser')).id;
+    
+
 wishlist_arr=wishlist_arr=JSON.parse(localStorage.getItem('WishLists')) || [];
 
 
 
 
 window.addEventListener('load',function(){
-    id=5;
+    id=current_user_Id;
     wishlist_arr=wishlist_arr=JSON.parse(localStorage.getItem('WishLists')) || [];
 
 
@@ -110,7 +123,7 @@ if(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))]
 }
 else{user_wish.userid=id;}
 //user_wish.wish_prod=(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))].wish_prod) || []
-user_wish.wish_prod=(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))]|| []) .wish_prod ||[]
+user_wish.wish_prod=((wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))]|| []) .wish_prod ||[]).slice();
 
 }
 
@@ -177,6 +190,7 @@ class WishList{
 
   //  p_id=product.product_id;
      const exists = this.wish_prod.some(item => item.product_id === productId);
+     console.log(exists)
 
     if (!exists) {
        this.wish_prod.push(product);
@@ -199,7 +213,7 @@ class WishList{
 
 delete(productId){
     const product = this.wish_prod.find(p => p.product_id === productId);
-    if (!product) return;
+    if (!product) {console.log("not found"); return;}
     let index=this.wish_prod.indexOf(product);
     this.wish_prod.splice(index, 1); //removing from data
     let user_index=wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===this.userid));
