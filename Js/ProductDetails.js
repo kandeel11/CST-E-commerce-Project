@@ -120,10 +120,10 @@ function renderProductDetails(product) {
     // Generate SKU based on ID to match screenshot style
     document.getElementById('product-sku').textContent = `2,51,594`;
 
-    // Price
-    document.getElementById('product-price').textContent = `$${product.price.toFixed(2)}`;
+    // Price setup
+    document.getElementById('product-price').textContent = `EGP ${product.price.toFixed(2)}`;
     if (product.oldPrice) {
-        document.getElementById('product-old-price').textContent = `$${product.oldPrice.toFixed(2)}`;
+        document.getElementById('product-old-price').textContent = `EGP ${product.oldPrice.toFixed(2)}`;
     } else {
         document.getElementById('product-old-price').style.display = 'none';
     }
@@ -297,6 +297,15 @@ function renderRelatedProducts(data, currentCategory, currentProductId) {
     const container = document.getElementById('related-products-container');
     if (!container || !data[currentCategory]) return;
 
+    // Get current user wishlist for heart icons
+    let wishlistIds = [];
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (user) {
+        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const uw = wl.find(i => i.user_id === user.id);
+        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+    }
+
     // Filter out current product and get up to 4 items
     const related = data[currentCategory]
         .filter(p => p.product_id !== currentProductId)
@@ -304,7 +313,7 @@ function renderRelatedProducts(data, currentCategory, currentProductId) {
 
     container.innerHTML = related.map(p => {
         const img = p.images && p.images.length > 0 ? p.images[0] : (p.img || p.image);
-        const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through ms-1">$${p.oldPrice.toFixed(2)}</small>` : '';
+        const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through ms-1">EGP ${p.oldPrice.toFixed(2)}</small>` : '';
         const saleBadge = p.discount > 0 ? `<div class="sale-badge">Sale ${p.discount}%</div>` : '';
 
         let avgRating = p.rating || 0;
@@ -319,8 +328,8 @@ function renderRelatedProducts(data, currentCategory, currentProductId) {
                         <a href="ProductDetails.html?id=${p.product_id || 0}" class="action-icon-btn" title="Quick View">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="event.preventDefault(); alert('Added to wishlist!');">
-                            <i class="far fa-heart"></i>
+                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${p.product_id || 0})">
+                            <i class="${wishlistIds.includes(p.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i>
                         </a>
                     </div>
                     <a href="ProductDetails.html?id=${p.product_id || 0}" class="d-block text-decoration-none text-dark position-relative z-1">
@@ -331,8 +340,8 @@ function renderRelatedProducts(data, currentCategory, currentProductId) {
                             <h6 class="card-title text-truncate mb-1">${p.name}</h6>
                         </a>
                         <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <div>
-                                <span class="fw-bold">$${p.price.toLocaleString()}</span>
+                            <div class="mt-2">
+                                <span class="fw-bold">EGP ${p.price.toLocaleString()}</span>
                                 ${oldPriceHtml}
                                 <div class="small">${starsHtml}</div>
                             </div>

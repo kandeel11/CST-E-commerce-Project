@@ -158,6 +158,15 @@ function renderProducts(data) {
     // Pick first 10 products for the homepage
     const featured = allProducts.slice(0, 10);
 
+    // Get current user wishlist for heart icons
+    let wishlistIds = [];
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (user) {
+        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const uw = wl.find(i => i.user_id === user.id);
+        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+    }
+
     container.innerHTML = featured.map(product => {
         const imgSrc = product.img || product.image || (product.images && product.images[0]) || '';
         const name = product.name || 'Product';
@@ -184,8 +193,12 @@ function renderProducts(data) {
 
         // Old price
         const oldPriceHtml = oldPrice
-            ? `<small class="text-muted text-decoration-line-through">$${oldPrice.toLocaleString()}</small>`
+            ? `<small class="text-muted text-decoration-line-through">EGP ${oldPrice.toLocaleString()}</small>`
             : '';
+
+        // Heart Icon status
+        const isWished = wishlistIds.includes(product.product_id || 0);
+        const heartIconCls = isWished ? 'fas fa-heart text-success' : 'far fa-heart';
 
         return `
             <div class="col">
@@ -196,8 +209,8 @@ function renderProducts(data) {
                         <a href="ProductDetails.html?id=${product.product_id || 0}" class="action-icon-btn" title="Quick View">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="event.preventDefault(); alert('Added to wishlist!');">
-                            <i class="far fa-heart"></i>
+                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${product.product_id || 0})">
+                            <i class="${heartIconCls}"></i>
                         </a>
                     </div>
                     <a href="ProductDetails.html?id=${product.product_id || 0}" class="d-block text-decoration-none text-dark position-relative z-1">
@@ -209,7 +222,7 @@ function renderProducts(data) {
                         </a>
                         <div class="d-flex justify-content-between align-items-center mt-auto">
                             <div>
-                                <span class="fw-bold">$${price.toLocaleString()}</span>
+                                <span class="fw-bold">EGP ${price.toLocaleString()}</span>
                                 ${oldPriceHtml}
                                 <div class="small">${starsHtml}</div>
                             </div>
@@ -239,6 +252,15 @@ function renderHotDeals(data) {
     const featured = allProducts[0];
     const gridProducts = allProducts.slice(1, 10);
 
+    // Get current user wishlist for heart icons
+    let wishlistIds = [];
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (user) {
+        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const uw = wl.find(i => i.user_id === user.id);
+        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+    }
+
     // Helper: generate stars
     function starsHtml(rating) {
         return Array.from({ length: 5 }, (_, i) =>
@@ -261,7 +283,7 @@ function renderHotDeals(data) {
                         <img src="${featImg}" class="w-100 rounded" alt="${featured.name}" style="height: 260px; object-fit: contain;">
                     </a>
                     <div class="d-flex align-items-center gap-2 mt-3">
-                        <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;"><i class="far fa-heart"></i></button>
+                        <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;" onclick="window.addToWishlistData(event, ${featured.product_id || 0})"><i class="${wishlistIds.includes(featured.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i></button>
                         <a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;" onclick="window.addToCartData(event, ${featured.product_id || 0}, '${encodeURIComponent(featured.name).replace(/'/g, "%27")}', ${featured.price}, '${featImg}')">
                             <i class="fas fa-shopping-bag me-1"></i> Add to Cart
                         </a>
@@ -271,8 +293,8 @@ function renderHotDeals(data) {
                 <div class="card-body text-center">
                     <a href="ProductDetails.html?id=${featured.product_id || 0}" class="text-green text-decoration-none fw-medium">${featured.name}</a>
                     <div class="mt-1">
-                        <span class="fw-bold fs-5">$${featured.price.toFixed(2)}</span>
-                        ${featured.oldPrice ? `<small class="text-muted text-decoration-line-through ms-1">$${featured.oldPrice.toFixed(2)}</small>` : ''}
+                        <span class="fw-bold fs-5">EGP ${featured.price.toFixed(2)}</span>
+                        ${featured.oldPrice ? `<small class="text-muted text-decoration-line-through ms-1">EGP ${featured.oldPrice.toFixed(2)}</small>` : ''}
                     </div>
                     <div class="my-1">${starsHtml(featured.rating)} <small class="text-muted">(${featReviewCount} Feedback)</small></div>
                     <p class="text-muted small mb-2">Hurry up! Offer ends in:</p>
@@ -289,10 +311,9 @@ function renderHotDeals(data) {
             </div>
         </div>`;
 
-    // Grid cards (right)
     const gridHtml = gridProducts.map(p => {
         const img = p.img || p.image || (p.images && p.images[0]) || '';
-        const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through">$${p.oldPrice.toFixed(2)}</small>` : '';
+        const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through">EGP ${p.oldPrice.toFixed(2)}</small>` : '';
         const saleBadge = p.discount > 28 ? `<div class="sale-badge" style="padding: 3px 8px; font-size: 0.70rem;">Sale ${p.discount}%</div>` : '';
         return `
             <div class="col-6 col-md-4">
@@ -303,8 +324,8 @@ function renderHotDeals(data) {
                         <a href="ProductDetails.html?id=${p.product_id || 0}" class="action-icon-btn" title="Quick View" style="width:28px; height:28px; font-size: 0.75rem;">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="event.preventDefault(); alert('Added to wishlist!');" style="width:28px; height:28px; font-size: 0.75rem;">
-                            <i class="far fa-heart"></i>
+                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${p.product_id || 0})" style="width:28px; height:28px; font-size: 0.75rem;">
+                            <i class="${wishlistIds.includes(p.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i>
                         </a>
                     </div>
                     <div class="p-2 text-center position-relative z-1" style="height:120px; display:flex; align-items:center; justify-content:center;">
@@ -318,7 +339,7 @@ function renderHotDeals(data) {
                         </a>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <span class="fw-bold small">$${p.price.toFixed(2)}</span> ${oldPriceHtml}
+                                <span class="fw-bold small">EGP ${p.price.toFixed(2)}</span> ${oldPriceHtml}
                             </div>
                             <button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>
                         </div>

@@ -68,10 +68,11 @@ function initAuthDisplay() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || JSON.parse(localStorage.getItem('currentSeller'));
 
     if (currentUser) {
+        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name || 'User')}&background=00B207&color=fff&size=100`;
         authContainer.innerHTML = `
             <div class="dropdown">
-                <a href="#" class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user-circle fa-lg me-2"></i>
+                <a href="#" class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" id="userDropdown" aria-expanded="false">
+                    <img src="${avatarUrl}" alt="Avatar" class="rounded-circle me-2" style="width: 25px; height: 25px; object-fit: cover; border: 1px solid rgba(255,255,255,0.5);">
                     <span class="small fw-semibold">Hi, ${currentUser.name || 'User'}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" aria-labelledby="userDropdown">
@@ -90,6 +91,18 @@ function initAuthDisplay() {
                 localStorage.removeItem('RememberedUser');
                 localStorage.removeItem('currentSeller');
                 window.location.reload();
+            });
+        }
+
+        // Manually initialize the dropdown to ensure it works properly
+        // since dynamic injection sometimes bypasses Bootstrap's data-api
+        const userDropdown = document.getElementById('userDropdown');
+        if (userDropdown && window.bootstrap && bootstrap.Dropdown) {
+            const bsDropdown = new bootstrap.Dropdown(userDropdown);
+            userDropdown.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                bsDropdown.toggle();
             });
         }
     }
@@ -116,7 +129,7 @@ window.updateCartBadge = function () {
     const badge = document.getElementById('cart-badge-count');
     if (badge) badge.textContent = count;
     const totalDisplay = document.getElementById('cart-badge-total');
-    if (totalDisplay) totalDisplay.textContent = '$' + total.toFixed(2);
+    if (totalDisplay) totalDisplay.textContent = 'EGP ' + total.toFixed(2);
 };
 
 window.addToCartData = function (event, id, name, price, image) {
@@ -186,3 +199,91 @@ window.addToCartData = function (event, id, name, price, image) {
         setTimeout(() => toastEl.remove(), 150);
     }, 2500);
 };
+
+window.addToWishlistData = function (event, id) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    // Check user login (optional based on your app logic, here we enforce it like cart)
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) {
+        alert('Please login first to add items to your wishlist.');
+        window.location.href = 'Login.html';
+        return;
+    }
+
+    const wishlistKey = 'wishlist';
+    let wishlist = JSON.parse(localStorage.getItem(wishlistKey)) || [];
+
+    // Find the current user's wishlist entry
+    let userWishlist = wishlist.find(item => item.user_id === currentUser.id);
+
+    // If it doesn't exist, create it
+    if (!userWishlist) {
+        userWishlist = { user_id: currentUser.id, product_ids: [] };
+        wishlist.push(userWishlist);
+    } else if (!userWishlist.product_ids) {
+        // Fallback for older localStorage schemas
+        userWishlist.product_ids = userWishlist.product_id ? [userWishlist.product_id] : [];
+    }
+
+    const btn = event ? event.currentTarget : null;
+    const icon = btn ? btn.querySelector('.fa-heart') : null;
+
+    if (!userWishlist.product_ids.includes(id)) {
+        // ADD ITEM
+        userWishlist.product_ids.push(id);
+        localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+
+        if (icon) {
+            icon.classList.remove('far');
+            icon.classList.add('fas', 'text-success');
+        }
+
+        showWishlistToast('Product added to wishlist!', 'bg-success');
+    } else {
+        // REMOVE ITEM
+        userWishlist.product_ids = userWishlist.product_ids.filter(pId => pId !== id);
+        localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
+
+        if (icon) {
+            icon.classList.remove('fas', 'text-success');
+            icon.classList.add('far');
+        }
+
+        showWishlistToast('Product removed from wishlist!', 'bg-secondary');
+    }
+};
+
+function showWishlistToast(msg, bgClass) {
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        toastContainer.style.zIndex = '1055';
+        document.body.appendChild(toastContainer);
+    }
+    const toastEl = document.createElement('div');
+    toastEl.className = `toast align-items-center text-white ${bgClass} border-0 fade show`;
+    toastEl.setAttribute('role', 'alert');
+    toastEl.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="fas fa-heart me-2"></i> ${msg}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    `;
+    const closeBtn = toastEl.querySelector('.btn-close');
+    closeBtn.addEventListener('click', () => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    });
+    toastContainer.appendChild(toastEl);
+    setTimeout(() => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    }, 2500);
+}

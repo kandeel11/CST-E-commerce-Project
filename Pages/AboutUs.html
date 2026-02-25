@@ -199,6 +199,20 @@
             font-size: 2rem;
             margin-bottom: 15px;
         }
+
+        .custom-indicators button {
+            width: 10px !important;
+            height: 10px !important;
+            border-radius: 50% !important;
+            background-color: #ddd !important;
+            opacity: 1 !important;
+            border: none !important;
+            margin: 0 5px !important;
+        }
+
+        .custom-indicators button.active {
+            background-color: var(--primary-green) !important;
+        }
     </style>
 </head>
 
@@ -467,12 +481,11 @@
                 </div>
 
                 <!-- Carousel Indicators -->
-                <div class="carousel-indicators" style="bottom: -20px;">
+                <div class="carousel-indicators custom-indicators" style="bottom: -20px;">
                     <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="0" class="active"
-                        aria-current="true" aria-label="Slide 1"
-                        style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary-green); opacity: 1; border: none; margin: 0 5px;"></button>
-                    <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="1" aria-label="Slide 2"
-                        style="width: 10px; height: 10px; border-radius: 50%; background-color: #ddd; opacity: 1; border: none; margin: 0 5px;"></button>
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
                 </div>
             </div>
         </div>
@@ -611,6 +624,21 @@
                 }).join('');
             })
             .catch(err => console.error('Error loading testimonials:', err));
+
+        // Sync carousel indicators manually to ensure they update on slide
+        const teamCarousel = document.getElementById('teamCarousel');
+        if (teamCarousel) {
+            teamCarousel.addEventListener('slid.bs.carousel', function (event) {
+                const indicators = document.querySelectorAll('.custom-indicators button');
+                indicators.forEach((indicator, index) => {
+                    if (index === event.to) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            });
+        }
     </script>
 </body>
 

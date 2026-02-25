@@ -110,11 +110,11 @@ function addProductsToTable(item) {
         for (var j = 0; j < subtotals.length; j++) {
             sum += parseFloat(subtotals[j].innerText);
         }
-        subtotaldiv.innerHTML = `$${sum.toFixed(2)}`;
-        totaldiv.innerHTML = `$${sum.toFixed(2)}`;
+        subtotaldiv.innerHTML = `EGP ${sum.toFixed(2)}`;
+        totaldiv.innerHTML = `EGP ${sum.toFixed(2)}`;
     } else {
-        subtotaldiv.innerHTML = `$0.00`;
-        totaldiv.innerHTML = `$0.00`;
+        subtotaldiv.innerHTML = `EGP 0.00`;
+        totaldiv.innerHTML = `EGP 0.00`;
     }
 }
 
