@@ -172,7 +172,8 @@ function renderProducts(products) {
         const price = pPrice(product);
         const image = pImg(product);
         const desc = pDesc(product);
-        const rating = product.rating || 4;
+        //const rating = product.rating || 4;
+        const rating = (r => isNaN(r) || r <= 0 ? 0 : r)(parseFloat(product.rating));
         const inStock = (product.stockQuantity || product.stock || 1) > 0;
         const wishlisted = isInWishlist(pid);
         const discount = product.oldPrice ? Math.round(((product.oldPrice - price) / product.oldPrice) * 100) : 0;

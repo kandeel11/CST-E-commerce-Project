@@ -1,13 +1,15 @@
-// current user
-let CURRENT_USER = localStorage.getItem('currentUser');
+const CURRENT_USER = 'ahmedali@example.com';
 
-//  product helpers 
+//  Product 
 const PRODUCTS_KEY = "products";
 
+/*
+ * Accepts a plain object and a class instance that has toJSON().
+ */
 export function addProductToStorage(product) {
     const products = getAllProducts();
-    //products.push(product.toJSON());
-    products.push(product)
+    const plain = typeof product.toJSON === "function" ? product.toJSON() : { ...product };
+    products.push(plain);
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
 }
 
@@ -23,27 +25,89 @@ export function getProductById(id) {
     return getAllProducts().find(p => p.id === id) || null;
 }
 
+export function updateProduct(updatedProduct) {
+    const products = getAllProducts().map(p =>
+        p.id === updatedProduct.id ? { ...p, ...updatedProduct } : p
+    );
+    saveProducts(products);
+}
+
+export function removeProductFromStorage(productId) {
+    saveProducts(getAllProducts().filter(p => p.id !== productId));
+}
+
+/**
+ * Loads and renders the products table for a specific seller.
+ * Expects products to have: id, name, price, stock, images[], seller_id
+ */
 export function loadProductsForSeller(sellerID) {
-    renderProductsTable(getAllProducts().filter(p => p.sellerID === sellerID));
+    const products = getAllProducts().filter(p => p.seller_id === sellerID);
+    renderProductsTable(products);
 }
 
 function renderProductsTable(products) {
     const tableBody = document.getElementById("productsTbody");
     if (!tableBody) return;
     tableBody.innerHTML = "";
+
+    if (products.length === 0) {
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="text-center text-muted py-4">
+                    <i class="fas fa-box-open me-2"></i>No products yet. Add your first product!
+                </td>
+            </tr>`;
+        return;
+    }
+
     products.forEach(product => {
+        const img   = (product.images && product.images[0]) || "";
+        const name  = product.name  || "—";
+        const price = parseFloat(product.price  || 0).toFixed(2);
+        const stock = product.stock ?? "—";
+
         const row = document.createElement("tr");
+        row.dataset.id = product.id;
         row.innerHTML = `
-            <td><img src="${product.imageUrl}" alt="${product.productName}" class="img-fluid" style="max-height:80px"></td>
-            <td>${product.productName}</td>
-            <td>$${Number(product.productPrice).toFixed(2)}</td>
-            <td>${product.stockQuantity}</td>
+            <td>
+                <img src="${img}" alt="${name}"
+                     class="rounded" style="width:56px;height:56px;object-fit:cover">
+            </td>
+            <td class="fw-semibold">${name}</td>
+            <td class="text-success fw-semibold">EGP ${price}</td>
+            <td>
+                <span class="badge ${stock > 0 ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger"}">
+                    ${stock > 0 ? stock + " in stock" : "Out of stock"}
+                </span>
+            </td>
             <td class="text-end d-none d-lg-table-cell">
-                <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
-                <button class="btn btn-sm btn-outline-warning me-1">Freeze</button>
-                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                <button class="btn btn-sm btn-outline-success me-1 edit-btn">
+                    <i class="fas fa-pen me-1"></i>Edit
+                </button>
+                <button class="btn btn-sm btn-outline-danger delete-btn">
+                    <i class="fas fa-trash-alt me-1"></i>Delete
+                </button>
             </td>
         `;
+
+        // Inline delete
+        row.querySelector(".delete-btn").addEventListener("click", () => {
+            if (!confirm(`Delete "${name}"?`)) return;
+            removeProductFromStorage(product.id);
+            row.remove();
+            // Re-check empty state
+            if (!tableBody.querySelector("tr[data-id]"))
+                renderProductsTable([]);
+        });
+
+        // Inline edit — dispatch a custom event the controller listens to
+        row.querySelector(".edit-btn").addEventListener("click", () => {
+            tableBody.dispatchEvent(new CustomEvent("editProduct", {
+                bubbles: true,
+                detail: product
+            }));
+        });
+
         tableBody.appendChild(row);
     });
 }
@@ -100,7 +164,7 @@ export function toggleWishlist(product) {
     return true; 
 }
 
-//  cart helpers 
+//  Cart  
 const CART_KEY = "cart";
 
 export function getCart() {
@@ -109,7 +173,7 @@ export function getCart() {
 
 export function addToCart(product) {
     const cart = getCart();
-    const existing = cart.find(item => item.product_id === product.product_id);
+    const existing = cart.find(item => item.id === product.id);
     if (existing) {
         existing.quantity = (existing.quantity || 1) + 1;
     } else {
