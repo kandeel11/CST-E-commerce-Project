@@ -1,21 +1,27 @@
 //Create cart for each user
-import { Cart } from "./cart.js";
+import { Cart } from "./Js/Cart.js";
 
 var btnlogin = document.getElementById("btnlogin");
 btnlogin.addEventListener("click", function () {
     //{id: 111, name: "yoy", email: "yo@gmail.com"};
-    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    var currentUser = {"id":"Us-1","Fname":"mohamed","Lname":"Khaled","dateCreated":"Wed Feb 25 2026 21:52:32 GMT+0200 (Eastern European Standard Time)","address":"22 Abo halmous, Gharbia, Egypt","Phone":"01014867453","Role":"User","Email":"khaled241@gmail.com","password":"Kh@123456","Active":true};//JSON.parse(localStorage.getItem("currentUser"));
     if(!currentUser){return;}
     localStorage.setItem("currentUser",JSON.stringify(currentUser));
-    var userid = currentuser.id;
+    var userid = currentUser.id;
     var mycart = Cart.createcart(userid);
     localStorage.setItem("MyCart",JSON.stringify(mycart));
     console.log(mycart);
 });
 //import{addProductToTable} from 'cart.js';
  let products = [
-    { product_id: 1, name: "Shirt2", price: 300, image: "shirt.jpg" },
-    { product_id: 2, name: "Shoes2", price: 500, image: "shoes.jpg" }
+    { product_id: 1, name: "A", price: 300, image: "shirt.jpg" ,stock: 9 ,seller_id: "SLR-1"},
+    { product_id: 2, name: "B", price: 500, image: "shoes.jpg" ,stock:3,seller_id: "SLR-1" },
+    { product_id: 3, name: "C", price: 300, image: "shirt.jpg" ,stock: 2 ,seller_id: "SLR-2"},
+    { product_id: 4, name: "D", price: 500, image: "shoes.jpg" ,stock:3,seller_id: "SLR-2" },
+    { product_id: 5, name: "E", price: 300, image: "shirt.jpg" ,stock: 5 ,seller_id: "SLR-3"},
+    { product_id: 6, name: "F", price: 500, image: "shoes.jpg" ,stock:3,seller_id: "SLR-3" },
+    { product_id: 7, name: "G", price: 300, image: "shirt.jpg" ,stock: 9 ,seller_id: "SLR-4"},
+    { product_id: 8, name: "H", price: 500, image: "shoes.jpg" ,stock:3,seller_id: "SLR-4" },
 ];
 
 if(!localStorage.getItem("products")){
@@ -71,6 +77,7 @@ for (let i = 0; i < btnAdd.length; i++) {
                 name: selectedProduct.name,
                 price: selectedProduct.price,
                 image: selectedProduct.image,
+                stock: selectedProduct.stock,
                 quantity: 1
             });
         }
