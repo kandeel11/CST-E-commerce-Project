@@ -14,7 +14,23 @@ current_user={"id":"Us-1","Fname":"mohamed","Lname":"Kandeel",
 wishlist_arr=wishlist_arr=JSON.parse(localStorage.getItem('WishLists')) || [];
 
 
+function addToWishlist1(productId){
+    current_user_Id=JSON.parse(localStorage.getItem('CurrentUser')).id;
+    id=current_user_Id;
+wishlist_arr=wishlist_arr=JSON.parse(localStorage.getItem('WishLists')) || [];
+user_wish=new WishList();
+if(wishlist_arr.length>0){
+//user_wish.userid=((wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))].userid) || id)
+if(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))]){
+    user_wish.userid=(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))].userid)
+}}
+else{user_wish.userid=id;}
+//user_wish.wish_prod=(wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))].wish_prod) || []
+user_wish.wish_prod=((wishlist_arr[wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===id))]|| []) .wish_prod ||[]).slice();
+user_wish.addToWishlist11(productId)
 
+
+}
 
 window.addEventListener('load',function(){
     id=current_user_Id;
@@ -210,6 +226,38 @@ class WishList{
     }
     localStorage.setItem('WishLists', JSON.stringify(wishlist_arr));
 }
+
+
+addToWishlist11(productId){
+     const product = allProducts.find(p => p.product_id === productId);
+     
+    if (!product) return; 
+   
+
+  //  p_id=product.product_id;
+     const exists = this.wish_prod.some(item => item.product_id === productId);
+     console.log(exists)
+
+    if (!exists) {
+       this.wish_prod.push(product);
+      //   createProductCard(product);
+   // document.getElementById('table_data').innerHTML=createProductCard(product)+document.getElementById('table_data').innerHTML;
+       // localStorage.setItem('wishlist', JSON.stringify(this.wish_prod));
+      
+
+    let user_index=wishlist_arr.indexOf(wishlist_arr.find(item=>item.userid===this.userid));
+    console.log(this.userid)
+    console.log(user_index)
+     if(user_index!=-1){wishlist_arr[user_index].wish_prod.push(product);} //update
+     else{wishlist_arr.push(new WishList(this.userid,product))} //create
+        //alert(`${product.name} added to wishlist! ♥`);
+    } else {
+        alert('Already in wishlist!');
+    }
+    localStorage.setItem('WishLists', JSON.stringify(wishlist_arr));
+}
+
+
 
 delete(productId){
     const product = this.wish_prod.find(p => p.product_id === productId);
