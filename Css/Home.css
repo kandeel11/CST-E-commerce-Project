@@ -953,6 +953,13 @@ footer .fa-2x:hover {
 
 .breadcrumb-section .breadcrumb {
     margin-bottom: 0;
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-section .breadcrumb-item {
+    display: flex;
+    align-items: center;
 }
 
 .breadcrumb-section .breadcrumb-item a {
@@ -960,6 +967,8 @@ footer .fa-2x:hover {
     text-decoration: none;
     font-size: 0.85rem;
     transition: color 0.2s;
+    display: flex;
+    align-items: center;
 }
 
 .breadcrumb-section .breadcrumb-item a:hover {
@@ -970,9 +979,17 @@ footer .fa-2x:hover {
     color: var(--primary-green);
     font-size: 0.85rem;
     font-weight: 600;
+    display: flex;
+    align-items: center;
 }
 
 .breadcrumb-section .breadcrumb-item+.breadcrumb-item::before {
     color: rgba(255, 255, 255, 0.5);
-    content: ">";
+    content: "\f105";
+    /* FontAwesome Angle Right */
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome";
+    font-weight: 900;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
 }

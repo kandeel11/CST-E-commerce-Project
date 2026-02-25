@@ -1,6 +1,7 @@
 // navbar.js - Breadcrumb and navbar functionality
 document.addEventListener('DOMContentLoaded', () => {
     initBreadcrumb();
+    if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
 });
 
 function initBreadcrumb() {
@@ -22,6 +23,10 @@ function initBreadcrumb() {
         pageName = 'Contact Us';
     } else if (rawPageName.toLowerCase() === 'userdashboard') {
         pageName = 'User Dashboard';
+    } else if (rawPageName.toLowerCase() === 'product') {
+        pageName = 'Shop';
+    } else if (rawPageName.toLowerCase() === 'productdetails') {
+        pageName = 'Product Details';
     } else {
         // Capitalize and format the page name nicely
         pageName = rawPageName
@@ -36,9 +41,14 @@ function initBreadcrumb() {
     // Set the breadcrumb content
     if (pageName.toLowerCase() === 'home') {
         breadcrumbList.innerHTML = `<li class="breadcrumb-item active d-flex align-items-center" id="breadcrumb-current"><a href="Home.html" class="text-white text-decoration-none opacity-75"><i class="fas fa-home me-2"></i> ${pageName}</a></li>`;
+    } else if (rawPageName.toLowerCase() === 'productdetails') {
+        // Product Details breadcrumb is populated dynamically in ProductDetails.js
+        breadcrumbList.innerHTML = `
+            <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item"><a href="Product.html" class="text-white opacity-75 text-decoration-none">Shop</a></li>
+            <li class="breadcrumb-item active fw-semibold" aria-current="page" id="breadcrumb-current" style="color: var(--primary-green);">Product</li>
+        `;
     } else {
-        // Use a > separator by default with Bootstrap
-        breadcrumbList.style.setProperty('--bs-breadcrumb-divider', "'>'");
         breadcrumbList.innerHTML = `
             <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
             <li class="breadcrumb-item active fw-semibold" aria-current="page" id="breadcrumb-current" style="color: var(--primary-green);">${pageName}</li>
@@ -287,3 +297,79 @@ function showWishlistToast(msg, bgClass) {
         setTimeout(() => toastEl.remove(), 150);
     }, 2500);
 }
+
+function initSearchAutoSuggest() {
+    const searchInput = document.getElementById('navbarSearchInput');
+    const searchBtn = document.getElementById('navbarSearchBtn');
+    const suggestionsBox = document.getElementById('searchSuggestions');
+
+    if (!searchInput || !suggestionsBox) return;
+
+    // Helper to get products from localStorage
+    function getProducts() {
+        return JSON.parse(localStorage.getItem('products')) || [];
+    }
+
+    searchInput.addEventListener('input', function () {
+        const query = this.value.trim().toLowerCase();
+
+        if (query.length === 0) {
+            suggestionsBox.style.display = 'none';
+            return;
+        }
+
+        const products = getProducts();
+
+        // Filter products based on search query
+        const matches = products.filter(p => {
+            const pName = p.name || p.productName || "";
+            const pCat = p.category || "";
+            return pName.toLowerCase().includes(query) || pCat.toLowerCase().includes(query);
+        }).slice(0, 5); // top 5 matches
+
+        if (matches.length > 0) {
+            suggestionsBox.innerHTML = matches.map(p => {
+                const name = p.name || p.productName || "Unknown Product";
+                const price = p.price || p.productPrice || 0;
+                const image = (p.images && p.images[0]) || p.imageUrl || "https://images.unsplash.com/photo-1574577457582-8c88015ac502?q=80&w=200";
+
+                return `
+                <li>
+                    <a class="dropdown-item d-flex align-items-center py-2 text-decoration-none" href="ProductDetails.html?id=${p.id}" style="border-bottom: 1px solid #f0f0f0;">
+                        <img src="${image}" alt="${name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" class="me-3">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <span class="d-block fw-medium text-dark text-truncate" style="font-size: 0.9rem;">${name}</span>
+                            <span class="text-success small fw-bold">EGP ${Number(price).toFixed(2)}</span>
+                        </div>
+                    </a>
+                </li>
+                `;
+            }).join('');
+
+            suggestionsBox.style.display = 'block';
+        } else {
+            suggestionsBox.innerHTML = '<li class="dropdown-item text-muted small py-2">No products found</li>';
+            suggestionsBox.style.display = 'block';
+        }
+    });
+
+    // Handle search button click
+    if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `Product.html?search=${encodeURIComponent(query)}`;
+            }
+        });
+    }
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+            suggestionsBox.style.display = 'none';
+        }
+    });
+}
+
+// Make globally available
+window.initSearchAutoSuggest = initSearchAutoSuggest;

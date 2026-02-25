@@ -17,19 +17,6 @@
     background-color: var(--primary-green) !important;
 }
 
-/* Breadcrumb background */
-.breadcrumb-header .overlay {
-    z-index: 0;
-}
-
-.breadcrumb-item+.breadcrumb-item::before {
-    color: white;
-    content: "›";
-    /* Right angle bracket for breadcrumb separator */
-    font-size: 1.2rem;
-    line-height: 1;
-}
-
 /* Share Icons */
 .share-icon {
     width: 36px;

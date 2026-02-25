@@ -76,6 +76,16 @@ function renderProductDetails(product) {
     document.title = `Ecobazar - ${product.name}`;
     document.getElementById('product-title').textContent = product.name;
 
+    // Breadcrumb Update
+    const breadcrumbList = document.getElementById('breadcrumb-list');
+    if (breadcrumbList) {
+        breadcrumbList.innerHTML = `
+            <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item"><a href="Product.html" class="text-white opacity-75 text-decoration-none">Shop</a></li>
+            <li class="breadcrumb-item active fw-semibold" aria-current="page" id="breadcrumb-current" style="color: var(--primary-green);">${product.name}</li>
+        `;
+    }
+
     // Formatting Tags
     let tagsArr = [];
     if (product.tags && Array.isArray(product.tags)) {
@@ -142,22 +152,9 @@ function renderProductDetails(product) {
     const mainImg = document.getElementById('main-product-image');
     mainImg.src = images[0];
 
-    // Build Thumbnail Gallery
+    // Thumbnail Gallery disabled per user request
     const thumbContainer = document.getElementById('thumbnail-container');
-    thumbContainer.innerHTML = '';
-    images.forEach((img, idx) => {
-        const div = document.createElement('div');
-        div.className = `img-thumbnail-wrapper cursor-pointer border rounded bg-white p-1 ${idx === 0 ? 'active-thumb' : ''}`;
-        div.style.width = '80px';
-        div.style.height = '80px';
-        div.innerHTML = `<img src="${img}" alt="Thumb" class="w-100 h-100 object-fit-contain mix-blend-multiply">`;
-        div.onclick = () => {
-            mainImg.src = img;
-            document.querySelectorAll('.img-thumbnail-wrapper').forEach(el => el.classList.remove('active-thumb'));
-            div.classList.add('active-thumb');
-        };
-        thumbContainer.appendChild(div);
-    });
+    if (thumbContainer) thumbContainer.innerHTML = '';
 
 
 
@@ -210,8 +207,7 @@ function renderProductDetails(product) {
         if (breadcrumbList) {
             breadcrumbList.innerHTML = `
                 <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#" class="text-white opacity-75 text-decoration-none">Category</a></li>
-                <li class="breadcrumb-item"><a href="#" class="text-white opacity-75 text-decoration-none">${product.category}</a></li>
+                <li class="breadcrumb-item"><a href="Product.html" class="text-white opacity-75 text-decoration-none">Shop</a></li>
                 <li class="breadcrumb-item active fw-semibold" aria-current="page" style="color: var(--primary-green);">${product.name}</li>
             `;
         }

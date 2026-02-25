@@ -113,8 +113,7 @@ function loadData() {
 const categoryMeta = {
     Fruits: { name: "Fruits", icon: "fa-apple-alt" },
     Vegetables: { name: "Vegetables", icon: "fa-carrot" },
-    Meat: { name: "Meat", icon: "fa-drumstick-bite" },
-    Fish: { name: "Fish & Seafood", icon: "fa-fish" },
+    MeatFish: { name: "Meat & Fish", icon: "fa-drumstick-bite" },
     Dairy: { name: "Dairy", icon: "fa-cheese" },
     Bakery: { name: "Bread & Bakery", icon: "fa-bread-slice" },
     Beverages: { name: "Beverages", icon: "fa-mug-hot" }
