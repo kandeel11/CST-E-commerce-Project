@@ -200,8 +200,8 @@ function renderProducts(products) {
                             title="${wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}">
                         <i class="${wishlisted ? "fas" : "far"} fa-heart"></i>
                     </button>
-                    <button class="hover-btn details-btn" title="View Details">
-                        <i class="fas fa-eye"></i>
+                    <button class="hover-btn details-btn" title="View Details" data-id=${product.product_id}>
+                        <i class="fas fa-eye" data-id=${product.product_id}></i>
                     </button>
                 </div>
             </div>
@@ -248,7 +248,7 @@ function renderProducts(products) {
         // Details
         card.querySelector(".details-btn").addEventListener("click", e => {
             e.stopPropagation();
-            window.location.href = `ProductDetails.html?id=${pid}`;
+            window.location.href = `ProductDetails.html?id=${e.target.dataset.id}`;
         });
 
         // Add to cart

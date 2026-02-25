@@ -1,9 +1,13 @@
+// current user
+let CURRENT_USER = localStorage.getItem('currentUser');
+
 //  product helpers 
 const PRODUCTS_KEY = "products";
 
 export function addProductToStorage(product) {
     const products = getAllProducts();
-    products.push(product.toJSON());
+    //products.push(product.toJSON());
+    products.push(product)
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
 }
 
@@ -48,7 +52,7 @@ function renderProductsTable(products) {
 const WISHLIST_KEY = "wishlists";
 
 export function getWishlist() {
-    return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || [];
+    return JSON.parse(localStorage.getItem(WISHLIST_KEY))[CURRENT_USER]|| [];
 }
 
 export function isInWishlist(productId) {
@@ -56,18 +60,35 @@ export function isInWishlist(productId) {
 }
 
 export function addToWishlist(product) {
-    const wishlist = getWishlist();
-    if (!wishlist.some(item => item.product_id === product.product_id)) {
-        wishlist.push(product);
-        localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+
+    const wishlists = JSON.parse(localStorage.getItem(WISHLIST_KEY)) || {};
+
+    // Ensure user array exists
+    wishlists[CURRENT_USER] ??= [];
+
+    const userWishlist = wishlists[CURRENT_USER];
+
+    if (!userWishlist.some(item => item.product_id === product.product_id)) {
+        userWishlist.push(product);
+
+        localStorage.setItem(
+            WISHLIST_KEY,
+            JSON.stringify(wishlists)
+        );
+
         return true;
     }
+
     return false;
 }
 
 export function removeFromWishlist(productId) {
     const wishlist = getWishlist().filter(item => item.product_id !== productId);
-    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
+    let wishlists = JSON.parse(localStorage.getItem(WISHLIST_KEY)) || {};
+    let userWishlist = wishlists[CURRENT_USER];
+    userWishlist = wishlist;
+    wishlists[CURRENT_USER] = userWishlist;
+    localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlists));
 }
 
 export function toggleWishlist(product) {

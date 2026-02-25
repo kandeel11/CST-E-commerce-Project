@@ -1,0 +1,98 @@
+    /* ── Design tokens (matches Product.css) ─────────────── */
+    :root {
+      --eco-green:       #2e9e45;
+      --eco-green-dark:  #1f7a32;
+      --eco-green-light: #f0faf0;
+      --eco-border:      #dee2e6;
+    }
+
+    /* ── Navbar ──────────────────────────────────────────── */
+    .eco-navbar { border-bottom: 2px solid var(--eco-green); }
+    .eco-navbar .navbar-brand i { color: var(--eco-green); }
+
+    /* ── Page header gradient (same as Product pages) ────── */
+    .page-header {
+      background: linear-gradient(135deg, #165a25 0%, #2e9e45 60%, #5cb85c 100%);
+      padding: 1.75rem 0 1.5rem;
+    }
+    .page-header h4 { color: #fff; }
+    .page-header .lead { color: rgba(255,255,255,.75); font-size: .95rem; }
+
+    /* ── Sidebar ─────────────────────────────────────────── */
+    .seller-sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      border-right: 1px solid var(--eco-border);
+      background: #fff;
+    }
+    .sidebar-btn {
+      border: none;
+      background: none;
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      width: 100%;
+      padding: .65rem .9rem;
+      border-radius: .375rem;
+      font-size: .9rem;
+      color: #495057;
+      transition: background .15s, color .15s;
+      text-align: left;
+    }
+    .sidebar-btn:hover  { background: var(--eco-green-light); color: var(--eco-green-dark); }
+    .sidebar-btn.active { background: var(--eco-green); color: #fff; font-weight: 600; }
+    .sidebar-btn.active i { color: #fff; }
+    .sidebar-btn i { width: 16px; color: #6c757d; }
+
+    /* ── KPI cards ───────────────────────────────────────── */
+    .kpi-card { border-left: 4px solid var(--eco-green); }
+    .kpi-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--eco-green-light);
+      color: var(--eco-green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+
+    /* ── Table tweaks ────────────────────────────────────── */
+    .table thead th {
+      background: var(--eco-green-light);
+      color: var(--eco-green-dark);
+      font-size: .8rem;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      border-bottom: 2px solid var(--eco-green);
+    }
+    .table tbody tr:hover { background: #f8fdf8; }
+
+    /* ── Section titles ──────────────────────────────────── */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #212529;
+    }
+
+    /* ── Mobile bottom nav ───────────────────────────────── */
+    .mobile-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #fff;
+      border-top: 1px solid var(--eco-border);
+      z-index: 1030;
+    }
+    .mobile-nav-btn {
+      border: none; background: none;
+      flex: 1; padding: .6rem 0;
+      font-size: .7rem; color: #6c757d;
+      display: flex; flex-direction: column;
+      align-items: center; gap: .2rem;
+      transition: color .15s;
+    }
+    .mobile-nav-btn.active { color: var(--eco-green); font-weight: 600; }
+    .mobile-nav-btn i { font-size: 1.1rem; }
+
+    @media (max-width: 767px) {
+      main.col-md-9 { padding-bottom: 5rem !important; }
+    }
