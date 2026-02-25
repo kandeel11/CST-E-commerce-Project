@@ -1,0 +1,144 @@
+/* ============================
+   Register Page - Ecobazar
+   ============================ */
+
+:root {
+    --primary: #00B207;
+    --primary-hover: #009a06;
+    --dark: #1a1a2e;
+    --text-muted: #808080;
+    --bg-light: #f7f7f7;
+    --border: #e6e6e6;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    color: #333;
+}
+
+.register-header {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 0;
+    text-align: center;
+}
+
+.register-header h2 {
+    font-size: 1.5rem;
+    color: var(--dark);
+}
+
+.text-success-custom {
+    color: var(--primary) !important;
+}
+
+.text-success-link {
+    color: var(--primary) !important;
+    text-decoration: none;
+}
+
+.text-success-link:hover {
+    color: var(--primary-hover) !important;
+    text-decoration: underline;
+}
+
+.card {
+    border-radius: 10px;
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.card h5 {
+    font-size: 1rem;
+    color: var(--dark);
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.9rem;
+    border-color: var(--border);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 178, 7, 0.15);
+}
+
+.form-label {
+    color: #555;
+}
+
+select.form-control {
+    appearance: auto;
+}
+
+.btn-success {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.register-btn {
+    font-size: 1.05rem;
+    padding: 0.75rem 2rem;
+    letter-spacing: 0.5px;
+}
+
+#liveToast {
+    background-color: #dc3545;
+    border-radius: 10px;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15);
+}
+
+.form-control.is-valid {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0, 178, 7, 0.15);
+}
+
+.error-message {
+    display: none;
+    color: #dc3545;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    text-align: left;
+}
+
+@media (max-width: 991.98px) {
+    .register-header h2 {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .register-header {
+        padding: 1rem 0;
+    }
+
+    .register-btn {
+        font-size: 0.95rem;
+    }
+}
