@@ -2,7 +2,54 @@ document.addEventListener("DOMContentLoaded", () => {
     loadComponents();
     loadData();
     initCountdown();
+
+    // Check if we need to show a login toast
+    if (localStorage.getItem("showLoginToast") === "true") {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser")) || JSON.parse(localStorage.getItem("currentSeller"));
+        if (currentUser) {
+            showWelcomeToast(`Welcome back ${currentUser.name} ${currentUser.Role || ''}!`);
+        }
+        localStorage.removeItem("showLoginToast");
+    }
 });
+
+function showWelcomeToast(message) {
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        toastContainer.style.zIndex = '1055';
+        document.body.appendChild(toastContainer);
+    }
+
+    const toastEl = document.createElement('div');
+    toastEl.className = `toast align-items-center text-white bg-success border-0 fade show`;
+    toastEl.setAttribute('role', 'alert');
+    toastEl.setAttribute('aria-live', 'assertive');
+    toastEl.setAttribute('aria-atomic', 'true');
+
+    toastEl.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">
+          ${message}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    `;
+
+    const closeBtn = toastEl.querySelector('.btn-close');
+    closeBtn.addEventListener('click', () => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    });
+
+    toastContainer.appendChild(toastEl);
+
+    setTimeout(() => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    }, 3000);
+}
 
 // Countdown timer for promo section
 function initCountdown() {
@@ -66,8 +113,7 @@ function loadData() {
 const categoryMeta = {
     Fruits: { name: "Fruits", icon: "fa-apple-alt" },
     Vegetables: { name: "Vegetables", icon: "fa-carrot" },
-    Meat: { name: "Meat", icon: "fa-drumstick-bite" },
-    Fish: { name: "Fish & Seafood", icon: "fa-fish" },
+    MeatFish: { name: "Meat & Fish", icon: "fa-drumstick-bite" },
     Dairy: { name: "Dairy", icon: "fa-cheese" },
     Bakery: { name: "Bread & Bakery", icon: "fa-bread-slice" },
     Beverages: { name: "Beverages", icon: "fa-mug-hot" }
@@ -111,6 +157,15 @@ function renderProducts(data) {
     // Pick first 10 products for the homepage
     const featured = allProducts.slice(0, 10);
 
+    // Get current user wishlist for heart icons
+    let wishlistIds = [];
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (user) {
+        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const uw = wl.find(i => i.user_id === user.id);
+        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+    }
+
     container.innerHTML = featured.map(product => {
         const imgSrc = product.img || product.image || (product.images && product.images[0]) || '';
         const name = product.name || 'Product';
@@ -132,24 +187,41 @@ function renderProducts(data) {
 
         // Discount badge
         const badgeHtml = discount > 0
-            ? `<span class="badge bg-danger position-absolute top-0 start-0 m-3">Sale ${discount}%</span>`
+            ? `<div class="sale-badge">Sale ${discount}%</div>`
             : '';
 
         // Old price
         const oldPriceHtml = oldPrice
-            ? `<small class="text-muted text-decoration-line-through">$${oldPrice.toLocaleString()}</small>`
+            ? `<small class="text-muted text-decoration-line-through">EGP ${oldPrice.toLocaleString()}</small>`
             : '';
+
+        // Heart Icon status
+        const isWished = wishlistIds.includes(product.product_id || 0);
+        const heartIconCls = isWished ? 'fas fa-heart text-success' : 'far fa-heart';
 
         return `
             <div class="col">
-                <div class="card product-card h-100">
+                <div class="card product-card h-100 position-relative">
                     ${badgeHtml}
-                    <img src="${imgSrc}" class="card-img-top" alt="${name}">
-                    <div class="card-body d-flex flex-column">
-                        <h6 class="card-title text-truncate">${name}</h6>
+                    <!-- Action Icons on Hover -->
+                    <div class="product-action-icons z-2">
+                        <a href="ProductDetails.html?id=${product.product_id || 0}" class="action-icon-btn" title="Quick View">
+                            <i class="far fa-eye"></i>
+                        </a>
+                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${product.product_id || 0})">
+                            <i class="${heartIconCls}"></i>
+                        </a>
+                    </div>
+                    <a href="ProductDetails.html?id=${product.product_id || 0}" class="d-block text-decoration-none text-dark position-relative z-1">
+                        <img src="${imgSrc}" class="card-img-top mx-auto d-block" alt="${name}" style="object-fit: contain; max-height: 200px;">
+                    </a>
+                    <div class="card-body d-flex flex-column z-1">
+                        <a href="ProductDetails.html?id=${product.product_id || 0}" class="text-decoration-none text-dark">
+                            <h6 class="card-title text-truncate mb-1">${name}</h6>
+                        </a>
                         <div class="d-flex justify-content-between align-items-center mt-auto">
                             <div>
-                                <span class="fw-bold">$${price.toLocaleString()}</span>
+                                <span class="fw-bold">EGP ${price.toLocaleString()}</span>
                                 ${oldPriceHtml}
                                 <div class="small">${starsHtml}</div>
                             </div>
@@ -179,6 +251,15 @@ function renderHotDeals(data) {
     const featured = allProducts[0];
     const gridProducts = allProducts.slice(1, 10);
 
+    // Get current user wishlist for heart icons
+    let wishlistIds = [];
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (user) {
+        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const uw = wl.find(i => i.user_id === user.id);
+        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+    }
+
     // Helper: generate stars
     function starsHtml(rating) {
         return Array.from({ length: 5 }, (_, i) =>
@@ -197,20 +278,22 @@ function renderHotDeals(data) {
                         <span class="badge bg-danger">Sale ${featured.discount}%</span>
                         ${featured.monthSale ? '<span class="badge bg-primary">Best Sale</span>' : ''}
                     </div>
-                    <img src="${featImg}" class="w-100 rounded" alt="${featured.name}" style="height: 260px; object-fit: contain;">
+                    <a href="ProductDetails.html?id=${featured.product_id || 0}" class="d-block text-center">
+                        <img src="${featImg}" class="w-100 rounded" alt="${featured.name}" style="height: 260px; object-fit: contain;">
+                    </a>
                     <div class="d-flex align-items-center gap-2 mt-3">
-                        <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;"><i class="far fa-heart"></i></button>
+                        <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;" onclick="window.addToWishlistData(event, ${featured.product_id || 0})"><i class="${wishlistIds.includes(featured.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i></button>
                         <a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;" onclick="window.addToCartData(event, ${featured.product_id || 0}, '${encodeURIComponent(featured.name).replace(/'/g, "%27")}', ${featured.price}, '${featImg}')">
                             <i class="fas fa-shopping-bag me-1"></i> Add to Cart
                         </a>
-                        <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;"><i class="far fa-eye"></i></button>
+                        <a href="ProductDetails.html?id=${featured.product_id || 0}" class="btn btn-outline-secondary btn-sm rounded-circle d-flex justify-content-center align-items-center text-decoration-none" style="width:36px;height:36px;"><i class="far fa-eye"></i></a>
                     </div>
                 </div>
                 <div class="card-body text-center">
-                    <a href="#" class="text-green text-decoration-none fw-medium">${featured.name}</a>
+                    <a href="ProductDetails.html?id=${featured.product_id || 0}" class="text-green text-decoration-none fw-medium">${featured.name}</a>
                     <div class="mt-1">
-                        <span class="fw-bold fs-5">$${featured.price.toFixed(2)}</span>
-                        ${featured.oldPrice ? `<small class="text-muted text-decoration-line-through ms-1">$${featured.oldPrice.toFixed(2)}</small>` : ''}
+                        <span class="fw-bold fs-5">EGP ${featured.price.toFixed(2)}</span>
+                        ${featured.oldPrice ? `<small class="text-muted text-decoration-line-through ms-1">EGP ${featured.oldPrice.toFixed(2)}</small>` : ''}
                     </div>
                     <div class="my-1">${starsHtml(featured.rating)} <small class="text-muted">(${featReviewCount} Feedback)</small></div>
                     <p class="text-muted small mb-2">Hurry up! Offer ends in:</p>
@@ -227,23 +310,35 @@ function renderHotDeals(data) {
             </div>
         </div>`;
 
-    // Grid cards (right)
     const gridHtml = gridProducts.map(p => {
         const img = p.img || p.image || (p.images && p.images[0]) || '';
-        const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through">$${p.oldPrice.toFixed(2)}</small>` : '';
-        const saleBadge = p.discount > 28 ? `<span class="badge bg-danger position-absolute top-0 start-0 m-2" style="font-size:0.65rem;">Sale ${p.discount}%</span>` : '';
+        const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through">EGP ${p.oldPrice.toFixed(2)}</small>` : '';
+        const saleBadge = p.discount > 28 ? `<div class="sale-badge" style="padding: 3px 8px; font-size: 0.70rem;">Sale ${p.discount}%</div>` : '';
         return `
             <div class="col-6 col-md-4">
-                <div class="card hot-deal-card h-100 border rounded-3 position-relative">
+                <div class="card hot-deal-card h-100 border rounded-3 position-relative overflow-hidden">
                     ${saleBadge}
-                    <div class="p-2 text-center" style="height:120px; display:flex; align-items:center; justify-content:center;">
-                        <img src="${img}" alt="${p.name}" style="max-height:100%; max-width:100%; object-fit:contain;">
+                    <!-- Action Icons on Hover -->
+                    <div class="product-action-icons z-2">
+                        <a href="ProductDetails.html?id=${p.product_id || 0}" class="action-icon-btn" title="Quick View" style="width:28px; height:28px; font-size: 0.75rem;">
+                            <i class="far fa-eye"></i>
+                        </a>
+                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${p.product_id || 0})" style="width:28px; height:28px; font-size: 0.75rem;">
+                            <i class="${wishlistIds.includes(p.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i>
+                        </a>
                     </div>
-                    <div class="card-body py-2 px-2">
-                        <p class="small mb-1 text-truncate">${p.name}</p>
+                    <div class="p-2 text-center position-relative z-1" style="height:120px; display:flex; align-items:center; justify-content:center;">
+                        <a href="ProductDetails.html?id=${p.product_id || 0}" class="d-block w-100 h-100">
+                            <img src="${img}" alt="${p.name}" style="max-height:100%; max-width:100%; object-fit:contain;">
+                        </a>
+                    </div>
+                    <div class="card-body py-2 px-2 z-1">
+                        <a href="ProductDetails.html?id=${p.product_id || 0}" class="text-decoration-none text-dark">
+                            <p class="small mb-1 text-truncate">${p.name}</p>
+                        </a>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <span class="fw-bold small">$${p.price.toFixed(2)}</span> ${oldPriceHtml}
+                                <span class="fw-bold small">EGP ${p.price.toFixed(2)}</span> ${oldPriceHtml}
                             </div>
                             <button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>
                         </div>
