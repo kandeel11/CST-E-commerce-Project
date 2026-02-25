@@ -9,8 +9,14 @@
                 border: 1px solid #ccc;
 
             }
-            #summarydiv table tr{
+            #summarydiv tbody tr{
                 border-bottom: 1px solid #ccc;
+            }
+            #summarydiv tbody tr:last-child{
+                border-bottom: none;
+            }
+            .form{
+                border: 1px solid #ccc;
             }
         </style>
 </head>
@@ -18,7 +24,7 @@
 <body>
     <section class="container">
         <div class="row">
-            <form class="col-7 row g-3 needs-validation" novalidate>
+            <form class="col-7 row g-3 needs-validation form" novalidate>
                 <h4>Billing Information</h4>
                 <div class="col-4">
                     <label for="validationCustom01" class="form-label">First name</label>
@@ -112,20 +118,17 @@
                     <button class="btn btn-primary" type="submit">Confirm form</button>
                 </div>
             </form>
-            <div class="col-4" id="summarydiv">
+            <div class="col-4 mt-5 ms-4" id="summarydiv">
                 <h6>Order Summary</h6>
-                <table>
+                <table width="100%">
                     <tbody>
 
                     </tbody>
-                    <tfoot>
+                </table>
+                <table width="100%" class="mt-3">
+                  
                         <tr>
                             <th colspan="3">Cart Total</th>
-                        </tr>
-                        <tr>
-
-                            <td colspan="2">Subtotal:</td>
-                            <td id="subtotal" class="totalcart"></td>
                         </tr>
                         <tr>
                             <td colspan="2">Shipping:</td>
@@ -135,13 +138,13 @@
                             <td colspan="2">Total:</td>
                             <td id="total" class="totalcart"></td>
                         </tr>
-                    </tfoot>
+            
                 </table>
             </div>
         </div>
 
     </section>
-    <script src="checkout.js"></script>
+    <script src="checkout.js" type="module"></script>
 </body>
 
 </html>
