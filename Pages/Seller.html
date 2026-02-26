@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seller Dashboard — Ecobazar</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../Css/Seller.css">
+</head>
+
+<body class="bg-light">
+
+<!--  NAVBAR  -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white eco-navbar sticky-top shadow-sm">
+  <div class="container-fluid px-3">
+    <a class="navbar-brand fw-bold fs-5 text-dark d-flex align-items-center gap-2" href="#">
+      <i class="fas fa-leaf"></i> Ecobazar
+    </a>
+    <div class="d-flex align-items-center gap-3">
+      <div class="d-flex align-items-center gap-2 text-muted small">
+        <i class="fas fa-store"></i>
+        <span id="storeName" class="fw-semibold text-dark">Store Name</span>
+      </div>
+      <div class="vr"></div>
+      <div class="d-flex align-items-center gap-2 text-muted small">
+        <i class="fas fa-user-circle fs-5 text-secondary"></i>
+        <span id="sellerName">Seller Name</span>
+      </div>
+      <button class="btn btn-outline-danger btn-sm rounded-pill px-3" id="logoutBtn">
+        <i class="fas fa-sign-out-alt me-1"></i> Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!--  PAGE HEADER  -->
+<div class="page-header">
+  <div class="container-fluid px-4">
+    <h4 class="fw-bold mb-0" id="pageHeaderTitle">Dashboard</h4>
+    <p class="lead mb-0">Manage your store, orders and analytics</p>
+  </div>
+</div>
+
+<!--  LAYOUT  -->
+<div class="container-fluid">
+  <div class="row g-0">
+
+    <!-- Sidebar (desktop) -->
+    <aside class="col-md-3 col-lg-2 d-none d-md-block seller-sidebar p-3">
+      <div class="d-flex flex-column gap-1 mt-1">
+        <button class="sidebar-btn active" data-section="products">
+          <i class="fas fa-box-open"></i> Products
+        </button>
+        <button class="sidebar-btn" data-section="orders">
+          <i class="fas fa-receipt"></i> Orders
+        </button>
+        <button class="sidebar-btn" data-section="analytics">
+          <i class="fas fa-chart-line"></i> Analytics
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="col-12 col-md-9 col-lg-10 p-4">
+
+      <!--  PRODUCTS SECTION  -->
+      <section id="section-products">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="section-title"><i class="fas fa-box-open text-success me-2"></i>Products</span>
+          <button class="btn btn-success btn-sm rounded-pill px-3" id="openAddProductModalBtn">
+            <i class="fas fa-plus me-1"></i> Add Product
+          </button>
+        </div>
+
+        <!-- Search  -->
+        <div class="row g-2 mb-3">
+          <div class="col-12 col-md-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
+              <input class="form-control border-start-0 ps-0" id="productSearch" placeholder="Search products…">
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <select class="form-select form-select-sm" id="productStatusFilter">
+              <option value="all">All Statuses</option>
+              <option value="active">Active</option>
+              <option value="pending">Pending</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-3">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th class="text-end d-none d-lg-table-cell">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsTbody">
+                <!-- populated by sellerController.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!--  ORDERS SECTION  -->
+      <section id="section-orders" class="d-none">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="section-title"><i class="fas fa-receipt text-success me-2"></i>Orders</span>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-3">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Items</th>
+                  <th>Status</th>
+                  <th class="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTbody">
+                <!-- populated by sellerController.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!--  ANALYTICS SECTION  -->
+      <section id="section-analytics" class="d-none">
+
+        <div class="mb-3">
+          <span class="section-title"><i class="fas fa-chart-line text-success me-2"></i>Analytics</span>
+        </div>
+
+        <!-- KPI cards -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-sm-4">
+            <div class="card border-0 shadow-sm rounded-3 kpi-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="kpi-icon"><i class="fas fa-dollar-sign"></i></div>
+                <div>
+                  <div class="text-muted small">Total Revenue</div>
+                  <div class="fs-5 fw-bold text-success" id="kpiRevenue">$0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-4">
+            <div class="card border-0 shadow-sm rounded-3 kpi-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="kpi-icon"><i class="fas fa-receipt"></i></div>
+                <div>
+                  <div class="text-muted small">Total Orders</div>
+                  <div class="fs-5 fw-bold text-success" id="kpiOrders">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-sm-4">
+            <div class="card border-0 shadow-sm rounded-3 kpi-card">
+              <div class="card-body d-flex align-items-center gap-3">
+                <div class="kpi-icon"><i class="fas fa-box-open"></i></div>
+                <div>
+                  <div class="text-muted small">Total Products</div>
+                  <div class="fs-5 fw-bold text-success" id="kpiProducts">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="card border-0 shadow-sm rounded-3">
+          <div class="card-body">
+            <h6 class="fw-semibold mb-3">
+              <i class="fas fa-chart-area text-success me-2"></i>Sales Over Time
+            </h6>
+            <canvas id="salesChart" height="120"></canvas>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!--  MOBILE BOTTOM NAV  -->
+<nav class="mobile-nav d-flex d-md-none">
+  <button class="mobile-nav-btn active" data-section="products">
+    <i class="fas fa-box-open"></i> Products
+  </button>
+  <button class="mobile-nav-btn" data-section="orders">
+    <i class="fas fa-receipt"></i> Orders
+  </button>
+  <button class="mobile-nav-btn" data-section="analytics">
+    <i class="fas fa-chart-line"></i> Analytics
+  </button>
+</nav>
+
+<!--  ADD PRODUCT MODAL  -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content rounded-3 border-0 shadow">
+      <form id="productForm">
+
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold" id="productModalTitle">
+            <i class="fas fa-plus-circle text-success me-2"></i>Add Product
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body overflow-auto" style="max-height: 65vh;">
+          <div class="row g-3">
+
+            <!-- Name -->
+            <div class="col-12 col-md-6">
+              <label class="form-label small fw-semibold">Product Name</label>
+              <input class="form-control" id="productName"
+                     placeholder="e.g. Organic Avocado" required>
+            </div>
+
+            <!-- Category -->
+            <div class="col-12 col-md-6">
+              <label class="form-label small fw-semibold">Category</label>
+              <select class="form-select" id="productCategory" required>
+                <option value="" disabled selected>Select category…</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="MeatFish">Meat &amp; Fish</option>
+                <option value="Dairy">Dairy</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Beverages">Beverages</option>
+                <option value="Snacks">Snacks</option>
+              </select>
+            </div>
+
+            <!-- Price -->
+            <div class="col-6 col-md-3">
+              <label class="form-label small fw-semibold">Price (EGP)</label>
+              <input type="number" class="form-control" id="productPrice"
+                     min="0" step="0.01" placeholder="0.00" required>
+            </div>
+
+            <!-- New / sale price (edit only) -->
+            <div class="col-6 col-md-3 d-none" id="newPriceGroup">
+              <label class="form-label small fw-semibold">
+                Sale Price <span class="text-muted fw-normal">(optional)</span>
+              </label>
+              <input type="number" class="form-control" id="productNewPrice"
+                     min="0" step="0.01" placeholder="Leave blank to remove sale">
+              <div class="form-text">
+                Current price moves to "original price" and this becomes the new price.
+              </div>
+            </div>
+
+            <!-- Stock -->
+            <div class="col-6 col-md-3">
+              <label class="form-label small fw-semibold">Stock</label>
+              <input type="number" class="form-control" id="productStock"
+                     min="0" step="1" placeholder="0" required>
+            </div>
+
+            <!-- Organic toggle -->
+            <div class="col-6 col-md-3 d-flex align-items-end pb-1">
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" type="checkbox" role="switch"
+                       id="productOrganic">
+                <label class="form-check-label small fw-semibold" for="productOrganic">
+                  <i class="fas fa-seedling text-success me-1"></i>Organic
+                </label>
+              </div>
+            </div>
+
+            <!-- Images -->
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Product Photos</label>
+              <div id="imagesContainer">
+                <!-- First row (remove btn hidden) -->
+                <div class="row g-2 mb-2 image-row">
+                  <div class="col-md-6">
+                    <input type="url" class="form-control product-image-url"
+                           placeholder="Paste Image URL (https://…)" />
+                  </div>
+                  <div class="col-md-5">
+                    <input type="file" class="form-control product-image-file" accept="image/*" />
+                  </div>
+                  <div class="col-md-1 d-flex align-items-center">
+                    <button type="button" class="btn btn-outline-danger btn-sm remove-image-btn d-none">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-success btn-sm mt-2" id="addImageBtn">
+                <i class="fas fa-plus me-1"></i> Add Another Photo
+              </button>
+            </div>
+
+            <!-- Description -->
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Description</label>
+              <textarea class="form-control" id="productDescription"
+                        rows="3" placeholder="Describe your product…" required></textarea>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer border-top">
+          <button type="button" class="btn btn-outline-secondary rounded-pill px-3"
+                  data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success rounded-pill px-4" id="modalSaveBtn">
+            Save Product
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Section switching (desktop sidebar + mobile nav) -->
+<script type="module" src="../Js/controllers/sellerController.js"></script>
+</body>
+</html>
