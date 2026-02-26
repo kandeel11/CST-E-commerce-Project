@@ -1,8 +1,10 @@
+import { addToWishlist1 } from './WishList.js';
 // navbar.js - Breadcrumb and navbar functionality
 document.addEventListener('DOMContentLoaded', () => {
     initBreadcrumb();
     if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
 });
+
 
 function initBreadcrumb() {
     const breadcrumbList = document.getElementById('breadcrumb-list');
@@ -215,57 +217,22 @@ window.addToWishlistData = function (event, id) {
         event.preventDefault();
         event.stopPropagation();
     }
+    console.log('Toggling wishlist:', id);
+    addToWishlist1(id);
+}
 
-    // Check user login (optional based on your app logic, here we enforce it like cart)
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (!currentUser) {
-        alert('Please login first to add items to your wishlist.');
-        window.location.href = 'Login.html';
-        return;
-    }
-
-    const wishlistKey = 'wishlist';
-    let wishlist = JSON.parse(localStorage.getItem(wishlistKey)) || [];
-
-    // Find the current user's wishlist entry
-    let userWishlist = wishlist.find(item => item.user_id === currentUser.id);
-
-    // If it doesn't exist, create it
-    if (!userWishlist) {
-        userWishlist = { user_id: currentUser.id, product_ids: [] };
-        wishlist.push(userWishlist);
-    } else if (!userWishlist.product_ids) {
-        // Fallback for older localStorage schemas
-        userWishlist.product_ids = userWishlist.product_id ? [userWishlist.product_id] : [];
-    }
-
-    const btn = event ? event.currentTarget : null;
-    const icon = btn ? btn.querySelector('.fa-heart') : null;
-
-    if (!userWishlist.product_ids.includes(id)) {
-        // ADD ITEM
-        userWishlist.product_ids.push(id);
-        localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
-
-        if (icon) {
-            icon.classList.remove('far');
-            icon.classList.add('fas', 'text-success');
+// Listen for wishlist changes and toggle heart icons across the page
+window.addEventListener('wishlistChanged', function (e) {
+    const { productId, action } = e.detail;
+    // Find all wishlist heart icon buttons/links for this product
+    document.querySelectorAll(`[onclick*="addToWishlistData(event, ${productId})"] i`).forEach(icon => {
+        if (action === 'added') {
+            icon.className = 'fas fa-heart text-success';
+        } else {
+            icon.className = 'far fa-heart';
         }
-
-        showWishlistToast('Product added to wishlist!', 'bg-success');
-    } else {
-        // REMOVE ITEM
-        userWishlist.product_ids = userWishlist.product_ids.filter(pId => pId !== id);
-        localStorage.setItem(wishlistKey, JSON.stringify(wishlist));
-
-        if (icon) {
-            icon.classList.remove('fas', 'text-success');
-            icon.classList.add('far');
-        }
-
-        showWishlistToast('Product removed from wishlist!', 'bg-secondary');
-    }
-};
+    });
+});
 
 function showWishlistToast(msg, bgClass) {
     let toastContainer = document.querySelector('.toast-container');

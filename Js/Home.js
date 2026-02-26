@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", () => {
     loadComponents();
     loadData();
@@ -12,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.removeItem("showLoginToast");
     }
 });
-
 function showWelcomeToast(message) {
     let toastContainer = document.querySelector('.toast-container');
     if (!toastContainer) {
@@ -161,9 +161,13 @@ function renderProducts(data) {
     let wishlistIds = [];
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (user) {
-        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
-        const uw = wl.find(i => i.user_id === user.id);
-        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+        const wl = JSON.parse(localStorage.getItem('WishLists')) || {};
+        const userProducts = wl[user.id] || [];
+        for (let i = 0; i < userProducts.length; i++) {
+            if (userProducts[i].product_id) {
+                wishlistIds.push(userProducts[i].product_id);
+            }
+        }
     }
 
     container.innerHTML = featured.map(product => {
@@ -255,9 +259,10 @@ function renderHotDeals(data) {
     let wishlistIds = [];
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (user) {
-        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
-        const uw = wl.find(i => i.user_id === user.id);
-        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+        const wl = JSON.parse(localStorage.getItem('WishLists')) || {};
+        const userProducts = wl[user.id] || [];
+        wishlistIds = userProducts.map(i => i.product_id);
+        console.log("Wishlist IDs for user:", wishlistIds);
     }
 
     // Helper: generate stars

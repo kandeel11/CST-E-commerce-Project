@@ -4,13 +4,25 @@
     box-sizing: border-box;
 }
 
-.container {
+#login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 70px auto;
 }
-
+.navbar-placeholder {
+    position: relative !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1020;
+}
+.navbar-topbar {
+   display: none;
+}   
+#Whish{
+    display: none !important;
+}
 .login-form {
     background-color: #fff;
     padding: 30px;
@@ -56,7 +68,7 @@ h2 {
 
 }
 
-.btn {
+#loginButton {
     background-color: #00B207;
     color: #fff;
     border: none;

@@ -11,7 +11,20 @@
     --border: #e6e6e6;
     --white: #ffffff;
 }
+.navbar-placeholder {
+    position: relative !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1020;
+}
 
+#Whish{
+    display: none !important;
+}
+.navbar-topbar {
+    display: none;
+}
 * {
     margin: 0;
     padding: 0;
