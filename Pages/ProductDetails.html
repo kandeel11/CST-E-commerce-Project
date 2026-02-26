@@ -1,233 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Details — Ecobazar</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="../Css/Product.css">
-
-    <style>
-        /* Only what Bootstrap cannot do on this page */
-        .details-img { max-height: 340px; object-fit: contain; }
-        .stars       { color: #f5a623; letter-spacing: 1px; }
-        .qty-input   { width: 56px; text-align: center; }
-    </style>
+    <title>Ecobazar - Product Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Css/ProductDetails.css">
+    <link rel="stylesheet" href="../Css/Home.css">
 </head>
-<body class="bg-light">
 
-<!-- ── NAVBAR ──────────────────────────────────────────────── -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-    <div class="container">
-        <a class="navbar-brand fw-bold fs-5 text-dark d-flex align-items-center gap-2" href="Home.html">
-            <i class="fas fa-leaf text-success"></i> Ecobazar
-        </a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mx-auto gap-1">
-                <li class="nav-item"><a class="nav-link rounded-pill px-3" href="Home.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link rounded-pill px-3" href="Product.html">Shop</a></li>
-                <li class="nav-item"><a class="nav-link rounded-pill px-3" href="Wishlist.html">Wishlist</a></li>
-                <li class="nav-item"><a class="nav-link rounded-pill px-3" href="Cart.html">Cart</a></li>
-            </ul>
-            <div class="d-flex align-items-center gap-3">
-                <a href="Cart.html" class="position-relative text-dark text-decoration-none">
-                    <i class="fas fa-shopping-cart fs-5"></i>
-                    <span id="cartCount"
-                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
-                          style="font-size:.65rem">0</span>
-                </a>
-                <a href="Login.html" class="btn btn-success btn-sm rounded-pill px-3">
-                    <i class="fas fa-user me-1"></i> Login
-                </a>
-            </div>
-        </div>
-    </div>
-</nav>
+<body>
+    <div id="navbar-placeholder" class="navbar-placeholder" style="z-index: 1020;"></div>
 
-<!--  PAGE HEADER  -->
-<section class="page-header">
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-2 small">
-                <li class="breadcrumb-item"><a href="Home.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="Product.html">Shop</a></li>
-                <li class="breadcrumb-item active" id="breadcrumbName">Product</li>
-            </ol>
-        </nav>
-        <h1 class="fw-bold mb-0" id="pageTitle">Product Details</h1>
-    </div>
-</section>
-
-<!--  MAIN  -->
-<main class="container py-4">
-    <div id="productDetails"></div>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<script type="module">
-import { getProductById, toggleWishlist, isInWishlist, addToCart, getCartCount } from "../Js/services/storageService.js";
-
-const container = document.getElementById("productDetails");
-const cartBadge = document.getElementById("cartCount");
-
-const pPrice = p => parseFloat(p.price || p.productPrice || 0);
-const pImg   = p => (p.images && p.images[0]) || p.imageUrl || "https://placehold.co/400x300/e8f5e9/2e7d32?text=Product";
-const stars  = r => "★".repeat(Math.floor(r)) + "☆".repeat(5 - Math.floor(r));
-
-function updateCartBadge() {
-    if (cartBadge) cartBadge.textContent = getCartCount();
-}
-
-const params    = new URLSearchParams(window.location.search);
-const productId = params.get("id");
-
-updateCartBadge();
-
-if (!productId) {
-    container.innerHTML = `
-        <div class="text-center py-5 text-muted">
-            <h4>No product specified</h4>
-            <a href="Product.html" class="btn btn-success rounded-pill px-4 mt-3">Back to Shop</a>
-        </div>`;
-} else {
-    const p = getProductById(productId);
-
-    if (!p) {
-        container.innerHTML = `
-            <div class="text-center py-5 text-muted">
-                <i class="fas fa-box-open fa-3x mb-3 d-block"></i>
-                <h4>Product not found</h4>
-                <p class="small">It may have been removed or the link is incorrect.</p>
-                <a href="Product.html" class="btn btn-success rounded-pill px-4">Back to Shop</a>
-            </div>`;
-    } else {
-        const name     = p.name || p.productName || "Product";
-        const price    = pPrice(p);
-        const image    = pImg(p);
-        const rating   = p.rating || 4;
-        const inStock  = (p.stockQuantity || p.stock || 1) > 0;
-        const wishlisted = isInWishlist(productId);
-
-        document.getElementById("pageTitle").textContent    = name;
-        document.getElementById("breadcrumbName").textContent = name;
-        document.title = `${name} — Ecobazar`;
-
-        container.innerHTML = `
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden">
-                <div class="row g-0">
-
-                    <!-- Image -->
-                    <div class="col-md-5 bg-light d-flex align-items-center justify-content-center p-4">
-                        <img src="${image}" alt="${name}" class="details-img img-fluid rounded-2">
-                    </div>
-
-                    <!-- Info -->
-                    <div class="col-md-7 p-4">
-                        <span class="text-success fw-semibold text-uppercase small"
-                              style="letter-spacing:1px">${p.category || ""}</span>
-
-                        <h2 class="fw-bold mt-1 mb-2">${name}</h2>
-
-                        <div class="d-flex align-items-center gap-2 mb-3">
-                            <span class="stars">${stars(rating)}</span>
-                            <span class="text-muted small">(${rating.toFixed(1)})</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <span class="fs-4 fw-bold text-success">EGP ${price.toFixed(2)}</span>
-                            ${p.originalPrice
-                                ? `<span class="text-muted text-decoration-line-through ms-2 small">
-                                       EGP ${p.originalPrice.toFixed(2)}
-                                   </span>`
-                                : ""}
-                        </div>
-
-                        <p class="text-muted mb-4">${p.description || p.productDescription || "No description available."}</p>
-
-                        <!-- Meta -->
-                        <ul class="list-unstyled small text-muted mb-4">
-                            <li class="mb-1">
-                                <i class="fas fa-tag text-success me-2"></i>
-                                Category: <strong>${p.category || "N/A"}</strong>
-                            </li>
-                            <li class="mb-1">
-                                <i class="fas fa-box text-success me-2"></i>
-                                Stock:
-                                ${inStock
-                                    ? `<strong class="text-success">${p.stockQuantity || p.stock || "Available"}</strong>`
-                                    : `<strong class="text-danger">Out of Stock</strong>`}
-                            </li>
-                            ${p.organic || p.isOrganic
-                                ? `<li><i class="fas fa-seedling text-success me-2"></i>Certified Organic</li>`
-                                : ""}
-                        </ul>
-
-                        <!-- Qty + Actions -->
-                        ${inStock ? `
-                        <div class="d-flex align-items-center gap-2 mb-3">
-                            <label class="fw-semibold small mb-0">Qty:</label>
-                            <div class="input-group input-group-sm" style="width:110px">
-                                <button class="btn btn-outline-secondary" id="qtyMinus">−</button>
-                                <input type="number" id="qtyDisplay" class="form-control qty-input"
-                                       value="1" min="1" max="99" readonly>
-                                <button class="btn btn-outline-secondary" id="qtyPlus">+</button>
-                            </div>
-                        </div>` : ""}
-
-                        <div class="d-flex gap-2 flex-wrap">
-                            ${inStock
-                                ? `<button class="btn btn-success px-4" id="addCartBtn">
-                                       <i class="fas fa-cart-plus me-2"></i>Add to Cart
-                                   </button>`
-                                : `<button class="btn btn-secondary px-4" disabled>
-                                       <i class="fas fa-ban me-2"></i>Out of Stock
-                                   </button>`}
-                            <button class="btn ${wishlisted ? "btn-danger" : "btn-outline-danger"} px-3"
-                                    id="wishlistBtn" title="${wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}">
-                                <i class="${wishlisted ? "fas" : "far"} fa-heart"></i>
-                            </button>
-                            <a href="Product.html" class="btn btn-outline-secondary btn-sm ms-auto align-self-center">
-                                <i class="fas fa-arrow-left me-1"></i> Back
-                            </a>
-                        </div>
+    <!-- Product Main Details -->
+    <section class="container mb-5" id="product-main">
+        <div class="row g-5">
+            <!-- Gallery -->
+            <div class="col-md-6">
+                <div class="d-flex gx-3 h-100 flex-column justify-content-center">
+                    <div class="main-image-container flex-grow-1 d-flex align-items-center justify-content-center p-3 overflow-hidden image-zoom-container"
+                        style="background-color: #f6f6f6; border-radius: 8px;">
+                        <img src="" alt="Main Product" id="main-product-image" class="img-fluid zoom-img"
+                            style="max-height: 400px; max-width: 100%; mix-blend-mode: darken; transition: transform 0.3s ease;">
                     </div>
                 </div>
             </div>
-        `;
+            <!-- Info -->
+            <div class="col-md-6">
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <h2 class="fw-bold mb-0 text-dark" id="product-title">Loading...</h2>
+                    <span class="badge bg-success-subtle text-success py-2 px-3 fw-medium" id="stock-status">In
+                        Stock</span>
+                </div>
 
-        // Quantity
-        let qty = 1;
-        const qtyEl = document.getElementById("qtyDisplay");
-        document.getElementById("qtyMinus")?.addEventListener("click", () => { if (qty > 1) qtyEl.value = --qty; });
-        document.getElementById("qtyPlus")?.addEventListener("click",  () => { qtyEl.value = ++qty; });
+                <div class="d-flex align-items-center gap-3 mb-4 text-muted small border-bottom pb-4">
+                    <div id="product-stars" class="d-flex align-items-center gap-1">
+                        <!-- Stars -->
+                    </div>
+                    <span><span id="review-count">0</span> Review</span>
+                    <span>•</span>
+                    <span><span class="fw-semibold text-dark">SKU:</span> <span id="product-sku">2,51,594</span></span>
+                </div>
 
-        // Add to cart
-        document.getElementById("addCartBtn")?.addEventListener("click", () => {
-            for (let i = 0; i < qty; i++) addToCart(p);
-            updateCartBadge();
-            const btn = document.getElementById("addCartBtn");
-            btn.innerHTML = `<i class="fas fa-check me-2"></i>Added!`;
-            btn.classList.replace("btn-success", "btn-secondary");
-            setTimeout(() => {
-                btn.innerHTML = `<i class="fas fa-cart-plus me-2"></i>Add to Cart`;
-                btn.classList.replace("btn-secondary", "btn-success");
-            }, 1500);
-        });
+                <div class="d-flex align-items-center gap-3 mb-4">
+                    <span class="text-muted text-decoration-line-through fs-5" id="product-old-price"></span>
+                    <span class="fw-bold fs-3 text-green" id="product-price"></span>
+                    <span class="badge bg-danger ms-2 px-2 py-1 fs-6 rounded-pill d-none" id="product-discount"></span>
+                </div>
 
-        // Wishlist
-        document.getElementById("wishlistBtn").addEventListener("click", () => {
-            const btn  = document.getElementById("wishlistBtn");
-            const icon = btn.querySelector("i");
-            const added = toggleWishlist(p);
-            icon.className    = added ? "fas fa-heart" : "far fa-heart";
-            btn.className     = `btn ${added ? "btn-danger" : "btn-outline-danger"} px-3`;
-            btn.title         = added ? "Remove from Wishlist" : "Add to Wishlist";
-        });
-    }
-}
-</script>
+                <div class="d-flex justify-content-between align-items-center py-3 border-bottom mb-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="text-muted small">Brand:</span>
+                        <div class="brand-logo border rounded p-1 d-flex align-items-center justify-content-center bg-white"
+                            style="width: 50px; height: 35px;">
+                            <i class="fas fa-leaf text-green" id="product-brand-logo"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="text-muted small">Share item:</span>
+                        <a href="#" class="share-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="share-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="share-icon"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="share-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+
+
+
+                <div class="d-flex align-items-center gap-3 mb-4 pb-4 border-bottom">
+                    <div class="quantity-selector d-flex align-items-center border rounded-pill px-2 py-1"
+                        style="background-color: #f6f6f6;">
+                        <button class="btn btn-link text-decoration-none text-dark p-2 qty-btn" id="qty-minus"><i
+                                class="fas fa-minus fs-6"></i></button>
+                        <input type="text" value="1"
+                            class="form-control border-0 bg-transparent text-center fw-bold fs-6" style="width: 50px;"
+                            id="qty-input" readonly>
+                        <button class="btn btn-link text-decoration-none text-dark p-2 qty-btn" id="qty-plus"><i
+                                class="fas fa-plus fs-6"></i></button>
+                    </div>
+                    <button
+                        class="btn bg-green text-white fw-semibold flex-grow-1 rounded-pill py-3 px-4 d-flex justify-content-center align-items-center gap-2 add-cart-btn"
+                        id="add-to-cart-btn">
+                        Add to Cart <i class="fas fa-shopping-bag"></i>
+                    </button>
+                    <button
+                        class="btn btn-light border rounded-circle d-flex justify-content-center align-items-center wishlist-btn"
+                        style="width: 50px; height: 50px;">
+                        <i class="far fa-heart fs-5 text-dark"></i>
+                    </button>
+                </div>
+
+                <div class="text-dark small">
+                    <p class="mb-2"><span class="fw-semibold">Category:</span> <span id="product-category"
+                            class="text-muted"></span></p>
+                    <p class="mb-0"><span class="fw-semibold">Tag:</span> <span id="product-tags"
+                            class="text-muted"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tabs Section -->
+    <section class="container mb-5">
+        <ul class="nav nav-tabs justify-content-center border-bottom-0 product-tabs mb-4 px-3" id="myTab"
+            role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="desc-tab" data-bs-toggle="tab" data-bs-target="#desc-pane"
+                    type="button" role="tab" aria-controls="desc-pane" aria-selected="true">Descriptions</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link mx-md-4" id="add-info-tab" data-bs-toggle="tab" data-bs-target="#add-info-pane"
+                    type="button" role="tab" aria-controls="add-info-pane" aria-selected="false">Additional
+                    Information</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="feedback-tab" data-bs-toggle="tab" data-bs-target="#feedback-pane"
+                    type="button" role="tab" aria-controls="feedback-pane" aria-selected="false">Customer
+                    Feedback</button>
+            </li>
+        </ul>
+
+        <!-- Subtle separator -->
+        <hr class="mt-0 mb-4" style="opacity: 0.1;">
+
+        <div class="tab-content pt-3" id="myTabContent">
+            <!-- Descriptions Tab -->
+            <div class="tab-pane fade show active" id="desc-pane" role="tabpanel" aria-labelledby="desc-tab"
+                tabindex="0">
+                <div class="row align-items-start g-5">
+                    <div class="col-12 text-muted lh-lg" id="tab-description-content">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information Tab -->
+            <div class="tab-pane fade" id="add-info-pane" role="tabpanel" aria-labelledby="add-info-tab" tabindex="0">
+                <div class="row">
+                    <div class="col-md-7 col-lg-5" id="additional-info-container">
+                        <table class="table table-borderless text-muted mb-0 table-sm">
+                            <tbody>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2" style="width: 150px;">Weight:</td>
+                                    <td id="info-weight" class="py-2">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Type:</td>
+                                    <td id="info-type" class="py-2">Organic</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Category:</td>
+                                    <td id="info-category" class="py-2">--</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Stock Status:</td>
+                                    <td id="info-stock" class="py-2">Available</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-medium text-dark py-2">Tags:</td>
+                                    <td id="info-tags" class="py-2">--</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Feedback Tab -->
+            <div class="tab-pane fade" id="feedback-pane" role="tabpanel" aria-labelledby="feedback-tab" tabindex="0">
+                <div class="row">
+                    <div class="col-md-8" id="reviews-container">
+                        <!-- Reviews dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="container mb-5 pb-4">
+        <h3 class="fw-bold fs-2 text-center mb-5 font-poppins">Related Products</h3>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="related-products-container">
+            <!-- Related products dynamically loaded -->
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Js/NavBar.js"></script>
+    <script src="../Js/ProductDetails.js"></script>
 </body>
+
 </html>

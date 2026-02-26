@@ -1,0 +1,115 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 70px auto;
+}
+.navbar-placeholder {
+    position: relative !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1020;
+}
+.navbar-topbar {
+   display: none;
+}   
+#Whish{
+    display: none !important;
+}
+.login-form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    padding: 10px;
+
+
+}
+
+#email,
+#password {
+    width: 472px;
+    padding: 10px;
+    margin: 0px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#password {
+    padding-right: 30px;
+    margin: 0px 20px;
+}
+
+.form-group {
+    margin: 20px 0;
+}
+
+#togglePassword {
+    position: relative;
+    top: -30px;
+    right: -213px;
+    font-size: 18px;
+}
+
+h2 {
+    margin: 20px 0;
+    font-weight: 700;
+    font-family: "Poppins";
+
+}
+
+#loginButton {
+    background-color: #00B207;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 43px;
+    width: 472px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.error-message {
+    padding: 0px;
+    margin: 0px 20px;
+    display: none;
+    color: red;
+    font-size: 10px;
+    margin: 0px 20px;
+    text-align: left;
+
+}
+#liveToast {
+    background-color: rgb(246, 111, 111);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 14px;
+    width: 400px;
+}
+
+
+
+
+#loginButton {
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+
+#loginButton:hover {
+    background-color: white;
+    color: #00B207;
+    border: 1px solid #00B207;
+}

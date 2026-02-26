@@ -1,52 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eco-Bazar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Ecobazar - Home</title>
+    <link rel="icon" type="image/x-icon"
+        href="https://ecobazar-ecommerce.vercel.app/_next/image?url=/images/logo.png&w=64&q=75">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../Css/Home.css">
 </head>
+
 <body>
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <div class="container-fluid">
 
-                <a class="navbar-brand" href="#">
-                <i class="fa-solid fa-leaf"></i> Eco-Bazar
-                </a>
+    <div id="navbar-placeholder" class="navbar-placeholder" style="z-index: 1020;"></div>
 
-                <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarText"
-                aria-controls="navbarText"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarText">
-
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                    <a class="nav-link active" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Shop</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-
-                <span class="navbar-text ms-auto" role="button">
-                    <i class="fa fa-solid fa-phone"></i>
-                    +20-123456789
-                </span>
-
+    <section class="container mt-4">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="p-5 rounded-3 d-flex align-items-center"
+                    style="background: #EBF8EC; height: 100%; background-image: url('https://ecobazar-ecommerce.vercel.app/_next/image?url=/images/Bannar.png&w=3840&q=75'); background-size: cover; background-position: center;">
+                    <div class="w-50">
+                        <span class="text-green fw-bold text-uppercase small">Welcome to shop</span>
+                        <h1 class="display-4 fw-bold my-3">Fresh & Healthy Organic Food</h1>
+                        <p class="h5 mb-4">Sale up to <span class="badge bg-warning text-dark">30% OFF</span></p>
+                        <p class="text-muted small">Free shipping on all your orders.</p>
+                        <button class="btn btn-primary mt-2">Shop now <i class="fas fa-arrow-right ms-2"></i></button>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
+
+            <div class="col-lg-4 d-flex flex-column gap-4">
+                <div class="p-4 rounded-3"
+                    style="background-image: url('https://images.tsawq.net/2025/dec-25/1765436621-96d9ea94.webp'); background-size: cover; background-position: center;">
+                    <span class="text-uppercase fw-bold small">Summer Sale</span>
+                    <h3 class="fw-bold">75% OFF</h3>
+                    <p class="text-muted small">Only Fruit & Vegetable</p>
+                    <a href="#" class="text-green fw-bold text-decoration-none">Shop Now <i
+                            class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="p-4 rounded-3 text-white d-flex flex-column justify-content-center"
+                    style="background-image: url('https://www.hlb-mauritius.com/wp-content/uploads/2022/05/closeup-shot-small-green-leaves-bush.jpg'); background-size: cover; background-position: center; min-height: 200px;">
+                    <div class="text-center">
+                        <span class="text-uppercase small text-white-70">Best Deal</span>
+                        <h3 class="fw-bold mb-3">Special Products Deal of the Month</h3>
+                        <a href="#" class="text-green fw-bold text-decoration-none">Shop Now <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container my-5">
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="feature-box d-flex align-items-center gap-3">
+                    <i class="fas fa-truck fa-2x text-green"></i>
+                    <div>
+                        <h6 class="fw-bold mb-0">Free Shipping</h6>
+                        <small class="text-muted">Free shipping on all your order</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box d-flex align-items-center gap-3">
+                    <i class="fas fa-headset fa-2x text-green"></i>
+                    <div>
+                        <h6 class="fw-bold mb-0">Customer Support 24/7</h6>
+                        <small class="text-muted">Instant access to Support</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box d-flex align-items-center gap-3">
+                    <i class="fas fa-shield-alt fa-2x text-green"></i>
+                    <div>
+                        <h6 class="fw-bold mb-0">100% Secure Payment</h6>
+                        <small class="text-muted">We ensure your money is safe</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box d-flex align-items-center gap-3">
+                    <i class="fas fa-box-open fa-2x text-green"></i>
+                    <div>
+                        <h6 class="fw-bold mb-0">Money-Back Guarantee</h6>
+                        <small class="text-muted">30 Days Money-Back Guarantee</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Popular Categories</h3>
+            <a href="#" class="text-green text-decoration-none fw-medium">View All <i
+                    class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-7 g-3" id="categories-container">
+            <!-- Categories loaded dynamically -->
+        </div>
+    </section>
+
+    <section class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Popular Products</h3>
+            <a href="#" class="text-green text-decoration-none fw-medium">View All <i
+                    class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4" id="featured-products-container">
+            <!-- Products loaded dynamically from dataEdited.json -->
+        </div>
+    </section>
+
+    <!-- Promotion Section -->
+    <section class="container mb-5">
+        <div class="row g-4">
+            <!-- Sale of the Month -->
+            <div class="col-md-4">
+                <div class="promo-card promo-blue position-relative overflow-hidden rounded-3">
+                    <div class="promo-content text-center text-white p-4">
+                        <span
+                            class="badge rounded-pill bg-white text-dark mb-2 px-3 py-1 small text-uppercase fw-semibold"
+                            style="letter-spacing: 1px;">Best Deals</span>
+                        <h3 class="fw-bold mb-3">Sale of the Month</h3>
+                        <div class="countdown d-flex justify-content-center gap-2 mb-3" id="promo-countdown">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="cd-days">00</span>
+                                <small class="d-block text-uppercase"
+                                    style="font-size: 0.6rem; opacity: 0.7;">Days</small>
+                            </div>
+                            <span class="countdown-sep">:</span>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="cd-hours">02</span>
+                                <small class="d-block text-uppercase"
+                                    style="font-size: 0.6rem; opacity: 0.7;">Hours</small>
+                            </div>
+                            <span class="countdown-sep">:</span>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="cd-mins">18</span>
+                                <small class="d-block text-uppercase"
+                                    style="font-size: 0.6rem; opacity: 0.7;">Mins</small>
+                            </div>
+                            <span class="countdown-sep">:</span>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="cd-secs">46</span>
+                                <small class="d-block text-uppercase"
+                                    style="font-size: 0.6rem; opacity: 0.7;">Secs</small>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-light rounded-pill px-4 py-2 fw-semibold">Shop Now <i
+                                class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=600" alt="Fresh vegetables"
+                        class="promo-img">
+                </div>
+            </div>
+
+            <!-- Low-Fat Meat -->
+            <div class="col-md-4">
+                <div class="promo-card promo-dark position-relative overflow-hidden rounded-3">
+                    <div class="promo-content text-center text-white p-4">
+                        <span class="text-uppercase small d-block mb-2" style="letter-spacing: 2px; opacity: 0.7;">85%
+                            Fat Free</span>
+                        <h3 class="fw-bold mb-3 fs-3 text-dark">Fresh & Healthy <br> Organic Food</h3>
+                        <p class="mb-4 d-flex align-items-center"><span class="fs-5 me-2"
+                                style="color: var(--gray-400);">Sale up to</span> <span
+                                class="fs-4 fw-semibold border rounded px-3 py-1 bg-white"
+                                style="color: var(--primary-green);">EGP 79.99</span></p>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=600" alt="Fresh meat"
+                        class="promo-img">
+                </div>
+            </div>
+
+            <!-- Fresh Fruit -->
+            <div class="col-md-4">
+                <div class="promo-card promo-yellow position-relative overflow-hidden rounded-3">
+                    <div class="promo-content text-center p-4">
+                        <span class="text-uppercase small d-block mb-2"
+                            style="letter-spacing: 2px; opacity: 0.6;">Summer Sale</span>
+                        <h3 class="fw-bold mb-2">100% Fresh Fruit</h3>
+                        <p class="mb-3">Up to <span class="badge bg-dark px-2 py-1">64% OFF</span></p>
+                        <a href="#" class="btn btn-outline-dark rounded-pill px-4 py-2 fw-semibold">Shop Now <i
+                                class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=600" alt="Fresh fruits"
+                        class="promo-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hot Deals Section -->
+    <section class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold">Hot Deals</h3>
+            <a href="#" class="text-green text-decoration-none fw-medium">View All <i
+                    class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="row g-4" id="hot-deals-container">
+            <!-- Hot deals loaded dynamically -->
+        </div>
+    </section>
+
+    <!-- Client Testimonials Section -->
+    <section class="testimonials-section py-5">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 class="fw-bold mb-0">Client Testimonials</h3>
+                <div class="testimonial-nav d-flex gap-2">
+                    <button class="testimonial-arrow" id="testimonial-prev" aria-label="Previous testimonial">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="testimonial-arrow active" id="testimonial-next" aria-label="Next testimonial">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="testimonial-track-wrapper">
+                <div class="testimonial-track" id="testimonial-track">
+                    <!-- Testimonials loaded dynamically from dataEdited.json -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Brand Logos Section -->
+    <style>
+        .brand-logo-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo-item:hover,
+        .brand-logo-item:hover * {
+            color: var(--primary-green) !important;
+        }
+
+        .brand-logo-item:hover {
+            transform: scale(1.05);
+        }
+    </style>
+    <section class="brand-logos-section py-5 bg-white border-top border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-around align-items-center gap-4 opacity-50">
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-bold text-secondary d-flex align-items-center" style="letter-spacing: 1px;">
+                        <span class="position-relative">
+                            FO<span class="position-absolute start-0 w-100"
+                                style="height:2px; background:currentColor; top:50%;"></span>
+                        </span>OD
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-bold text-secondary" style="letter-spacing: 2px;">
+                        BOOK<span class="align-middle mx-1" style="font-size: 0.5em;"><i
+                                class="fas fa-circle"></i></span>OFF
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-bold fst-italic text-secondary">
+                        <span class="fs-2">G</span><span class="fs-5 fw-normal ms-1">Series</span>
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fst-italic text-lowercase fw-semibold text-secondary">
+                        steps
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-light text-secondary" style="letter-spacing: 3px; font-family: serif;">
+                        MANGO
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Gallery Section -->
+    <section class="social-gallery-section py-5">
+        <div class="container">
+            <h3 class="fw-bold text-center mb-4">Follow us on Social Media</h3>
+            <div class="row g-3">
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener" class="social-gallery-item"
+                        data-platform="Instagram">
+                        <img src="https://acsagrokft.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-07-at-00.37.35_b94a1cb1.jpg"
+                            alt="Fresh tomatoes">
+                        <div class="social-overlay">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="https://www.facebook.com" target="_blank" rel="noopener" class="social-gallery-item"
+                        data-platform="Facebook">
+                        <img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400"
+                            alt="Fresh spinach">
+                        <div class="social-overlay">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="https://www.tiktok.com" target="_blank" rel="noopener" class="social-gallery-item"
+                        data-platform="TikTok">
+                        <img src="https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400"
+                            alt="Fresh cucumbers">
+                        <div class="social-overlay">
+                            <i class="fab fa-tiktok"></i>
+                            <span>TikTok</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="https://www.x.com" target="_blank" rel="noopener" class="social-gallery-item"
+                        data-platform="X">
+                        <img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400" alt="Red peppers">
+                        <div class="social-overlay">
+                            <i class="fab fa-x-twitter"></i>
+                            <span>X</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="https://www.pinterest.com" target="_blank" rel="noopener" class="social-gallery-item"
+                        data-platform="Pinterest">
+                        <img src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?w=400" alt="Fresh basil">
+                        <div class="social-overlay">
+                            <i class="fab fa-pinterest-p"></i>
+                            <span>Pinterest</span>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6 col-md-4 col-lg-2">
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener" class="social-gallery-item"
+                        data-platform="YouTube">
+                        <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400" alt="Fresh juice">
+                        <div class="social-overlay">
+                            <i class="fab fa-youtube"></i>
+                            <span>YouTube</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../Js/NavBar.js" defer></script>
+    <script src="../Js/Home.js"></script>
+    <script type="module" src="../Js/Toast.js"></script>
 </body>
+
 </html>
