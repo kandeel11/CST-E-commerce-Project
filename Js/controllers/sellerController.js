@@ -24,7 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // ── User ───────────────────────────────────────────────────────────────────────
 function initUser() {
-    // Try session first; fall back to a dev stub
+    // simulate seller data after login
     currentUser =
         JSON.parse(sessionStorage.getItem("pageUser")) ||
         { storeName: "A5dar", name: "Mohamed Khalifa", userID: "123" };
