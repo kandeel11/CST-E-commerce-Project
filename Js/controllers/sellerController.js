@@ -107,7 +107,7 @@ function initProductModal() {
     //  Open for EDIT (event fired by renderProductsTable) 
     document.getElementById("productsTbody").addEventListener("editProduct", e => {
         const product = e.detail;
-        editingId = product.id;
+        editingId = product.product_id;
         modalTitle.childNodes[modalTitle.childNodes.length - 1].textContent = "Edit Product";
         modalIcon.className = "fas fa-pen text-success me-2";
         // Show sale-price field only when editing
@@ -164,7 +164,7 @@ function initProductModal() {
 
         if (editingId) {
             //  UPDATE existing product 
-            const existing = getAllProducts().find(p => p.id === editingId);
+            const existing = getAllProducts().find(p => p.product_id === editingId);
             // If a sale price is given: current price → originalPrice, newPrice → price
             const priceUpdate = !isNaN(newPrice) && newPrice > 0
                 ? { price: newPrice, originalPrice: price }
@@ -183,7 +183,7 @@ function initProductModal() {
         } else {
             //  ADD new product 
             const product = {
-                product_id:           `${currentUser.userID}_${Date.now()}`,
+                product_id:   `${currentUser.userID}_${Date.now()}`,
                 seller_id:    currentUser.userID,
                 brand:        currentUser.storeName,
                 name,
