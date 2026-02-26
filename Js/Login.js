@@ -113,8 +113,20 @@ LoginButton.addEventListener('click', function (event) {
                 else {
                     localStorage.removeItem("RememberedUser");
                 }
+                let userCart = JSON.parse(localStorage.getItem("cart")) || [];
+                if (!userCart.some(c => c.userid === users[i].id)) {
+                    userCart.push({ userid: users[i].id, items: [] });
+                    localStorage.setItem("cart", JSON.stringify(userCart));
+                    localStorage.setItem("Mycart", JSON.stringify(userCart[userCart.length - 1]));
+
+                } else {
+                    localStorage.setItem("Mycart", JSON.stringify(userCart.find(c => c.userid === users[i].id)));
+                }
+
                 window.location.href = `../Pages/Home.html`;
                 isUserFound = true;
+
+
                 break;
             }
             else if (users[i].Role === "Seller") {
@@ -123,6 +135,8 @@ LoginButton.addEventListener('click', function (event) {
                 isUserFound = true;
                 break;
             }
+
+
 
             // document.querySelector('form').submit();
         }

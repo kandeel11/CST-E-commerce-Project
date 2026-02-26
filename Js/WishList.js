@@ -4,6 +4,7 @@ let isGuest = false;
 if (!localStorage.getItem('currentUser')) {
     isGuest = true;
 }
+import { removeFromWishlist } from ".//services/storageService.js";
 
 let current_user_Id = isGuest ? null : JSON.parse(localStorage.getItem('currentUser')).id;
 
@@ -81,6 +82,13 @@ async function fetchProducts() {
 
 window.addEventListener('load', function () {
 
+    // If guest, show login modal and stop
+    if (isGuest) {
+        const loginModal = new bootstrap.Modal(document.getElementById('loginAlertModal'));
+        loginModal.show();
+        return;
+    }
+
     checkWhichPage();
 
     loadComponents();
@@ -126,6 +134,7 @@ function createProductCard(product) {
     const mainImg = product.images && product.images.length > 0 ? product.images[0] : '';
     const stockText = getStockText(product.stock);
     const isOutOfStock = product.stock <= 0;
+    console.log('Creating product card for:', product);
 
     return `
      <div class="dismisser-row" data-id="${product.product_id}">
@@ -163,19 +172,34 @@ function getStockText(stock) {
 
 function delett(event) {
     let el = event.target;
+    console.log('Clicked delete for element:', el.dataset.id || el.closest('.dismisser-row')?.dataset.id);
     while (el && !el.dataset.id) {
         el = el.parentElement;
     }
     if (el && el.dataset.id) {
-        const productId = Number(el.dataset.id);
+
+        // const productId = Number(el.dataset.id);
+        const productId = el.dataset.id; // Keep as string for comparison in wishlist_obj);
+
+        // Remove from WishLists key in localStorage (use == for type safety)
         let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
         let userProducts = wishlist_obj[current_user_Id] || [];
-        const idx = userProducts.findIndex(p => p.product_id === productId);
-        if (idx !== -1) {
-            userProducts.splice(idx, 1);
-            wishlist_obj[current_user_Id] = userProducts;
-            localStorage.setItem('WishLists', JSON.stringify(wishlist_obj));
+        wishlist_obj[current_user_Id] = userProducts.filter(p => p.product_id != productId);
+        localStorage.setItem('WishLists', JSON.stringify(wishlist_obj));
+        localStorage.setItem("wishUpdated", Date.now());
+        console.log('Removed productId from wishlist_obj:', productId);
+
+        // Also remove via storageService (wrapped in try-catch to not block DOM removal)
+        try {
+            removeFromWishlist(productId);
+        } catch (e) {
+            console.warn('storageService removeFromWishlist error:', e);
         }
+
+        // Dispatch event so heart icons update on other pages
+        window.dispatchEvent(new CustomEvent('wishlistChanged', { detail: { productId, action: 'removed' } }));
+
+        // Remove from DOM
         el.remove();
     }
 
@@ -187,7 +211,8 @@ function checkEmpty() {
     const tableData = document.getElementById('table_data');
     const emptyState = document.getElementById('empty-state');
     if (emptyState) {
-        emptyState.classList.toggle('d-none', !(tableData.children.length === 0 && tableData.innerHTML.trim() === ''));
+        const hasItems = tableData.querySelectorAll('.dismisser-row').length > 0;
+        emptyState.classList.toggle('d-none', hasItems);
     }
 }
 

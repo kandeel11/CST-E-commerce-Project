@@ -1,7 +1,7 @@
 // ── Product helpers ────────────────────────────────────────────────────────────
 const PRODUCTS_KEY = "products";
 
-export function getCurrentUser(){
+export function getCurrentUser() {
     return JSON.parse(localStorage.getItem('currentUser'));
 }
 
@@ -56,8 +56,8 @@ function renderProductsTable(products) {
     }
 
     products.forEach(product => {
-        const img   = (product.images && product.images[0]) || "";
-        const name  = product.name  || "—";
+        const img = (product.images && product.images[0]) || "";
+        const name = product.name || "—";
         const price = parseFloat(product.price || 0).toFixed(2);
         const stock = product.stock ?? "—";
 
@@ -104,26 +104,29 @@ function renderProductsTable(products) {
 }
 
 // ── Wishlist helpers (stored under key: "waitlists") ──────────────────────────
-const WISHLIST_KEY = "wishlists";
+const WISHLIST_KEY = "WishLists";
 
 export function getWishlist() {
     return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || {};
 }
 
 export function isInWishlist(product_id) {
+    if (!getCurrentUser()) return false;
     const wishlists = getWishlist();
-    let wishlist = wishlists[getCurrentUser().userid] || [];
+    let wishlist = wishlists[getCurrentUser().id] || [];
     return wishlist.some(item => item.product_id === product_id);
 }
 
 export function addToWishlist(product) {
+    if (!getCurrentUser()) return false;
     let wishlists = getWishlist();
-    let wishlist = wishlists[getCurrentUser().userid] || [];
+    let wishlist = wishlists[getCurrentUser().id] || [];
 
     if (!wishlist.some(item => item.product_id === product.product_id)) {
         wishlist.push(product);
-        wishlists[getCurrentUser().userid] = wishlist;
+        wishlists[getCurrentUser().id] = wishlist;
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlists));
+        localStorage.setItem("wishUpdated", Date.now());
         return true;
     }
     return false;
@@ -131,9 +134,10 @@ export function addToWishlist(product) {
 
 export function removeFromWishlist(product_id) {
     let wishlists = getWishlist();
-    let wishlist = wishlists[getCurrentUser().userid] || [];
-    wishlists[getCurrentUser().userid] = wishlist.filter(item => item.product_id !== product_id);
+    let wishlist = wishlists[getCurrentUser().id] || [];
+    wishlists[getCurrentUser().id] = wishlist.filter(item => item.product_id !== product_id);
     localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlists));
+    localStorage.setItem("wishUpdated", Date.now());
 }
 
 export function toggleWishlist(product) {
@@ -157,13 +161,27 @@ export function getCart() {
 export function getUserCart() {
     const user = getCurrentUser();
     if (!user) return null;
-    return getCart().find(e => e.userid === user.userid) || null;
+    return getCart().find(e => e.userid === user.id) || null;
 }
 
 /** Returns the items array for the current user. */
 export function getUserCartItems() {
     return getUserCart()?.items || [];
 }
+function getMyCart() {
+    const key = "Mycart";
+    const user = getCurrentUser();
+    if (!user) return null;
+    const cart = getCart();
+    let userCart = cart.find(e => e.userid === user.id);
+    if (!userCart) {
+        userCart = { "userid": user.id, "items": [] };
+        cart.push(userCart);
+        localStorage.setItem(key, JSON.stringify(userCart));
+    }
+    return userCart;
+}
+
 
 /**
  * Adds a product to the current user's cart.
@@ -173,14 +191,19 @@ export function getUserCartItems() {
 export function addToCart(product) {
     const user = getCurrentUser();
     if (!user) return false;
-
+    const myCart = getMyCart();
+    if (!myCart) return false; // should not happen, getMyCart creates it if missing
     const cart = getCart();
+    console.log(user);
+    console.log(cart);
 
-    let userCart = cart.find(e => e.userid === user.userid);
+    let userCart = cart.find(e => e.userid === user.id);
     if (!userCart) {
-        userCart = { userid: user.userid, items: [] };
+        userCart = { "userid": user.id, "items": [] };
+        console.log("Creating new cart for user:", user.id);
         cart.push(userCart);
     }
+
 
     const existing = userCart.items.find(item => item.product_id === product.product_id);
 
@@ -192,9 +215,12 @@ export function addToCart(product) {
     } else {
         userCart.items.push({ ...product, quantity: 1 });
     }
-
+    myCart.items = userCart.items; // sync with getMyCart reference
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem("Mycart", JSON.stringify(myCart));
+    localStorage.setItem("cartUpdated", Date.now());
     return true;
+
 }
 
 /** Removes a single item from the current user's cart by product_id. */
@@ -203,11 +229,13 @@ export function removeFromCart(product_id) {
     if (!user) return;
 
     const cart = getCart();
-    const userCart = cart.find(e => e.userid === user.userid);
+    const userCart = cart.find(e => e.userid === user.id);
     if (!userCart) return;
 
     userCart.items = userCart.items.filter(item => item.product_id !== product_id);
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem("Mycart", JSON.stringify(userCart));
+    localStorage.setItem("cartUpdated", Date.now());
 }
 
 /** Updates the quantity of an item; removes it if quantity reaches 0. */
@@ -216,7 +244,7 @@ export function updateCartItemQuantity(product_id, quantity) {
     if (!user) return;
 
     const cart = getCart();
-    const userCart = cart.find(e => e.userid === user.userid);
+    const userCart = cart.find(e => e.userid === user.id);
     if (!userCart) return;
 
     if (quantity <= 0) {
@@ -226,6 +254,8 @@ export function updateCartItemQuantity(product_id, quantity) {
         if (item) item.quantity = quantity;
     }
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem("Mycart", JSON.stringify(userCart));
+    localStorage.setItem("cartUpdated", Date.now());
 }
 
 /** Clears all items from the current user's cart. */
@@ -234,9 +264,11 @@ export function clearCart() {
     if (!user) return;
 
     const cart = getCart();
-    const userCart = cart.find(e => e.userid === user.userid);
+    const userCart = cart.find(e => e.userid === user.id);
     if (userCart) userCart.items = [];
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    localStorage.setItem("Mycart", JSON.stringify(userCart));
+    localStorage.setItem("cartUpdated", Date.now());
 }
 
 /** Total number of items (sum of quantities) in the current user's cart. */
