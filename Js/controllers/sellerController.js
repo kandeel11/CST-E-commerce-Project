@@ -165,10 +165,22 @@ function initProductModal() {
         if (editingId) {
             //  UPDATE existing product 
             const existing = getAllProducts().find(p => p.product_id === editingId);
-            // If a sale price is given: current price → originalPrice, newPrice → price
-            const priceUpdate = !isNaN(newPrice) && newPrice > 0
-                ? { price: newPrice, originalPrice: price }
-                : { price };                            // no sale: just update price, clear old originalPrice
+            // iff a sale price is given: current price → oldPrice, newPrice → price
+            let priceUpdate;
+            if(!isNaN(newPrice) && newPrice > 0 ){
+                if(newPrice < price){
+                    priceUpdate = { price: newPrice, oldPrice: price }
+                }
+                else{
+                    priceUpdate = { price: newPrice, oldPrice: null }
+                }
+            }
+            else{
+                priceUpdate = { price };
+            }
+            //const priceUpdate = !isNaN(newPrice) && newPrice > 0 
+            //    ? { price: newPrice, oldPrice: price }
+            //    : { price };                            // no sale: just update price, clear old oldPrice
             const updated = {
                 ...existing,
                 name,
@@ -190,7 +202,7 @@ function initProductModal() {
                 category,
                 description:  desc,
                 price,
-                originalPrice: null,
+                oldPrice: null,
                 stock,
                 organic,
                 images:       imageUrls.length > 0
