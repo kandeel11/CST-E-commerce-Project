@@ -86,33 +86,37 @@ function initSearch() {
     statusFilter.addEventListener("change", applyFilter);
 }
 
-// ── Product modal (Add + Edit) ─────────────────────────────────────────────────
+//  Product modal (Add + Edit) 
 function initProductModal() {
     const modal       = bootstrap.Modal.getOrCreateInstance(document.getElementById("productModal"));
     const modalTitle  = document.getElementById("productModalTitle");
     const modalIcon   = modalTitle.querySelector("i");
     const form        = document.getElementById("productForm");
 
-    // ── Open for ADD ────────────────────────────────────────────
+    //  Open for ADD 
     document.getElementById("openAddProductModalBtn").addEventListener("click", () => {
         editingId = null;
         modalTitle.childNodes[modalTitle.childNodes.length - 1].textContent = "Add Product";
         modalIcon.className = "fas fa-plus-circle text-success me-2";
+        // Hide sale-price field for new products
+        document.getElementById("newPriceGroup").classList.add("d-none");
         clearForm();
         modal.show();
     });
 
-    // ── Open for EDIT (event fired by renderProductsTable) ──────
+    //  Open for EDIT (event fired by renderProductsTable) 
     document.getElementById("productsTbody").addEventListener("editProduct", e => {
         const product = e.detail;
         editingId = product.id;
         modalTitle.childNodes[modalTitle.childNodes.length - 1].textContent = "Edit Product";
         modalIcon.className = "fas fa-pen text-success me-2";
+        // Show sale-price field only when editing
+        document.getElementById("newPriceGroup").classList.remove("d-none");
         populateForm(product);
         modal.show();
     });
 
-    // ── Add / remove image rows ──────────────────────────────────
+    //  Add / remove image rows 
     document.getElementById("addImageBtn").addEventListener("click", () => {
         const row = document.createElement("div");
         row.className = "row g-2 mb-2 image-row";
@@ -137,7 +141,7 @@ function initProductModal() {
             e.target.closest(".image-row").remove();
     });
 
-    // ── Form submit ─────────────────────────────────────────────
+    //  Form submit 
     form.addEventListener("submit", e => {
         e.preventDefault();
 
@@ -150,44 +154,53 @@ function initProductModal() {
             else if (file)  imageUrls.push(URL.createObjectURL(file));
         });
 
-        const name  = document.getElementById("productName").value.trim();
-        const price = parseFloat(document.getElementById("productPrice").value);
-        const stock = parseInt(document.getElementById("productStock").value);
-        const desc  = document.getElementById("productDescription").value.trim();
+        const name     = document.getElementById("productName").value.trim();
+        const category = document.getElementById("productCategory").value;
+        const price    = parseFloat(document.getElementById("productPrice").value);
+        const newPrice = parseFloat(document.getElementById("productNewPrice").value);
+        const stock    = parseInt(document.getElementById("productStock").value);
+        const organic  = document.getElementById("productOrganic").checked;
+        const desc     = document.getElementById("productDescription").value.trim();
 
         if (editingId) {
-            // ── UPDATE existing product ──────────────────────────
+            //  UPDATE existing product 
             const existing = getAllProducts().find(p => p.id === editingId);
-            const updated  = {
+            // If a sale price is given: current price → originalPrice, newPrice → price
+            const priceUpdate = !isNaN(newPrice) && newPrice > 0
+                ? { price: newPrice, originalPrice: price }
+                : { price };                            // no sale: just update price, clear old originalPrice
+            const updated = {
                 ...existing,
                 name,
+                category,
                 description: desc,
-                price,
                 stock,
-                // Only replace images if the user actually added new ones
+                organic,
+                ...priceUpdate,
                 images: imageUrls.length > 0 ? imageUrls : existing.images,
             };
             updateProduct(updated);
         } else {
-            // ── ADD new product ──────────────────────────────────
+            //  ADD new product 
             const product = {
-                id:          `${currentUser.userID}_${Date.now()}`,
-                seller_id:   currentUser.userID,
-                brand:       currentUser.storeName,
+                product_id:           `${currentUser.userID}_${Date.now()}`,
+                seller_id:    currentUser.userID,
+                brand:        currentUser.storeName,
                 name,
-                description: desc,
+                category,
+                description:  desc,
                 price,
+                originalPrice: null,
                 stock,
-                images:      imageUrls.length > 0
-                                 ? imageUrls
-                                 : ["https://placehold.co/400x300/e8f5e9/2e7d32?text=Product"],
-                category:    "Fruits",   // TODO: add category dropdown to form
-                rating:      0,
-                organic:     false,
-                discount:    0,
-                dailySale:   false,
-                weight:      "",
-                unit:        "",
+                organic,
+                images:       imageUrls.length > 0
+                                  ? imageUrls
+                                  : ["https://placehold.co/400x300/e8f5e9/2e7d32?text=Product"],
+                rating:       0,
+                discount:     0,
+                dailySale:    false,
+                weight:       "",
+                unit:         "",
             };
             addProductToStorage(product);
         }
@@ -251,10 +264,11 @@ function refreshAnalytics() {
 
 // ── Form helpers ───────────────────────────────────────────────────────────────
 function clearForm() {
-    ["productName", "productPrice", "productStock", "productDescription"]
+    ["productName", "productPrice", "productNewPrice", "productStock", "productDescription"]
         .forEach(id => { document.getElementById(id).value = ""; });
+    document.getElementById("productCategory").value = "";
+    document.getElementById("productOrganic").checked = false;
 
-    // Reset image rows to a single empty row
     document.getElementById("imagesContainer").innerHTML = `
         <div class="row g-2 mb-2 image-row">
             <div class="col-md-6">
@@ -275,10 +289,12 @@ function clearForm() {
 function populateForm(product) {
     document.getElementById("productName").value        = product.name        || "";
     document.getElementById("productPrice").value       = product.price       || "";
+    document.getElementById("productNewPrice").value    = "";   // always blank; seller fills in if desired
     document.getElementById("productStock").value       = product.stock       || "";
     document.getElementById("productDescription").value = product.description || "";
+    document.getElementById("productCategory").value    = product.category    || "";
+    document.getElementById("productOrganic").checked   = !!product.organic;
 
-    // Populate image rows from existing images
     const container = document.getElementById("imagesContainer");
     container.innerHTML = "";
     const images = (product.images && product.images.length) ? product.images : [""];

@@ -1,3 +1,4 @@
+import { showToast } from "../controllers/productController.js";
 const CURRENT_USER = 'ahmedali@example.com';
 
 //  Product 
@@ -175,11 +176,16 @@ export function addToCart(product) {
     const cart = getCart();
     const existing = cart.find(item => item.id === product.id);
     if (existing) {
+            if((existing.quantity || 0) >= product.stock){
+                showToast(`✋🏼 Maximum Quantity Reached!`);
+                return false;
+            }
         existing.quantity = (existing.quantity || 1) + 1;
     } else {
         cart.push({ ...product, quantity: 1 });
     }
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    return true;
 }
 
 export function getCartCount() {

@@ -1,4 +1,4 @@
-import { getAllProducts, toggleWishlist, isInWishlist, addToCart, getCartCount } from "../services/storageService.js";
+import { getAllProducts, toggleWishlist, isInWishlist, addToCart, getCartCount, getCart } from "../services/storageService.js";
 
 //  DOM re
 const productsContainer = document.getElementById("productsContainer");
@@ -174,9 +174,9 @@ function renderProducts(products) {
         const desc = pDesc(product);
         //const rating = product.rating || 4;
         const rating = (r => isNaN(r) || r <= 0 ? 0 : r)(parseFloat(product.rating));
-        const inStock = (product.stockQuantity || product.stock || 1) > 0;
+        const inStock = (product.stockQuantity || product.stock) > 0;
         const wishlisted = isInWishlist(pid);
-        const discount = product.oldPrice ? Math.round(((product.oldPrice - price) / product.oldPrice) * 100) : 0;
+        const discount = product.originalPrice ? Math.round(((product.originalPrice - price) / product.originalPrice) * 100) : 0;
 
         const card = document.createElement("div");
         card.className = "product-card card border-0 shadow-sm rounded-3 overflow-hidden";
@@ -201,8 +201,8 @@ function renderProducts(products) {
                             title="${wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}">
                         <i class="${wishlisted ? "fas" : "far"} fa-heart"></i>
                     </button>
-                    <button class="hover-btn details-btn" title="View Details" data-id=${product.product_id}>
-                        <i class="fas fa-eye" data-id=${product.product_id}></i>
+                    <button class="hover-btn details-btn" title="View Details" data-id=${product.id}>
+                        <i class="fas fa-eye" data-id=${product.id}></i>
                     </button>
                 </div>
             </div>
@@ -221,8 +221,8 @@ function renderProducts(products) {
                 <div class="d-flex align-items-center justify-content-between mt-auto">
                     <div>
                         <span class="fw-bold text-success">EGP ${price.toFixed(2)}</span>
-                        ${product.oldPrice
-                            ? `<br><small class="text-muted text-decoration-line-through">EGP ${product.oldPrice.toFixed(2)}</small>`
+                        ${product.originalPrice
+                            ? `<br><small class="text-muted text-decoration-line-through">EGP ${product.originalPrice.toFixed(2)}</small>`
                             : ""}
                     </div>
                     <button class="btn btn-success btn-sm add-cart-btn" ${!inStock ? "disabled" : ""}>
@@ -255,10 +255,15 @@ function renderProducts(products) {
         // Add to cart
         card.querySelector(".add-cart-btn")?.addEventListener("click", e => {
             e.stopPropagation();
-            if (!inStock) return;
-            addToCart(product);
-            updateCartBadge();
+            if (!inStock){
+                showToast(`🪹 No Stock Available for this item!`);
+                return;
+            } 
+            let added = addToCart(product);
+            if(added){
+                updateCartBadge();
             showToast(`🛒 ${name} added to cart!`);
+            }
         });
 
         productsContainer.appendChild(card);
@@ -301,7 +306,7 @@ function resetFilters() {
     applyFilters();
 }
 
-function showToast(message) {
+export function showToast(message) {
     let container = document.getElementById("toastContainer");
     if (!container) {
         container = document.createElement("div");
