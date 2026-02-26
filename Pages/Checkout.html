@@ -150,7 +150,24 @@ body {
         
        </div>
     </section>
-
+    <div class="toast-container position-fixed top-0 end-0 p-3 mb-5">
+        <div id="myToast3" class="toast align-items-center text-bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Order Completed Successfully 🎉</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3 mb-5">
+        <div id="myToast33" class="toast align-items-center text-bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Can't Compelete this Order product Out of Stock</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
     <script type="module">
         import { Order } from '../JS/Checkout.js';
         Order.AddSummaryOrder();
@@ -160,6 +177,3 @@ body {
 </body>
 
 </html>
- <!-- Order Notes
-                <div class="col-12 mb-3"> <label for="orderNotes" class="form-label">Order Notes</label> <textarea
-                        class="form-control" id="orderNotes" placeholder="(optional)" rows="4"></textarea> </div> -->

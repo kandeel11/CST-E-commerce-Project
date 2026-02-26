@@ -1,10 +1,10 @@
 import { Order } from "./Checkout.js";
 var carts = JSON.parse(localStorage.getItem("cart")) || [];
+let mycart = JSON.parse(localStorage.getItem("MyCart")) || [];
 export class Cart {
   constructor(userid) {
     this.userid = userid;
     this.items = [];
-    this.createddate = new Date().toString();
   }
   static createcart(userid) {
     let carts = JSON.parse(localStorage.getItem("cart")) || [];
@@ -18,10 +18,34 @@ export class Cart {
       return usercart;
     }
   }
-  static GetCurrentUserCart() {
-    let mycart = JSON.parse(localStorage.getItem("MyCart")) || [];
+  static syncToCart(mycart) {
+    if (!mycart || !mycart.userid) return;
+
+    let carts = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let index = carts.findIndex((c) => c.userid === mycart.userid);
+
+    if (index !== -1) {
+      carts[index] = mycart;
+    } else {
+      carts.push(mycart);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(carts));
+}
+ static GetCurrentUserCart() {
+    let mycart = JSON.parse(localStorage.getItem("MyCart"));
+
+    if (!mycart || !Array.isArray(mycart.items)) {
+        mycart = {
+            userid: null,
+            items: [],
+        };
+        localStorage.setItem("MyCart", JSON.stringify(mycart));
+    }
+
     return mycart;
-  }
+}
   static AddItemstoTable() {
     var row = document.getElementsByTagName("tbody")[0];
     if (!row) {
@@ -265,11 +289,15 @@ btntocheckout.addEventListener("click", function () {
     var orders = JSON.parse(localStorage.getItem("order")) || [];
 
     var pendingOrder = orders.find(o => o.userid === userId && o.orderStatus === "pending");
-
+     var items = mycart.items;
+     var total =0;
+     items.forEach(item=>{
+        total += item.quantity * item.price;
+     })
     if (pendingOrder) {
         pendingOrder.products = mycart.items;
     } else {
-        var order = new Order(userId, "pending", mycart.items);
+        var order = new Order(userId, "pending", mycart.items ,total);
         orders.push(order);
     }
     localStorage.setItem("order", JSON.stringify(orders));
