@@ -18,6 +18,21 @@ const categoryItems = document.querySelectorAll(".category-item");
 const viewBtns = document.querySelectorAll(".view-btn");
 const cartCountEl = document.getElementById("cartCount");
 
+// ── Category key → actual product category value mapping ──────────────────────
+const categoryKeyToValue = {
+    "Fruits": "Fruits",
+    "Vegetables": "Vegetables",
+    "MeatFish": "Meat & Fish",
+    "Dairy": "Dairy",
+    "Bakery": "Bread & Bakery",
+    "Beverages": "Beverages",
+    "Snacks": "Snacks"
+};
+// Reverse map: product category value → sidebar key
+const categoryValueToKey = Object.fromEntries(
+    Object.entries(categoryKeyToValue).map(([k, v]) => [v, k])
+);
+
 // ── State ──────────────────────────────────────────────────────────────────────
 let allProducts = [];
 let filteredProducts = [];
@@ -29,10 +44,19 @@ const PAGE_SIZE = 9;
 // ── Init ───────────────────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
     allProducts = getAllProducts();
-    if (allProducts.length === 0) {
-        allProducts = getDemoProducts();
-        localStorage.setItem("products", JSON.stringify(allProducts));
+    console.log("Products loaded from storage:", allProducts);
+
+    // Read ?category= from URL (e.g. Product.html?category=MeatFish)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCategory = urlParams.get("category");
+    if (urlCategory && urlCategory !== "All") {
+        currentCategory = categoryKeyToValue[urlCategory] || urlCategory;
+        categoryItems.forEach(item => {
+            item.classList.remove("active");
+            if (item.dataset.category === urlCategory) item.classList.add("active");
+        });
     }
+
     updateCartBadge();
     populateCategoryCounts(allProducts);
 
@@ -57,7 +81,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
     applyFilters();
     bindEvents();
-    loadData();
     loadComponents();
 });
 
@@ -78,7 +101,8 @@ function bindEvents() {
         item.addEventListener("click", () => {
             categoryItems.forEach(i => i.classList.remove("active"));
             item.classList.add("active");
-            currentCategory = item.dataset.category;
+            const key = item.dataset.category;
+            currentCategory = key === "All" ? "All" : (categoryKeyToValue[key] || key);
             currentPage = 1;
             applyFilters();
         });
@@ -299,9 +323,10 @@ function populateCategoryCounts(products) {
     const counts = {};
     products.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
     document.getElementById("countAll").textContent = products.length;
-    ["Fruits", "Vegetables", "MeatFish", "Dairy", "Bakery", "Beverages", "Snacks"].forEach(cat => {
-        const el = document.getElementById(`count${cat}`);
-        if (el) el.textContent = counts[cat] || 0;
+    ["Fruits", "Vegetables", "MeatFish", "Dairy", "Bakery", "Beverages", "Snacks"].forEach(key => {
+        const el = document.getElementById(`count${key}`);
+        const catValue = categoryKeyToValue[key] || key;
+        if (el) el.textContent = counts[catValue] || 0;
     });
 }
 
@@ -341,6 +366,7 @@ function showToast(message) {
         setTimeout(() => toast.remove(), 400);
     }, 2800);
 }
+<<<<<<< HEAD
 async function loadData() {
     try {
         const response = await fetch("../Data/ecobazar.json");
@@ -353,6 +379,8 @@ async function loadData() {
         console.error(error);
     }
 }
+=======
+>>>>>>> a73708406e2ce72740909bcd2adbe000093aabcb
 
 function loadComponents() {
     // 1. Load Navbar
