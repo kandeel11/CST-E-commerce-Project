@@ -37,6 +37,8 @@ window.addEventListener("DOMContentLoaded", () => {
     populateCategoryCounts(allProducts);
     applyFilters();
     bindEvents();
+    loadData();
+    loadComponents();
 });
 
 // ── Events ─────────────────────────────────────────────────────────────────────
@@ -332,7 +334,6 @@ async function loadData() {
     }
 }
 
-loadData();
 function loadComponents() {
     // 1. Load Navbar
     fetch('../../Pages/NavBar.html')
@@ -355,7 +356,3 @@ function loadComponents() {
         })
         .catch(error => console.error('Error loading footer:', error));
 }
-window.addEventListener('load', function () {
-
-    loadComponents();
-});
