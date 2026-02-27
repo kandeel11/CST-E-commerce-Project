@@ -1,9 +1,7 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     loadComponents();
     loadData();
     initCountdown();
-
     // Check if we need to show a login toast
     if (localStorage.getItem("showLoginToast") === "true") {
         const currentUser = JSON.parse(localStorage.getItem("currentUser")) || JSON.parse(localStorage.getItem("currentSeller"));
@@ -21,13 +19,11 @@ function showWelcomeToast(message) {
         toastContainer.style.zIndex = '1055';
         document.body.appendChild(toastContainer);
     }
-
     const toastEl = document.createElement('div');
     toastEl.className = `toast align-items-center text-white bg-success border-0 fade show`;
     toastEl.setAttribute('role', 'alert');
     toastEl.setAttribute('aria-live', 'assertive');
     toastEl.setAttribute('aria-atomic', 'true');
-
     toastEl.innerHTML = `
       <div class="d-flex">
         <div class="toast-body">
@@ -36,26 +32,21 @@ function showWelcomeToast(message) {
         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
     `;
-
     const closeBtn = toastEl.querySelector('.btn-close');
     closeBtn.addEventListener('click', () => {
         toastEl.classList.remove('show');
         setTimeout(() => toastEl.remove(), 150);
     });
-
     toastContainer.appendChild(toastEl);
-
     setTimeout(() => {
         toastEl.classList.remove('show');
         setTimeout(() => toastEl.remove(), 150);
     }, 3000);
 }
-
 // Countdown timer for promo section
 function initCountdown() {
     const now = new Date();
     const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
-
     function update() {
         const diff = endOfMonth - new Date();
         if (diff <= 0) return;
@@ -72,21 +63,19 @@ function initCountdown() {
     update();
     setInterval(update, 1000);
 }
-
 function loadComponents() {
     // 1. Load Navbar
     fetch('NavBar.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navbar-placeholder').innerHTML = data;
-
             // Re-run NavBar initialization since the HTML is dynamically loaded
             if (window.initNavBarAuth) window.initNavBarAuth();
-            if (window.initBreadcrumb) window.initBreadcrumb();
+            if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+            if (window.initMobileSearch) window.initMobileSearch();
             if (window.updateCartBadge) window.updateCartBadge();
         })
         .catch(error => console.error('Error loading navbar:', error));
-
     // 2. Load Footer
     fetch('Footer.html')
         .then(response => response.text())
@@ -95,18 +84,23 @@ function loadComponents() {
         })
         .catch(error => console.error('Error loading footer:', error));
 }
-
 // Fetch JSON data and render sections
+// Fetch data from local storage or fallback to JSON and render sections
 function loadData() {
-    fetch('../Data/ecobazar.json')
-        .then(response => response.json())
-        .then(data => {
-            renderCategories(data);
-            renderProducts(data);
-            renderHotDeals(data);
-            renderTestimonials(data);
-        })
-        .catch(error => console.error('Error loading data:', error));
+    let products = JSON.parse(localStorage.getItem('products'));
+    if (products && products.length > 0) {
+        const data = {};
+        products.forEach(p => {
+            const cat = p.category || "Uncategorized";
+            if (!data[cat]) data[cat] = [];
+            data[cat].push(p);
+        });
+        renderCategories(data);
+        renderProducts(data);
+        renderHotDeals(data);
+        renderTestimonials(data);
+    }
+
 }
 
 // ========== CATEGORIES ==========
@@ -118,17 +112,13 @@ const categoryMeta = {
     Bakery: { name: "Bread & Bakery", icon: "fa-bread-slice" },
     Beverages: { name: "Beverages", icon: "fa-mug-hot" }
 };
-
 function renderCategories(data) {
     const container = document.getElementById('categories-container');
     if (!container) return;
-
     const categoryKeys = Object.keys(data).filter(key => Array.isArray(data[key]) && key !== 'Sellers');
-
     container.innerHTML = categoryKeys.map(key => {
         const meta = categoryMeta[key] || { name: key, icon: "fa-box" };
         const count = data[key].length;
-
         return `
             <div class="col">
                 <div class="category-card">
@@ -140,12 +130,10 @@ function renderCategories(data) {
         `;
     }).join('');
 }
-
 // ========== PRODUCTS ==========
 function renderProducts(data) {
     const container = document.getElementById('featured-products-container');
     if (!container) return;
-
     // Collect all products from all categories
     let allProducts = [];
     for (const category in data) {
@@ -153,10 +141,8 @@ function renderProducts(data) {
             allProducts = allProducts.concat(data[category]);
         }
     }
-
     // Pick first 10 products for the homepage
     const featured = allProducts.slice(0, 10);
-
     // Get current user wishlist for heart icons
     let wishlistIds = [];
     const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -169,40 +155,33 @@ function renderProducts(data) {
             }
         }
     }
-
     container.innerHTML = featured.map(product => {
         const imgSrc = product.img || product.image || (product.images && product.images[0]) || '';
         const name = product.name || 'Product';
         const price = product.price || 0;
         const oldPrice = product.oldPrice || null;
         const discount = product.discount || 0;
-
         // Calculate average rating from reviews
         let avgRating = product.rating || 0;
         if (product.reviews && product.reviews.length > 0 && avgRating === 0) {
             const sum = product.reviews.reduce((acc, r) => acc + r.rating, 0);
             avgRating = Math.round(sum / product.reviews.length);
         }
-
         // Generate stars HTML
         const starsHtml = Array.from({ length: 5 }, (_, i) =>
             `<i class="fas fa-star${i < avgRating ? '' : '-half-alt'}" style="color: ${i < avgRating ? '#FF8A00' : '#ddd'}"></i>`
         ).join('');
-
         // Discount badge
         const badgeHtml = discount > 0
             ? `<div class="sale-badge">Sale ${discount}%</div>`
             : '';
-
         // Old price
         const oldPriceHtml = oldPrice
             ? `<small class="text-muted text-decoration-line-through">EGP ${oldPrice.toLocaleString()}</small>`
             : '';
-
         // Heart Icon status
         const isWished = wishlistIds.includes(product.product_id || 0);
         const heartIconCls = isWished ? 'fas fa-heart text-success' : 'far fa-heart';
-
         return `
             <div class="col">
                 <div class="card product-card h-100 position-relative">
@@ -237,12 +216,10 @@ function renderProducts(data) {
         `;
     }).join('');
 }
-
 // ========== HOT DEALS ==========
 function renderHotDeals(data) {
     const container = document.getElementById('hot-deals-container');
     if (!container) return;
-
     // Collect all products and sort by discount descending
     let allProducts = [];
     for (const category in data) {
@@ -251,10 +228,8 @@ function renderHotDeals(data) {
         }
     }
     allProducts.sort((a, b) => (b.discount || 0) - (a.discount || 0));
-
     const featured = allProducts[0];
     const gridProducts = allProducts.slice(1, 10);
-
     // Get current user wishlist for heart icons
     let wishlistIds = [];
     const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -264,14 +239,12 @@ function renderHotDeals(data) {
         wishlistIds = userProducts.map(i => i.product_id);
         console.log("Wishlist IDs for user:", wishlistIds);
     }
-
     // Helper: generate stars
     function starsHtml(rating) {
         return Array.from({ length: 5 }, (_, i) =>
             `<i class="fas fa-star" style="color: ${i < rating ? '#FF8A00' : '#ddd'}; font-size: 0.7rem;"></i>`
         ).join('');
     }
-
     // Featured card (left)
     const featImg = featured.img || featured.image || (featured.images && featured.images[0]) || '';
     const featReviewCount = featured.reviews ? featured.reviews.length * 100 + 24 : 0;
@@ -314,7 +287,6 @@ function renderHotDeals(data) {
                 </div>
             </div>
         </div>`;
-
     const gridHtml = gridProducts.map(p => {
         const img = p.img || p.image || (p.images && p.images[0]) || '';
         const oldPriceHtml = p.oldPrice ? `<small class="text-muted text-decoration-line-through">EGP ${p.oldPrice.toFixed(2)}</small>` : '';
@@ -352,23 +324,19 @@ function renderHotDeals(data) {
                 </div>
             </div>`;
     }).join('');
-
     container.innerHTML = featuredHtml + `
         <div class="col-lg-7">
             <div class="row g-3">
                 ${gridHtml}
             </div>
         </div>`;
-
     // Start deal countdown
     initDealCountdown();
 }
-
 function initDealCountdown() {
     const end = new Date();
     end.setDate(end.getDate() + 1);
     end.setHours(23, 59, 59, 0);
-
     function tick() {
         const diff = end - new Date();
         if (diff <= 0) return;
@@ -385,7 +353,6 @@ function initDealCountdown() {
     tick();
     setInterval(tick, 1000);
 }
-
 // ========== TESTIMONIALS (from product reviews) ==========
 // Display names mapped to user_ids for testimonial cards
 const customerNames = [
@@ -393,11 +360,9 @@ const customerNames = [
     "Sarah Johnson", "Michael Brown", "Emily Davis", "David Martinez",
     "Jessica Taylor", "Daniel Anderson"
 ];
-
 function renderTestimonials(data) {
     const track = document.getElementById('testimonial-track');
     if (!track) return;
-
     // Collect all reviews from all products across all categories
     let allReviews = [];
     for (const category in data) {
@@ -413,14 +378,11 @@ function renderTestimonials(data) {
             }
         });
     }
-
     // Filter for high-rated reviews (4+ stars) and pick 6 for the carousel
     const topReviews = allReviews
         .filter(r => r.rating >= 4)
         .slice(0, 6);
-
     if (topReviews.length === 0) return;
-
     // Render testimonial cards
     track.innerHTML = topReviews.map((review, index) => {
         const name = customerNames[index % customerNames.length];
@@ -428,11 +390,9 @@ function renderTestimonials(data) {
         const gender = review.user_id % 2 === 0 ? 'women' : 'men';
         const avatarId = (review.user_id % 90) + 1;
         const avatar = `https://randomuser.me/api/portraits/${gender}/${avatarId}.jpg`;
-
         const starsHtml = Array.from({ length: 5 }, (_, i) =>
             `<i class="fas fa-star" style="color: ${i < review.rating ? '#FF8A00' : '#ddd'}"></i>`
         ).join('');
-
         return `
             <div class="testimonial-card">
                 <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
@@ -451,31 +411,24 @@ function renderTestimonials(data) {
             </div>
         `;
     }).join('');
-
     // Initialize carousel after rendering
     initTestimonialCarousel();
 }
-
 function initTestimonialCarousel() {
     const track = document.getElementById('testimonial-track');
     const prevBtn = document.getElementById('testimonial-prev');
     const nextBtn = document.getElementById('testimonial-next');
-
     if (!track || !prevBtn || !nextBtn) return;
-
     const cards = track.querySelectorAll('.testimonial-card');
     let currentIndex = 0;
-
     function getVisibleCount() {
         if (window.innerWidth < 576) return 1;
         if (window.innerWidth < 992) return 2;
         return 3;
     }
-
     function getMaxIndex() {
         return Math.max(0, cards.length - getVisibleCount());
     }
-
     function updateCarousel() {
         const visibleCount = getVisibleCount();
         const gap = 24;
@@ -483,25 +436,20 @@ function initTestimonialCarousel() {
         const offset = currentIndex * (cardWidth + gap);
         track.style.transform = `translateX(-${offset}px)`;
     }
-
     nextBtn.addEventListener('click', () => {
         if (currentIndex < getMaxIndex()) {
             currentIndex++;
             updateCarousel();
         }
     });
-
     prevBtn.addEventListener('click', () => {
         if (currentIndex > 0) {
             currentIndex--;
             updateCarousel();
         }
     });
-
     window.addEventListener('resize', () => {
         currentIndex = Math.min(currentIndex, getMaxIndex());
         updateCarousel();
     });
 }
-
-

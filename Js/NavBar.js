@@ -1,79 +1,28 @@
 import { addToWishlist1 } from './WishList.js';
 import { getAllProducts, toggleWishlist, isInWishlist, addToCart, getCartCount } from "../Js/services/storageService.js";
 
-// navbar.js - Breadcrumb and navbar functionality
+// navbar.js - navbar functionality
 document.addEventListener('DOMContentLoaded', () => {
-    initBreadcrumb();
     if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+    if (window.initMobileSearch) window.initMobileSearch();
 });
 
+let lastScrollTop = 0;
 
-function initBreadcrumb() {
-    const breadcrumbList = document.getElementById('breadcrumb-list');
-    if (!breadcrumbList) return;
+window.addEventListener('scroll', function () {
+    const navbar = document.querySelector('.navbar-placeholder');
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Get the current page name from the URL
-    const path = window.location.pathname;
-    let fileName = path.split('/').pop() || 'Home.html';
-    fileName = fileName.split('?')[0].split('#')[0]; // strip query and hash
-
-    // Remove extension and clean up
-    let rawPageName = fileName.replace('.html', '').replace('.htm', '');
-    let pageName = 'Home';
-
-    if (rawPageName.toLowerCase() === 'aboutus') {
-        pageName = 'About Us';
-    } else if (rawPageName.toLowerCase() === 'contactus') {
-        pageName = 'Contact Us';
-    } else if (rawPageName.toLowerCase() === 'userdashboard') {
-        pageName = 'User Dashboard';
-    } else if (rawPageName.toLowerCase() === 'product') {
-        pageName = 'Shop';
-    } else if (rawPageName.toLowerCase() === 'productdetails') {
-        pageName = 'Product Details';
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
+        navbar.classList.add('scrolleddown');
+        navbar.classList.remove('scrolledup');
     } else {
-        // Capitalize and format the page name nicely
-        pageName = rawPageName
-            .replace(/[-_]/g, ' ')        // Replace dashes/underscores with spaces
-            .replace(/\b\w/g, c => c.toUpperCase()); // Capitalize first letter of each word
+        navbar.classList.remove('scrolleddown');
+        navbar.classList.add('scrolledup');
     }
 
-    if (!pageName || pageName.toLowerCase() === 'index' || pageName === '') {
-        pageName = 'Home';
-    }
-
-    // Set the breadcrumb content
-    if (pageName.toLowerCase() === 'home') {
-        breadcrumbList.innerHTML = `<li class="breadcrumb-item active d-flex align-items-center" id="breadcrumb-current"><a href="Home.html" class="text-white text-decoration-none opacity-75"><i class="fas fa-home me-2"></i> ${pageName}</a></li>`;
-    } else if (rawPageName.toLowerCase() === 'productdetails') {
-        // Product Details breadcrumb is populated dynamically in ProductDetails.js
-        breadcrumbList.innerHTML = `
-            <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
-            <li class="breadcrumb-item"><a href="Product.html" class="text-white opacity-75 text-decoration-none">Shop</a></li>
-            <li class="breadcrumb-item active fw-semibold" aria-current="page" id="breadcrumb-current" style="color: var(--primary-green);">Product</li>
-        `;
-    } else {
-        breadcrumbList.innerHTML = `
-            <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
-            <li class="breadcrumb-item active fw-semibold" aria-current="page" id="breadcrumb-current" style="color: var(--primary-green);">${pageName}</li>
-        `;
-    }
-
-    // Highlight the active nav link based on the current page
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    navLinks.forEach(link => {
-        const linkText = link.textContent.trim().toLowerCase();
-        if (linkText === pageName.toLowerCase()) {
-            link.classList.add('active', 'fw-semibold');
-            link.classList.remove('text-muted');
-            link.style.setProperty('color', 'var(--primary-green)', 'important');
-        } else {
-            link.classList.remove('active', 'fw-semibold');
-            link.classList.add('text-muted');
-            link.style.color = '';
-        }
-    });
-}
+    lastScrollTop = scrollTop;
+});
 
 function initAuthDisplay() {
     const authContainer = document.getElementById('nav-auth-container');
@@ -82,12 +31,12 @@ function initAuthDisplay() {
     const currentUser = JSON.parse(localStorage.getItem('currentUser')) || JSON.parse(localStorage.getItem('currentSeller'));
 
     if (currentUser) {
-        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.name || 'User')}&background=00B207&color=fff&size=100`;
+        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.Fname + ' ' + currentUser.Lname || 'User')}&background=00B207&color=fff&size=100`;
         authContainer.innerHTML = `
             <div class="dropdown">
                 <a href="#" class="text-white text-decoration-none dropdown-toggle d-flex align-items-center" id="userDropdown" aria-expanded="false">
                     <img src="${avatarUrl}" alt="Avatar" class="rounded-circle me-2" style="width: 25px; height: 25px; object-fit: cover; border: 1px solid rgba(255,255,255,0.5);">
-                    <span class="small fw-semibold">Hi, ${currentUser.name || 'User'}</span>
+                    <span class="small fw-semibold">Hi, ${currentUser.Fname + ' ' + currentUser.Lname || 'User'}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" aria-labelledby="userDropdown">
                     <li><a class="dropdown-item small py-2" href="../Pages/userdashboard.html"><i class="fa-solid fa-table-cells-large fa-sm me-2 text-muted"></i>My Dashboard</a></li>
@@ -104,6 +53,7 @@ function initAuthDisplay() {
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('RememberedUser');
                 localStorage.removeItem('currentSeller');
+                localStorage.removeItem('MyCart');
                 window.location.reload();
             });
         }
@@ -124,7 +74,6 @@ function initAuthDisplay() {
 
 // Ensure globally available for dynamic loading
 window.initNavBarAuth = initAuthDisplay;
-window.initBreadcrumb = initBreadcrumb;
 
 window.updateCartBadge = function () {
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -274,9 +223,6 @@ function initSearchAutoSuggest() {
     if (!searchInput || !suggestionsBox) return;
 
     // Helper to get products from localStorage
-    function getProducts() {
-        return JSON.parse(localStorage.getItem('products')) || [];
-    }
 
     searchInput.addEventListener('input', function () {
         const query = this.value.trim().toLowerCase();
@@ -286,7 +232,7 @@ function initSearchAutoSuggest() {
             return;
         }
 
-        const products = getProducts();
+        const products = getAllProducts();
 
         // Filter products based on search query
         const matches = products.filter(p => {
@@ -303,7 +249,7 @@ function initSearchAutoSuggest() {
 
                 return `
                 <li>
-                    <a class="dropdown-item d-flex align-items-center py-2 text-decoration-none" href="ProductDetails.html?id=${p.id}" style="border-bottom: 1px solid #f0f0f0;">
+                    <a class="dropdown-item d-flex align-items-center py-2 text-decoration-none" href="ProductDetails.html?id=${p.product_id}" style="border-bottom: 1px solid #f0f0f0;">
                         <img src="${image}" alt="${name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" class="me-3">
                         <div class="flex-grow-1 overflow-hidden">
                             <span class="d-block fw-medium text-dark text-truncate" style="font-size: 0.9rem;">${name}</span>
@@ -318,6 +264,17 @@ function initSearchAutoSuggest() {
         } else {
             suggestionsBox.innerHTML = '<li class="dropdown-item text-muted small py-2">No products found</li>';
             suggestionsBox.style.display = 'block';
+        }
+    });
+
+    // Handle Enter key
+    searchInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = this.value.trim();
+            if (query) {
+                window.location.href = `Product.html?search=${encodeURIComponent(query)}`;
+            }
         }
     });
 
@@ -339,5 +296,91 @@ function initSearchAutoSuggest() {
     });
 }
 
+// ── Mobile Search Toggle ──
+function initMobileSearch() {
+    const toggleBtn = document.getElementById('mobileSearchToggle');
+    const mobileRow = document.getElementById('mobileSearchRow');
+    const mobileInput = document.getElementById('mobileSearchInput');
+    const mobileSuggest = document.getElementById('mobileSearchSuggestions');
+    const mobileBtn = document.getElementById('mobileSearchBtn');
+
+    if (!toggleBtn || !mobileRow) return;
+
+    toggleBtn.addEventListener('click', () => {
+        const isOpen = mobileRow.classList.contains('open');
+        if (isOpen) {
+            mobileRow.classList.remove('open');
+        } else {
+            mobileRow.classList.add('open');
+            if (mobileInput) mobileInput.focus();
+        }
+    });
+
+    if (!mobileInput || !mobileSuggest) return;
+
+    // Auto-suggest for mobile
+    mobileInput.addEventListener('input', function () {
+        const query = this.value.trim().toLowerCase();
+        if (query.length === 0) {
+            mobileSuggest.style.display = 'none';
+            return;
+        }
+        const products = getAllProducts();
+        const matches = products.filter(p => {
+            const pName = p.name || p.productName || '';
+            const pCat = p.category || '';
+            return pName.toLowerCase().includes(query) || pCat.toLowerCase().includes(query);
+        }).slice(0, 5);
+
+        if (matches.length > 0) {
+            mobileSuggest.innerHTML = matches.map(p => {
+                const name = p.name || p.productName || 'Unknown Product';
+                const price = p.price || p.productPrice || 0;
+                const image = (p.images && p.images[0]) || p.imageUrl || 'https://images.unsplash.com/photo-1574577457582-8c88015ac502?q=80&w=200';
+                return `
+                <li>
+                    <a class="dropdown-item d-flex align-items-center py-2 text-decoration-none" href="ProductDetails.html?id=${p.product_id}" style="border-bottom: 1px solid #f0f0f0;">
+                        <img src="${image}" alt="${name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;" class="me-3">
+                        <div class="flex-grow-1 overflow-hidden">
+                            <span class="d-block fw-medium text-dark text-truncate" style="font-size: 0.9rem;">${name}</span>
+                            <span class="text-success small fw-bold">EGP ${Number(price).toFixed(2)}</span>
+                        </div>
+                    </a>
+                </li>`;
+            }).join('');
+            mobileSuggest.style.display = 'block';
+        } else {
+            mobileSuggest.innerHTML = '<li class="dropdown-item text-muted small py-2">No products found</li>';
+            mobileSuggest.style.display = 'block';
+        }
+    });
+
+    mobileInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const query = this.value.trim();
+            if (query) {
+                window.location.href = `Product.html?search=${encodeURIComponent(query)}`;
+            }
+        }
+    });
+
+    if (mobileBtn) {
+        mobileBtn.addEventListener('click', () => {
+            const query = mobileInput.value.trim();
+            if (query) {
+                window.location.href = `Product.html?search=${encodeURIComponent(query)}`;
+            }
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!mobileInput.contains(e.target) && !mobileSuggest.contains(e.target) && !toggleBtn.contains(e.target)) {
+            mobileSuggest.style.display = 'none';
+        }
+    });
+}
+
 // Make globally available
 window.initSearchAutoSuggest = initSearchAutoSuggest;
+window.initMobileSearch = initMobileSearch;

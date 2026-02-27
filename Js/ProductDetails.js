@@ -28,47 +28,28 @@ function loadProductData() {
     const urlParams = new URLSearchParams(window.location.search);
     let productId = parseInt(urlParams.get('id'));
 
-    fetch('../Data/ecobazar.json')
-        .then(response => response.json())
-        .then(data => {
-            let foundProduct = null;
-            let currentCategory = null;
+    const products = getAllProducts(); // flat array from localStorage
 
-            for (const category in data) {
-                if (Array.isArray(data[category]) && category !== 'Sellers') {
-                    // If no ID passed, pick a product with images and reviews as default to show off the UI well
-                    if (!productId) {
-                        if (category === 'Vegetables') {
-                            foundProduct = data[category].find(p => p.name.includes('Cabbage')) || data[category][0];
-                            currentCategory = category;
-                            productId = foundProduct.product_id;
-                            break;
-                        }
-                    } else {
-                        const prod = data[category].find(p => p.product_id === productId);
-                        if (prod) {
-                            foundProduct = prod;
-                            currentCategory = category;
-                            break;
-                        }
-                    }
-                }
-            }
+    let foundProduct = null;
+    let currentCategory = null;
 
-            // Fallback if ID is invalid
-            if (!foundProduct && data["Vegetables"]) {
-                foundProduct = data["Vegetables"][0];
-                currentCategory = "Vegetables";
-                productId = foundProduct.product_id;
-            }
+    if (!productId) {
+        // Default: first product
+        foundProduct = products.find(p => p.name && p.images && p.images.length > 0) || products[0];
+    } else {
+        foundProduct = products.find(p => p.product_id === productId);
+    }
 
-            if (foundProduct) {
-                renderProductDetails(foundProduct);
-                renderRelatedProducts(data, currentCategory, productId);
-            } else {
-                document.getElementById('product-main').innerHTML = '<div class="alert alert-danger">Product data not found!</div>';
-            }
-        });
+    // Fallback
+    if (!foundProduct) foundProduct = products[0];
+
+    if (foundProduct) {
+        currentCategory = foundProduct.category;
+        renderProductDetails(foundProduct);
+        renderRelatedProducts(products, currentCategory, foundProduct.product_id);
+    } else {
+        document.getElementById('product-main').innerHTML = '<div class="alert alert-danger">Product data not found!</div>';
+    }
 }
 
 function renderProductDetails(product) {
@@ -79,14 +60,6 @@ function renderProductDetails(product) {
     document.getElementById('product-title').textContent = product.name;
 
     // Breadcrumb Update
-    const breadcrumbList = document.getElementById('breadcrumb-list');
-    if (breadcrumbList) {
-        breadcrumbList.innerHTML = `
-            <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
-            <li class="breadcrumb-item"><a href="Product.html" class="text-white opacity-75 text-decoration-none">Shop</a></li>
-            <li class="breadcrumb-item active fw-semibold" aria-current="page" id="breadcrumb-current" style="color: var(--primary-green);">${product.name}</li>
-        `;
-    }
 
     // Formatting Tags
     let tagsArr = [];
@@ -173,59 +146,11 @@ function renderProductDetails(product) {
 
     // Render Reviews Tab
     const reviewContainer = document.getElementById('reviews-container');
-    if (product.reviews && product.reviews.length > 0) {
-        const customerNames = ["Robert Fox", "Dianne Russell", "Eleanor Pena", "James Wilson", "Sarah Johnson"];
-        reviewContainer.innerHTML = product.reviews.map((r, i) => {
-            const name = customerNames[i % customerNames.length];
-            const gender = r.user_id % 2 === 0 ? 'women' : 'men';
-            const avatarId = (r.user_id % 90) + 1;
-            const avatar = `https://randomuser.me/api/portraits/${gender}/${avatarId}.jpg`;
-            const rStars = Array.from({ length: 5 }, (_, idx) => `<i class="fas fa-star" style="color: ${idx < r.rating ? '#FF8A00' : '#ddd'}"></i>`).join('');
-
-            return `
-            <div class="d-flex gap-4 mb-4 pb-4 border-bottom">
-                <img src="${avatar}" alt="User" class="rounded-circle" style="width: 50px; height: 50px; object-fit:cover;">
-                <div class="flex-grow-1">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <h6 class="fw-bold mb-0 text-dark">${name}</h6>
-                        <small class="text-muted">2 mins ago</small>
-                    </div>
-                    <div class="mb-2" style="font-size: 0.8rem;">${rStars}</div>
-                    <p class="text-muted mb-0 small lh-lg">${r.comment}</p>
-                </div>
-            </div>`;
-        }).join('');
-    } else {
-        reviewContainer.innerHTML = '<p class="text-muted py-4">No feedback available yet.</p>';
-    }
+    reviewContainer.innerHTML = '<p class="text-muted py-4">No feedback available yet.</p>';
+    
 
     setupQuantityAndCart();
 
-    // Update navbar breadcrumb to match the product
-    const updateBreadcrumbUI = () => {
-        const breadcrumbList = document.getElementById('breadcrumb-list');
-        const breadcrumbSection = document.getElementById('breadcrumb-section');
-
-        if (breadcrumbList) {
-            breadcrumbList.innerHTML = `
-                <li class="breadcrumb-item"><a href="Home.html" class="text-white opacity-75 text-decoration-none"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="Product.html" class="text-white opacity-75 text-decoration-none">Shop</a></li>
-                <li class="breadcrumb-item active fw-semibold" aria-current="page" style="color: var(--primary-green);">${product.name}</li>
-            `;
-        }
-
-        if (breadcrumbSection) {
-            const texts = breadcrumbSection.querySelectorAll('.text-muted, .text-dark');
-            texts.forEach(t => {
-                t.classList.remove('text-muted', 'text-dark');
-                t.classList.add('text-white');
-            });
-        }
-    };
-
-    updateBreadcrumbUI();
-    setTimeout(updateBreadcrumbUI, 100);
-    setTimeout(updateBreadcrumbUI, 500);
 }
 
 function setupQuantityAndCart() {
@@ -278,26 +203,20 @@ function setupQuantityAndCart() {
     };
 }
 
-function renderRelatedProducts(data, currentCategory, currentProductId) {
+function renderRelatedProducts(products, currentCategory, currentProductId) {
     const container = document.getElementById('related-products-container');
-    if (!container || !data[currentCategory]) return;
+    if (!container) return;
 
-    // Get current user wishlist for heart icons
     let wishlistIds = [];
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (user) {
         const wl = JSON.parse(localStorage.getItem('WishLists')) || [];
-        console.log(user.id)
-        console.log(wl[`${user.id}`]);
-        const uw = wl[`${user.id}`].find(w => w.product_id == currentProductId);
-        if (uw) console.log("Current product is in user's wishlist:", uw);
-        console.log("User wishlist entry for this product:", uw);
-        if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
+        const uw = wl[`${user.id}`];
+        if (uw) wishlistIds = uw.map(w => w.product_id);
     }
 
-    // Filter out current product and get up to 4 items
-    const related = data[currentCategory]
-        .filter(p => p.product_id !== currentProductId)
+    const related = products
+        .filter(p => p.category === currentCategory && p.product_id !== currentProductId)
         .slice(0, 4);
 
     container.innerHTML = related.map(p => {

@@ -83,17 +83,17 @@
                 <div class="contact-info-card d-flex flex-column gap-4 justify-content-center">
                     <div>
                         <i class="fas fa-map-marker-alt contact-icon"></i>
-                        <p class="mb-0 text-muted small">2715 Ash Dr. San Jose,<br>South Dakota 83475</p>
+                        <p class="mb-0 text-muted small">10 Al Gaish and<br>Mohamed Mounir st</p>
                     </div>
                     <hr class="text-muted opacity-25 m-0">
                     <div>
                         <i class="far fa-envelope contact-icon"></i>
-                        <p class="mb-0 text-muted small">Proxy@gmail.com<br>Help.proxy@gmail.com</p>
+                        <p class="mb-0 text-muted small">Manga@gmail.com<br>Help.Manga@gmail.com</p>
                     </div>
                     <hr class="text-muted opacity-25 m-0">
                     <div>
                         <i class="fas fa-phone-alt contact-icon"></i>
-                        <p class="mb-0 text-muted small">(219) 555-0114<br>(164) 333-0487</p>
+                        <p class="mb-0 text-muted small">+20 10 14867453<br>+20 10 09387170</p>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../Js/NavBar.js"></script>
+    <script type="module" src="../Js/NavBar.js"></script>
 
     <!-- Load Common Components -->
     <script>
@@ -158,7 +158,8 @@
 
                 // Initialize navbar scripts if they exist
                 if (window.initNavBarAuth) window.initNavBarAuth();
-                if (window.initBreadcrumb) window.initBreadcrumb();
+                if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+                if (window.initMobileSearch) window.initMobileSearch();
                 if (window.updateCartBadge) window.updateCartBadge();
             })
             .catch(error => console.error('Error loading navbar:', error));

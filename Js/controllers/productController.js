@@ -35,6 +35,26 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     updateCartBadge();
     populateCategoryCounts(allProducts);
+
+    // Read URL params for search and category
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    const categoryParam = urlParams.get('category');
+
+    if (searchQuery) {
+        searchInput.value = searchQuery;
+    }
+
+    if (categoryParam && categoryParam !== 'All') {
+        currentCategory = categoryParam;
+        categoryItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.category === categoryParam) {
+                item.classList.add('active');
+            }
+        });
+    }
+
     applyFilters();
     bindEvents();
     loadData();
@@ -323,7 +343,7 @@ function showToast(message) {
 }
 async function loadData() {
     try {
-        const response = await fetch("https://raw.githubusercontent.com/kandeel11/CST-E-commerce-Project/refs/heads/Develop-Login/Data/ecobazar.json?token=GHSAT0AAAAAADVMU3SPVXPEN6XYDDZPD4OY2NBX56A");
+        const response = await fetch("../Data/ecobazar.json");
         const data = await response.json();
 
         products = Object.values(data).flat();
@@ -343,7 +363,8 @@ function loadComponents() {
 
             // Re-run NavBar initialization since the HTML is dynamically loaded
             if (window.initNavBarAuth) window.initNavBarAuth();
-            if (window.initBreadcrumb) window.initBreadcrumb();
+            if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+            if (window.initMobileSearch) window.initMobileSearch();
             if (window.updateCartBadge) window.updateCartBadge();
         })
         .catch(error => console.error('Error loading navbar:', error));

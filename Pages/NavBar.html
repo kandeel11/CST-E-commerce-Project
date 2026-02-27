@@ -19,7 +19,7 @@
                 <h2 class="fw-bold d-flex align-items-center mb-0 flex-shrink-0" style="color: #1A1A1A;">
                     <i class="fas fa-leaf me-2" style="color: #00B207;"></i> Ecobazar
                 </h2>
-                <div class="mx-auto position-relative" style="max-width: 500px; width: 100%;">
+                <div class="mx-auto position-relative d-none d-lg-block" style="max-width: 500px; width: 100%;">
                     <div class="input-group">
                         <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
                         <input type="text" id="navbarSearchInput" class="form-control border-start-0 border-end-0"
@@ -33,6 +33,10 @@
                     </ul>
                 </div>
                 <div id="Whish" class="d-flex align-items-center gap-3 flex-shrink-0">
+                    <!-- Mobile search button (visible only on mobile) -->
+                    <button class="wishlist-btn d-lg-none" title="Search" id="mobileSearchToggle">
+                        <i class="fas fa-search fa-lg"></i>
+                    </button>
                     <button class="wishlist-btn" title="Wishlist" onclick="window.location.href='WishList.html'">
                         <i class="far fa-heart fa-lg"></i>
                     </button>
@@ -42,7 +46,7 @@
                             <span id="cart-badge-count"
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
                         </div>
-                        <div class="text-start lh-1 small">
+                        <div class="text-start lh-1 small d-none d-sm-block">
                             <div class="text-muted">Shopping cart:</div>
                             <div class="fw-bold" id="cart-badge-total">EGP 00.00</div>
                         </div>
@@ -52,8 +56,26 @@
         </div>
     </div>
 
+    <!-- Mobile Search Row (hidden by default, toggled by JS) -->
+    <div class="mobile-search-row d-lg-none" id="mobileSearchRow">
+        <div class="container-fluid px-4 py-2">
+            <div class="position-relative">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="fas fa-search"></i></span>
+                    <input type="text" id="mobileSearchInput" class="form-control border-start-0 border-end-0"
+                        placeholder="Search products..." autocomplete="off">
+                    <button class="btn px-4" type="button" id="mobileSearchBtn"
+                        style="background-color: #00B207; border: none; color: #fff;">Search</button>
+                </div>
+                <ul id="mobileSearchSuggestions" class="dropdown-menu w-100 shadow-sm border-0 mt-1"
+                    style="display: none; position: absolute; z-index: 1050; max-height: 300px; overflow-y: auto;">
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <!-- BOTTOM NAV: white/light background with nav links -->
-    <div class="navbar-bottom">
+    <div class="navbar-bottom mb-4">
         <div class="container-fluid px-4">
             <nav class="navbar navbar-expand-lg p-0">
                 <!-- Hamburger button: visible on md/sm/xs -->
@@ -66,14 +88,14 @@
                 <!-- Phone number visible on mobile next to hamburger -->
                 <div class="fw-bold d-lg-none ms-auto">
                     <i class="fas fa-phone-alt me-1" style="color: #00B207;"></i>
-                    <span class="small">(219) 555-0114</span>
+                    <span class="small">+20 10 14867453</span>
                 </div>
 
                 <!-- Collapsible nav content -->
                 <div class="collapse navbar-collapse" id="mainNavCollapse">
                     <ul class="navbar-nav me-auto py-2 py-lg-0 gap-lg-3">
                         <li class="nav-item">
-                            <a class="nav-link fw-semibold active" href="Home.html">Home</a>
+                            <a class="nav-link text-muted" href="Home.html">Home</a>
                         </li>
 
                         <!-- SHOP: hover mega-menu on desktop, collapsible arrow on mobile -->
@@ -170,13 +192,6 @@
                                 </ul>
                             </div>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-muted" href="#">Pages</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-muted" href="#">Blog</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-muted" href="AboutUs.html">About Us</a>
                         </li>
@@ -188,21 +203,9 @@
 
                 <!-- Phone number: desktop only -->
                 <div class="fw-bold d-none d-lg-block">
-                    <i class="fas fa-phone-alt me-2" style="color: #00B207;"></i> (219) 555-0114
+                    <i class="fas fa-phone-alt me-2" style="color: #00B207;"></i> +20 10 14867453
                 </div>
             </nav>
         </div>
     </div>
 </header>
-
-<!-- Breadcrumb Section -->
-<div class="breadcrumb-section" id="breadcrumb-section">
-    <div class="container-fluid px-4">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0 py-2" id="breadcrumb-list">
-                <li class="breadcrumb-item"><a href="Home.html"><i class="fas fa-home"></i></a></li>
-                <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-current">Home</li>
-            </ol>
-        </nav>
-    </div>
-</div>

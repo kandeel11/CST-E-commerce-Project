@@ -117,10 +117,10 @@ LoginButton.addEventListener('click', function (event) {
                 if (!userCart.some(c => c.userid === users[i].id)) {
                     userCart.push({ userid: users[i].id, items: [] });
                     localStorage.setItem("cart", JSON.stringify(userCart));
-                    localStorage.setItem("Mycart", JSON.stringify(userCart[userCart.length - 1]));
+                    localStorage.setItem("MyCart", JSON.stringify(userCart[userCart.length - 1]));
 
                 } else {
-                    localStorage.setItem("Mycart", JSON.stringify(userCart.find(c => c.userid === users[i].id)));
+                    localStorage.setItem("MyCart", JSON.stringify(userCart.find(c => c.userid === users[i].id)));
                 }
 
                 window.location.href = `../Pages/Home.html`;
@@ -161,7 +161,8 @@ function loadComponents() {
 
             // Re-run NavBar initialization since the HTML is dynamically loaded
             if (window.initNavBarAuth) window.initNavBarAuth();
-            if (window.initBreadcrumb) window.initBreadcrumb();
+            if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+            if (window.initMobileSearch) window.initMobileSearch();
             if (window.updateCartBadge) window.updateCartBadge();
         })
         .catch(error => console.error('Error loading navbar:', error));
@@ -183,5 +184,3 @@ window.addEventListener('DOMContentLoaded', function () {
     loadComponents();
     console.log(document.querySelector(".navbar-topbar"));
 });
-
-

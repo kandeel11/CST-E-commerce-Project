@@ -331,7 +331,8 @@ function loadComponents() {
 
       // Re-run NavBar initialization since the HTML is dynamically loaded
       if (window.initNavBarAuth) window.initNavBarAuth();
-      if (window.initBreadcrumb) window.initBreadcrumb();
+      if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+      if (window.initMobileSearch) window.initMobileSearch();
       if (window.updateCartBadge) window.updateCartBadge();
     })
     .catch(error => console.error('Error loading navbar:', error));
