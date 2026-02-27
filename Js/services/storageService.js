@@ -1,8 +1,12 @@
-// ── Product helpers ────────────────────────────────────────────────────────────
 const PRODUCTS_KEY = "products";
+const ORDERS_KEY = "orders";
+const USERS_KEY = "users";
 
 export function getCurrentUser(){
     return JSON.parse(localStorage.getItem('currentUser'));
+}
+export function getCurrentSeller(){
+    return JSON.parse(localStorage.getItem('currentSeller'));
 }
 
 export function addProductToStorage(product) {
@@ -15,9 +19,23 @@ export function addProductToStorage(product) {
 export function getAllProducts() {
     return JSON.parse(localStorage.getItem(PRODUCTS_KEY)) || [];
 }
+export function getAllOrders(){
+    return JSON.parse(localStorage.getItem(ORDERS_KEY)) || [];
+}
+export function getAllUsers() {
+  return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+}
+function getUserEmailById(userId) {
+  const users = getAllUsers();
+  const u = users.find(x => String(x.id) === String(userId));
+  return u?.Email || "Unknown";
+}
 
 export function saveProducts(products) {
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+}
+export function saveOrders(orders) {
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
 }
 
 export function getProductById(product_id) {
@@ -39,7 +57,153 @@ export function loadProductsForSeller(sellerID) {
     const products = getAllProducts().filter(p => p.seller_id === sellerID);
     renderProductsTable(products);
 }
+/////////////New
+export function loadOrdersForSeller() {
+  const sellerId = getCurrentSeller().userid;
+  const rows = getAllOrders().flatMap(order => {
+    const userid = order.userid;
+    const buyerEmail = getUserEmailById(order.userid);
+    const orderDate = new Date(order.createddate).toLocaleDateString();
+    const orderStatus = order.orderStatus;
 
+    // take only products for current seller
+    const sellerProducts = (order.products || []).filter(p =>
+      String(p.seller_id) === String(sellerId)
+    );
+
+    // each matching product becomes its own row
+    return sellerProducts.map(p => ({
+      orderDate,
+      rawCreatedDate: order.createddate,//// raw value used for matching on cancel
+      buyerEmail,
+      productName: p.name,
+      quantity: p.quantity,
+      status: orderStatus,
+      product_id: p.product_id,
+      userid
+    }));
+  });
+  //console.log(rows);
+  renderOrdersTable(rows);
+  //return rows;
+}
+
+function renderOrdersTable(orders) {
+  const tableBody = document.getElementById("ordersTbody");
+  if (!tableBody) return;
+
+  tableBody.innerHTML = "";
+
+  if (!Array.isArray(orders) || orders.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="6" class="text-center text-muted py-5">
+          <div class="d-flex flex-column align-items-center gap-2">
+            <i class="fas fa-box-open fa-2x opacity-50"></i>
+            <div class="fw-semibold">No orders yet</div>
+            <div class="small">When customers place orders, they’ll appear here.</div>
+          </div>
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  const statusBadgeClass = (status) => {
+    const s = String(status || "").toLowerCase();
+    if (s === "pending") return "badge bg-warning-subtle text-warning-emphasis border border-warning-subtle";
+    if (s === "completed" || s === "delivered") return "badge bg-success-subtle text-success-emphasis border border-success-subtle";
+    if (s === "cancelled" || s === "canceled") return "badge bg-danger-subtle text-danger-emphasis border border-danger-subtle";
+    return "badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle";
+  };
+
+  orders.forEach((order) => {
+
+    const productId = order.product_id;
+    const buyerEmail = order.buyerEmail ?? "Unknown";
+    const productName = order.productName ?? "-";
+    const quantity = Number(order.quantity ?? 0);
+    const orderStatus = order.orderStatus ?? order.status ?? "pending";
+    const orderDate = new Date(order.orderDate ?? order.createddate ?? Date.now()).toLocaleDateString();
+
+    const row = document.createElement("tr");
+    row.classList.add("align-middle");
+    row.dataset.id = String(productId);
+
+    row.innerHTML = `
+      <td class="text-muted small">${orderDate}</td>
+
+      <td class="small">
+        <i class="fas fa-envelope me-2 text-muted"></i>
+        <span class="text-primary">${buyerEmail}</span>
+      </td>
+
+      <td class="fw-semibold">
+        <i class="fas fa-tag me-2 text-muted"></i>${productName}
+      </td>
+
+      <td>
+        <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle px-3 py-2">
+          x${Number.isFinite(quantity) ? quantity : 0}
+        </span>
+      </td>
+
+      <td>
+        <span class="${statusBadgeClass(orderStatus)} px-3 py-2 text-capitalize">
+          ${orderStatus}
+        </span>
+      </td>
+
+      <td class="text-end d-none d-lg-table-cell">
+        <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
+          <i class="fas fa-trash-alt me-1"></i>Cancel
+        </button>
+      </td>
+    `;
+
+    row.addEventListener("mouseenter", () => row.classList.add("table-active"));
+    row.addEventListener("mouseleave", () => row.classList.remove("table-active"));
+    const cancelBtn = row.querySelector(".cancel-order-btn");
+    if (cancelBtn) {
+      cancelBtn.addEventListener("click", () => {
+        if (!confirm("Cancel this item from the order?")) return;
+
+        // restore stock 
+        const products = getAllProducts();
+        const idx = products.findIndex((p) => p.product_id === productId);
+
+        if (idx !== -1) {
+          const q = Number.isFinite(quantity) ? quantity : 0;
+          products[idx].stock = Number(products[idx].stock || 0) + q;
+          saveProducts(products);
+        }
+
+        let allOrders = getAllOrders();
+        allOrders = allOrders
+        .map(o => {
+            const sameBuyer = String(o.userid) === String(order.userid);
+            const sameDate  = String(o.createddate) === String(order.rawCreatedDate);
+            if (!sameBuyer || !sameDate) return o;
+
+            const updatedProducts = (o.products || []).filter(p =>
+            p.product_id !== productId
+            );
+            return { ...o, products: updatedProducts };
+        })
+        // if an order has no products left, remove the whole order object
+        .filter(o => (o.products || []).length > 0);
+        saveOrders(allOrders);
+
+        row.remove();
+        if (tableBody.querySelectorAll("tr").length === 0) {
+          renderOrdersTable([]);
+        }
+      });
+    }
+
+    tableBody.appendChild(row);
+  });
+}
 function renderProductsTable(products) {
     const tableBody = document.getElementById("productsTbody");
     if (!tableBody) return;
@@ -103,7 +267,7 @@ function renderProductsTable(products) {
     });
 }
 
-// ── Wishlist helpers (stored under key: "waitlists") ──────────────────────────
+// ── Wishlist helpers
 const WISHLIST_KEY = "wishlists";
 
 export function getWishlist() {
@@ -165,11 +329,6 @@ export function getUserCartItems() {
     return getUserCart()?.items || [];
 }
 
-/**
- * Adds a product to the current user's cart.
- * Increments quantity if already present; respects product.stock limit.
- * Returns true on success, false if stock limit reached or no user logged in.
- */
 export function addToCart(product) {
     const user = getCurrentUser();
     if (!user) return false;

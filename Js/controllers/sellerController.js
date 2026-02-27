@@ -3,6 +3,7 @@ import {
     updateProduct,
     removeProductFromStorage,
     loadProductsForSeller,
+    loadOrdersForSeller,
     getAllProducts,
     saveProducts,
 } from "../services/storageService.js";
@@ -20,6 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
     initAnalytics();
 
     loadProductsForSeller(currentUser.userID);
+    loadOrdersForSeller(currentUser.userID)
 });
 
 // ── User ───────────────────────────────────────────────────────────────────────
@@ -70,15 +72,15 @@ function initSearch() {
     const statusFilter = document.getElementById("productStatusFilter");
 
     function applyFilter() {
-        const q      = searchInput.value.trim().toLowerCase();
+        const input      = searchInput.value.trim().toLowerCase();
         const status = statusFilter.value;
         const rows   = document.querySelectorAll("#productsTbody tr[data-id]");
 
         rows.forEach(row => {
             const name = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
-            const matchesQ      = !q || name.includes(q);
+            const matches      = !input || name.includes(input);
             const matchesStatus = status === "all"; // extend when real status field exists
-            row.style.display   = matchesQ && matchesStatus ? "" : "none";
+            row.style.display   = matches && matchesStatus ? "" : "none";
         });
     }
 
