@@ -1,0 +1,332 @@
+/* ============================
+   User Dashboard JS - Ecobazar
+   ============================ */
+
+// ---- Auth Guard ----
+// const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+// if (!currentUser) {
+//     window.location.href = "Login.html";
+// }
+
+const navUsername = document.getElementById("navUsername");
+const profileName = document.getElementById("profileName");
+const profileRole = document.getElementById("profileRole");
+const profileAvatar = document.getElementById("profileAvatar");
+const billingName = document.getElementById("billingName");
+const billingAddress = document.getElementById("billingAddress");
+const billingEmail = document.getElementById("billingEmail");
+const billingPhone = document.getElementById("billingPhone");
+const recentOrdersBody = document.getElementById("recentOrdersBody");
+const allOrdersBody = document.getElementById("allOrdersBody");
+const wishlistGrid = document.getElementById("wishlistGrid");
+const cartCountEl = document.getElementById("cartCount");
+const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+
+const sidebarLinks = document.querySelectorAll(".sidebar-nav .nav-link[data-section]");
+const contentSections = document.querySelectorAll(".content-section");
+
+// Handle all links with data-section (sidebar + inline links)
+document.addEventListener("click", function (e) {
+    const link = e.target.closest("[data-section]");
+    if (!link) return;
+    e.preventDefault();
+    const section = link.getAttribute("data-section");
+    switchSection(section);
+});
+
+function switchSection(sectionName) {
+    // Hide all sections
+    contentSections.forEach(s => s.classList.add("d-none"));
+
+    // Show target section
+    const target = document.getElementById("section-" + sectionName);
+    if (target) target.classList.remove("d-none");
+
+    // Update sidebar active state
+    sidebarLinks.forEach(l => l.classList.remove("active"));
+    const activeLink = document.querySelector(`.sidebar-nav .nav-link[data-section="${sectionName}"]`);
+    if (activeLink) activeLink.classList.add("active");
+
+    // Load data for certain sections
+    if (sectionName === "orders") renderAllOrders();
+    if (sectionName === "wishlist") window.location.href = "wishlist.html"; // Redirect to wishlist page
+    if (sectionName === "settings") loadSettings();
+}
+
+// ---- Initialize Profile ----
+function initProfile() {
+    const userProfile = getUserProfile();
+    const name = userProfile.Fname
+        ? `${userProfile.Fname} ${userProfile.Lname || ""}`.trim()
+        : currentUser.Fname && currentUser.Lname ? `${currentUser.Fname} ${currentUser.Lname}` : "User";
+    profileName.textContent = name;
+    profileRole.textContent = currentUser.Role || "Customer";
+    profileAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=00B207&color=fff&size=100`;
+
+    billingName.textContent = name;
+    billingEmail.textContent = currentUser.Email || "Not set";
+
+    const addr = userProfile.address;
+    if (addr && addr.street) {
+        const parts = [addr.street, addr.city, addr.state, addr.zip, addr.country].filter(Boolean);
+        billingAddress.textContent = parts.join(", ");
+    } else {
+        billingAddress.textContent = "No address set";
+    }
+    billingPhone.textContent = userProfile.phone || "Not set";
+}
+
+// ---- User Profile Storage ----
+// Extend currentUser data with profile/address stored separately
+function getUserProfile() {
+    const profiles = JSON.parse(localStorage.getItem("currentUser")) || {};
+    return profiles[currentUser.Email] || {
+        firstName: currentUser.Fname ? currentUser.Fname : "",
+        lastName: currentUser.Lname || "",
+
+        phone: currentUser.Phone || "",
+        address: currentUser.address ? {
+            street: currentUser.address.split(",")[0]?.trim() || "",
+            city: currentUser.address.split(",")[1]?.trim() || "",
+            country: currentUser.address.split(",")[2]?.trim() || ""
+        }
+            : null
+    }
+};
+
+function saveUserProfile(profile) {
+    const profiles = JSON.parse(localStorage.getItem("currentUser")) || {};
+    profiles[currentUser.Email] = profile;
+    localStorage.setItem("currentUser", JSON.stringify(profiles));
+}
+
+// ---- Orders ----
+function getOrders() {
+    const allOrders = JSON.parse(localStorage.getItem("orders")) || [];
+    allOrders.find(o => o.userid === currentUser.id)
+    console.log("Current User:", currentUser);
+    console.log("All Orders from localStorage:");
+    allOrders.forEach(o => console.log(`Order ID: ${o.id}, UserID: ${o.userid}, Total: ${o.total}`));
+    return allOrders.filter(o => o.userid === currentUser.id);
+}
+
+
+function renderAllOrders() {
+    const orders = getOrders();
+    console.log("Orders for current user:", orders);
+    allOrdersBody.innerHTML = "";
+
+    if (orders.length === 0) {
+        document.getElementById("noAllOrdersMsg").classList.remove("d-none");
+        return;
+    }
+    document.getElementById("noAllOrdersMsg").classList.add("d-none");
+
+    orders.forEach(order => {
+        allOrdersBody.innerHTML += createOrderRow(order);
+    });
+}
+
+function createOrderRow(order) {
+    const statusClass = getStatusClass(order.orderStatus);
+    const itemCount = order.products ? order.products.length : 0;
+    const productText = itemCount === 1 ? "1 Product" : `${itemCount} Products`;
+
+    return `
+        <tr>
+            <td class="fw-semibold">#${formatDate(order.createddate)}</td>
+            <td>${formatDate(order.createddate)}</td>
+            <td>$${order.total.toFixed(2)} <span class="text-muted small">(${productText})</span></td>
+            <td><span class="badge-status ${statusClass}">${order.orderStatus}</span></td>
+            <td><a href="#" class="view-details-link" onclick="viewOrderDetail('${formatDate(order.createddate)}')">View Details</a></td>
+        </tr>
+    `;
+}
+
+function getStatusClass(status) {
+    switch (status?.toLowerCase()) {
+        case "processing": return "badge-processing";
+        case "on the way": return "badge-on-the-way";
+        case "completed": return "badge-completed";
+        case "cancelled": return "badge-cancelled";
+        default: return "badge-processing";
+    }
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return "N/A";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" });
+}
+
+// ---- View Order Detail (Modal) ----
+window.viewOrderDetail = function (orderId) {
+    const orders = getOrders();
+    const order = orders.find(o => formatDate(o.createddate) === orderId);
+    if (!order) return;
+
+    const body = document.getElementById("orderDetailBody");
+    let itemsHtml = "";
+
+    if (order.products && order.products.length > 0) {
+        order.products.forEach(item => {
+            itemsHtml += `
+                <div class="order-detail-item">
+                    <img src="${item.images[0]}" alt="${item.name}">
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-semibold small">${item.name}</h6>
+                        <p class="text-muted mb-0 small">Qty: ${item.quantity} × $${item.price.toFixed(2)}</p>
+                    </div>
+                    <div class="fw-bold small">$${(item.quantity * item.price).toFixed(2)}</div>
+                </div>
+            `;
+        });
+    }
+
+    body.innerHTML = `
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+            <div>
+                <p class="mb-1 small text-muted">Order ID</p>
+                <h6 class="fw-bold mb-0">#${formatDate(order.createddate)}</h6>
+            </div>
+            <div class="text-end">
+                <p class="mb-1 small text-muted">Date</p>
+                <h6 class="fw-bold mb-0">${formatDate(order.createddate)}</h6>
+            </div>
+            <div class="text-end">
+                <p class="mb-1 small text-muted">Status</p>
+                <span class="badge-status ${getStatusClass(order.orderStatus)}">${order.orderStatus}</span>
+            </div>
+        </div>
+        <div class="mb-3">
+            ${itemsHtml || '<p class="text-muted">No item details available.</p>'}
+        </div>
+        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+            <h6 class="fw-bold mb-0">Total</h6>
+            <h5 class="fw-bold text-success mb-0">$${order.total.toFixed(2)}</h5>
+        </div>
+    `;
+
+    const modal = new bootstrap.Modal(document.getElementById("orderDetailModal"));
+    modal.show();
+};
+
+
+// ---- Settings ----
+function loadSettings() {
+    const profile = getUserProfile();
+
+    document.getElementById("settingFirstName").value = profile.firstName || "";
+    document.getElementById("settingLastName").value = profile.lastName || "";
+    document.getElementById("settingEmail").value = currentUser.Email || "";
+    document.getElementById("settingPhone").value = profile.phone || "";
+
+    const addr = profile.address || {};
+    document.getElementById("settingStreet").value = addr.street || "";
+    document.getElementById("settingCity").value = addr.city || "";
+
+    document.getElementById("settingCountry").value = addr.country || "";
+}
+
+// Account Form
+document.getElementById("accountForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const profile = getUserProfile();
+    profile.firstName = document.getElementById("settingFirstName").value.trim();
+    profile.lastName = document.getElementById("settingLastName").value.trim();
+    profile.phone = document.getElementById("settingPhone").value.trim();
+    saveUserProfile(profile);
+
+    // Update currentUser name in localStorage
+    currentUser.Fname = profile.firstName;
+    currentUser.Lname = profile.lastName;
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+    // Also update in users array
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const userIdx = users.findIndex(u => u.Email === currentUser.Email);
+    if (userIdx !== -1) {
+        users[userIdx].Fname = profile.firstName;
+        users[userIdx].Lname = profile.lastName;
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    initProfile();
+    showToast("Account settings saved!");
+});
+
+// Address Form
+document.getElementById("addressForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const profile = getUserProfile();
+    profile.address = {
+        street: document.getElementById("settingStreet").value.trim(),
+        city: document.getElementById("settingCity").value.trim(),
+        country: document.getElementById("settingCountry").value.trim()
+    };
+    saveUserProfile(profile);
+    initProfile();
+    showToast("Billing address saved!");
+});
+
+// Password Form
+document.getElementById("passwordForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const currentPw = document.getElementById("currentPassword").value;
+    const newPw = document.getElementById("newPassword").value;
+    const confirmPw = document.getElementById("confirmPassword").value;
+
+    if (currentPw !== currentUser.password) {
+        showToast("Current password is incorrect!", true);
+        return;
+    }
+    if (newPw.length < 6) {
+        showToast("New password must be at least 6 characters!", true);
+        return;
+    }
+    if (newPw !== confirmPw) {
+        showToast("Passwords do not match!", true);
+        return;
+    }
+
+    // Update password
+    currentUser.password = newPw;
+    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const userIdx = users.findIndex(u => u.Email === currentUser.Email);
+    if (userIdx !== -1) {
+        users[userIdx].password = newPw;
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+
+    document.getElementById("passwordForm").reset();
+    showToast("Password changed successfully!");
+});
+
+// ---- Logout ----
+document.getElementById("logoutBtn").addEventListener("click", function (e) {
+    e.preventDefault();
+    localStorage.removeItem("currentUser");
+    window.location.href = "Login.html";
+});
+
+// ---- Toast ----
+function showToast(message, isError = false) {
+    const toastEl = document.getElementById("toastNotification");
+    const toastMsg = document.getElementById("toastMessage");
+    toastMsg.textContent = message;
+
+    if (isError) {
+        toastEl.classList.remove("text-bg-success");
+        toastEl.classList.add("text-bg-danger");
+    } else {
+        toastEl.classList.remove("text-bg-danger");
+        toastEl.classList.add("text-bg-success");
+    }
+    const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
+    toast.show();
+}
+window.addEventListener("load", function () {
+    initProfile();
+});

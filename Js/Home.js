@@ -108,6 +108,23 @@ function loadData() {
         })
         .catch(error => console.error('Error loading data:', error));
 }
+async function loadData() {
+    try {
+        const response = await fetch("../../Data/ecobazar.json");
+        const data = await response.json();
+        console.log("Loaded products data:", data);
+
+        products = Object.values(data).flat();
+        console.log("Parsed products array:", products);
+        localStorage.setItem('products', JSON.stringify(products))
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+// ========== Product MANAGEMENT (Add To storageService) ==========
+// loadData()
+
 
 // ========== CATEGORIES ==========
 const categoryMeta = {

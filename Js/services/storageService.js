@@ -219,6 +219,8 @@ export function addToCart(product) {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
     localStorage.setItem("MyCart", JSON.stringify(myCart));
     localStorage.setItem("cartUpdated", Date.now());
+    if (window.updateCartBadge) window.updateCartBadge();
+
     return true;
 
 }
