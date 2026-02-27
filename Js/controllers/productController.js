@@ -48,6 +48,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Read ?category= from URL (e.g. Product.html?category=MeatFish)
     const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
     const urlCategory = urlParams.get("category");
     if (urlCategory && urlCategory !== "All") {
         currentCategory = categoryKeyToValue[urlCategory] || urlCategory;
@@ -61,8 +62,6 @@ window.addEventListener("DOMContentLoaded", () => {
     populateCategoryCounts(allProducts);
 
     // Read URL params for search and category
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('search');
     const categoryParam = urlParams.get('category');
 
     if (searchQuery) {
@@ -366,7 +365,6 @@ function showToast(message) {
         setTimeout(() => toast.remove(), 400);
     }, 2800);
 }
-<<<<<<< HEAD
 async function loadData() {
     try {
         const response = await fetch("../Data/ecobazar.json");
@@ -379,8 +377,6 @@ async function loadData() {
         console.error(error);
     }
 }
-=======
->>>>>>> a73708406e2ce72740909bcd2adbe000093aabcb
 
 function loadComponents() {
     // 1. Load Navbar

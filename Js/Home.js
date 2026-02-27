@@ -102,22 +102,7 @@ function loadData() {
     }
 
 }
-async function loadData() {
-    try {
-        const response = await fetch("../../Data/ecobazar.json");
-        const data = await response.json();
-        console.log("Loaded products data:", data);
 
-        products = Object.values(data).flat();
-        console.log("Parsed products array:", products);
-        localStorage.setItem('products', JSON.stringify(products))
-
-    } catch (error) {
-        console.error(error);
-    }
-}
-// ========== Product MANAGEMENT (Add To storageService) ==========
-// loadData()
 
 
 // ========== CATEGORIES ==========
@@ -138,11 +123,13 @@ function renderCategories(data) {
         const count = data[key].length;
         return `
             <div class="col">
-                <div class="category-card">
-                    <i class="fas ${meta.icon} category-icon"></i>
-                    <h6 class="small fw-bold mb-0">${meta.name}</h6>
-                    <small class="text-muted">${count} Products</small>
-                </div>
+            <a href="Product.html?category=${encodeURIComponent(key)}" class="text-decoration-none text-green">
+            <div class="category-card">
+            <i class="fas ${meta.icon} category-icon"></i>
+            <h6 class="small fw-bold mb-0">${meta.name}</h6>
+            <small class="text-muted">${count} Products</small>
+            </div>
+            </a>
             </div>
         `;
     }).join('');
@@ -428,45 +415,4 @@ function renderTestimonials(data) {
             </div>
         `;
     }).join('');
-    // Initialize carousel after rendering
-    initTestimonialCarousel();
-}
-function initTestimonialCarousel() {
-    const track = document.getElementById('testimonial-track');
-    const prevBtn = document.getElementById('testimonial-prev');
-    const nextBtn = document.getElementById('testimonial-next');
-    if (!track || !prevBtn || !nextBtn) return;
-    const cards = track.querySelectorAll('.testimonial-card');
-    let currentIndex = 0;
-    function getVisibleCount() {
-        if (window.innerWidth < 576) return 1;
-        if (window.innerWidth < 992) return 2;
-        return 3;
-    }
-    function getMaxIndex() {
-        return Math.max(0, cards.length - getVisibleCount());
-    }
-    function updateCarousel() {
-        const visibleCount = getVisibleCount();
-        const gap = 24;
-        const cardWidth = (track.parentElement.offsetWidth - gap * (visibleCount - 1)) / visibleCount;
-        const offset = currentIndex * (cardWidth + gap);
-        track.style.transform = `translateX(-${offset}px)`;
-    }
-    nextBtn.addEventListener('click', () => {
-        if (currentIndex < getMaxIndex()) {
-            currentIndex++;
-            updateCarousel();
-        }
-    });
-    prevBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-        }
-    });
-    window.addEventListener('resize', () => {
-        currentIndex = Math.min(currentIndex, getMaxIndex());
-        updateCarousel();
-    });
 }
