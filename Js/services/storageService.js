@@ -169,7 +169,7 @@ export function getUserCartItems() {
     return getUserCart()?.items || [];
 }
 function getMyCart() {
-    const key = "Mycart";
+    const key = "MyCart";
     const user = getCurrentUser();
     if (!user) return null;
     const cart = getCart();
@@ -211,13 +211,13 @@ export function addToCart(product) {
         if ((existing.quantity || 0) >= (product.stock || Infinity)) {
             return false; // stock limit reached
         }
-        existing.quantity = (existing.quantity || 1) + 1;
+        existing.quantity = (existing.quantity || 1) + (product.quantity || 1);
     } else {
-        userCart.items.push({ ...product, quantity: 1 });
+        userCart.items.push({ ...product, quantity: product.quantity || 1 });
     }
     myCart.items = userCart.items; // sync with getMyCart reference
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("Mycart", JSON.stringify(myCart));
+    localStorage.setItem("MyCart", JSON.stringify(myCart));
     localStorage.setItem("cartUpdated", Date.now());
     return true;
 
@@ -234,7 +234,7 @@ export function removeFromCart(product_id) {
 
     userCart.items = userCart.items.filter(item => item.product_id !== product_id);
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("Mycart", JSON.stringify(userCart));
+    localStorage.setItem("MyCart", JSON.stringify(userCart));
     localStorage.setItem("cartUpdated", Date.now());
 }
 
@@ -254,7 +254,7 @@ export function updateCartItemQuantity(product_id, quantity) {
         if (item) item.quantity = quantity;
     }
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("Mycart", JSON.stringify(userCart));
+    localStorage.setItem("MyCart", JSON.stringify(userCart));
     localStorage.setItem("cartUpdated", Date.now());
 }
 
@@ -267,7 +267,7 @@ export function clearCart() {
     const userCart = cart.find(e => e.userid === user.id);
     if (userCart) userCart.items = [];
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("Mycart", JSON.stringify(userCart));
+    localStorage.setItem("MyCart", JSON.stringify(userCart));
     localStorage.setItem("cartUpdated", Date.now());
 }
 

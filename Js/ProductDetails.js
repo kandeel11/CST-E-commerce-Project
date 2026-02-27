@@ -1,3 +1,5 @@
+import { getAllProducts, toggleWishlist, isInWishlist, addToCart, getCartCount } from "../Js/services/storageService.js";
+
 document.addEventListener("DOMContentLoaded", () => {
     loadComponents();
     loadProductData();
@@ -245,36 +247,23 @@ function setupQuantityAndCart() {
         if (currentProductData && currentQty < currentProductData.stock) {
             currentQty++;
             qtyInput.value = currentQty;
+            currentProductData.quantity = currentQty; // Update quantity in product data for cart addition
+
         }
     };
 
     btnAddToCart.onclick = () => {
         if (!currentProductData) return;
-
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const existingItem = cart.find(item => item.product_id === currentProductData.product_id);
-
-        if (existingItem) {
-            existingItem.quantity += currentQty;
-        } else {
-            const img = currentProductData.images && currentProductData.images.length > 0
-                ? currentProductData.images[0]
-                : (currentProductData.img || currentProductData.image);
-
-            cart.push({
-                product_id: currentProductData.product_id,
-                name: currentProductData.name,
-                price: currentProductData.price,
-                img: img,
-                quantity: currentQty
-            });
-        }
-
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Update navbar cart badge if it exists
+        let current_user = JSON.parse(localStorage.getItem("currentUser"));
+        let carts = JSON.parse(localStorage.getItem('cart')) || [];
+        let userId = current_user ? current_user.id : null;
+        let cart = carts.find(c => c.userid === userId)?.items || [];
+        let products = JSON.parse(localStorage.getItem('products')) || [];
+        console.log(currentProductData);
+        addToCart(currentProductData);
+        // Update cart badge in navbar
         if (window.updateCartBadge) window.updateCartBadge();
-
+        // Update navbar cart badge if it exists
         // Brief visual success animation
         const originalText = btnAddToCart.innerHTML;
         btnAddToCart.innerHTML = `Added! <i class="fas fa-check"></i>`;
@@ -297,8 +286,12 @@ function renderRelatedProducts(data, currentCategory, currentProductId) {
     let wishlistIds = [];
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (user) {
-        const wl = JSON.parse(localStorage.getItem('wishlist')) || [];
-        const uw = wl.find(i => i.user_id === user.id);
+        const wl = JSON.parse(localStorage.getItem('WishLists')) || [];
+        console.log(user.id)
+        console.log(wl[`${user.id}`]);
+        const uw = wl[`${user.id}`].find(w => w.product_id == currentProductId);
+        if (uw) console.log("Current product is in user's wishlist:", uw);
+        console.log("User wishlist entry for this product:", uw);
         if (uw) wishlistIds = uw.product_ids || (uw.product_id ? [uw.product_id] : []);
     }
 

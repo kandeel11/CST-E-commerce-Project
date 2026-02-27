@@ -1,4 +1,6 @@
 import { addToWishlist1 } from './WishList.js';
+import { getAllProducts, toggleWishlist, isInWishlist, addToCart, getCartCount } from "../Js/services/storageService.js";
+
 // navbar.js - Breadcrumb and navbar functionality
 document.addEventListener('DOMContentLoaded', () => {
     initBreadcrumb();
@@ -129,14 +131,18 @@ window.updateCartBadge = function () {
     let count = 0;
     let total = 0;
     if (currentUser) {
-        const cartKey = 'cart_' + currentUser.id;
+        const cartKey = 'cart';
         const usercart = JSON.parse(localStorage.getItem(cartKey));
-        if (usercart && usercart.items) {
-            usercart.items.forEach(item => {
-                count += parseInt(item.quantity) || 0;
-                total += (parseFloat(item.price) || 0) * (parseInt(item.quantity) || 0);
-            });
-        }
+        usercart.find(cart => {
+            if (cart.userid === currentUser.id) {
+                if (cart.items) {
+                    cart.items.forEach(item => {
+                        count += parseInt(item.quantity) || 0;
+                        total += (parseFloat(item.price) || 0) * (parseInt(item.quantity) || 0);
+                    });
+                }
+            }
+        });
     }
     const badge = document.getElementById('cart-badge-count');
     if (badge) badge.textContent = count;
@@ -155,22 +161,17 @@ window.addToCartData = function (event, id, name, price, image) {
         window.location.href = 'Login.html';
         return;
     }
-    const cartKey = 'cart_' + currentUser.id;
+    const cartKey = 'cart';
     let usercart = JSON.parse(localStorage.getItem(cartKey)) || { items: [] };
-    const existingItem = usercart.items.find(item => item.id == id || item.product_id == id);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        usercart.items.push({
-            id: id,
-            product_id: id,
-            name: decodeURIComponent(name),
-            price: parseFloat(price),
-            image: image,
-            quantity: 1
-        });
-    }
-    localStorage.setItem(cartKey, JSON.stringify(usercart));
+    usercart.find(cart => {
+        if (cart.userid === currentUser.id) {
+            usercart = cart;
+        }
+    });
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    products = products.find(p => p.product_id == id) || {};
+    addToCart(products);
+
     window.dispatchEvent(new Event('storage'));
     if (window.updateCartBadge) window.updateCartBadge();
 
