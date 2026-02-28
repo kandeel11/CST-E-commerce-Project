@@ -120,6 +120,22 @@
           <span class="section-title"><i class="fas fa-receipt text-success me-2"></i>Orders</span>
         </div>
 
+        <div class="row g-2 mb-3">
+          <div class="col-12 col-md-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-text bg-white"><i class="fas fa-search text-muted"></i></span>
+              <input class="form-control border-start-0 ps-0" id="orderSearch" placeholder="Search orders...">
+            </div>
+          </div>
+          <div class="col-12 col-md-3">
+            <select class="form-select form-select-sm" id="orderStatusFilter">
+              <option value="all">All Statuses</option>
+              <option value="completed">Completed</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+        </div>
+
         <div class="card border-0 shadow-sm rounded-3">
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">

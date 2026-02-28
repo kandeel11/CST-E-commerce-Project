@@ -17,7 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
     initSidebar();
     initProductModal();
     initLogout();
-    initSearch();
+    initSearch('productSearch', 'productStatusFilter');
     initAnalytics();
 
     loadProductsForSeller(currentUser.userID);
@@ -54,7 +54,23 @@ function initSidebar() {
     }
 
     document.querySelectorAll(".sidebar-btn, .mobile-nav-btn").forEach(btn =>
-        btn.addEventListener("click", () => switchSection(btn.dataset.section))
+        btn.addEventListener("click", function() {
+            switchSection(btn.dataset.section);
+            let Input;
+            let Filter;
+            if(btn.dataset.section === 'products'){
+                Input = "productSearch";
+                Filter = "productStatusFilter";
+            }
+            else if(btn.dataset.section === 'orders'){
+                Input = "orderSearch";
+                Filter = "orderStatusFilter"
+            }
+            else{
+                return;
+            }
+            initSearch(Input, Filter);
+        } )
     );
 }
 
@@ -67,21 +83,41 @@ function initLogout() {
 }
 
 // ── Search / filter (products table) ──────────────────────────────────────────
-function initSearch() {
-    const searchInput  = document.getElementById("productSearch");
-    const statusFilter = document.getElementById("productStatusFilter");
+function initSearch(Input, Filter) {
+    const searchInput  = document.getElementById(Input);
+    const statusFilter = document.getElementById(Filter);
 
     function applyFilter() {
         const input      = searchInput.value.trim().toLowerCase();
         const status = statusFilter.value;
-        const rows   = document.querySelectorAll("#productsTbody tr[data-id]");
-
-        rows.forEach(row => {
+        let rows;
+        if(Input === 'productSearch'){
+            rows = document.querySelectorAll("#productsTbody tr[data-id]");
+            rows.forEach(row => {
             const name = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
             const matches      = !input || name.includes(input);
             const matchesStatus = status === "all"; // extend when real status field exists
             row.style.display   = matches && matchesStatus ? "" : "none";
         });
+        }else{
+            rows = document.querySelectorAll("#ordersTbody tr[data-id]");
+            rows.forEach(row => {
+                const date = row.querySelector("td:nth-child(1)")?.textContent || "";
+                const email = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
+                const name = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
+                const matches      = !input || date.includes(input) || email.includes(input) || name.includes(input);
+                const matchesStatus = status === "all"; // extend when real status field exists
+                row.style.display   = matches && matchesStatus ? "" : "none";
+            });
+        }
+        
+
+        /*rows.forEach(row => {
+            const name = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
+            const matches      = !input || name.includes(input);
+            const matchesStatus = status === "all"; // extend when real status field exists
+            row.style.display   = matches && matchesStatus ? "" : "none";
+        });*/
     }
 
     searchInput.addEventListener("input",  applyFilter);
