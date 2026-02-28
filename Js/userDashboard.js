@@ -235,13 +235,15 @@ document.getElementById("accountForm").addEventListener("submit", function (e) {
     profile.firstName = document.getElementById("settingFirstName").value.trim();
     profile.lastName = document.getElementById("settingLastName").value.trim();
     profile.phone = document.getElementById("settingPhone").value.trim();
+    if (profile.phone && !isValidPhone(profile.phone)) {
+        showToast("Phone number must be 11 digits!", true);
+        return;
+    }
     saveUserProfile(profile);
-
     // Update currentUser name in localStorage
     currentUser.Fname = profile.firstName;
     currentUser.Lname = profile.lastName;
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
     // Also update in users array
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const userIdx = users.findIndex(u => u.Email === currentUser.Email);
@@ -250,7 +252,6 @@ document.getElementById("accountForm").addEventListener("submit", function (e) {
         users[userIdx].Lname = profile.lastName;
         localStorage.setItem("users", JSON.stringify(users));
     }
-
     initProfile();
     showToast("Account settings saved!");
 });
@@ -268,7 +269,14 @@ document.getElementById("addressForm").addEventListener("submit", function (e) {
     initProfile();
     showToast("Billing address saved!");
 });
-
+function IsValidPassword(password) {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/;
+    return passwordRegex.test(password);
+}
+function isValidPhone(phone) {
+    const phoneRegex = /^01[0125][0-9]{8}$/;
+    return phoneRegex.test(phone);
+}
 // Password Form
 document.getElementById("passwordForm").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -280,8 +288,8 @@ document.getElementById("passwordForm").addEventListener("submit", function (e) 
         showToast("Current password is incorrect!", true);
         return;
     }
-    if (newPw.length < 6) {
-        showToast("New password must be at least 6 characters!", true);
+    if (!IsValidPassword(newPw)) {
+        showToast("New password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one digit!", true);
         return;
     }
     if (newPw !== confirmPw) {

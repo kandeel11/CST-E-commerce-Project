@@ -256,7 +256,7 @@ function IsValidPassword(password) {
     return passwordRegex.test(password);
 }
 function isValidPhone(phone) {
-    const phoneRegex = /^[0-9]{11}$/;
+    const phoneRegex = /^01[0125][0-9]{8}$/;
     return phoneRegex.test(phone);
 }
 
