@@ -110,7 +110,7 @@ function initAuthDisplay() {
                 sessionStorage.removeItem('RememberedUser');
                 sessionStorage.removeItem('currentSeller');
                 sessionStorage.removeItem('currentAdmin');
-                sessionStorage.removeItem('MyCart');
+                localStorage.removeItem('MyCart');
                 window.location.reload();
             });
         }
