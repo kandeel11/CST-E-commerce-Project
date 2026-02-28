@@ -243,10 +243,10 @@ function renderProducts(products) {
                 : ""}
                 <img src="${image}" class="product-img" alt="${name}" loading="lazy">
                 <div class="product-hover-actions">
-                    <button class="hover-btn wishlist-btn ${wishlisted ? "wishlisted" : ""}"
+                    ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="hover-btn wishlist-btn ${wishlisted ? "wishlisted" : ""}"
                             title="${wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}">
                         <i class="${wishlisted ? "fas" : "far"} fa-heart"></i>
-                    </button>
+                    </button>`}
                     <button class="hover-btn details-btn" title="View Details">
                         <i class="fas fa-eye"></i>
                     </button>
@@ -271,26 +271,29 @@ function renderProducts(products) {
                 ? `<br><small class="text-muted text-decoration-line-through">EGP ${product.oldPrice.toFixed(2)}</small>`
                 : ""}
                     </div>
-                    <button class="btn btn-success btn-sm add-cart-btn ${!inStock ? "disabled" : ""}"
+                    ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="btn btn-success btn-sm add-cart-btn ${!inStock ? "disabled" : ""}"
                             ${!inStock ? "disabled" : ""}>
                         <i class="fas fa-cart-plus me-1"></i>
                         <span class="d-none d-md-inline">Add</span>
-                    </button>
+                    </button>`}
                 </div>
             </div>
         `;
 
         // Wishlist
-        card.querySelector(".wishlist-btn").addEventListener("click", e => {
-            e.stopPropagation();
-            const btn = e.currentTarget;
-            const icon = btn.querySelector("i");
-            const added = toggleWishlist(product);
-            btn.classList.toggle("wishlisted", added);
-            icon.className = added ? "fas fa-heart" : "far fa-heart";
-            btn.title = added ? "Remove from Wishlist" : "Add to Wishlist";
-            showToast(added ? "❤️ Added to wishlist" : "💔 Removed from wishlist");
-        });
+        const wishlistBtnEl = card.querySelector(".wishlist-btn");
+        if (wishlistBtnEl) {
+            wishlistBtnEl.addEventListener("click", e => {
+                e.stopPropagation();
+                const btn = e.currentTarget;
+                const icon = btn.querySelector("i");
+                const added = toggleWishlist(product);
+                btn.classList.toggle("wishlisted", added);
+                icon.className = added ? "fas fa-heart" : "far fa-heart";
+                btn.title = added ? "Remove from Wishlist" : "Add to Wishlist";
+                showToast(added ? "❤️ Added to wishlist" : "💔 Removed from wishlist");
+            });
+        }
 
         // Details
         card.querySelector(".details-btn").addEventListener("click", e => {
@@ -390,6 +393,7 @@ function loadComponents() {
             if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
             if (window.initMobileSearch) window.initMobileSearch();
             if (window.updateCartBadge) window.updateCartBadge();
+            if (window.hideNavbarCartWishlistForRole) window.hideNavbarCartWishlistForRole();
         })
         .catch(error => console.error('Error loading navbar:', error));
 
@@ -398,6 +402,7 @@ function loadComponents() {
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
+            if (window.hideFooterCartWishlistForRole) window.hideFooterCartWishlistForRole();
         })
         .catch(error => console.error('Error loading footer:', error));
 }

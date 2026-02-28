@@ -1,6 +1,11 @@
 import { addToWishlist1 } from './WishList.js';
 import { getAllProducts, toggleWishlist, isInWishlist, addToCart, getCartCount } from "../Js/services/storageService.js";
 
+// Global helper to check if current user is a seller or admin
+window.isSellerOrAdmin = function () {
+    return !!(sessionStorage.getItem('currentSeller') || sessionStorage.getItem('currentAdmin'));
+};
+
 // navbar.js - navbar functionality
 document.addEventListener('DOMContentLoaded', () => {
     if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
@@ -27,9 +32,17 @@ function initAuthDisplay() {
     const authContainer = document.getElementById('nav-auth-container');
     if (!authContainer) return;
 
-    const currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || JSON.parse(sessionStorage.getItem('currentSeller'));
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || JSON.parse(sessionStorage.getItem('currentSeller')) || JSON.parse(sessionStorage.getItem('currentAdmin'));
 
     if (currentUser) {
+        // Determine dashboard URL based on role
+        let dashboardUrl = '../Pages/userdashboard.html';
+        if (sessionStorage.getItem('currentSeller')) {
+            dashboardUrl = '../Pages/Seller.html';
+        } else if (sessionStorage.getItem('currentAdmin')) {
+            dashboardUrl = '../Pages/Admin.html';
+        }
+
         const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.Fname + ' ' + currentUser.Lname || 'User')}&background=00B207&color=fff&size=100`;
         authContainer.innerHTML = `
             <div class="dropdown">
@@ -38,7 +51,7 @@ function initAuthDisplay() {
                     <span class="small fw-semibold">Hi, ${currentUser.Fname + ' ' + currentUser.Lname || 'User'}</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item small py-2" href="../Pages/userdashboard.html"><i class="fa-solid fa-table-cells-large fa-sm me-2 text-muted"></i>My Dashboard</a></li>
+                    <li><a class="dropdown-item small py-2" href="${dashboardUrl}"><i class="fa-solid fa-table-cells-large fa-sm me-2 text-muted"></i>My Dashboard</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item small py-2 text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt fa-sm me-2"></i>Logout</a></li>
                 </ul>
@@ -52,6 +65,7 @@ function initAuthDisplay() {
                 sessionStorage.removeItem('currentUser');
                 sessionStorage.removeItem('RememberedUser');
                 sessionStorage.removeItem('currentSeller');
+                sessionStorage.removeItem('currentAdmin');
                 sessionStorage.removeItem('MyCart');
                 window.location.reload();
             });
@@ -69,10 +83,55 @@ function initAuthDisplay() {
             });
         }
     }
+
+    // After auth is set up, apply role-based hiding (runs with correct timing)
+    if (window.isSellerOrAdmin()) {
+        // Hide navbar wishlist/cart
+        const whishDiv = document.getElementById('Whish');
+        if (whishDiv) {
+            const wishlistBtn = whishDiv.querySelector('button[title="Wishlist"]');
+            const cartBtn = document.getElementById('nabvar-cart');
+            const cartrow = document.getElementById('cart-quantity-row');
+            const cartBtns = whishDiv.querySelectorAll('.cart-btn');
+            if (wishlistBtn) wishlistBtn.style.display = 'none';
+            if (cartBtn) cartBtn.classList.add('d-none');
+            if (cartrow) cartrow.classList.add('d-none');
+            cartBtns.forEach(btn => btn.style.display = 'none');
+        }
+        // Hide product details cart row if on that page
+        const cartRow = document.getElementById('cart-quantity-row');
+        if (cartRow) cartRow.style.display = 'none';
+    }
 }
 
 // Ensure globally available for dynamic loading
 window.initNavBarAuth = initAuthDisplay;
+
+// Hide wishlist and cart icons in navbar for sellers/admins
+window.hideNavbarCartWishlistForRole = function () {
+    if (window.isSellerOrAdmin()) {
+        const whishDiv = document.getElementById('Whish');
+        if (whishDiv) {
+            // Hide the wishlist button (title="Wishlist"), not the mobile search toggle
+            const wishlistBtn = whishDiv.querySelector('button[title="Wishlist"]');
+            const cartBtn = whishDiv.querySelector('button[title="Cart"]');
+            // Hide all cart buttons
+            const cartBtns = whishDiv.querySelectorAll('.cart-btn');
+            if (wishlistBtn) wishlistBtn.style.display = 'none';
+            cartBtns.forEach(btn => btn.style.display = 'none');
+        }
+    }
+};
+
+// Hide footer cart/wishlist links for sellers/admins
+window.hideFooterCartWishlistForRole = function () {
+    if (window.isSellerOrAdmin()) {
+        const cartLink = document.getElementById('footer-cart-link');
+        const wishlistLink = document.getElementById('footer-wishlist-link');
+        if (cartLink) cartLink.style.display = 'none';
+        if (wishlistLink) wishlistLink.style.display = 'none';
+    }
+};
 
 window.updateCartBadge = function () {
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
