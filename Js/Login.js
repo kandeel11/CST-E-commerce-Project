@@ -4,7 +4,9 @@ const rememberMeCheckbox = document.querySelector('#rememberMe');
 const Email = document.querySelector('#email');
 const LoginButton = document.querySelector('#loginButton');
 const RemembertUser = JSON.parse(localStorage.getItem("RememberedUser")) || null;
-const CurrentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+const CurrentUser = JSON.parse(sessionStorage.getItem("currentUser")) || null;
+const CurrentSeller = JSON.parse(sessionStorage.getItem("currentSeller")) || null;
+const CurrentAdmin = JSON.parse(sessionStorage.getItem("currentAdmin")) || null;
 const toastLiveExample = document.getElementById('liveToast');
 const toastbody = toastLiveExample.querySelector('.toast-body');
 const toastcontainer = document.querySelector('.toast-container');
@@ -22,6 +24,12 @@ if (urlParams.get('registered') === 'true') {
 import { User } from './Classes/User.js';
 if (CurrentUser) {
     window.location.href = `../Pages/Home.html`;
+}
+if (CurrentSeller) {
+    window.location.href = `../Pages/Seller.html`;
+}
+if (CurrentAdmin) {
+    window.location.href = `../Pages/AdminDashboard.html`;
 }
 
 togglePassword.addEventListener('click', function () {
@@ -91,7 +99,7 @@ LoginButton.addEventListener('click', function (event) {
     for (let i = 0; i < users.length; i++) {
         if (emailValue == users[i].Email && passwordValue == users[i].password) {
             if (users[i].Role === "Admin") {
-                localStorage.setItem("currentAdmin", JSON.stringify(users[i]));
+                sessionStorage.setItem("currentAdmin", JSON.stringify(users[i]));
                 window.location.href = `../Pages/AdminDashboard.html`;
                 isUserFound = true;
                 break;
@@ -102,7 +110,7 @@ LoginButton.addEventListener('click', function (event) {
                     new bootstrap.Toast(toastLiveExample).show();
                     return;
                 }
-                localStorage.setItem("currentUser", JSON.stringify(users[i]));
+                sessionStorage.setItem("currentUser", JSON.stringify(users[i]));
                 if (rememberMeCheckbox.checked) {
                     localStorage.setItem("RememberedUser", JSON.stringify(users[i]));
                 }
@@ -122,7 +130,7 @@ LoginButton.addEventListener('click', function (event) {
                 break;
             }
             else if (users[i].Role === "Seller") {
-                localStorage.setItem("currentSeller", JSON.stringify(users[i]));
+                sessionStorage.setItem("currentSeller", JSON.stringify(users[i]));
                 window.location.href = `../Pages/Seller.html`;
                 isUserFound = true;
                 break;

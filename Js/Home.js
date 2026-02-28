@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     loadData();
     initCountdown();
     // Check if we need to show a login toast
-    if (localStorage.getItem("showLoginToast") === "true") {
-        const currentUser = JSON.parse(localStorage.getItem("currentUser")) || JSON.parse(localStorage.getItem("currentSeller"));
+    if (sessionStorage.getItem("showLoginToast") === "true") {
+        const currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || JSON.parse(sessionStorage.getItem("currentSeller"));
         if (currentUser) {
             showWelcomeToast(`Welcome back ${currentUser.name} ${currentUser.Role || ''}!`);
         }
-        localStorage.removeItem("showLoginToast");
+        sessionStorage.removeItem("showLoginToast");
     }
 });
 function showWelcomeToast(message) {
@@ -149,7 +149,7 @@ function renderProducts(data) {
     const featured = allProducts.slice(0, 10);
     // Get current user wishlist for heart icons
     let wishlistIds = [];
-    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const user = JSON.parse(sessionStorage.getItem('currentUser'));
     if (user) {
         const wl = JSON.parse(localStorage.getItem('WishLists')) || {};
         const userProducts = wl[user.id] || [];
@@ -236,7 +236,7 @@ function renderHotDeals(data) {
     const gridProducts = allProducts.slice(1, 10);
     // Get current user wishlist for heart icons
     let wishlistIds = [];
-    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const user = JSON.parse(sessionStorage.getItem('currentUser'));
     if (user) {
         const wl = JSON.parse(localStorage.getItem('WishLists')) || {};
         const userProducts = wl[user.id] || [];

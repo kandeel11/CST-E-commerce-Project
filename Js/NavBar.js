@@ -20,7 +20,6 @@ window.addEventListener('scroll', function () {
         navbar.classList.remove('scrolleddown');
         navbar.classList.add('scrolledup');
     }
-
     lastScrollTop = scrollTop;
 });
 
@@ -28,7 +27,7 @@ function initAuthDisplay() {
     const authContainer = document.getElementById('nav-auth-container');
     if (!authContainer) return;
 
-    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || JSON.parse(localStorage.getItem('currentSeller'));
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser')) || JSON.parse(sessionStorage.getItem('currentSeller'));
 
     if (currentUser) {
         const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.Fname + ' ' + currentUser.Lname || 'User')}&background=00B207&color=fff&size=100`;
@@ -50,10 +49,10 @@ function initAuthDisplay() {
         if (logoutBtn) {
             logoutBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                localStorage.removeItem('currentUser');
-                localStorage.removeItem('RememberedUser');
-                localStorage.removeItem('currentSeller');
-                localStorage.removeItem('MyCart');
+                sessionStorage.removeItem('currentUser');
+                sessionStorage.removeItem('RememberedUser');
+                sessionStorage.removeItem('currentSeller');
+                sessionStorage.removeItem('MyCart');
                 window.location.reload();
             });
         }
@@ -76,7 +75,7 @@ function initAuthDisplay() {
 window.initNavBarAuth = initAuthDisplay;
 
 window.updateCartBadge = function () {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     let count = 0;
     let total = 0;
     if (currentUser) {
@@ -104,7 +103,7 @@ window.addToCartData = function (event, id, name, price, image) {
         event.preventDefault();
         event.stopPropagation();
     }
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     if (!currentUser) {
         alert('Please login first to add items to cart.');
         window.location.href = 'Login.html';

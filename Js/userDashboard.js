@@ -3,10 +3,12 @@
    ============================ */
 
 // ---- Auth Guard ----
-// const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
-// if (!currentUser) {
-//     window.location.href = "Login.html";
-// }
+{
+    let currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || null;
+    if (!currentUser) {
+        window.location.href = "Login.html";
+    }
+}
 
 const navUsername = document.getElementById("navUsername");
 const profileName = document.getElementById("profileName");
@@ -20,7 +22,7 @@ const recentOrdersBody = document.getElementById("recentOrdersBody");
 const allOrdersBody = document.getElementById("allOrdersBody");
 const wishlistGrid = document.getElementById("wishlistGrid");
 const cartCountEl = document.getElementById("cartCount");
-const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+const currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || null;
 
 const sidebarLinks = document.querySelectorAll(".sidebar-nav .nav-link[data-section]");
 const contentSections = document.querySelectorAll(".content-section");
@@ -335,6 +337,33 @@ function showToast(message, isError = false) {
     const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
     toast.show();
 }
+
 window.addEventListener("load", function () {
+    loadComponents();
     initProfile();
 });
+
+
+function loadComponents() {
+    // 1. Load Navbar
+    fetch('../Pages/NavBar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+
+            // Re-run NavBar initialization since the HTML is dynamically loaded
+            if (window.initNavBarAuth) window.initNavBarAuth();
+            if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+            if (window.initMobileSearch) window.initMobileSearch();
+            if (window.updateCartBadge) window.updateCartBadge();
+        })
+        .catch(error => console.error('Error loading navbar:', error));
+
+    // 2. Load Footer
+    fetch('../Pages/Footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading footer:', error));
+}
