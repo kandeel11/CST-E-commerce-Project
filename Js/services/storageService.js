@@ -134,7 +134,7 @@ function renderOrdersTable(orders) {
     const s = String(status || "").toLowerCase();
     if (s === "pending") return "badge bg-warning-subtle text-warning-emphasis border border-warning-subtle";
     if (s === "completed" || s === "delivered") return "badge bg-success-subtle text-success-emphasis border border-success-subtle";
-    if (s === "cancelled" || s === "canceled") return "badge bg-danger-subtle text-danger-emphasis border border-danger-subtle";
+    if (s === "processed" || s === "processed") return "badge bg-info-subtle text-info-emphasis border border-info-subtle";
     return "badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle";
   };
 
@@ -170,19 +170,33 @@ function renderOrdersTable(orders) {
       </td>
 
       <td>
-        <span class="${statusBadgeClass(orderStatus)} px-3 py-2 text-capitalize">
+        <span class="${statusBadgeClass(orderStatus)} px-3 py-2 text-capitalize statusbadge">
           ${orderStatus}
         </span>
       </td>
 
       <td class="text-end d-none d-lg-table-cell">
-        ${String(orderStatus).toLowerCase() === 'pending' ?
+        ${
+            String(orderStatus).toLowerCase() === 'pending'
+            ?
             `
-            <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
-                <i class="fas fa-trash-alt me-1"></i>Cancel
-            </button>
+                <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
+                    <span class="small"><i class="fas fa-trash-alt me-1"></i>Cancel</span>
+                </button>
             `
-            : ""
+            :
+            String(orderStatus).toLowerCase() === 'processed'
+            ?
+            `
+                <button type="button" class="btn btn-sm btn-outline-primary confirm-order-btn ms-1">
+                    <span class="small"><i class="fas fa-check me-1"></i>Confirm</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
+                    <span class="small"><i class="fas fa-trash-alt me-1"></i>Cancel</span>
+                </button>
+            `
+            :
+            ""
         }
       </td>
     `;
@@ -225,9 +239,35 @@ function renderOrdersTable(orders) {
       });
     }
 
+    row.addEventListener('click', function (e) {
+        const confirmBtn = e.target.closest('.confirm-order-btn');
+        if (!confirmBtn) return;
+
+        const productId = row.dataset.id;
+        const orders = getAllOrders();
+
+        // the order containing the product
+        const order = orders.find(o =>
+            o.products.some(p => String(p.product_id) === String(productId))
+        );
+
+        if (order) {
+            order.orderStatus = "completed";
+            localStorage.setItem("orders", JSON.stringify(orders));
+        }
+
+        const statusBadge = row.querySelector('.statusbadge');
+        statusBadge.className = `${statusBadgeClass("completed")} px-3 py-2`;
+        statusBadge.textContent = "Completed";
+
+        confirmBtn.remove();
+        const cancelBtn = row.querySelector('.cancel-order-btn');
+        if (cancelBtn) cancelBtn.remove();
+    });
     tableBody.appendChild(row);
   });
 }
+
 function renderProductsTable(products) {
     const tableBody = document.getElementById("productsTbody");
     if (!tableBody) return;
