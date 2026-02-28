@@ -79,7 +79,7 @@ export function loadProductsForSeller(sellerID) {
 }
 /////////////New
 export function loadOrdersForSeller() {
-    const sellerId = getCurrentSeller().userid;
+    const sellerId = getCurrentSeller().id;
     getSellerTotalRevenue(sellerId);
     const rows = getAllOrders().flatMap(order => {
         const userid = order.userid;

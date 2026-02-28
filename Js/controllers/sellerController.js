@@ -24,8 +24,8 @@ window.addEventListener("DOMContentLoaded", () => {
     initSearch('productSearch', 'productStatusFilter');
     initAnalytics();
 
-    loadProductsForSeller(currentUser.userid);
-    loadOrdersForSeller(currentUser.userid)
+    loadProductsForSeller(currentUser.id);
+    loadOrdersForSeller(currentUser.id)
 });
 
 // ── User ───────────────────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@ function initUser() {
 
     //sessionStorage.setItem("pageUser", JSON.stringify(currentUser));
     document.getElementById("storeName").textContent  = currentUser.storeName;
-    document.getElementById("sellerName").textContent = currentUser.name;
+    document.getElementById("sellerName").textContent = `${currentUser.Fname} ${currentUser.Lname}`;
 }
 
 // ── Sidebar / section switching ────────────────────────────────────────────────
@@ -92,6 +92,7 @@ function initSearch(Input, Filter) {
     function applyFilter() {
         const input      = searchInput.value.trim().toLowerCase();
         const status = statusFilter.value;
+
         let rows;
         if(Input === 'productSearch'){
             rows = document.querySelectorAll("#productsTbody tr[data-id]");
@@ -104,12 +105,14 @@ function initSearch(Input, Filter) {
         }else{
             rows = document.querySelectorAll("#ordersTbody tr[data-id]");
             rows.forEach(row => {
-                const date = row.querySelector("td:nth-child(1)")?.textContent || "";
-                const email = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
-                const name = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
-                const matches      = !input || date.includes(input) || email.includes(input) || name.includes(input);
-                const matchesStatus = status === "all"; // extend when real status field exists
-                row.style.display   = matches && matchesStatus ? "" : "none";
+                const date   = row.querySelector("td:nth-child(1)")?.textContent.toLowerCase() || "";
+                const email  = row.querySelector("td:nth-child(2)")?.textContent.toLowerCase() || "";
+                const name   = row.querySelector("td:nth-child(3)")?.textContent.toLowerCase() || "";
+                const rowStatus = row.querySelector("td:nth-child(5)")?.textContent.toLowerCase() || "";
+                const matchesSearch = !input || date.includes(input) || email.includes(input) || name.includes(input);
+                const matchesStatus = status === "all" || rowStatus.includes(status.toLowerCase());
+
+                row.style.display = matchesSearch && matchesStatus ? "" : "none";
             });
         }
         
@@ -235,8 +238,8 @@ function initProductModal() {
         } else {
             //  ADD new product 
             const product = {
-                product_id:   `${currentUser.userid}_${Date.now()}`,
-                seller_id:    currentUser.userid,
+                product_id:   `${currentUser.id}_${Date.now()}`,
+                seller_id:    currentUser.id,
                 brand:        currentUser.storeName,
                 name,
                 category,
@@ -258,7 +261,7 @@ function initProductModal() {
         }
 
         modal.hide();
-        loadProductsForSeller(currentUser.userID);
+        loadProductsForSeller(currentUser.id);
     });
 }
 
@@ -299,9 +302,9 @@ function initAnalytics() {
 function refreshAnalytics() {
     //const myProducts = getAllProducts().filter(p => p.seller_id === currentUser.userID);
     document.getElementById("kpiRevenue").textContent =
-        "EGP " + getSellerTotalRevenue(currentUser.userid);
-    document.getElementById("kpiOrders").textContent  = getSellerOrders(currentUser.userid).length;
-    document.getElementById("kpiProducts").textContent = getSellerProducts(currentUser.userid).length;
+        "EGP " + getSellerTotalRevenue(currentUser.id);
+    document.getElementById("kpiOrders").textContent  = getSellerOrders(currentUser.id).length;
+    document.getElementById("kpiProducts").textContent = getSellerProducts(currentUser.id).length;
 
     // Stub chart data (replace with real order data when available)
     if (window._salesChart) {
