@@ -31,6 +31,26 @@ function getUserEmailById(userId) {
   return u?.Email || "Unknown";
 }
 
+export function getSellerOrders(sellerId){
+    const allOrders = getAllOrders();
+    let sellerProducts = allOrders.flatMap(order => {
+            return (order.products || []).filter(p =>
+                String(p.seller_id) === String(sellerId)
+            );
+        }
+    );
+    return sellerProducts;
+}
+export function getSellerTotalRevenue(sellerId){
+    const products = getSellerOrders(sellerId);
+    let TotalRevenue = products.reduce((sum, p) => sum + (Number(p.price) * Number(p.quantity)), 0);
+    return TotalRevenue.toFixed(2);
+}
+export function getSellerProducts(seller_id){
+    let allProducts = getAllProducts();
+    return allProducts.filter(p => p.seller_id === seller_id);
+}
+
 export function saveProducts(products) {
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
 }
@@ -59,30 +79,31 @@ export function loadProductsForSeller(sellerID) {
 }
 /////////////New
 export function loadOrdersForSeller() {
-  const sellerId = getCurrentSeller().userid;
-  const rows = getAllOrders().flatMap(order => {
-    const userid = order.userid;
-    const buyerEmail = getUserEmailById(order.userid);
-    const orderDate = new Date(order.createddate).toLocaleDateString();
-    const orderStatus = order.orderStatus;
+    const sellerId = getCurrentSeller().userid;
+    getSellerTotalRevenue(sellerId);
+    const rows = getAllOrders().flatMap(order => {
+        const userid = order.userid;
+        const buyerEmail = getUserEmailById(order.userid);
+        const orderDate = new Date(order.createddate).toLocaleDateString();
+        const orderStatus = order.orderStatus;
 
-    // take only products for current seller
-    const sellerProducts = (order.products || []).filter(p =>
-      String(p.seller_id) === String(sellerId)
-    );
+        // take only products for current seller
+        const sellerProducts = (order.products || []).filter(p =>
+            String(p.seller_id) === String(sellerId)
+        );
 
-    // each matching product becomes its own row
-    return sellerProducts.map(p => ({
-      orderDate,
-      rawCreatedDate: order.createddate,//// raw value used for matching on cancel
-      buyerEmail,
-      productName: p.name,
-      quantity: p.quantity,
-      status: orderStatus,
-      product_id: p.product_id,
-      userid
-    }));
-  });
+        // each matching product becomes its own row
+        return sellerProducts.map(p => ({
+            orderDate,
+            rawCreatedDate: order.createddate,//// raw value used for matching on cancel
+            buyerEmail,
+            productName: p.name,
+            quantity: p.quantity,
+            status: orderStatus,
+            product_id: p.product_id,
+            userid
+        }));
+    });
   //console.log(rows);
   renderOrdersTable(rows);
   //return rows;
@@ -155,9 +176,14 @@ function renderOrdersTable(orders) {
       </td>
 
       <td class="text-end d-none d-lg-table-cell">
-        <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
-          <i class="fas fa-trash-alt me-1"></i>Cancel
-        </button>
+        ${String(orderStatus).toLowerCase() === 'pending' ?
+            `
+            <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
+                <i class="fas fa-trash-alt me-1"></i>Cancel
+            </button>
+            `
+            : ""
+        }
       </td>
     `;
 
@@ -185,9 +211,7 @@ function renderOrdersTable(orders) {
             const sameDate  = String(o.createddate) === String(order.rawCreatedDate);
             if (!sameBuyer || !sameDate) return o;
 
-            const updatedProducts = (o.products || []).filter(p =>
-            p.product_id !== productId
-            );
+            const updatedProducts = (o.products || []).filter(p => p.product_id !== productId);
             return { ...o, products: updatedProducts };
         })
         // if an order has no products left, remove the whole order object

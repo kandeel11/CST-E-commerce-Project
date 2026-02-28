@@ -2,8 +2,12 @@ import {
     addProductToStorage,
     updateProduct,
     removeProductFromStorage,
+    getCurrentSeller,
     loadProductsForSeller,
     loadOrdersForSeller,
+    getSellerTotalRevenue,
+    getSellerOrders,
+    getSellerProducts,
     getAllProducts,
     saveProducts,
 } from "../services/storageService.js";
@@ -20,18 +24,16 @@ window.addEventListener("DOMContentLoaded", () => {
     initSearch('productSearch', 'productStatusFilter');
     initAnalytics();
 
-    loadProductsForSeller(currentUser.userID);
-    loadOrdersForSeller(currentUser.userID)
+    loadProductsForSeller(currentUser.userid);
+    loadOrdersForSeller(currentUser.userid)
 });
 
 // ── User ───────────────────────────────────────────────────────────────────────
 function initUser() {
     // simulate seller data after login
-    currentUser =
-        JSON.parse(sessionStorage.getItem("pageUser")) ||
-        { storeName: "A5dar", name: "Mohamed Khalifa", userID: "123" };
+    currentUser = getCurrentSeller();
 
-    sessionStorage.setItem("pageUser", JSON.stringify(currentUser));
+    //sessionStorage.setItem("pageUser", JSON.stringify(currentUser));
     document.getElementById("storeName").textContent  = currentUser.storeName;
     document.getElementById("sellerName").textContent = currentUser.name;
 }
@@ -233,8 +235,8 @@ function initProductModal() {
         } else {
             //  ADD new product 
             const product = {
-                product_id:   `${currentUser.userID}_${Date.now()}`,
-                seller_id:    currentUser.userID,
+                product_id:   `${currentUser.userid}_${Date.now()}`,
+                seller_id:    currentUser.userid,
                 brand:        currentUser.storeName,
                 name,
                 category,
@@ -295,12 +297,11 @@ function initAnalytics() {
 }
 
 function refreshAnalytics() {
-    const myProducts = getAllProducts().filter(p => p.seller_id === currentUser.userID);
-
+    //const myProducts = getAllProducts().filter(p => p.seller_id === currentUser.userID);
     document.getElementById("kpiRevenue").textContent =
-        "EGP " + myProducts.reduce((s, p) => s + (parseFloat(p.price) || 0), 0).toFixed(2);
-    document.getElementById("kpiOrders").textContent  = "—";   // no orders model yet
-    document.getElementById("kpiProducts").textContent = myProducts.length;
+        "EGP " + getSellerTotalRevenue(currentUser.userid);
+    document.getElementById("kpiOrders").textContent  = getSellerOrders(currentUser.userid).length;
+    document.getElementById("kpiProducts").textContent = getSellerProducts(currentUser.userid).length;
 
     // Stub chart data (replace with real order data when available)
     if (window._salesChart) {
