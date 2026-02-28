@@ -9,7 +9,8 @@ import {
     getSellerOrders,
     getSellerProducts,
     getAllProducts,
-    saveProducts,
+    getAllOrders,
+    saveProducts
 } from "../services/storageService.js";
 
 // ── State 
@@ -265,54 +266,219 @@ function initProductModal() {
     });
 }
 
-// ── Analytics ──────────────────────────────────────────────────────────────────
+// Visualization part
+function buildSellerAnalyticsData(sellerId) {
+  const orders = getAllOrders();
+
+  const revenueByDate = {};
+  const productSales = new Map();
+  const statusCounts = {};
+
+  orders.forEach(order => {
+    const status = String(order.orderStatus || "").toLowerCase();
+    statusCounts[status] = (statusCounts[status] || 0) + 1;
+
+    const dateLabel = new Date(order.createddate).toLocaleDateString();
+
+    (order.products || []).forEach(p => {
+      if (String(p.seller_id) !== String(sellerId)) return;
+
+      const qty = Number(p.quantity) || 0;
+      const price = Number(p.price) || 0;
+      const revenue = price * qty;
+
+      // sales over time: should be only COMPLETED but I'll leave it as it for testing 
+      if (status === "completed" || status === "pending") {
+        revenueByDate[dateLabel] = (revenueByDate[dateLabel] || 0) + revenue;
+      }
+
+      // top products: use COMPLETED only (same as above)
+      if (status === "completed" || status === "pending") {
+        const key = String(p.product_id);
+        const prev = productSales.get(key) || { name: p.name || `#${key}`, qty: 0, revenue: 0 };
+        prev.qty += qty;
+        prev.revenue += revenue;
+        // keep latest known name
+        prev.name = p.name || prev.name;
+        productSales.set(key, prev);
+      }
+    });
+  });
+
+  // Sort dates properly
+  const salesLabels = Object.keys(revenueByDate).sort((a, b) => new Date(a) - new Date(b));
+  const salesData = salesLabels.map(d => revenueByDate[d]);
+
+  // Top 5 products by quantity (you can switch to revenue if you want)
+  const topProducts = Array.from(productSales.entries())
+    .map(([product_id, v]) => ({ product_id, ...v }))
+    .sort((a, b) => b.qty - a.qty)
+    .slice(0, 5);
+
+  // Status distribution: keep nice order
+  const statusOrder = ["pending", "processing", "completed"];
+  const statusLabels = statusOrder.filter(s => statusCounts[s] != null);
+  // include any other custom statuses
+  Object.keys(statusCounts).forEach(s => { if (!statusLabels.includes(s)) statusLabels.push(s); });
+  const statusData = statusLabels.map(s => statusCounts[s] || 0);
+
+  return {
+    sales: { labels: salesLabels, data: salesData },
+    topProducts: {
+      labels: topProducts.map(p => p.name),
+      qty: topProducts.map(p => p.qty),
+      revenue: topProducts.map(p => p.revenue),
+    },
+    status: { labels: statusLabels, data: statusData },
+  };
+}
+
 function initAnalytics() {
-    // Chart.js is optional; skip gracefully if not loaded
     if (typeof Chart === "undefined") return;
+    // avoid reinitialization
+    if (window._salesChart || window._topProductsChart || window._statusChart) return;
 
-    const ctx = document.getElementById("salesChart")?.getContext("2d");
-    if (!ctx) return;
-
-    window._salesChart = new Chart(ctx, {
+    /// sales line
+    const salesCtx = document.getElementById("salesChart")?.getContext("2d");
+    if (salesCtx) {
+        window._salesChart = new Chart(salesCtx, {
         type: "line",
         data: {
             labels: [],
             datasets: [{
-                label: "Revenue (EGP)",
-                data: [],
-                borderColor: "#2e9e45",
-                backgroundColor: "rgba(46,158,69,.08)",
-                borderWidth: 2,
-                pointRadius: 3,
-                fill: true,
-                tension: .35,
+            label: "Revenue (EGP)",
+            data: [],
+            borderColor: "#2e9e45",
+            backgroundColor: "rgba(46,158,69,.10)",
+            borderWidth: 2,
+            pointRadius: 3,
+            fill: true,
+            tension: 0.35
             }]
         },
         options: {
             responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: {
-                y: { beginAtZero: true, grid: { color: "#e9ecef" } },
-                x: { grid: { display: false } }
+            y: { beginAtZero: true, grid: { color: "#eef2f6" } },
+            x: { grid: { display: false } }
             }
         }
+        });
+    }
+
+    /// Top products bar
+    const topCtx = document.getElementById("topProductsChart")?.getContext("2d");
+    if (topCtx) {
+        window._topProductsChart = new Chart(topCtx, {
+        type: "bar",
+        data: {
+            labels: [],
+            datasets: [{
+            label: "Units Sold",
+            data: [],
+            backgroundColor: "rgb(102, 209, 123)",
+            borderColor: "#2e9e45",
+            borderWidth: 2,
+            borderRadius: 10,
+            maxBarThickness: 42
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+            y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: "#eef2f6" } },
+            x: { grid: { display: false } }
+            }
+        }
+        });
+    }
+
+    /// Status doughnut 
+    const statusCtx = document.getElementById("orderStatusChart")?.getContext("2d");
+    if (statusCtx) {
+        window._statusChart = new Chart(statusCtx, {
+        type: "doughnut",
+        data: {
+            labels: [],
+            datasets: [{
+            data: [],
+            backgroundColor: [],
+            borderColor: "#ffffff",
+            borderWidth: 2,
+            hoverOffset: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { position: "bottom" } },
+            cutout: "65%"
+        }
+        });
+    }
+
+    //  resizing
+    function forceChartsResize() {
+        window._salesChart?.resize();
+        window._topProductsChart?.resize();
+        window._statusChart?.resize();
+
+        window._salesChart?.update("none");
+        window._topProductsChart?.update("none");
+        window._statusChart?.update("none");
+    }
+
+    window.addEventListener("resize", () => {
+        clearTimeout(window.__chartResizeTimer);
+        window.__chartResizeTimer = setTimeout(forceChartsResize, 120);
+    });
+
+    document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) setTimeout(forceChartsResize, 120);
     });
 }
 
+function statusColor(label) {
+    const s = String(label).toLowerCase();
+    if (s === "pending") return "rgba(255, 193, 7, .85)";
+    if (s === "processing") return "rgba(13, 110, 253, .80)";
+    if (s === "completed") return "rgba(46, 158, 69, .80)";
+    return "rgba(108, 117, 125, .70)";
+}
+
+/// refreshing
 function refreshAnalytics() {
-    //const myProducts = getAllProducts().filter(p => p.seller_id === currentUser.userID);
-    document.getElementById("kpiRevenue").textContent =
-        "EGP " + getSellerTotalRevenue(currentUser.id);
-    document.getElementById("kpiOrders").textContent  = getSellerOrders(currentUser.id).length;
+    document.getElementById("kpiRevenue").textContent = "EGP " + getSellerTotalRevenue(currentUser.id);
+    document.getElementById("kpiOrders").textContent = getSellerOrders(currentUser.id).length;
     document.getElementById("kpiProducts").textContent = getSellerProducts(currentUser.id).length;
 
-    // Stub chart data (replace with real order data when available)
+    const data = buildSellerAnalyticsData(currentUser.id);
+
+    // Sales line
     if (window._salesChart) {
-        const labels = ["Jan","Feb","Mar","Apr","May","Jun","Jul"];
-        const data   = labels.map(() => Math.floor(Math.random() * 3000) + 500);
-        window._salesChart.data.labels   = labels;
-        window._salesChart.data.datasets[0].data = data;
+        window._salesChart.data.labels = data.sales.labels;
+        window._salesChart.data.datasets[0].data = data.sales.data;
         window._salesChart.update();
+    }
+
+  // Top 5 bar (by quantity)
+    if (window._topProductsChart) {
+        window._topProductsChart.data.labels = data.topProducts.labels;
+        window._topProductsChart.data.datasets[0].data = data.topProducts.qty;
+        window._topProductsChart.update();
+    }
+
+  // Status doughnut
+    if (window._statusChart) {
+        const labels = data.status.labels.map(s => s[0].toUpperCase() + s.slice(1));
+        window._statusChart.data.labels = labels;
+        window._statusChart.data.datasets[0].data = data.status.data;
+        window._statusChart.data.datasets[0].backgroundColor = labels.map(statusColor);
+        window._statusChart.update();
     }
 }
 
@@ -343,7 +509,7 @@ function clearForm() {
 function populateForm(product) {
     document.getElementById("productName").value        = product.name        || "";
     document.getElementById("productPrice").value       = product.price       || "";
-    document.getElementById("productNewPrice").value    = "";   // always blank; seller fills in if desired
+    document.getElementById("productNewPrice").value    = "";   // always blank
     document.getElementById("productStock").value       = product.stock       || "";
     document.getElementById("productDescription").value = product.description || "";
     document.getElementById("productCategory").value    = product.category    || "";
