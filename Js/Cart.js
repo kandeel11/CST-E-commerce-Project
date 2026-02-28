@@ -60,16 +60,18 @@ export class Cart {
         var quantitytd = document.createElement("td");
         var subtotatd = document.createElement("td");
         var daletetd = document.createElement("td");
-        // <img src="${mycart.items[i].image}" width="50px" height="50px" /">
         producttd.innerHTML = `
-        <span>${mycart.items[i].name}</span>
-        `;
+  <div class="product-cell">
+    <img src="${mycart.items[i].images[0]}" />
+    <span>${mycart.items[i].name}</span>
+  </div>
+`;
         pricetd.innerHTML = `${mycart.items[i].price}`;
         quantitytd.innerHTML = `<button class="minnum" data-productid="${mycart.items[i].product_id}">-</button>
               <span class="qty"> ${mycart.items[i].quantity} </span>
               <button class="maxnum" data-productid="${mycart.items[i].product_id}">+</button>`;
 
-        subtotatd.innerHTML = `<span class="spansub">${mycart.items[i].price * mycart.items[i].quantity}</span>`;
+        subtotatd.innerHTML = `<span class="spansub">${(mycart.items[i].price * mycart.items[i].quantity).toFixed(2)}</span>`;
         subtotatd.classList.add("calcsubtotal");
         daletetd.innerHTML = `<button class="deletebtn" data-productid="${mycart.items[i].product_id}"><i class="bi bi-trash3"></i></button>`;
 
@@ -130,7 +132,7 @@ export class Cart {
               cart.items = mycart.items;
             }
             console.log(cart);
-            carts = carts.map(c => c.userid === mycart.userid ? cart : c);
+            carts = carts.map((c) => (c.userid === mycart.userid ? cart : c));
             localStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
             location.reload();
@@ -138,7 +140,6 @@ export class Cart {
             var toastEl = document.getElementById("myToastt");
             var toast = new bootstrap.Toast(toastEl);
             toast.show();
-
           }
         });
       });
@@ -167,7 +168,9 @@ export class Cart {
           var innerqty = +qtySpan.innerText;
           var productid = btnMax.dataset.productid;
           var finditem = mycart.items.find((p) => p.product_id == productid);
-          if (!qtySpan) { return; }
+          if (!qtySpan) {
+            return;
+          }
           var toasttEl = document.getElementById("myToast");
           var toastt = new bootstrap.Toast(toasttEl);
           if (finditem.stock == finditem.quantity) {
@@ -183,13 +186,11 @@ export class Cart {
               cart.items = mycart.items;
             }
             console.log(cart);
-            carts = carts.map(c => c.userid === mycart.userid ? cart : c);
+            carts = carts.map((c) => (c.userid === mycart.userid ? cart : c));
             localStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
             location.reload();
           }
-
-
         });
       });
     }
@@ -242,27 +243,27 @@ export class Cart {
   static totalcal() {
     let mycart = Cart.GetCurrentUserCart();
     var rows = document.querySelectorAll("tbody tr");
-    if (rows.length == 0) { return; }
+    if (rows.length == 0) {
+      return;
+    }
     var SumSubtotal = 0;
     for (var i = 0; i < rows.length; i++) {
       var innersubtotal = rows[i].querySelector(".spansub");
       if (innersubtotal) {
-        SumSubtotal += parseInt(innersubtotal.innerHTML);
+        SumSubtotal += parseFloat(innersubtotal.innerHTML);
       }
     }
     if (mycart.items.length > 0) {
       var subtotaldiv = document.querySelector("#subtotal");
-      subtotaldiv.innerHTML = SumSubtotal;
+      subtotaldiv.innerHTML = `EGP ${SumSubtotal.toFixed(2)}`;
       var totaldiv = document.getElementById("total");
-      totaldiv.innerText = SumSubtotal;
+      totaldiv.innerText = `EGP ${SumSubtotal.toFixed(2)}`;
     } else {
       var subtotaldiv = document.getElementById("subtotal");
       subtotaldiv.innerHTML = `${0}`;
       var totaldiv = document.getElementById("total");
       totaldiv.innerHTML = `${0}`;
     }
-
-
   }
 }
 Cart.AddItemstoTable();
@@ -280,7 +281,7 @@ window.addEventListener("storage", function (e) {
 var returnbtn = document.getElementById("btntocheckout");
 if (returnbtn) {
   returnbtn.addEventListener("click", function () {
-    window.location.href = "loginAddtocart.html";
+    window.location.href = "Home.html";
   });
 }
 //button procced to checkout
@@ -306,28 +307,46 @@ btntocheckout.addEventListener("click", function () {
   }
   var orders = JSON.parse(localStorage.getItem("order")) || [];
 
-  var pendingOrder = orders.find(o => o.userid === userId && o.orderStatus === "pending");
+  var pendingOrder = orders.find(
+    (o) => o.userid === userId && o.orderStatus === "pending",
+  );
+  var mycart = Cart.GetCurrentUserCart();
   var items = mycart.items;
   var total = 0;
-  items.forEach(item => {
+
+  items.forEach((item) => {
     total += item.quantity * item.price;
-  })
-  if (pendingOrder) {
-    pendingOrder.products = mycart.items;
+  });
+  var orders = JSON.parse(localStorage.getItem("order")) || [];
+  var orderid;
+
+  if (orders.length === 0) {
+    orderid = 1;
   } else {
-    var order = new Order(userId, "pending", mycart.items, total);
+    orderid = orders[orders.length - 1].orderid + 1;
+  }
+  var pendingOrder = orders.find(
+    (o) => o.userid === userId && o.orderStatus === "pending",
+  );
+
+  if (pendingOrder) {
+    pendingOrder.products = [...items];
+    pendingOrder.total = total;
+  } else {
+    var order = new Order(orderid, userId, "pending", [...items], total);
     orders.push(order);
   }
+
   localStorage.setItem("order", JSON.stringify(orders));
   window.location.href = "checkout.html";
 });
 
 function loadComponents() {
   // 1. Load Navbar
-  fetch('../Pages/NavBar.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('navbar-placeholder').innerHTML = data;
+  fetch("../Pages/NavBar.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById("navbar-placeholder").innerHTML = data;
 
       // Re-run NavBar initialization since the HTML is dynamically loaded
       if (window.initNavBarAuth) window.initNavBarAuth();
@@ -335,17 +354,16 @@ function loadComponents() {
       if (window.initMobileSearch) window.initMobileSearch();
       if (window.updateCartBadge) window.updateCartBadge();
     })
-    .catch(error => console.error('Error loading navbar:', error));
+    .catch((error) => console.error("Error loading navbar:", error));
 
   // 2. Load Footer
-  fetch('../Pages/Footer.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('footer-placeholder').innerHTML = data;
+  fetch("../Pages/Footer.html")
+    .then((response) => response.text())
+    .then((data) => {
+      document.getElementById("footer-placeholder").innerHTML = data;
     })
-    .catch(error => console.error('Error loading footer:', error));
+    .catch((error) => console.error("Error loading footer:", error));
 }
-window.addEventListener('load', function () {
-
+window.addEventListener("load", function () {
   loadComponents();
 });

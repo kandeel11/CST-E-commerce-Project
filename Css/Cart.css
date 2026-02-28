@@ -252,3 +252,23 @@ td.price-col {
     font-weight: 500;
     color: #495057;
 }
+.product-cell {
+  display: flex;          
+  align-items: center;    
+  gap: 10px;   
+}
+
+.product-cell img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;     
+  flex-shrink: 0;     
+}
+
+.product-cell span {
+  display: block;
+  max-width: 200px;       
+  white-space: nowrap;    
+  overflow: hidden;      
+  text-overflow: ellipsis;
+}
