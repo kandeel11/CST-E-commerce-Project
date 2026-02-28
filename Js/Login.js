@@ -83,9 +83,6 @@ passwordField.addEventListener("input", function () {
     passwordField.classList.remove('is-invalid');
     passwordError.style.display = 'none';
 });
-
-
-
 LoginButton.addEventListener('click', function (event) {
     event.preventDefault(); // Prevent form submission
     const emailValue = Email.value.trim();
@@ -93,11 +90,6 @@ LoginButton.addEventListener('click', function (event) {
     let isUserFound = false;
     for (let i = 0; i < users.length; i++) {
         if (emailValue == users[i].Email && passwordValue == users[i].password) {
-            if (!users[i].Active) {
-                toastbody.textContent = "Your account is inactive. Please contact support.";
-                new bootstrap.Toast(toastLiveExample).show();
-                return;
-            }
             if (users[i].Role === "Admin") {
                 localStorage.setItem("currentAdmin", JSON.stringify(users[i]));
                 window.location.href = `../Pages/AdminDashboard.html`;
@@ -105,7 +97,11 @@ LoginButton.addEventListener('click', function (event) {
                 break;
             }
             else if (users[i].Role === "User") {
-
+                if (!users[i].Active) {
+                    toastbody.textContent = "Your account is inactive. Please contact support.";
+                    new bootstrap.Toast(toastLiveExample).show();
+                    return;
+                }
                 localStorage.setItem("currentUser", JSON.stringify(users[i]));
                 if (rememberMeCheckbox.checked) {
                     localStorage.setItem("RememberedUser", JSON.stringify(users[i]));
@@ -118,34 +114,25 @@ LoginButton.addEventListener('click', function (event) {
                     userCart.push({ userid: users[i].id, items: [] });
                     localStorage.setItem("cart", JSON.stringify(userCart));
                     localStorage.setItem("MyCart", JSON.stringify(userCart[userCart.length - 1]));
-
                 } else {
                     localStorage.setItem("MyCart", JSON.stringify(userCart.find(c => c.userid === users[i].id)));
                 }
-
                 window.location.href = `../Pages/Home.html`;
                 isUserFound = true;
-
-
                 break;
             }
             else if (users[i].Role === "Seller") {
                 localStorage.setItem("currentSeller", JSON.stringify(users[i]));
-                window.location.href = `../Pages/SellerDashboard.html`;
+                window.location.href = `../Pages/Seller.html`;
                 isUserFound = true;
                 break;
             }
-
-
-
-            // document.querySelector('form').submit();
         }
+        // document.querySelector('form').submit();
     }
     if (!isUserFound) {
         toastbody.textContent = "Invalid email or password. Please try again.";
         new bootstrap.Toast(toastLiveExample).show();
-
-
         event.preventDefault(); // Prevent form submission
     }
 
