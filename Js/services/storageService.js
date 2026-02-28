@@ -2,7 +2,7 @@
 const PRODUCTS_KEY = "products";
 
 export function getCurrentUser() {
-    return JSON.parse(localStorage.getItem('currentUser'));
+    return JSON.parse(sessionStorage.getItem('currentUser'));
 }
 
 export function addProductToStorage(product) {

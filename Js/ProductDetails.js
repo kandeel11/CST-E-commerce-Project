@@ -13,12 +13,14 @@ function loadComponents() {
             document.getElementById('navbar-placeholder').innerHTML = data;
             if (window.initNavBarAuth) window.initNavBarAuth();
             if (window.updateCartBadge) window.updateCartBadge();
+            if (window.hideNavbarCartWishlistForRole) window.hideNavbarCartWishlistForRole();
         });
 
     fetch('Footer.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
+            if (window.hideFooterCartWishlistForRole) window.hideFooterCartWishlistForRole();
         });
 }
 
@@ -147,10 +149,15 @@ function renderProductDetails(product) {
     // Render Reviews Tab
     const reviewContainer = document.getElementById('reviews-container');
     reviewContainer.innerHTML = '<p class="text-muted py-4">No feedback available yet.</p>';
-    
+
 
     setupQuantityAndCart();
 
+    // Hide add-to-cart and quantity for sellers/admins
+    if (window.isSellerOrAdmin && window.isSellerOrAdmin()) {
+        const cartRow = document.getElementById('cart-quantity-row');
+        if (cartRow) cartRow.style.display = 'none';
+    }
 }
 
 function setupQuantityAndCart() {
@@ -236,9 +243,9 @@ function renderRelatedProducts(products, currentCategory, currentProductId) {
                         <a href="ProductDetails.html?id=${p.product_id || 0}" class="action-icon-btn" title="Quick View">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${p.product_id || 0})">
+                        ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${p.product_id || 0})">
                             <i class="${wishlistIds.includes(p.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i>
-                        </a>
+                        </a>`}
                     </div>
                     <a href="ProductDetails.html?id=${p.product_id || 0}" class="d-block text-decoration-none text-dark position-relative z-1">
                         <img src="${img}" class="card-img-top mx-auto d-block" alt="${p.name}" style="object-fit: contain; max-height: 200px;">
@@ -253,7 +260,7 @@ function renderRelatedProducts(products, currentCategory, currentProductId) {
                                 ${oldPriceHtml}
                                 <div class="small">${starsHtml}</div>
                             </div>
-                            <button class="add-btn-circle" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>
+                            ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="add-btn-circle" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>`}
                         </div>
                     </div>
                 </div>

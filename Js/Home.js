@@ -3,12 +3,12 @@ document.addEventListener("DOMContentLoaded", () => {
     loadData();
     initCountdown();
     // Check if we need to show a login toast
-    if (localStorage.getItem("showLoginToast") === "true") {
-        const currentUser = JSON.parse(localStorage.getItem("currentUser")) || JSON.parse(localStorage.getItem("currentSeller"));
+    if (sessionStorage.getItem("showLoginToast") === "true") {
+        const currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || JSON.parse(sessionStorage.getItem("currentSeller"));
         if (currentUser) {
             showWelcomeToast(`Welcome back ${currentUser.name} ${currentUser.Role || ''}!`);
         }
-        localStorage.removeItem("showLoginToast");
+        sessionStorage.removeItem("showLoginToast");
     }
 });
 function showWelcomeToast(message) {
@@ -74,6 +74,7 @@ function loadComponents() {
             if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
             if (window.initMobileSearch) window.initMobileSearch();
             if (window.updateCartBadge) window.updateCartBadge();
+            if (window.hideNavbarCartWishlistForRole) window.hideNavbarCartWishlistForRole();
         })
         .catch(error => console.error('Error loading navbar:', error));
     // 2. Load Footer
@@ -81,6 +82,7 @@ function loadComponents() {
         .then(response => response.text())
         .then(data => {
             document.getElementById('footer-placeholder').innerHTML = data;
+            if (window.hideFooterCartWishlistForRole) window.hideFooterCartWishlistForRole();
         })
         .catch(error => console.error('Error loading footer:', error));
 }
@@ -149,7 +151,7 @@ function renderProducts(data) {
     const featured = allProducts.slice(0, 10);
     // Get current user wishlist for heart icons
     let wishlistIds = [];
-    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const user = JSON.parse(sessionStorage.getItem('currentUser'));
     if (user) {
         const wl = JSON.parse(localStorage.getItem('WishLists')) || {};
         const userProducts = wl[user.id] || [];
@@ -195,9 +197,9 @@ function renderProducts(data) {
                         <a href="ProductDetails.html?id=${product.product_id || 0}" class="action-icon-btn" title="Quick View">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${product.product_id || 0})">
+                        ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${product.product_id || 0})">
                             <i class="${heartIconCls}"></i>
-                        </a>
+                        </a>`}
                     </div>
                     <a href="ProductDetails.html?id=${product.product_id || 0}" class="d-block text-decoration-none text-dark position-relative z-1">
                         <img src="${imgSrc}" class="card-img-top mx-auto d-block" alt="${name}" style="object-fit: contain; max-height: 200px;">
@@ -212,7 +214,7 @@ function renderProducts(data) {
                                 ${oldPriceHtml}
                                 <div class="small">${starsHtml}</div>
                             </div>
-                            <button class="add-btn-circle" onclick="window.addToCartData(event, ${product.product_id || 0}, '${encodeURIComponent(name).replace(/'/g, "%27")}', ${price}, '${imgSrc}')"><i class="fas fa-shopping-bag"></i></button>
+                            ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="add-btn-circle" onclick="window.addToCartData(event, ${product.product_id || 0}, '${encodeURIComponent(name).replace(/'/g, "%27")}', ${price}, '${imgSrc}')"><i class="fas fa-shopping-bag"></i></button>`}
                         </div>
                     </div>
                 </div>
@@ -236,7 +238,7 @@ function renderHotDeals(data) {
     const gridProducts = allProducts.slice(1, 10);
     // Get current user wishlist for heart icons
     let wishlistIds = [];
-    const user = JSON.parse(localStorage.getItem('currentUser'));
+    const user = JSON.parse(sessionStorage.getItem('currentUser'));
     if (user) {
         const wl = JSON.parse(localStorage.getItem('WishLists')) || {};
         const userProducts = wl[user.id] || [];
@@ -264,10 +266,10 @@ function renderHotDeals(data) {
                         <img src="${featImg}" class="w-100 rounded" alt="${featured.name}" style="height: 260px; object-fit: contain;">
                     </a>
                     <div class="d-flex align-items-center gap-2 mt-3">
-                        <button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;" onclick="window.addToWishlistData(event, ${featured.product_id || 0})"><i class="${wishlistIds.includes(featured.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i></button>
-                        <a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;" onclick="window.addToCartData(event, ${featured.product_id || 0}, '${encodeURIComponent(featured.name).replace(/'/g, "%27")}', ${featured.price}, '${featImg}')">
+                        ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;" onclick="window.addToWishlistData(event, ${featured.product_id || 0})"><i class="${wishlistIds.includes(featured.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i></button>`}
+                        ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;" onclick="window.addToCartData(event, ${featured.product_id || 0}, '${encodeURIComponent(featured.name).replace(/'/g, "%27")}', ${featured.price}, '${featImg}')">
                             <i class="fas fa-shopping-bag me-1"></i> Add to Cart
-                        </a>
+                        </a>`}
                         <a href="ProductDetails.html?id=${featured.product_id || 0}" class="btn btn-outline-secondary btn-sm rounded-circle d-flex justify-content-center align-items-center text-decoration-none" style="width:36px;height:36px;"><i class="far fa-eye"></i></a>
                     </div>
                 </div>
@@ -304,9 +306,9 @@ function renderHotDeals(data) {
                         <a href="ProductDetails.html?id=${p.product_id || 0}" class="action-icon-btn" title="Quick View" style="width:28px; height:28px; font-size: 0.75rem;">
                             <i class="far fa-eye"></i>
                         </a>
-                        <a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${p.product_id || 0})" style="width:28px; height:28px; font-size: 0.75rem;">
+                        ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<a href="#" class="action-icon-btn" title="Add to Wishlist" onclick="window.addToWishlistData(event, ${p.product_id || 0})" style="width:28px; height:28px; font-size: 0.75rem;">
                             <i class="${wishlistIds.includes(p.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i>
-                        </a>
+                        </a>`}
                     </div>
                     <div class="p-2 text-center position-relative z-1" style="height:120px; display:flex; align-items:center; justify-content:center;">
                         <a href="ProductDetails.html?id=${p.product_id || 0}" class="d-block w-100 h-100">
@@ -321,7 +323,7 @@ function renderHotDeals(data) {
                             <div>
                                 <span class="fw-bold small">EGP ${p.price.toFixed(2)}</span> ${oldPriceHtml}
                             </div>
-                            <button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>
+                            ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>`}
                         </div>
                         <div>${starsHtml(p.rating)}</div>
                     </div>

@@ -3,10 +3,12 @@
    ============================ */
 
 // ---- Auth Guard ----
-// const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
-// if (!currentUser) {
-//     window.location.href = "Login.html";
-// }
+{
+    let currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || null;
+    if (!currentUser) {
+        window.location.href = "Login.html";
+    }
+}
 
 const navUsername = document.getElementById("navUsername");
 const profileName = document.getElementById("profileName");
@@ -20,7 +22,7 @@ const recentOrdersBody = document.getElementById("recentOrdersBody");
 const allOrdersBody = document.getElementById("allOrdersBody");
 const wishlistGrid = document.getElementById("wishlistGrid");
 const cartCountEl = document.getElementById("cartCount");
-const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+const currentUser = JSON.parse(sessionStorage.getItem("currentUser")) || null;
 
 const sidebarLinks = document.querySelectorAll(".sidebar-nav .nav-link[data-section]");
 const contentSections = document.querySelectorAll(".content-section");
@@ -235,13 +237,15 @@ document.getElementById("accountForm").addEventListener("submit", function (e) {
     profile.firstName = document.getElementById("settingFirstName").value.trim();
     profile.lastName = document.getElementById("settingLastName").value.trim();
     profile.phone = document.getElementById("settingPhone").value.trim();
+    if (profile.phone && !isValidPhone(profile.phone)) {
+        showToast("Phone number must be 11 digits!", true);
+        return;
+    }
     saveUserProfile(profile);
-
     // Update currentUser name in localStorage
     currentUser.Fname = profile.firstName;
     currentUser.Lname = profile.lastName;
     localStorage.setItem("currentUser", JSON.stringify(currentUser));
-
     // Also update in users array
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const userIdx = users.findIndex(u => u.Email === currentUser.Email);
@@ -250,7 +254,6 @@ document.getElementById("accountForm").addEventListener("submit", function (e) {
         users[userIdx].Lname = profile.lastName;
         localStorage.setItem("users", JSON.stringify(users));
     }
-
     initProfile();
     showToast("Account settings saved!");
 });
@@ -268,7 +271,14 @@ document.getElementById("addressForm").addEventListener("submit", function (e) {
     initProfile();
     showToast("Billing address saved!");
 });
-
+function IsValidPassword(password) {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{7,}$/;
+    return passwordRegex.test(password);
+}
+function isValidPhone(phone) {
+    const phoneRegex = /^01[0125][0-9]{8}$/;
+    return phoneRegex.test(phone);
+}
 // Password Form
 document.getElementById("passwordForm").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -280,8 +290,8 @@ document.getElementById("passwordForm").addEventListener("submit", function (e) 
         showToast("Current password is incorrect!", true);
         return;
     }
-    if (newPw.length < 6) {
-        showToast("New password must be at least 6 characters!", true);
+    if (!IsValidPassword(newPw)) {
+        showToast("New password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one digit!", true);
         return;
     }
     if (newPw !== confirmPw) {
@@ -327,6 +337,33 @@ function showToast(message, isError = false) {
     const toast = new bootstrap.Toast(toastEl, { delay: 2500 });
     toast.show();
 }
+
 window.addEventListener("load", function () {
+    loadComponents();
     initProfile();
 });
+
+
+function loadComponents() {
+    // 1. Load Navbar
+    fetch('../Pages/NavBar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+
+            // Re-run NavBar initialization since the HTML is dynamically loaded
+            if (window.initNavBarAuth) window.initNavBarAuth();
+            if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+            if (window.initMobileSearch) window.initMobileSearch();
+            if (window.updateCartBadge) window.updateCartBadge();
+        })
+        .catch(error => console.error('Error loading navbar:', error));
+
+    // 2. Load Footer
+    fetch('../Pages/Footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading footer:', error));
+}

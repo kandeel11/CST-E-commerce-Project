@@ -16,10 +16,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <!-- Custom CSS -->
+    <link rel="stylesheet" href="../Css/Home.css">
+
     <link rel="stylesheet" href="../Css/userDashboard.css">
 </head>
 
 <body>
+    <div id="navbar-placeholder" class="navbar-placeholder" style="z-index: 1020;"></div>
+
 
     <!-- Dashboard Main -->
     <section class="py-4 py-lg-5">
@@ -138,22 +142,7 @@
                     </div>
 
                     <!-- ====== WISHLIST SECTION ====== -->
-                    <div id="section-wishlist" class="content-section d-none">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="fw-bold mb-0">My Wishlist (<span id="wishlistCount">0</span>)</h5>
-                        </div>
-                        <div class="row g-3" id="wishlistGrid">
-                            <!-- Filled by JS -->
-                        </div>
-                        <div id="noWishlistMsg" class="text-center py-5 d-none">
-                            <i class="far fa-heart fa-3x text-muted mb-3 d-block"></i>
-                            <h6 class="text-muted">Your wishlist is empty.</h6>
-                            <p class="text-muted small">Browse products and add your favorites here!</p>
-                            <a href="AllProducts.html" class="btn btn-success rounded-pill px-4 mt-2">
-                                <i class="fas fa-shopping-bag me-1"></i> Browse Products
-                            </a>
-                        </div>
-                    </div>
+
 
                     <!-- ====== SETTINGS SECTION ====== -->
                     <div id="section-settings" class="content-section d-none display-flex flex-column gap-4">
@@ -293,12 +282,16 @@
             </div>
         </div>
     </div>
+    <div id="footer-placeholder"></div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <!-- Custom JS -->
+
+    <script type="module" src="../Js/NavBar.js"></script>
     <script src="../Js/userDashboard.js"></script>
 </body>
 

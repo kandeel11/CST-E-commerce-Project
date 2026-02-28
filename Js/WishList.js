@@ -1,23 +1,24 @@
 
 
 let isGuest = false;
-if (!localStorage.getItem('currentUser')) {
+if (!sessionStorage.getItem('currentUser')) {
     isGuest = true;
 }
+
 import { removeFromWishlist } from ".//services/storageService.js";
 
-let current_user_Id = isGuest ? null : JSON.parse(localStorage.getItem('currentUser')).id;
+let current_user_Id = isGuest ? null : JSON.parse(sessionStorage.getItem('currentUser')).id;
 
 // WishLists is now an object: { "Us-1": [product, ...], "Us-2": [product, ...] }
 let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
 
 export function addToWishlist1(productId) {
-    if (!localStorage.getItem('currentUser')) {
+    if (!sessionStorage.getItem('currentUser')) {
         const loginModal = new bootstrap.Modal(document.getElementById('loginAlertModal'));
         loginModal.show();
         return;
     }
-    const current_user_Id = JSON.parse(localStorage.getItem('currentUser')).id;
+    const current_user_Id = JSON.parse(sessionStorage.getItem('currentUser')).id;
     const id = current_user_Id;
 
     let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
