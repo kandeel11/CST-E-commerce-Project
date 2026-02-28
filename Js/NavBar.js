@@ -6,6 +6,50 @@ window.isSellerOrAdmin = function () {
     return !!(sessionStorage.getItem('currentSeller') || sessionStorage.getItem('currentAdmin'));
 };
 
+// Ensure globally available UI helpers
+window.showBootstrapToast = function (message, type = 'success') {
+    let toastContainer = document.querySelector('.toast-container');
+    if (!toastContainer) {
+        toastContainer = document.createElement('div');
+        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
+        toastContainer.style.zIndex = '1055';
+        document.body.appendChild(toastContainer);
+    }
+
+    const toastEl = document.createElement('div');
+    const bgClass = type === 'success' ? 'bg-success' : 'bg-danger';
+    const iconClass = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
+    toastEl.className = `toast align-items-center text-white ${bgClass} border-0 fade show`;
+    toastEl.setAttribute('role', 'alert');
+    toastEl.setAttribute('aria-live', 'assertive');
+    toastEl.setAttribute('aria-atomic', 'true');
+
+    toastEl.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="fas ${iconClass} me-2"></i> ${message}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    `;
+
+    const closeBtn = toastEl.querySelector('.btn-close');
+    closeBtn.addEventListener('click', () => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    });
+
+    toastContainer.appendChild(toastEl);
+
+    setTimeout(() => {
+        toastEl.classList.remove('show');
+        setTimeout(() => toastEl.remove(), 150);
+    }, 2500);
+};
+
+// Map existing showToast calls to the new Bootstrap Toast globally
+window.showToast = window.showBootstrapToast;
+
 // navbar.js - navbar functionality
 document.addEventListener('DOMContentLoaded', () => {
     if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
@@ -164,8 +208,7 @@ window.addToCartData = function (event, id, name, price, image) {
     }
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
     if (!currentUser) {
-        alert('Please login first to add items to cart.');
-        window.location.href = 'Login.html';
+        window.showBootstrapToast('Please login first to add items to cart.', 'error');
         return;
     }
     const cartKey = 'cart';
@@ -183,41 +226,7 @@ window.addToCartData = function (event, id, name, price, image) {
     if (window.updateCartBadge) window.updateCartBadge();
 
     // Show Toast
-    let toastContainer = document.querySelector('.toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-        toastContainer.style.zIndex = '1055';
-        document.body.appendChild(toastContainer);
-    }
-
-    const toastEl = document.createElement('div');
-    toastEl.className = `toast align-items-center text-white bg-success border-0 fade show`;
-    toastEl.setAttribute('role', 'alert');
-    toastEl.setAttribute('aria-live', 'assertive');
-    toastEl.setAttribute('aria-atomic', 'true');
-
-    toastEl.innerHTML = `
-      <div class="d-flex">
-        <div class="toast-body">
-          <i class="fas fa-check-circle me-2"></i> ${decodeURIComponent(name)} added to cart!
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-    `;
-
-    const closeBtn = toastEl.querySelector('.btn-close');
-    closeBtn.addEventListener('click', () => {
-        toastEl.classList.remove('show');
-        setTimeout(() => toastEl.remove(), 150);
-    });
-
-    toastContainer.appendChild(toastEl);
-
-    setTimeout(() => {
-        toastEl.classList.remove('show');
-        setTimeout(() => toastEl.remove(), 150);
-    }, 2500);
+    window.showBootstrapToast(decodeURIComponent(name) + ' added to cart!', 'success');
 };
 
 window.addToWishlistData = function (event, id) {
@@ -225,6 +234,16 @@ window.addToWishlistData = function (event, id) {
         event.preventDefault();
         event.stopPropagation();
     }
+
+    // Intercept auth-check here to show toast instead of native modal in WishList.js
+    const currentUser = sessionStorage.getItem('currentUser');
+    if (!currentUser) {
+        if (window.showBootstrapToast) {
+            window.showBootstrapToast('Please login first to add items to wishlist.', 'error');
+        }
+        return;
+    }
+
     console.log('Toggling wishlist:', id);
     addToWishlist1(id);
 }
@@ -232,6 +251,7 @@ window.addToWishlistData = function (event, id) {
 // Listen for wishlist changes and toggle heart icons across the page
 window.addEventListener('wishlistChanged', function (e) {
     const { productId, action } = e.detail;
+
     // Find all wishlist heart icon buttons/links for this product
     document.querySelectorAll(`[onclick*="addToWishlistData(event, ${productId})"] i`).forEach(icon => {
         if (action === 'added') {
@@ -240,38 +260,21 @@ window.addEventListener('wishlistChanged', function (e) {
             icon.className = 'far fa-heart';
         }
     });
+
+    // Show toast for wishlist actions
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    let product = products.find(p => p.product_id == productId);
+    let name = product ? product.name : "Item";
+
+    if (window.showBootstrapToast) {
+        if (action === 'added') {
+            window.showBootstrapToast(`${name} added to wishlist! ♥`, 'success');
+        } else {
+            window.showBootstrapToast(`${name} removed from wishlist`, 'danger');
+        }
+    }
 });
 
-function showWishlistToast(msg, bgClass) {
-    let toastContainer = document.querySelector('.toast-container');
-    if (!toastContainer) {
-        toastContainer = document.createElement('div');
-        toastContainer.className = 'toast-container position-fixed bottom-0 end-0 p-3';
-        toastContainer.style.zIndex = '1055';
-        document.body.appendChild(toastContainer);
-    }
-    const toastEl = document.createElement('div');
-    toastEl.className = `toast align-items-center text-white ${bgClass} border-0 fade show`;
-    toastEl.setAttribute('role', 'alert');
-    toastEl.innerHTML = `
-      <div class="d-flex">
-        <div class="toast-body">
-          <i class="fas fa-heart me-2"></i> ${msg}
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-      </div>
-    `;
-    const closeBtn = toastEl.querySelector('.btn-close');
-    closeBtn.addEventListener('click', () => {
-        toastEl.classList.remove('show');
-        setTimeout(() => toastEl.remove(), 150);
-    });
-    toastContainer.appendChild(toastEl);
-    setTimeout(() => {
-        toastEl.classList.remove('show');
-        setTimeout(() => toastEl.remove(), 150);
-    }, 2500);
-}
 
 function initSearchAutoSuggest() {
     const searchInput = document.getElementById('navbarSearchInput');
