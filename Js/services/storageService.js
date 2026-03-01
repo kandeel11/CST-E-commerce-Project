@@ -217,7 +217,7 @@ export function addToCart(product) {
     }
     myCart.items = userCart.items; // sync with getMyCart reference
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("MyCart", JSON.stringify(myCart));
+    sessionStorage.setItem("MyCart", JSON.stringify(myCart));
     localStorage.setItem("cartUpdated", Date.now());
     if (window.updateCartBadge) window.updateCartBadge();
 
@@ -236,7 +236,7 @@ export function removeFromCart(product_id) {
 
     userCart.items = userCart.items.filter(item => item.product_id !== product_id);
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("MyCart", JSON.stringify(userCart));
+    sessionStorage.setItem("MyCart", JSON.stringify(userCart));
     localStorage.setItem("cartUpdated", Date.now());
 }
 
@@ -256,7 +256,7 @@ export function updateCartItemQuantity(product_id, quantity) {
         if (item) item.quantity = quantity;
     }
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("MyCart", JSON.stringify(userCart));
+    sessionStorage.setItem("MyCart", JSON.stringify(userCart));
     localStorage.setItem("cartUpdated", Date.now());
 }
 
@@ -269,7 +269,7 @@ export function clearCart() {
     const userCart = cart.find(e => e.userid === user.id);
     if (userCart) userCart.items = [];
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    localStorage.setItem("MyCart", JSON.stringify(userCart));
+    sessionStorage.setItem("MyCart", JSON.stringify(userCart));
     localStorage.setItem("cartUpdated", Date.now());
 }
 

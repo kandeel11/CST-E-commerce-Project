@@ -1,6 +1,6 @@
 import { Order } from "./Checkout.js";
 var carts = JSON.parse(localStorage.getItem("cart")) || [];
-let mycart = JSON.parse(localStorage.getItem("MyCart")) || [];
+let mycart = JSON.parse(sessionStorage.getItem("MyCart")) || [];
 export class Cart {
   constructor(userid) {
     this.userid = userid;
@@ -34,14 +34,14 @@ export class Cart {
     localStorage.setItem("cart", JSON.stringify(carts));
   }
   static GetCurrentUserCart() {
-    let mycart = JSON.parse(localStorage.getItem("MyCart"));
+    let mycart = JSON.parse(sessionStorage.getItem("MyCart"));
 
     if (!mycart || !Array.isArray(mycart.items)) {
       mycart = {
         userid: null,
         items: [],
       };
-      localStorage.setItem("MyCart", JSON.stringify(mycart));
+      sessionStorage.setItem("MyCart", JSON.stringify(mycart));
     }
 
     return mycart;
@@ -133,7 +133,7 @@ export class Cart {
             }
             console.log(cart);
             carts = carts.map((c) => (c.userid === mycart.userid ? cart : c));
-            localStorage.setItem("MyCart", JSON.stringify(mycart));
+            sessionStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
             location.reload();
           } else {
@@ -187,7 +187,7 @@ export class Cart {
             }
             console.log(cart);
             carts = carts.map((c) => (c.userid === mycart.userid ? cart : c));
-            localStorage.setItem("MyCart", JSON.stringify(mycart));
+            sessionStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
             location.reload();
           }
@@ -229,7 +229,7 @@ export class Cart {
             (p) => p.product_id == productid,
           );
           mycart.items.splice(finditem, 1);
-          localStorage.setItem("MyCart", JSON.stringify(mycart));
+          sessionStorage.setItem("MyCart", JSON.stringify(mycart));
           var userCart = carts.find((c) => c.userid === mycart.userid);
           if (userCart) {
             userCart.items = mycart.items;
@@ -286,13 +286,13 @@ if (returnbtn) {
 }
 //button procced to checkout
 
-var orders = JSON.parse(localStorage.getItem("order")) || [];
+var orders = JSON.parse(localStorage.getItem("orders")) || [];
 var btntocheckout = document.getElementById("btnch");
 console.log(btntocheckout);
 btntocheckout.addEventListener("click", function () {
   var toasttEl = document.getElementById("myToast2");
   var toast2 = new bootstrap.Toast(toasttEl);
-  var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
   if (!currentUser) {
     toast2.show();
     return;
@@ -305,7 +305,7 @@ btntocheckout.addEventListener("click", function () {
     toasttt.show();
     return;
   }
-  var orders = JSON.parse(localStorage.getItem("order")) || [];
+  var orders = JSON.parse(localStorage.getItem("orders")) || [];
 
   var pendingOrder = orders.find(
     (o) => o.userid === userId && o.orderStatus === "pending",
@@ -317,7 +317,7 @@ btntocheckout.addEventListener("click", function () {
   items.forEach((item) => {
     total += item.quantity * item.price;
   });
-  var orders = JSON.parse(localStorage.getItem("order")) || [];
+  var orders = JSON.parse(localStorage.getItem("orders")) || [];
   var orderid;
 
   if (orders.length === 0) {
@@ -337,7 +337,7 @@ btntocheckout.addEventListener("click", function () {
     orders.push(order);
   }
 
-  localStorage.setItem("order", JSON.stringify(orders));
+  localStorage.setItem("orders", JSON.stringify(orders));
   window.location.href = "checkout.html";
 });
 

@@ -121,9 +121,9 @@ LoginButton.addEventListener('click', function (event) {
                 if (!userCart.some(c => c.userid === users[i].id)) {
                     userCart.push({ userid: users[i].id, items: [] });
                     localStorage.setItem("cart", JSON.stringify(userCart));
-                    localStorage.setItem("MyCart", JSON.stringify(userCart[userCart.length - 1]));
+                    sessionStorage.setItem("MyCart", JSON.stringify(userCart[userCart.length - 1]));
                 } else {
-                    localStorage.setItem("MyCart", JSON.stringify(userCart.find(c => c.userid === users[i].id)));
+                    sessionStorage.setItem("MyCart", JSON.stringify(userCart.find(c => c.userid === users[i].id)));
                 }
                 window.location.href = `../Pages/Home.html`;
                 isUserFound = true;

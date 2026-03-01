@@ -1,6 +1,7 @@
 //import { Cart } from "../Js/Cart.js";
 export class Order {
-  constructor(userid, orderStatus, products = [], total) {
+  constructor(orderid,userid, orderStatus, products = [], total) {
+    this.orderid = orderid;
     this.userid = userid;
     this.products = products;
     this.orderStatus = orderStatus;
@@ -9,11 +10,11 @@ export class Order {
   }
   static AddSummaryOrder() {
     //currentuser
-    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if (!currentUser) return;
     var userid = currentUser.id;
 
-    var orders = JSON.parse(localStorage.getItem("order")) || [];
+    var orders = JSON.parse(localStorage.getItem("orders")) || [];
     if (orders.length === 0) return;
     var myorder = orders.find(
       (o) => o.userid == userid && o.orderStatus === "pending",
@@ -28,27 +29,21 @@ export class Order {
       var producttd = document.createElement("td");
       var quantitytd = document.createElement("td");
       var totaltd = document.createElement("td");
-      producttd.innerHTML = `<img src="${product.image}" width="50px" height="50px"<span>${product.name}</span>`;
+      producttd.innerHTML = `<div class="product-cell"><img src="${product.images[0]}" /><span>${product.name}</span>
+          </div>`;
       quantitytd.innerHTML = `${product.quantity}`;
-      totaltd.innerHTML = `${product.quantity * product.price}`;
+      totaltd.innerHTML = `EGP ${product.quantity * product.price}`;
       var row = document.querySelector("table tbody");
       newrow.appendChild(producttd);
       newrow.appendChild(quantitytd);
       newrow.appendChild(totaltd);
       row.appendChild(newrow);
-      newrow.style.backgroundColor = "#f8f9fa";
-      newrow.addEventListener("mouseover", function () {
-        newrow.style.backgroundColor = "#eceaea";
-      });
-      newrow.addEventListener("mouseout", function () {
-        newrow.style.backgroundColor = "#f8f9fa";
-      });
     });
     var totalorder = document.getElementById("total");
-    totalorder.innerHTML = `$${myorder.total}`;
+    totalorder.innerHTML = `EGP ${(parseFloat(myorder.total)).toFixed(2)}`;
   }
   static fillform() {
-    var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if (!currentUser) {
       toast2.show();
     }
@@ -63,49 +58,15 @@ export class Order {
     var addressinp = document.querySelector("#street");
     addressinp.value = currentUser.address;
   }
-  static btnconfirmform() {
-    var btnconfirm = document.querySelector("#btnconfirm");
-    if (!btnconfirm) return;
-
-    btnconfirm.addEventListener("click", function (e) {
-      e.preventDefault();
-      var currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  static compelteOrder(){
+      var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
       if (!currentUser) return;
       var userId = currentUser.id;
 
-      var orders = JSON.parse(localStorage.getItem("order")) || [];
-      var pendingOrder = orders.find(
-        (o) => o.userid === userId && o.orderStatus === "pending",
-      );
-
-      if (!pendingOrder) return;
-
-      pendingOrder.orderStatus = "Completed";
-      localStorage.setItem("order", JSON.stringify(orders));
-
-      var mycart = JSON.parse(localStorage.getItem("MyCart")) || { items: [] };
-      mycart.items = [];
-      localStorage.setItem("MyCart", JSON.stringify(mycart));
-
-      var carts = JSON.parse(localStorage.getItem("cart")) || [];
-      localStorage.setItem("cart", JSON.stringify(carts));
-      location.reload();
-    });
-  }
-  static btnconfirmform() {
-    var btnconfirm = document.querySelector("#btnconfirm");
-    if (!btnconfirm) return;
-    btnconfirm.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      var currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      if (!currentUser) return;
-      var userId = currentUser.id;
-
-      var orders = JSON.parse(localStorage.getItem("order")) || [];
+      var orders = JSON.parse(localStorage.getItem("orders")) || [];
       var pendingOrder = orders.find((o) => o.userid === userId && o.orderStatus === "pending");
       if (!pendingOrder) return;
-      pendingOrder.orderStatus = "Completed";
+      pendingOrder.orderStatus = "Processing";
 
       var toastElement = document.getElementById("myToast33");
       var toastBody = toastElement.querySelector(".toast-body");
@@ -127,11 +88,11 @@ export class Order {
         }
       });
       localStorage.setItem("products", JSON.stringify(allProducts));
-      localStorage.setItem("order", JSON.stringify(orders));
-      var mycart = JSON.parse(localStorage.getItem("MyCart"));
+      localStorage.setItem("orders", JSON.stringify(orders));
+      var mycart = JSON.parse(sessionStorage.getItem("MyCart"));
       if (mycart && mycart.userid == userId) {
         mycart.items = [];
-        localStorage.setItem("MyCart", JSON.stringify(mycart));
+        sessionStorage.setItem("MyCart", JSON.stringify(mycart));
       }
       var carts = JSON.parse(localStorage.getItem("cart")) || [];
       var userCart = carts.find((c) => c.userid == userId);
@@ -145,31 +106,75 @@ export class Order {
       setTimeout(() => {
         window.location.href = "../Pages/Home.html";
       }, 1500);
-    });
+     
   }
 }
-(() => {
-  "use strict";
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll(".needs-validation");
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach((form) => {
-    form.addEventListener(
-      "submit",
-      (event) => {
-        if (!form.checkValidity()) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-
-        form.classList.add("was-validated");
-      },
-      false,
-    );
+var returntocart = document.querySelector("#returntocart");
+if(returntocart){
+  returntocart.addEventListener("click", function () {
+    window.location.href = "Cart.html";
   });
-})();
+}
+//form validation
+var formselected = document.querySelector("form");
+if(formselected){
+  formselected.addEventListener("submit", function (e) {
+    e.preventDefault();
+  e.stopPropagation();
+    const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
+    const email = document.getElementById("email");
+    const phone = document.getElementById("phone");
+    const street = document.getElementById("street");
+    const city = document.getElementById("city");
+    let nameRegex = /^[A-Za-z]+$/;
+    let phoneRegex = /^01[0-9]{9}$/;
+    let emailRegex = /^[a-z]+@[a-z]+\.[a-z]+$/;
+    let valid = true;
+    if (!nameRegex.test(firstName.value.trim())) {
+        firstName.classList.add("is-invalid");
+        valid = false;
+    } else {
+        firstName.classList.remove("is-invalid");
+    }
+    if (!emailRegex.test(email.value.trim())) {
+        email.classList.add("is-invalid");
+        valid = false;
+    } else {
+        email.classList.remove("is-invalid");
+    }
+    if (!nameRegex.test(lastName.value.trim())) {
+        lastName.classList.add("is-invalid");
+        valid = false;
+    } else {
+        lastName.classList.remove("is-invalid");
+    }
+    if (!phoneRegex.test(phone.value.trim())) {
+        phone.classList.add("is-invalid");
+        valid = false;
+    } else {
+        phone.classList.remove("is-invalid");
+    }
+    if (street.value.trim() === "") {
+        street.classList.add("is-invalid");
+        valid = false;
+    } else {
+        street.classList.remove("is-invalid");
+    }
+    if(city.value === ""){ 
+      city.classList.add("is-invalid");
+      valid = false;
+    } else {
+      city.classList.remove("is-invalid");
+    }
+
+    if (!valid) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+    }
+    Order.compelteOrder();
+});}
 
 
 function loadComponents() {

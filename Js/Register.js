@@ -14,7 +14,7 @@ const toastbody = toastLiveExample.querySelector('.toast-body');
 
 import { User } from "./Classes/User.js";
 FnameInput.focus();
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+const currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
 if (currentUser) {
     window.location.href = "../Pages/home.html";
 }
