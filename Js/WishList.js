@@ -83,7 +83,7 @@ async function fetchProducts() {
 
 window.addEventListener('load', function () {
 
-    // If guest, show login modal and stop
+    // // If guest, show login modal and stop
     if (isGuest) {
         const loginModal = new bootstrap.Modal(document.getElementById('loginAlertModal'));
         loginModal.show();

@@ -5,6 +5,9 @@
       --eco-green-light: #f0faf0;
       --eco-border:      #dee2e6;
     }
+    #store:hover{
+      cursor: pointer;
+    }
 
     /* ── Navbar ──────────────────────────────────────────── */
     .eco-navbar { border-bottom: 2px solid var(--eco-green); }
