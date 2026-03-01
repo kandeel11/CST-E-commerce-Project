@@ -1,0 +1,117 @@
+<html>
+
+<head>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="../Css/Cart.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../Css/Home.css">
+    <script src="https://kit.fontawesome.com/d35eaeeb6f.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <div id="navbar-placeholder" class="navbar-placeholder" style="z-index: 1020;"></div>
+
+    <div class="cart-header">
+        <i class="bi bi-cart3 cart-header-icon"></i>
+        <h2 class="text-center mt-3">My Shopping Cart</h2>
+    </div>
+    <section class="container">
+        <div class="row">
+            <div id="table" class="col-md-12 col-lg-7 mb-md-4 me-lg-3">
+                <table class="text-center" width="100%">
+                    <tr>
+                        <th>PRODUCT</th>
+                        <th>PRICE</th>
+                        <th>QUANTITY</th>
+                        <th>SUBTOTAL</th>
+                        <th></th>
+                    </tr>
+                    <tbody>
+
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" class="text-start"><button id="btntocheckout">
+                                    <i class="bi bi-arrow-left"></i> Return to shop
+                                </button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class=" col-md-12 col-lg-4" id="totaldiv">
+
+                <table width="100%">
+                    <tr>
+                        <th colspan="3"><i class="bi bi-receipt"></i>Cart Total</th>
+                    </tr>
+                    <tr>
+
+                        <td colspan="2">Subtotal:</td>
+                        <td id="subtotal" class="totalcart"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Shipping:</td>
+                        <td class="totalcart"><span class="badge-free">Free</span></td>
+                    </tr>
+                    <tr class="last">
+                        <td colspan="2">Total:</td>
+                        <td id="total" class="totalcart total-price"></td>
+                    </tr>
+                </table>
+                <button class="btn btn-success btntotal mt-3" id="btnch">
+                    <i class="bi bi-lock-fill"></i> Proceed to checkout
+                </button>
+            </div>
+        </div>
+    </section>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-5">
+        <div id="myToast" class="toast align-items-center text-bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Out of stock. You can't add more of this item.</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3 mb-5">
+        <div id="myToastt" class="toast align-items-center text-bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    You need at least 1 item in your cart.</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3 mb-5">
+        <div id="myToastemptycart" class="toast align-items-center text-bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Your Cart is Empty</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed top-0 end-0 p-3 mb-5">
+        <div id="myToast2" class="toast align-items-center text-bg-success border-0" role="alert">
+            <div class="d-flex">
+                <div class="toast-body">
+                    You must be logged in!</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+            </div>
+        </div>
+    </div>
+    <div id="footer-placeholder"></div>
+
+    <script type="module" src="../Js/NavBar.js"></script>
+    <script src="../Js/Cart.js" type="module" defer></script>
+</body>
+
+</html>

@@ -2,48 +2,92 @@ import { getAllProducts, toggleWishlist, isInWishlist, addToCart, getCartCount }
 
 // ── DOM refs ───────────────────────────────────────────────────────────────────
 const productsContainer = document.getElementById("productsContainer");
-const resultsCount      = document.getElementById("resultsCount");
-const noResults         = document.getElementById("noResults");
-const searchInput       = document.getElementById("searchInput");
-const sortSelect        = document.getElementById("sortSelect");
-const priceRange        = document.getElementById("priceRange");
-const priceValue        = document.getElementById("priceValue");
-const ratingFilters     = document.getElementById("ratingFilters");
-const organicFilter     = document.getElementById("organicFilter");
-const inStockFilter     = document.getElementById("inStockFilter");
-const resetFiltersBtn   = document.getElementById("resetFilters");
-const clearSearchBtn    = document.getElementById("clearSearch");
-const paginationEl      = document.getElementById("pagination");
-const categoryItems     = document.querySelectorAll(".category-item");
-const viewBtns          = document.querySelectorAll(".view-btn");
-const cartCountEl       = document.getElementById("cartCount");
+const resultsCount = document.getElementById("resultsCount");
+const noResults = document.getElementById("noResults");
+const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
+const priceRange = document.getElementById("priceRange");
+const priceValue = document.getElementById("priceValue");
+const ratingFilters = document.getElementById("ratingFilters");
+const organicFilter = document.getElementById("organicFilter");
+const inStockFilter = document.getElementById("inStockFilter");
+const resetFiltersBtn = document.getElementById("resetFilters");
+const clearSearchBtn = document.getElementById("clearSearch");
+const paginationEl = document.getElementById("pagination");
+const categoryItems = document.querySelectorAll(".category-item");
+const viewBtns = document.querySelectorAll(".view-btn");
+const cartCountEl = document.getElementById("cartCount");
+
+// ── Category key → actual product category value mapping ──────────────────────
+const categoryKeyToValue = {
+    "Fruits": "Fruits",
+    "Vegetables": "Vegetables",
+    "MeatFish": "Meat & Fish",
+    "Dairy": "Dairy",
+    "Bakery": "Bread & Bakery",
+    "Beverages": "Beverages",
+    "Snacks": "Snacks"
+};
+// Reverse map: product category value → sidebar key
+const categoryValueToKey = Object.fromEntries(
+    Object.entries(categoryKeyToValue).map(([k, v]) => [v, k])
+);
 
 // ── State ──────────────────────────────────────────────────────────────────────
-let allProducts      = [];
+let allProducts = [];
 let filteredProducts = [];
-let currentPage      = 1;
-let currentCategory  = "All";
-let currentView      = "grid";
-const PAGE_SIZE      = 9;
+let currentPage = 1;
+let currentCategory = "All";
+let currentView = "grid";
+const PAGE_SIZE = 9;
 
 // ── Init ───────────────────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
     allProducts = getAllProducts();
-    if (allProducts.length === 0) {
-        allProducts = getDemoProducts();
-        localStorage.setItem("products", JSON.stringify(allProducts));
+    console.log("Products loaded from storage:", allProducts);
+
+    // Read ?category= from URL (e.g. Product.html?category=MeatFish)
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    const urlCategory = urlParams.get("category");
+    if (urlCategory && urlCategory !== "All") {
+        currentCategory = categoryKeyToValue[urlCategory] || urlCategory;
+        categoryItems.forEach(item => {
+            item.classList.remove("active");
+            if (item.dataset.category === urlCategory) item.classList.add("active");
+        });
     }
+
     updateCartBadge();
     populateCategoryCounts(allProducts);
+
+    // Read URL params for search and category
+    const categoryParam = urlParams.get('category');
+
+    if (searchQuery) {
+        searchInput.value = searchQuery;
+    }
+
+    if (categoryParam && categoryParam !== 'All') {
+        currentCategory = categoryParam;
+        categoryItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.category === categoryParam) {
+                item.classList.add('active');
+            }
+        });
+    }
+
     applyFilters();
     bindEvents();
+    loadComponents();
 });
 
 // ── Events ─────────────────────────────────────────────────────────────────────
 function bindEvents() {
-    searchInput.addEventListener("input",  () => { currentPage = 1; applyFilters(); });
-    sortSelect.addEventListener("change",  () => applyFilters());
-    priceRange.addEventListener("input",   () => {
+    searchInput.addEventListener("input", () => { currentPage = 1; applyFilters(); });
+    sortSelect.addEventListener("change", () => applyFilters());
+    priceRange.addEventListener("input", () => {
         priceValue.textContent = `$${parseFloat(priceRange.value).toFixed(2)}`;
         currentPage = 1;
         applyFilters();
@@ -56,7 +100,8 @@ function bindEvents() {
         item.addEventListener("click", () => {
             categoryItems.forEach(i => i.classList.remove("active"));
             item.classList.add("active");
-            currentCategory = item.dataset.category;
+            const key = item.dataset.category;
+            currentCategory = key === "All" ? "All" : (categoryKeyToValue[key] || key);
             currentPage = 1;
             applyFilters();
         });
@@ -112,13 +157,13 @@ function applyFilters() {
 function sortProducts(arr, method) {
     const copy = [...arr];
     switch (method) {
-        case "price-low":  return copy.sort((a, b) => pPrice(a) - pPrice(b));
+        case "price-low": return copy.sort((a, b) => pPrice(a) - pPrice(b));
         case "price-high": return copy.sort((a, b) => pPrice(b) - pPrice(a));
-        case "name-az":    return copy.sort((a, b) => pName(a).localeCompare(pName(b)));
-        case "name-za":    return copy.sort((a, b) => pName(b).localeCompare(pName(a)));
-        case "rating":     return copy.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-        case "discount":   return copy.sort((a, b) => (b.discount || 0) - (a.discount || 0));
-        default:           return copy;
+        case "name-az": return copy.sort((a, b) => pName(a).localeCompare(pName(b)));
+        case "name-za": return copy.sort((a, b) => pName(b).localeCompare(pName(a)));
+        case "rating": return copy.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+        case "discount": return copy.sort((a, b) => (b.discount || 0) - (a.discount || 0));
+        default: return copy;
     }
 }
 
@@ -131,8 +176,8 @@ function paginateProducts(arr) {
 function renderPage() {
     const pageItems = paginateProducts(filteredProducts);
     resultsCount.textContent = `Showing ${filteredProducts.length} result${filteredProducts.length !== 1 ? "s" : ""}`;
-    noResults.style.display          = filteredProducts.length === 0 ? "block" : "none";
-    productsContainer.style.display  = filteredProducts.length === 0 ? "none"  : "";
+    noResults.style.display = filteredProducts.length === 0 ? "block" : "none";
+    productsContainer.style.display = filteredProducts.length === 0 ? "none" : "";
     renderProducts(pageItems);
     renderPagination();
 }
@@ -167,15 +212,15 @@ function renderProducts(products) {
     productsContainer.className = currentView === "list" ? "products-list" : "products-grid";
 
     products.forEach(product => {
-        const pid       = pId(product);
-        const name      = pName(product);
-        const price     = pPrice(product);
-        const image     = pImg(product);
-        const desc      = pDesc(product);
-        const rating    = (r => isNaN(r) || r <= 0 ? 0 : r)(parseFloat(product.rating));
-        const inStock   = (product.stockQuantity || product.stock || 1) > 0;
+        const pid = pId(product);
+        const name = pName(product);
+        const price = pPrice(product);
+        const image = pImg(product);
+        const desc = pDesc(product);
+        const rating = (r => isNaN(r) || r <= 0 ? 0 : r)(parseFloat(product.rating));
+        const inStock = (product.stockQuantity || product.stock || 1) > 0;
         const wishlisted = isInWishlist(pid);
-        const discount  = product.oldPrice
+        const discount = product.oldPrice
             ? Math.round(((product.oldPrice - price) / product.oldPrice) * 100)
             : 0;
 
@@ -186,22 +231,22 @@ function renderProducts(products) {
         card.innerHTML = `
             <div class="product-image-wrapper">
                 ${!inStock
-                    ? `<span class="position-absolute top-0 end-0 m-2 badge bg-danger rounded-pill z-1">Out of Stock</span>`
-                    : ""}
+                ? `<span class="position-absolute top-0 end-0 m-2 badge bg-danger rounded-pill z-1">Out of Stock</span>`
+                : ""}
                 ${product.organic || product.isOrganic
-                    ? `<span class="position-absolute top-0 start-0 m-2 badge bg-success rounded-pill z-1">
+                ? `<span class="position-absolute top-0 start-0 m-2 badge bg-success rounded-pill z-1">
                            <i class="fas fa-seedling me-1"></i>Organic
                        </span>`
-                    : ""}
+                : ""}
                 ${discount > 0
-                    ? `<span class="position-absolute bottom-0 start-0 m-2 badge bg-warning text-dark rounded-pill z-1">-${discount}%</span>`
-                    : ""}
+                ? `<span class="position-absolute bottom-0 start-0 m-2 badge bg-warning text-dark rounded-pill z-1">-${discount}%</span>`
+                : ""}
                 <img src="${image}" class="product-img" alt="${name}" loading="lazy">
                 <div class="product-hover-actions">
-                    <button class="hover-btn wishlist-btn ${wishlisted ? "wishlisted" : ""}"
+                    ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="hover-btn wishlist-btn ${wishlisted ? "wishlisted" : ""}"
                             title="${wishlisted ? "Remove from Wishlist" : "Add to Wishlist"}">
                         <i class="${wishlisted ? "fas" : "far"} fa-heart"></i>
-                    </button>
+                    </button>`}
                     <button class="hover-btn details-btn" title="View Details">
                         <i class="fas fa-eye"></i>
                     </button>
@@ -223,29 +268,32 @@ function renderProducts(products) {
                     <div>
                         <span class="fw-bold text-success">EGP ${price.toFixed(2)}</span>
                         ${product.oldPrice
-                            ? `<br><small class="text-muted text-decoration-line-through">EGP ${product.oldPrice.toFixed(2)}</small>`
-                            : ""}
+                ? `<br><small class="text-muted text-decoration-line-through">EGP ${product.oldPrice.toFixed(2)}</small>`
+                : ""}
                     </div>
-                    <button class="btn btn-success btn-sm add-cart-btn ${!inStock ? "disabled" : ""}"
+                    ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="btn btn-success btn-sm add-cart-btn ${!inStock ? "disabled" : ""}"
                             ${!inStock ? "disabled" : ""}>
                         <i class="fas fa-cart-plus me-1"></i>
                         <span class="d-none d-md-inline">Add</span>
-                    </button>
+                    </button>`}
                 </div>
             </div>
         `;
 
         // Wishlist
-        card.querySelector(".wishlist-btn").addEventListener("click", e => {
-            e.stopPropagation();
-            const btn  = e.currentTarget;
-            const icon = btn.querySelector("i");
-            const added = toggleWishlist(product);
-            btn.classList.toggle("wishlisted", added);
-            icon.className = added ? "fas fa-heart" : "far fa-heart";
-            btn.title = added ? "Remove from Wishlist" : "Add to Wishlist";
-            showToast(added ? "❤️ Added to wishlist" : "💔 Removed from wishlist");
-        });
+        const wishlistBtnEl = card.querySelector(".wishlist-btn");
+        if (wishlistBtnEl) {
+            wishlistBtnEl.addEventListener("click", e => {
+                e.stopPropagation();
+                const btn = e.currentTarget;
+                const icon = btn.querySelector("i");
+                const added = toggleWishlist(product);
+                btn.classList.toggle("wishlisted", added);
+                icon.className = added ? "fas fa-heart" : "far fa-heart";
+                btn.title = added ? "Remove from Wishlist" : "Add to Wishlist";
+                showToast(added ? "❤️ Added to wishlist" : "💔 Removed from wishlist");
+            });
+        }
 
         // Details
         card.querySelector(".details-btn").addEventListener("click", e => {
@@ -267,19 +315,20 @@ function renderProducts(products) {
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
-const pId    = p => p.product_id || "";
-const pName  = p => p.name || p.productName || "Product";
+const pId = p => p.product_id || "";
+const pName = p => p.name || p.productName || "Product";
 const pPrice = p => parseFloat(p.price || p.productPrice || 0);
-const pDesc  = p => p.description || p.productDescription || "";
-const pImg   = p => (p.images && p.images[0]) || p.imageUrl || "https://placehold.co/300x220/e8f5e9/2e7d32?text=Product";
+const pDesc = p => p.description || p.productDescription || "";
+const pImg = p => (p.images && p.images[0]) || p.imageUrl || "https://placehold.co/300x220/e8f5e9/2e7d32?text=Product";
 
 function populateCategoryCounts(products) {
     const counts = {};
     products.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
     document.getElementById("countAll").textContent = products.length;
-    ["Fruits","Vegetables","MeatFish","Dairy","Bakery","Beverages","Snacks"].forEach(cat => {
-        const el = document.getElementById(`count${cat}`);
-        if (el) el.textContent = counts[cat] || 0;
+    ["Fruits", "Vegetables", "MeatFish", "Dairy", "Bakery", "Beverages", "Snacks"].forEach(key => {
+        const el = document.getElementById(`count${key}`);
+        const catValue = categoryKeyToValue[key] || key;
+        if (el) el.textContent = counts[catValue] || 0;
     });
 }
 
@@ -289,8 +338,8 @@ function updateCartBadge() {
 
 function resetFilters() {
     searchInput.value = "";
-    sortSelect.value  = "default";
-    priceRange.value  = priceRange.max;
+    sortSelect.value = "default";
+    priceRange.value = priceRange.max;
     priceValue.textContent = `$${parseFloat(priceRange.max).toFixed(2)}`;
     document.querySelector('input[name="rating"][value="0"]').checked = true;
     organicFilter.checked = false;
@@ -298,7 +347,7 @@ function resetFilters() {
     categoryItems.forEach(i => i.classList.remove("active"));
     document.querySelector('.category-item[data-category="All"]').classList.add("active");
     currentCategory = "All";
-    currentPage     = 1;
+    currentPage = 1;
     applyFilters();
 }
 
@@ -319,21 +368,41 @@ function showToast(message) {
         setTimeout(() => toast.remove(), 400);
     }, 2800);
 }
+async function loadData() {
+    try {
+        const response = await fetch("../Data/ecobazar.json");
+        const data = await response.json();
 
-// ── Demo data ──────────────────────────────────────────────────────────────────
-function getDemoProducts() {
-    return [
-        { product_id:"p1",  name:"Organic Avocado",      description:"Creamy Hass avocados, hand-picked at peak ripeness.",            category:"Fruits",     price:12.99, rating:4.8, stock:50, organic:true,  images:["https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&q=80"] },
-        { product_id:"p2",  name:"Fresh Strawberries",   description:"Sun-ripened strawberries bursting with natural sweetness.",       category:"Fruits",     price:7.50,  rating:4.6, stock:30, organic:false, images:["https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400&q=80"] },
-        { product_id:"p3",  name:"Baby Spinach",          description:"Tender baby spinach leaves, triple-washed and ready to eat.",    category:"Vegetables", price:4.99,  rating:4.4, stock:80, organic:true,  images:["https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400&q=80"] },
-        { product_id:"p4",  name:"Cherry Tomatoes",       description:"Vibrant and juicy cherry tomatoes straight from the vine.",      category:"Vegetables", price:5.49,  rating:4.5, stock:60, organic:false, images:["https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=400&q=80"] },
-        { product_id:"p5",  name:"Free-Range Chicken",    description:"Pasture-raised free-range chicken, no antibiotics.",             category:"MeatFish",   price:18.99, rating:4.7, stock:20, organic:false, images:["https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&q=80"] },
-        { product_id:"p6",  name:"Atlantic Salmon",       description:"Premium Atlantic salmon fillet, rich in Omega-3.",               category:"MeatFish",   price:22.50, rating:4.9, stock:15, organic:false, images:["https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&q=80"] },
-        { product_id:"p7",  name:"Greek Yogurt",          description:"Thick, creamy Greek yogurt with live active cultures.",          category:"Dairy",      price:6.99,  rating:4.3, stock:45, organic:true,  images:["https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80"] },
-        { product_id:"p8",  name:"Sourdough Bread",       description:"Artisan sourdough with a crispy crust and chewy interior.",      category:"Bakery",     price:8.50,  rating:4.8, stock:25, organic:false, images:["https://images.unsplash.com/photo-1585478259715-876acc5be8eb?w=400&q=80"] },
-        { product_id:"p9",  name:"Cold Brew Coffee",      description:"Smooth, low-acid cold brew steeped for 24 hours.",               category:"Beverages",  price:9.99,  rating:4.7, stock:35, organic:false, images:["https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80"] },
-        { product_id:"p10", name:"Mixed Nuts",            description:"Premium blend of almonds, cashews, walnuts and pecans.",         category:"Snacks",     price:14.99, rating:4.5, stock:0,  organic:false, images:["https://images.unsplash.com/photo-1604940740030-a6e9c0e95b87?w=400&q=80"] },
-        { product_id:"p11", name:"Alphonso Mango",        description:"Fragrant and intensely sweet mangoes at their peak.",            category:"Fruits",     price:11.00, rating:4.9, stock:40, organic:true,  oldPrice:14.00, images:["https://images.unsplash.com/photo-1553279768-865429fa0078?w=400&q=80"] },
-        { product_id:"p12", name:"Almond Milk",           description:"Unsweetened almond milk, creamy with no preservatives.",         category:"Beverages",  price:5.99,  rating:4.2, stock:55, organic:true,  images:["https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80"] },
-    ];
+        products = Object.values(data).flat();
+        localStorage.setItem('products', JSON.stringify(products))
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function loadComponents() {
+    // 1. Load Navbar
+    fetch('../../Pages/NavBar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navbar-placeholder').innerHTML = data;
+
+            // Re-run NavBar initialization since the HTML is dynamically loaded
+            if (window.initNavBarAuth) window.initNavBarAuth();
+            if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+            if (window.initMobileSearch) window.initMobileSearch();
+            if (window.updateCartBadge) window.updateCartBadge();
+            if (window.hideNavbarCartWishlistForRole) window.hideNavbarCartWishlistForRole();
+        })
+        .catch(error => console.error('Error loading navbar:', error));
+
+    // 2. Load Footer
+    fetch('../../Pages/Footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+            if (window.hideFooterCartWishlistForRole) window.hideFooterCartWishlistForRole();
+        })
+        .catch(error => console.error('Error loading footer:', error));
 }

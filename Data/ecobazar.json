@@ -1,0 +1,2046 @@
+{
+    "Fruits": [
+        {
+            "product_id": 1,
+            "name": "Fresh Organic Bananas",
+            "images": [
+                "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=400",
+                "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400",
+                "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=400",
+                "https://images.unsplash.com/photo-1543218024-57a70143c369?w=400"
+            ],
+            "price": 1.99,
+            "oldPrice": 2.99,
+            "discount": 33,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Sweet and ripe organic bananas, perfect for smoothies and snacking. Sourced from certified organic farms.",
+            "category": "Fruits",
+            "unit": "Bunch",
+            "weight": "1 kg",
+            "organic": true,
+            "stock": 150,
+            "seller_id": "SLR-1",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 1, "rating": 5, "comment": "Always fresh and perfectly ripe when delivered. My kids love them!" },
+                { "user_id": 2, "rating": 4, "comment": "Great quality organic bananas at a reasonable price." },
+                { "user_id": 3, "rating": 5, "comment": "Best bananas I've bought online. Will definitely order again." }
+            ]
+        },
+        {
+            "product_id": 3,
+            "name": "Organic Avocados",
+            "images": [
+                "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400",
+                "https://images.unsplash.com/photo-1601039641847-7857b994d704?w=400",
+                "https://images.unsplash.com/photo-1519162808019-7de1683fa2ad?w=400",
+                "https://images.unsplash.com/photo-1590005354167-6da97870c757?w=400"
+            ],
+            "price": 5.99,
+            "oldPrice": 7.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Creamy Hass avocados, perfect for guacamole, toast, and salads. Rich in healthy fats.",
+            "category": "Fruits",
+            "unit": "Pack of 4",
+            "weight": "800g",
+            "organic": true,
+            "stock": 85,
+            "seller_id": "SLR-1",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 7, "rating": 5, "comment": "Perfect ripeness every time. Great for avocado toast!" },
+                { "user_id": 8, "rating": 5, "comment": "Creamy and delicious. The best avocados I've found online." },
+                { "user_id": 9, "rating": 4, "comment": "Fresh and tasty, though sometimes they arrive a bit firm." }
+            ]
+        },
+        {
+            "product_id": 4,
+            "name": "Fresh Strawberries",
+            "images": [
+                "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=400",
+                "https://images.unsplash.com/photo-1543528176-61b239494933?w=400",
+                "https://images.unsplash.com/photo-1518635017498-87f514b751ba?w=400",
+                "https://images.unsplash.com/photo-1495570689269-d883b1224443?w=400"
+            ],
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Berry Fields",
+            "description": "Juicy, hand-picked strawberries bursting with flavor. Ideal for desserts, smoothies, or eating fresh.",
+            "category": "Fruits",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": true,
+            "stock": 60,
+            "seller_id": "SLR-3",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 10, "rating": 5, "comment": "Incredibly sweet and fresh! Tastes like they were just picked." },
+                { "user_id": 11, "rating": 5, "comment": "My family goes through these so fast. Amazing quality." },
+                { "user_id": 12, "rating": 4, "comment": "Great for smoothies. Love the organic certification." }
+            ]
+        },
+        {
+            "product_id": 8,
+            "name": "Organic Blueberries",
+            "images": [
+                "https://images.unsplash.com/photo-1498557850523-fd3d118b962e?w=400",
+                "https://images.unsplash.com/photo-1457296898342-cdd24585d095?w=400",
+                "https://images.unsplash.com/photo-1425934398893-310a009a77f9?w=400",
+                "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=400"
+            ],
+            "price": 5.49,
+            "oldPrice": 7.49,
+            "discount": 27,
+            "rating": 5,
+            "brand": "Berry Fields",
+            "description": "Plump organic blueberries, rich in antioxidants. Great for baking, smoothies, and snacking.",
+            "category": "Fruits",
+            "unit": "Pack",
+            "weight": "300g",
+            "organic": true,
+            "stock": 70,
+            "seller_id": "SLR-3",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 22, "rating": 5, "comment": "Sweet, plump, and perfect for my morning oatmeal!" },
+                { "user_id": 23, "rating": 5, "comment": "The best blueberries I've ever ordered. So flavorful." },
+                { "user_id": 24, "rating": 4, "comment": "Great for baking muffins. Fresh and delicious." }
+            ]
+        },
+        {
+            "product_id": 33,
+            "name": "Fresh Mangoes",
+            "images": [
+                "https://images.unsplash.com/photo-1553279768-865429fa0078?w=400",
+                "https://images.unsplash.com/photo-1601493700631-2b16ec4b4716?w=400",
+                "https://images.unsplash.com/photo-1591073113125-e46713c829ed?w=400",
+                "https://images.unsplash.com/photo-1605027990121-cbae9e0642df?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 5.49,
+            "discount": 27,
+            "rating": 5,
+            "brand": "Tropical Bliss",
+            "description": "Sweet, juicy Alphonso mangoes imported fresh. The king of fruits, perfect for eating, smoothies, and desserts.",
+            "category": "Fruits",
+            "unit": "Pack of 3",
+            "weight": "900g",
+            "organic": false,
+            "stock": 45,
+            "seller_id": "SLR-5",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 97, "rating": 5, "comment": "Incredibly sweet and aromatic! Tastes like summer." },
+                { "user_id": 98, "rating": 5, "comment": "Best mangoes I've ever had. Perfectly ripe." },
+                { "user_id": 99, "rating": 4, "comment": "Great for mango lassi. Very flavorful fruit." }
+            ]
+        },
+        {
+            "product_id": 34,
+            "name": "Organic Raspberries",
+            "images": [
+                "https://images.unsplash.com/photo-1577069861033-55d04cec4ef5?w=400",
+                "https://images.unsplash.com/photo-1562547256-2c5ee93b60b7?w=400",
+                "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+                "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400"
+            ],
+            "price": 5.99,
+            "oldPrice": 7.99,
+            "discount": 25,
+            "rating": 4,
+            "brand": "Berry Fields",
+            "description": "Delicate organic raspberries with a perfect sweet-tart balance. Ideal for baking, smoothies, and garnishing.",
+            "category": "Fruits",
+            "unit": "Pack",
+            "weight": "250g",
+            "organic": true,
+            "stock": 40,
+            "seller_id": "SLR-3",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 100, "rating": 5, "comment": "Perfect raspberries! Great on top of cheesecake." },
+                { "user_id": 101, "rating": 4, "comment": "Delicate and flavorful. Handle with care." },
+                { "user_id": 102, "rating": 4, "comment": "Love these in my morning yogurt. So fresh!" }
+            ]
+        },
+        {
+            "product_id": 35,
+            "name": "Green Grapes Seedless",
+            "images": [
+                "https://images.unsplash.com/photo-1537640538966-79f369143f8f?w=400",
+                "https://images.unsplash.com/photo-1596363505729-4190a9506133?w=400",
+                "https://images.unsplash.com/photo-1423483641154-5411ec9c0ddf?w=400",
+                "https://images.unsplash.com/photo-1471943311424-646960669fbc?w=400"
+            ],
+            "price": 3.49,
+            "oldPrice": 4.99,
+            "discount": 30,
+            "rating": 5,
+            "brand": "Sun Harvest",
+            "description": "Crisp seedless green grapes, perfect for snacking, salads, and fruit platters. Always sweet and crunchy.",
+            "category": "Fruits",
+            "unit": "Bag",
+            "weight": "500g",
+            "organic": false,
+            "stock": 90,
+            "seller_id": "SLR-2",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 103, "rating": 5, "comment": "So crisp and sweet! Kids love snacking on these." },
+                { "user_id": 104, "rating": 5, "comment": "Perfect grapes every time. Great value." },
+                { "user_id": 105, "rating": 4, "comment": "Refreshing and convenient snack for lunches." }
+            ]
+        },
+        {
+            "product_id": 36,
+            "name": "Organic Lemons",
+            "images": [
+                "https://images.unsplash.com/photo-1590502593747-42a996133562?w=400",
+                "https://images.unsplash.com/photo-1557800636-894a64c1696f?w=400",
+                "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400",
+                "https://images.unsplash.com/photo-1587486913049-53fc88980cfc?w=400"
+            ],
+            "price": 2.49,
+            "oldPrice": 3.49,
+            "discount": 29,
+            "rating": 4,
+            "brand": "Nature's Best",
+            "description": "Bright, zesty organic lemons perfect for cooking, baking, drinks, and dressings. Bursting with vitamin C.",
+            "category": "Fruits",
+            "unit": "Pack of 6",
+            "weight": "600g",
+            "organic": true,
+            "stock": 120,
+            "seller_id": "SLR-1",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 106, "rating": 5, "comment": "Juicy and aromatic. Perfect for homemade lemonade!" },
+                { "user_id": 107, "rating": 4, "comment": "Always fresh and zesty. A kitchen essential." },
+                { "user_id": 108, "rating": 4, "comment": "Great for cooking and baking. Consistent quality." }
+            ]
+        },
+        {
+            "product_id": 37,
+            "name": "Fresh Pineapple",
+            "images": [
+                "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=400",
+                "https://images.unsplash.com/photo-1589820296156-2454bb8a6ad1?w=400",
+                "https://images.unsplash.com/photo-1490885578174-acda8905c2c6?w=400",
+                "https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 5.49,
+            "discount": 27,
+            "rating": 5,
+            "brand": "Tropical Bliss",
+            "description": "Sweet and tangy golden pineapple, hand-selected for peak ripeness. Enjoy fresh, grilled, or in tropical smoothies.",
+            "category": "Fruits",
+            "unit": "Whole",
+            "weight": "1.2 kg",
+            "organic": false,
+            "stock": 35,
+            "seller_id": "SLR-5",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 109, "rating": 5, "comment": "Perfectly ripe and so sweet! Great tropical flavor." },
+                { "user_id": 110, "rating": 5, "comment": "Love grilling pineapple slices. This one was perfect." },
+                { "user_id": 111, "rating": 4, "comment": "Juicy and delicious. Makes great piña coladas!" }
+            ]
+        },
+        {
+            "product_id": 38,
+            "name": "Organic Red Apples",
+            "images": [
+                "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=400",
+                "https://images.unsplash.com/photo-1584306670957-acf935f5033c?w=400",
+                "https://images.unsplash.com/photo-1570913149827-d2ac84ab3f9a?w=400",
+                "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400"
+            ],
+            "price": 3.29,
+            "oldPrice": 4.49,
+            "discount": 27,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Crisp, sweet organic Fuji apples. Perfect for snacking, salads, baking, and juicing.",
+            "category": "Fruits",
+            "unit": "Bag of 6",
+            "weight": "1 kg",
+            "organic": true,
+            "stock": 100,
+            "seller_id": "SLR-1",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 112, "rating": 5, "comment": "Crisp and sweet every time. My favorite snack apple!" },
+                { "user_id": 113, "rating": 5, "comment": "These are perfect for my kids' lunchboxes." },
+                { "user_id": 114, "rating": 4, "comment": "Great for apple pie. Always fresh and crunchy." }
+            ]
+        },
+        {
+            "product_id": 39,
+            "name": "Fresh Watermelon",
+            "images": [
+                "https://images.unsplash.com/photo-1589984662646-e7b2e4962f18?w=400",
+                "https://images.unsplash.com/photo-1563114773-84221bd62daa?w=400",
+                "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=400",
+                "https://images.unsplash.com/photo-1582281298055-e25b84a30b0b?w=400"
+            ],
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 5,
+            "brand": "Sun Harvest",
+            "description": "Sweet, juicy seedless watermelon. The ultimate summer refreshment, perfect for picnics and parties.",
+            "category": "Fruits",
+            "unit": "Whole",
+            "weight": "4 kg",
+            "organic": false,
+            "stock": 25,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 115, "rating": 5, "comment": "So sweet and refreshing! Perfect summer fruit." },
+                { "user_id": 116, "rating": 5, "comment": "Seedless and incredibly juicy. Love it!" },
+                { "user_id": 117, "rating": 4, "comment": "Great for fruit salad. Always picks a good one." }
+            ]
+        },
+        {
+            "product_id": 40,
+            "name": "Organic Peaches",
+            "images": [
+                "https://th.bing.com/th/id/OIP.k8yAGQ6ptl0ZOyNwsWMZwgHaIu?w=163&h=191&c=7&r=0&o=7&dpr=1.6&pid=1.7&rm=3",
+                "https://images.unsplash.com/photo-1601379327928-bedfaf9da2d0?w=400",
+                "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?w=400",
+                "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400"
+            ],
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 4,
+            "brand": "Sun Harvest",
+            "description": "Fragrant organic peaches, ripe and juicy. Perfect for eating fresh, baking cobblers, or making preserves.",
+            "category": "Fruits",
+            "unit": "Pack of 4",
+            "weight": "700g",
+            "organic": true,
+            "stock": 55,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 118, "rating": 5, "comment": "The most fragrant peaches! Makes amazing cobbler." },
+                { "user_id": 119, "rating": 4, "comment": "Sweet and juicy. Tastes like summer." },
+                { "user_id": 120, "rating": 4, "comment": "Great organic peaches. Ripen perfectly on the counter." }
+            ]
+        }
+    ],
+    "Vegetables": [
+        {
+            "product_id": 2,
+            "name": "Red Bell Peppers",
+            "images": [
+                "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?w=400",
+                "https://images.unsplash.com/photo-1563746098251-d35aef196e83?w=400",
+                "https://images.unsplash.com/photo-1601648764658-cf37e8c89b70?w=400",
+                "https://images.unsplash.com/photo-1526470498-9ae73c665de8?w=400"
+            ],
+            "price": 3.49,
+            "oldPrice": 4.99,
+            "discount": 30,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Crisp and colorful red bell peppers, great for salads, stir-fry, and roasting.",
+            "category": "Vegetables",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "stock": 110,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 4, "rating": 5, "comment": "So fresh and crunchy! Perfect for my salads every day." },
+                { "user_id": 5, "rating": 4, "comment": "Good quality, vibrant color. A staple in my kitchen." },
+                { "user_id": 6, "rating": 4, "comment": "These peppers are sweet and delicious when roasted." }
+            ]
+        },
+        {
+            "product_id": 5,
+            "name": "Organic Baby Spinach",
+            "images": [
+                "https://images.unsplash.com/photo-1576045057995-568f588f82fb?w=400",
+                "https://images.unsplash.com/photo-1580910365203-91ea9115a319?w=400",
+                "https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?w=400",
+                "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400"
+            ],
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Tender baby spinach leaves, pre-washed and ready to eat. Perfect for salads and cooking.",
+            "category": "Vegetables",
+            "unit": "Bag",
+            "weight": "250g",
+            "organic": true,
+            "stock": 95,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 13, "rating": 4, "comment": "Very fresh and tender. Great for quick salads." },
+                { "user_id": 14, "rating": 5, "comment": "Love the convenience of pre-washed spinach." },
+                { "user_id": 15, "rating": 4, "comment": "Healthy and delicious. A must-have in my fridge." }
+            ]
+        },
+        {
+            "product_id": 6,
+            "name": "Organic Tomatoes on the Vine",
+            "images": [
+                "data:image/webp;base64,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",
+                "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=400",
+                "https://images.unsplash.com/photo-1558818498-28c1e002b655?w=400",
+                "https://images.unsplash.com/photo-1582284540020-8acbe03f4924?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 5.49,
+            "discount": 27,
+            "rating": 5,
+            "brand": "Sun Harvest",
+            "description": "Vine-ripened organic tomatoes with rich flavor. Perfect for salads, sauces, and sandwiches.",
+            "category": "Vegetables",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "stock": 80,
+            "seller_id": "SLR-2",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 16, "rating": 5, "comment": "These tomatoes taste like summer! So much flavor." },
+                { "user_id": 17, "rating": 5, "comment": "Perfect for homemade pasta sauce. Highly recommend!" },
+                { "user_id": 18, "rating": 4, "comment": "Fresh and juicy. The vine-ripened taste makes a difference." }
+            ]
+        },
+        {
+            "product_id": 7,
+            "name": "Fresh Broccoli",
+            "images": [
+                "https://th.bing.com/th/id/OSK.HERO1f8l307sz1c4_DFfAumvygWpSfBE1UEcuBq0MErWPkg?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3",
+                "https://images.unsplash.com/photo-1584270354949-c26b0d5b4a0c?w=400",
+                "https://images.unsplash.com/photo-1628773822503-930a7eaecf80?w=400",
+                "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=400"
+            ],
+            "price": 2.49,
+            "oldPrice": 3.29,
+            "discount": 24,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Crisp and nutritious broccoli florets, packed with vitamins and minerals.",
+            "category": "Vegetables",
+            "unit": "Head",
+            "weight": "350g",
+            "organic": false,
+            "stock": 130,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 19, "rating": 4, "comment": "Always fresh and green. Great for steaming." },
+                { "user_id": 20, "rating": 5, "comment": "Kids actually love this broccoli! Very fresh." },
+                { "user_id": 21, "rating": 4, "comment": "Good quality and great value for the price." }
+            ]
+        },
+        {
+            "product_id": 41,
+            "name": "Organic Carrots",
+            "images": [
+                "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=400",
+                "https://images.unsplash.com/photo-1447175008436-054170c2e979?w=400",
+                "https://images.unsplash.com/photo-1582515073490-39981397c445?w=400",
+                "https://images.unsplash.com/photo-1590868309235-ea34bed7bd7f?w=400"
+            ],
+            "price": 1.99,
+            "oldPrice": 2.79,
+            "discount": 29,
+            "rating": 5,
+            "brand": "Green Valley",
+            "description": "Crunchy organic carrots, naturally sweet. Perfect for snacking, cooking, juicing, and baking.",
+            "category": "Vegetables",
+            "unit": "Bag",
+            "weight": "1 kg",
+            "organic": true,
+            "stock": 200,
+            "seller_id": "SLR-2",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 121, "rating": 5, "comment": "Sweetest carrots I've ever tasted! Kids love them raw." },
+                { "user_id": 122, "rating": 5, "comment": "Perfect for carrot cake. Always fresh and crunchy." },
+                { "user_id": 123, "rating": 4, "comment": "Great for juicing. Organic quality at a fair price." }
+            ]
+        },
+        {
+            "product_id": 42,
+            "name": "Fresh Zucchini",
+            "images": [
+                "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?w=400",
+                "https://images.unsplash.com/photo-1597714026720-8f74c62310ba?w=400",
+                "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=400",
+                "https://images.unsplash.com/photo-1572441713132-c542fc4fe282?w=400"
+            ],
+            "price": 2.29,
+            "oldPrice": 3.19,
+            "discount": 28,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Tender green zucchini, versatile for grilling, sautéing, spiralizing, and baking zucchini bread.",
+            "category": "Vegetables",
+            "unit": "Pack of 3",
+            "weight": "600g",
+            "organic": false,
+            "stock": 75,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 124, "rating": 4, "comment": "Great for zoodles! Fresh and firm." },
+                { "user_id": 125, "rating": 5, "comment": "Love grilling these in summer. So tender." },
+                { "user_id": 126, "rating": 4, "comment": "Perfect size for baking. Consistent quality." }
+            ]
+        },
+        {
+            "product_id": 43,
+            "name": "Organic Sweet Potatoes",
+            "images": [
+                "https://th.bing.com/th/id/OIP.WQC_YcTXuc6ZF4tF0e6d0QHaFh?w=234&h=180&c=7&r=0&o=7&dpr=1.6&pid=1.7&rm=3",
+                "https://images.unsplash.com/photo-1590165482129-1b8b27698780?w=400",
+                "https://images.unsplash.com/photo-1576107232684-1279f390859f?w=400",
+                "https://images.unsplash.com/photo-1615484477778-ca3b77940c25?w=400"
+            ],
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Nutrient-rich organic sweet potatoes with deep orange flesh. Perfect for roasting, mashing, and baking.",
+            "category": "Vegetables",
+            "unit": "Bag",
+            "weight": "1 kg",
+            "organic": true,
+            "stock": 140,
+            "seller_id": "SLR-1",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 127, "rating": 5, "comment": "Makes the best sweet potato fries! So naturally sweet." },
+                { "user_id": 128, "rating": 5, "comment": "Perfect for Thanksgiving pie. Rich orange color." },
+                { "user_id": 129, "rating": 4, "comment": "Great organic option. Roasts beautifully every time." }
+            ]
+        },
+        {
+            "product_id": 44,
+            "name": "Fresh Cauliflower",
+            "images": [
+                "https://th.bing.com/th/id/OSK.HEROPwEDWy4affXU_ATCjpwam6WB2ThTH5rMP6OHqFFvCOE?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3",
+                "https://images.unsplash.com/photo-1613743983303-b3e89f8a2b80?w=400",
+                "https://images.unsplash.com/photo-1510627498534-cf7e9002facc?w=400",
+                "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=400"
+            ],
+            "price": 2.79,
+            "oldPrice": 3.69,
+            "discount": 24,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Fresh white cauliflower head, great for roasting, making cauliflower rice, or creamy mashed cauliflower.",
+            "category": "Vegetables",
+            "unit": "Head",
+            "weight": "500g",
+            "organic": false,
+            "stock": 85,
+            "seller_id": "SLR-2",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 130, "rating": 4, "comment": "Perfect for cauliflower rice. Fresh and firm!" },
+                { "user_id": 131, "rating": 5, "comment": "Roasted cauliflower is my new favorite side dish." },
+                { "user_id": 132, "rating": 4, "comment": "Great low-carb option. Always good quality." }
+            ]
+        },
+        {
+            "product_id": 45,
+            "name": "Organic Kale Bunch",
+            "images": [
+                "https://images.unsplash.com/photo-1524179091875-bf99a9a6af57?w=400",
+                "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400",
+                "https://images.unsplash.com/photo-1445282768818-728615cc910a?w=400",
+                "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=400"
+            ],
+            "price": 2.49,
+            "oldPrice": 3.49,
+            "discount": 29,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Fresh organic curly kale, packed with nutrients. Perfect for smoothies, salads, chips, and sautéing.",
+            "category": "Vegetables",
+            "unit": "Bunch",
+            "weight": "300g",
+            "organic": true,
+            "stock": 65,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 133, "rating": 4, "comment": "Crispy kale chips are my new obsession!" },
+                { "user_id": 134, "rating": 5, "comment": "Perfect for green smoothies. Very fresh leaves." },
+                { "user_id": 135, "rating": 4, "comment": "Healthy and versatile. Great organic quality." }
+            ]
+        },
+        {
+            "product_id": 46,
+            "name": "Fresh Mushrooms Mix",
+            "images": [
+                "data:image/webp;base64,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",
+                "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400",
+                "https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?w=400",
+                "https://images.unsplash.com/photo-1609780447631-05b93e5a88ea?w=400"
+            ],
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Assorted fresh mushrooms including cremini, shiitake, and oyster. Perfect for stir-fry, risotto, and soups.",
+            "category": "Vegetables",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": false,
+            "stock": 50,
+            "seller_id": "SLR-1",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 136, "rating": 5, "comment": "Great variety of mushrooms! Makes amazing risotto." },
+                { "user_id": 137, "rating": 5, "comment": "So fresh and earthy. Love the shiitake especially." },
+                { "user_id": 138, "rating": 4, "comment": "Perfect for stir-fry nights. Good selection." }
+            ]
+        },
+        {
+            "product_id": 47,
+            "name": "Organic Cucumber",
+            "images": [
+                "https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?w=400",
+                "https://images.unsplash.com/photo-1558818498-28c1e002b655?w=400",
+                "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?w=400",
+                "https://images.unsplash.com/photo-1568584711075-3d021a7c3ca3?w=400"
+            ],
+            "price": 1.49,
+            "oldPrice": 1.99,
+            "discount": 25,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Cool, crisp organic cucumbers. Perfect for salads, sandwiches, pickles, and refreshing infused water.",
+            "category": "Vegetables",
+            "unit": "Pack of 3",
+            "weight": "500g",
+            "organic": true,
+            "stock": 160,
+            "seller_id": "SLR-2",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 139, "rating": 5, "comment": "Crisp and refreshing! Great in summer salads." },
+                { "user_id": 140, "rating": 4, "comment": "Perfect for cucumber water. Always fresh." },
+                { "user_id": 141, "rating": 4, "comment": "Good organic cucumbers. Nice crunch every time." }
+            ]
+        },
+        {
+            "product_id": 48,
+            "name": "Fresh Green Beans",
+            "images": [
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Heaps_of_beans.jpg/500px-Heaps_of_beans.jpg",
+                "https://images.unsplash.com/photo-1590779033100-9f60a05a013d?w=400",
+                "https://images.unsplash.com/photo-1573047330191-fb342b1be381?w=400",
+                "https://images.unsplash.com/photo-1559841644-08984562005a?w=400"
+            ],
+            "price": 2.99,
+            "oldPrice": 3.79,
+            "discount": 21,
+            "rating": 4,
+            "brand": "Green Valley",
+            "description": "Tender fresh green beans, hand-picked for quality. Delicious steamed, sautéed, or in casseroles.",
+            "category": "Vegetables",
+            "unit": "Bag",
+            "weight": "400g",
+            "organic": false,
+            "stock": 90,
+            "seller_id": "SLR-2",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 142, "rating": 4, "comment": "Snappy and fresh! Great in green bean casserole." },
+                { "user_id": 143, "rating": 5, "comment": "Love sautéing these with garlic. So tender." },
+                { "user_id": 144, "rating": 4, "comment": "Good quality green beans. Nice and crisp." }
+            ]
+        }
+    ],
+    "MeatFish": [
+        {
+            "product_id": 9,
+            "name": "Grass-Fed Beef Ribeye Steak",
+            "images": [
+                "https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=400",
+                "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400",
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
+                "https://images.unsplash.com/photo-1546964124-0cce460f38ef?w=400"
+            ],
+            "price": 14.99,
+            "oldPrice": 19.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Prairie Ranch",
+            "description": "Premium grass-fed ribeye steak with rich marbling. Perfect for grilling and pan-searing.",
+            "category": "Meat & Fish",
+            "unit": "Piece",
+            "weight": "350g",
+            "organic": true,
+            "stock": 30,
+            "seller_id": "SLR-4",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 25, "rating": 5, "comment": "The marbling on this steak is incredible. Best beef I've cooked at home!" },
+                { "user_id": 26, "rating": 5, "comment": "Melt-in-your-mouth tender. Restaurant quality at home." },
+                { "user_id": 27, "rating": 4, "comment": "Great flavor and quality. A bit pricey but worth it for special occasions." }
+            ]
+        },
+        {
+            "product_id": 10,
+            "name": "Fresh Atlantic Salmon Fillet",
+            "images": [
+                "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400",
+                "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=400",
+                "https://images.unsplash.com/photo-1574781330855-d0db8cc6a79c?w=400",
+                "https://images.unsplash.com/photo-1485704686097-ed47f7263ca4?w=400"
+            ],
+            "price": 12.99,
+            "oldPrice": 16.99,
+            "discount": 24,
+            "rating": 5,
+            "brand": "Ocean Fresh",
+            "description": "Wild-caught Atlantic salmon fillet, rich in omega-3. Perfect for baking, grilling, or pan-frying.",
+            "category": "Meat & Fish",
+            "unit": "Fillet",
+            "weight": "300g",
+            "organic": false,
+            "stock": 40,
+            "seller_id": "SLR-6",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 28, "rating": 5, "comment": "Absolutely fresh and buttery. Makes amazing baked salmon." },
+                { "user_id": 29, "rating": 5, "comment": "The best salmon I've bought online. Perfectly portioned." },
+                { "user_id": 30, "rating": 4, "comment": "Great quality fish. My family loves salmon night now!" }
+            ]
+        },
+        {
+            "product_id": 11,
+            "name": "Organic Free-Range Chicken Breast",
+            "images": [
+                "https://th.bing.com/th/id/R.74af030466a397c3aa010a9bece2da45?rik=btPhf1ITsnsA2w&riu=http%3a%2f%2fwww.goodfoodproject.co.uk%2fcdn%2fshop%2fproducts%2fChicken-breast2.jpg%3fv%3d1660992774&ehk=MomWNZvkozMwUSXEusn8D9JxSn7v310GcrYbUWux%2bzU%3d&risl=&pid=ImgRaw&r=0",
+                "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400",
+                "https://images.unsplash.com/photo-1606728035253-49e8a23146de?w=400",
+                "https://images.unsplash.com/photo-1501200291289-c5a76c232e5f?w=400"
+            ],
+            "price": 8.99,
+            "oldPrice": 11.99,
+            "discount": 25,
+            "rating": 4,
+            "brand": "Happy Farm",
+            "description": "Boneless, skinless chicken breast from free-range organic chickens. Versatile and healthy.",
+            "category": "Meat & Fish",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "stock": 55,
+            "seller_id": "SLR-4",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 31, "rating": 4, "comment": "Really tender and flavorful compared to regular chicken." },
+                { "user_id": 32, "rating": 5, "comment": "Love that it's free-range. You can taste the difference." },
+                { "user_id": 33, "rating": 4, "comment": "Great for meal prep. Consistent quality every time." }
+            ]
+        },
+        {
+            "product_id": 12,
+            "name": "Fresh Jumbo Shrimp",
+            "images": [
+                "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400",
+                "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400",
+                "https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=400",
+                "https://images.unsplash.com/photo-1559737558-2f5a35f4523b?w=400"
+            ],
+            "price": 11.49,
+            "oldPrice": 14.99,
+            "discount": 23,
+            "rating": 5,
+            "brand": "Ocean Fresh",
+            "description": "Large wild-caught shrimp, peeled and deveined. Ready for grilling, pasta, or stir-fry.",
+            "category": "Meat & Fish",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": false,
+            "stock": 35,
+            "seller_id": "SLR-6",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 34, "rating": 5, "comment": "Huge shrimp with amazing flavor. Restaurant quality!" },
+                { "user_id": 35, "rating": 5, "comment": "So convenient being pre-peeled. Taste is fantastic." },
+                { "user_id": 36, "rating": 4, "comment": "Great for shrimp scampi. Fresh and well-packaged." }
+            ]
+        },
+        {
+            "product_id": 13,
+            "name": "Lamb Chops Premium Cut",
+            "images": [
+                "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400",
+                "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400",
+                "https://images.unsplash.com/photo-1608039755401-742074f0548d?w=400",
+                "https://images.unsplash.com/photo-1558030006-450675393462?w=400"
+            ],
+            "price": 16.99,
+            "oldPrice": 22.99,
+            "discount": 26,
+            "rating": 4,
+            "brand": "Prairie Ranch",
+            "description": "Premium lamb chops, perfect for grilling and roasting. Tender and full of flavor.",
+            "category": "Meat & Fish",
+            "unit": "Pack",
+            "weight": "400g",
+            "organic": true,
+            "stock": 20,
+            "seller_id": "SLR-4",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 37, "rating": 5, "comment": "These lamb chops are incredible! So tender and juicy." },
+                { "user_id": 38, "rating": 4, "comment": "Great for a special dinner. Excellent quality meat." },
+                { "user_id": 39, "rating": 4, "comment": "Premium quality at a fair price. My favorite cut." }
+            ]
+        },
+        {
+            "product_id": 14,
+            "name": "Ground Turkey Organic",
+            "images": [
+                "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400",
+                "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400",
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
+                "https://images.unsplash.com/photo-1594221708779-94832f4320d1?w=400"
+            ],
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 4,
+            "brand": "Happy Farm",
+            "description": "Lean organic ground turkey, perfect for burgers, meatballs, and healthy recipes.",
+            "category": "Meat & Fish",
+            "unit": "Pack",
+            "weight": "450g",
+            "organic": true,
+            "stock": 45,
+            "seller_id": "SLR-4",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 40, "rating": 4, "comment": "Lean and flavorful. Perfect for healthy turkey burgers." },
+                { "user_id": 41, "rating": 5, "comment": "Great substitute for ground beef. My family loves it." },
+                { "user_id": 42, "rating": 4, "comment": "Good quality organic ground turkey at a fair price." }
+            ]
+        },
+        {
+            "product_id": 49,
+            "name": "Fresh Tuna Steak",
+            "images": [
+                "https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=400",
+                "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=400",
+                "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=400",
+                "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=400"
+            ],
+            "price": 13.99,
+            "oldPrice": 17.99,
+            "discount": 22,
+            "rating": 5,
+            "brand": "Ocean Fresh",
+            "description": "Sushi-grade fresh tuna steak, perfect for searing, grilling, or poke bowls. Rich and buttery flavor.",
+            "category": "Meat & Fish",
+            "unit": "Steak",
+            "weight": "250g",
+            "organic": false,
+            "stock": 25,
+            "seller_id": "SLR-6",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 145, "rating": 5, "comment": "Incredible quality! Perfect for seared tuna salad." },
+                { "user_id": 146, "rating": 5, "comment": "Sushi-grade freshness. Makes amazing poke bowls." },
+                { "user_id": 147, "rating": 4, "comment": "Rich flavor and beautiful color. Great for grilling." }
+            ]
+        },
+        {
+            "product_id": 50,
+            "name": "Organic Whole Chicken",
+            "images": [
+                "https://images.unsplash.com/photo-1587593810167-a84920ea0781?w=400",
+                "https://images.unsplash.com/photo-1501200291289-c5a76c232e5f?w=400",
+                "https://images.unsplash.com/photo-1598514982901-ae62764ae75e?w=400",
+                "https://images.unsplash.com/photo-1606728035253-49e8a23146de?w=400"
+            ],
+            "price": 11.99,
+            "oldPrice": 15.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Happy Farm",
+            "description": "Whole organic free-range chicken, perfect for roasting Sunday dinner. Juicy and full of flavor.",
+            "category": "Meat & Fish",
+            "unit": "Whole",
+            "weight": "1.5 kg",
+            "organic": true,
+            "stock": 20,
+            "seller_id": "SLR-4",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 148, "rating": 5, "comment": "Best roast chicken ever! So juicy and flavorful." },
+                { "user_id": 149, "rating": 5, "comment": "Free-range taste is unmatched. Sunday dinner staple." },
+                { "user_id": 150, "rating": 4, "comment": "Great size for a family meal. Excellent quality." }
+            ]
+        },
+        {
+            "product_id": 63,
+            "name": "Premium Pork Chops",
+            "images": [
+                "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400",
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
+                "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400",
+                "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400"
+            ],
+            "price": 9.99,
+            "oldPrice": 13.49,
+            "discount": 26,
+            "rating": 5,
+            "brand": "Prairie Ranch",
+            "description": "Thick-cut premium pork chops, bone-in for extra flavor. Perfect for grilling, pan-searing, or baking.",
+            "category": "Meat & Fish",
+            "unit": "Pack of 2",
+            "weight": "500g",
+            "organic": false,
+            "stock": 35,
+            "seller_id": "SLR-4",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 187, "rating": 5, "comment": "Perfectly thick cut! Juicy on the grill every time." },
+                { "user_id": 188, "rating": 5, "comment": "Best pork chops I've bought. Great marbling." },
+                { "user_id": 189, "rating": 4, "comment": "Bone-in adds so much flavor. Restaurant quality." }
+            ]
+        },
+        {
+            "product_id": 64,
+            "name": "Grass-Fed Ground Beef",
+            "images": [
+                "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400",
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
+                "https://images.unsplash.com/photo-1546964124-0cce460f38ef?w=400",
+                "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400"
+            ],
+            "price": 7.99,
+            "oldPrice": 9.99,
+            "discount": 20,
+            "rating": 5,
+            "brand": "Prairie Ranch",
+            "description": "Lean 90/10 grass-fed ground beef. Perfect for burgers, meatballs, tacos, and bolognese sauce.",
+            "category": "Meat & Fish",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "stock": 60,
+            "seller_id": "SLR-4",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 190, "rating": 5, "comment": "Makes the best burgers! Rich beefy flavor." },
+                { "user_id": 191, "rating": 5, "comment": "Love the grass-fed quality. Lean but still juicy." },
+                { "user_id": 192, "rating": 4, "comment": "Great for taco night. Consistent quality." }
+            ]
+        },
+        {
+            "product_id": 65,
+            "name": "Fresh Cod Fillet",
+            "images": [
+                "https://images.unsplash.com/photo-1574781330855-d0db8cc6a79c?w=400",
+                "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?w=400",
+                "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?w=400",
+                "https://images.unsplash.com/photo-1485704686097-ed47f7263ca4?w=400"
+            ],
+            "price": 10.99,
+            "oldPrice": 13.99,
+            "discount": 21,
+            "rating": 4,
+            "brand": "Ocean Fresh",
+            "description": "Wild-caught Atlantic cod fillet with mild, flaky white flesh. Perfect for fish and chips, baking, or pan-frying.",
+            "category": "Meat & Fish",
+            "unit": "Fillet",
+            "weight": "350g",
+            "organic": false,
+            "stock": 30,
+            "seller_id": "SLR-6",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 193, "rating": 5, "comment": "Flakiest cod ever! Perfect for fish tacos." },
+                { "user_id": 194, "rating": 4, "comment": "Mild and delicious. Kids love it battered and fried." },
+                { "user_id": 195, "rating": 4, "comment": "Great quality white fish. Fresh ocean flavor." }
+            ]
+        },
+        {
+            "product_id": 66,
+            "name": "Duck Breast Boneless",
+            "images": [
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=400",
+                "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400",
+                "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400",
+                "https://images.unsplash.com/photo-1608039755401-742074f0548d?w=400"
+            ],
+            "price": 15.99,
+            "oldPrice": 19.99,
+            "discount": 20,
+            "rating": 5,
+            "brand": "Prairie Ranch",
+            "description": "Premium boneless duck breast with crispy skin potential. Rich, gamey flavor perfect for gourmet dinner.",
+            "category": "Meat & Fish",
+            "unit": "Piece",
+            "weight": "350g",
+            "organic": false,
+            "stock": 15,
+            "seller_id": "SLR-4",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 196, "rating": 5, "comment": "Restaurant-quality duck at home! Crispy skin perfection." },
+                { "user_id": 197, "rating": 5, "comment": "Rich and flavorful. Perfect medium-rare." },
+                { "user_id": 198, "rating": 4, "comment": "Great for special occasions. Premium quality." }
+            ]
+        },
+        {
+            "product_id": 67,
+            "name": "Smoked Bacon Thick-Cut",
+            "images": [
+                "data:image/webp;base64,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",
+                "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400",
+                "https://images.unsplash.com/photo-1588168333986-5078d3ae3976?w=400",
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=400"
+            ],
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 5,
+            "brand": "Happy Farm",
+            "description": "Thick-cut hickory smoked bacon from heritage pigs. Crispy, smoky, and irresistibly delicious.",
+            "category": "Meat & Fish",
+            "unit": "Pack",
+            "weight": "350g",
+            "organic": false,
+            "stock": 70,
+            "seller_id": "SLR-4",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 199, "rating": 5, "comment": "Best bacon ever! Thick-cut and perfectly smoky." },
+                { "user_id": 200, "rating": 5, "comment": "Crispy perfection every morning. Can't go back to regular." },
+                { "user_id": 201, "rating": 4, "comment": "Great hickory flavor. Excellent with eggs and pancakes." }
+            ]
+        },
+        {
+            "product_id": 68,
+            "name": "Italian Pork Sausages",
+            "images": [
+                "data:image/webp;base64,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",
+                "https://images.unsplash.com/photo-1558030006-450675393462?w=400",
+                "https://images.unsplash.com/photo-1602470520998-f4a52199a3d6?w=400",
+                "https://images.unsplash.com/photo-1544025162-d76694265947?w=400"
+            ],
+            "price": 7.49,
+            "oldPrice": 9.49,
+            "discount": 21,
+            "rating": 4,
+            "brand": "Prairie Ranch",
+            "description": "Authentic Italian-style pork sausages with fennel and herbs. Perfect for pasta, grilling, or pizza topping.",
+            "category": "Meat & Fish",
+            "unit": "Pack of 6",
+            "weight": "450g",
+            "organic": false,
+            "stock": 50,
+            "seller_id": "SLR-4",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 202, "rating": 5, "comment": "Authentic Italian flavor! Perfect with peppers and onions." },
+                { "user_id": 203, "rating": 4, "comment": "Great fennel taste. Makes amazing pasta sauce." },
+                { "user_id": 204, "rating": 4, "comment": "Juicy and flavorful. Kids love these on the grill." }
+            ]
+        }
+    ],
+    "Dairy": [
+        {
+            "product_id": 15,
+            "name": "Organic Whole Milk",
+            "images": [
+                "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400",
+                "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
+                "https://images.unsplash.com/photo-1600788886242-5c96aabe3757?w=400",
+                "https://images.unsplash.com/photo-1523473827533-2a64d0d36748?w=400"
+            ],
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Green Pastures",
+            "description": "Fresh organic whole milk from grass-fed cows. Rich, creamy, and hormone-free.",
+            "category": "Dairy",
+            "unit": "Bottle",
+            "weight": "1 Liter",
+            "organic": true,
+            "stock": 100,
+            "seller_id": "SLR-7",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 43, "rating": 5, "comment": "The creamiest milk I've ever tasted. Love the organic quality!" },
+                { "user_id": 44, "rating": 5, "comment": "My kids can taste the difference. They refuse regular milk now." },
+                { "user_id": 45, "rating": 4, "comment": "Rich and delicious. Perfect for coffee and cereal." }
+            ]
+        },
+        {
+            "product_id": 16,
+            "name": "Greek Yogurt Natural",
+            "images": [
+                "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400",
+                "https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=400",
+                "https://images.unsplash.com/photo-1484980972926-edee96e0960d?w=400",
+                "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 5.29,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Green Pastures",
+            "description": "Thick and creamy Greek yogurt, high in protein. No artificial flavors or preservatives.",
+            "category": "Dairy",
+            "unit": "Tub",
+            "weight": "500g",
+            "organic": true,
+            "stock": 120,
+            "seller_id": "SLR-7",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 46, "rating": 5, "comment": "Incredibly thick and creamy. Best Greek yogurt I've tried!" },
+                { "user_id": 47, "rating": 5, "comment": "Perfect with fresh fruit and honey. So satisfying." },
+                { "user_id": 48, "rating": 4, "comment": "High protein and great taste. A healthy snack staple." }
+            ]
+        },
+        {
+            "product_id": 17,
+            "name": "Artisan Cheddar Cheese Block",
+            "images": [
+                "https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=400",
+                "https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400",
+                "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400",
+                "https://images.unsplash.com/photo-1634487359989-3e90c9432133?w=400"
+            ],
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 4,
+            "brand": "Countryside Dairy",
+            "description": "Aged artisan cheddar cheese with sharp, complex flavor. Perfect for sandwiches and charcuterie boards.",
+            "category": "Dairy",
+            "unit": "Block",
+            "weight": "350g",
+            "organic": false,
+            "stock": 60,
+            "seller_id": "SLR-8",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 49, "rating": 5, "comment": "Rich and sharp flavor. This cheddar elevates any dish!" },
+                { "user_id": 50, "rating": 4, "comment": "Great for mac and cheese. Real artisan quality." },
+                { "user_id": 51, "rating": 4, "comment": "Tastes amazing on crackers. Proper aged cheddar flavor." }
+            ]
+        },
+        {
+            "product_id": 18,
+            "name": "Farm Fresh Eggs Free-Range",
+            "images": [
+                "https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400",
+                "https://images.unsplash.com/photo-1598965675045-45c5e72c7d05?w=400",
+                "https://images.unsplash.com/photo-1509358271058-acd22cc93898?w=400",
+                "https://images.unsplash.com/photo-1569288063643-5d29ad64df09?w=400"
+            ],
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 5,
+            "brand": "Happy Farm",
+            "description": "Dozen free-range eggs from pasture-raised hens. Deep golden yolks with rich flavor.",
+            "category": "Dairy",
+            "unit": "Dozen",
+            "weight": "12 pcs",
+            "organic": true,
+            "stock": 80,
+            "seller_id": "SLR-4",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 52, "rating": 5, "comment": "The yolks are so golden and rich! You can taste the quality." },
+                { "user_id": 53, "rating": 5, "comment": "Best eggs I've ever bought. My omelets have never been better." },
+                { "user_id": 54, "rating": 4, "comment": "Fresh and ethically raised. Worth every penny." }
+            ]
+        },
+        {
+            "product_id": 19,
+            "name": "Organic Butter Unsalted",
+            "images": [
+                "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400",
+                "https://images.unsplash.com/photo-1588165171080-c89acfa5ee83?w=400",
+                "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=400",
+                "https://images.unsplash.com/photo-1600788886242-5c96aabe3757?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 4.99,
+            "discount": 20,
+            "rating": 4,
+            "brand": "Green Pastures",
+            "description": "Pure organic unsalted butter from grass-fed cows. Ideal for baking and cooking.",
+            "category": "Dairy",
+            "unit": "Block",
+            "weight": "250g",
+            "organic": true,
+            "stock": 95,
+            "seller_id": "SLR-7",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 55, "rating": 5, "comment": "This butter makes everything taste better. So creamy!" },
+                { "user_id": 56, "rating": 4, "comment": "Perfect for baking. My pastries have improved so much." },
+                { "user_id": 57, "rating": 4, "comment": "Great organic option for everyday cooking." }
+            ]
+        },
+        {
+            "product_id": 20,
+            "name": "Fresh Mozzarella Ball",
+            "images": [
+                "https://images.unsplash.com/photo-1634487359989-3e90c9432133?w=400",
+                "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400",
+                "https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400",
+                "https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=400"
+            ],
+            "price": 5.49,
+            "oldPrice": 6.99,
+            "discount": 21,
+            "rating": 5,
+            "brand": "Countryside Dairy",
+            "description": "Soft, creamy fresh mozzarella. Perfect for Caprese salad, pizza, and Italian dishes.",
+            "category": "Dairy",
+            "unit": "Ball",
+            "weight": "250g",
+            "organic": false,
+            "stock": 50,
+            "seller_id": "SLR-8",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 58, "rating": 5, "comment": "Softest mozzarella ever! Makes my homemade pizza amazing." },
+                { "user_id": 59, "rating": 5, "comment": "Perfect for Caprese salad. So fresh and milky." },
+                { "user_id": 60, "rating": 4, "comment": "Great quality fresh mozzarella. Tastes authentic." }
+            ]
+        },
+        {
+            "product_id": 51,
+            "name": "Organic Cream Cheese",
+            "images": [
+                "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400",
+                "https://images.unsplash.com/photo-1559561853-08451507cbe7?w=400",
+                "https://images.unsplash.com/photo-1571212515416-fef01fc43637?w=400",
+                "https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400"
+            ],
+            "price": 3.49,
+            "oldPrice": 4.49,
+            "discount": 22,
+            "rating": 4,
+            "brand": "Green Pastures",
+            "description": "Smooth organic cream cheese, perfect for bagels, cheesecake, and dips. Rich and creamy texture.",
+            "category": "Dairy",
+            "unit": "Tub",
+            "weight": "200g",
+            "organic": true,
+            "stock": 85,
+            "seller_id": "SLR-7",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 151, "rating": 5, "comment": "Smoothest cream cheese ever! Perfect on my bagel." },
+                { "user_id": 152, "rating": 4, "comment": "Great for cheesecake baking. Organic is a bonus." },
+                { "user_id": 153, "rating": 4, "comment": "Rich and creamy. Much better than regular brands." }
+            ]
+        },
+        {
+            "product_id": 52,
+            "name": "Parmesan Cheese Wedge",
+            "images": [
+                "https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400",
+                "https://images.unsplash.com/photo-1618164436241-4473940d1f5c?w=400",
+                "https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=400",
+                "https://images.unsplash.com/photo-1634487359989-3e90c9432133?w=400"
+            ],
+            "price": 8.99,
+            "oldPrice": 11.49,
+            "discount": 22,
+            "rating": 5,
+            "brand": "Countryside Dairy",
+            "description": "Authentic aged Parmigiano-Reggiano wedge, aged 24 months. Intense umami flavor for pasta and salads.",
+            "category": "Dairy",
+            "unit": "Wedge",
+            "weight": "200g",
+            "organic": false,
+            "stock": 40,
+            "seller_id": "SLR-8",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 154, "rating": 5, "comment": "Real Parmigiano! Grated over pasta it's heaven." },
+                { "user_id": 155, "rating": 5, "comment": "The 24-month aging is perfect. Rich and nutty flavor." },
+                { "user_id": 156, "rating": 4, "comment": "Excellent quality parmesan. A kitchen essential." }
+            ]
+        }
+    ],
+    "Bakery": [
+        {
+            "product_id": 21,
+            "name": "Artisan Sourdough Bread",
+            "images": [
+                "data:image/webp;base64,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",
+                "https://images.unsplash.com/photo-1555951015-6da899b5c2cd?w=400",
+                "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
+                "https://images.unsplash.com/photo-1555951015-6da899b5c2cd?w=400"
+            ],
+            "price": 5.99,
+            "oldPrice": 7.49,
+            "discount": 20,
+            "rating": 5,
+            "brand": "Golden Crust",
+            "description": "Handcrafted sourdough bread with a crispy crust and tangy, chewy interior. Made with natural starter.",
+            "category": "Bread & Bakery",
+            "unit": "Loaf",
+            "weight": "500g",
+            "organic": true,
+            "stock": 40,
+            "seller_id": "SLR-9",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 61, "rating": 5, "comment": "The best sourdough I've ever had! Crusty outside, soft inside." },
+                { "user_id": 62, "rating": 5, "comment": "Smells incredible and tastes even better. Artisan quality." },
+                { "user_id": 63, "rating": 4, "comment": "Perfect tang and texture. Great with butter or for toast." }
+            ]
+        },
+        {
+            "product_id": 22,
+            "name": "Organic Whole Wheat Bread",
+            "images": [
+                "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
+                "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400",
+                "https://images.unsplash.com/photo-1555951015-6da899b5c2cd?w=400",
+                "https://images.unsplash.com/photo-1555951015-6da899b5c2cd?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 4.99,
+            "discount": 20,
+            "rating": 4,
+            "brand": "Golden Crust",
+            "description": "Nutritious whole wheat bread made with 100% organic whole grain flour. Soft and hearty.",
+            "category": "Bread & Bakery",
+            "unit": "Loaf",
+            "weight": "400g",
+            "organic": true,
+            "stock": 60,
+            "seller_id": "SLR-9",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 64, "rating": 4, "comment": "Healthy and delicious. Perfect for sandwiches." },
+                { "user_id": 65, "rating": 5, "comment": "Love that it's 100% whole grain. Tastes great toasted." },
+                { "user_id": 66, "rating": 4, "comment": "Soft texture for whole wheat bread. My family loves it." }
+            ]
+        },
+        {
+            "product_id": 23,
+            "name": "French Butter Croissants",
+            "images": [
+                "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=400",
+                "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?w=400",
+                "https://images.unsplash.com/photo-1549903072-7e6e0bedb7fb?w=400",
+                "https://images.unsplash.com/photo-1568051243851-f9b136146e97?w=400"
+            ],
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 5,
+            "brand": "Parisian Delights",
+            "description": "Flaky, buttery croissants made with premium French butter. Baked fresh daily.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 4",
+            "weight": "320g",
+            "organic": false,
+            "stock": 35,
+            "seller_id": "SLR-10",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 67, "rating": 5, "comment": "Flakiest croissants outside of Paris! Absolutely divine." },
+                { "user_id": 68, "rating": 5, "comment": "Buttery perfection. Best croissants I've had in this country." },
+                { "user_id": 69, "rating": 4, "comment": "Great with coffee in the morning. Premium quality bakery item." }
+            ]
+        },
+        {
+            "product_id": 24,
+            "name": "Chocolate Chip Cookies",
+            "images": [
+                "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400",
+                "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400",
+                "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400",
+                "https://images.unsplash.com/photo-1532499016263-f2c3e89de9cd?w=400"
+            ],
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Sweet Harvest",
+            "description": "Soft-baked chocolate chip cookies made with Belgian chocolate and organic flour.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 6",
+            "weight": "250g",
+            "organic": false,
+            "stock": 75,
+            "seller_id": "SLR-10",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 70, "rating": 5, "comment": "These cookies are dangerously good! Can't stop eating them." },
+                { "user_id": 71, "rating": 5, "comment": "Soft, chewy, and loaded with chocolate. Heavenly!" },
+                { "user_id": 72, "rating": 4, "comment": "Best store-bought cookies I've ever tasted. Real chocolate!" }
+            ]
+        },
+        {
+            "product_id": 25,
+            "name": "Multigrain Bagels",
+            "images": [
+                "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400",
+                "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
+                "https://images.unsplash.com/photo-1555951015-6da899b5c2cd?w=400",
+                "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400"
+            ],
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 4,
+            "brand": "Golden Crust",
+            "description": "Chewy multigrain bagels packed with seeds and grains. Perfect for breakfast sandwiches.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 4",
+            "weight": "400g",
+            "organic": true,
+            "stock": 50,
+            "seller_id": "SLR-9",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 73, "rating": 4, "comment": "Love the seeds and texture. Great toasted with cream cheese." },
+                { "user_id": 74, "rating": 5, "comment": "Hearty and filling. My go-to breakfast option." },
+                { "user_id": 75, "rating": 4, "comment": "Good flavor and nutritious. A healthy start to the day." }
+            ]
+        },
+        {
+            "product_id": 26,
+            "name": "Blueberry Muffins",
+            "images": [
+                "https://images.unsplash.com/photo-1607958996333-41aef7caefaa?w=400",
+                "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=400",
+                "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=400",
+                "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400"
+            ],
+            "price": 5.49,
+            "oldPrice": 6.99,
+            "discount": 21,
+            "rating": 5,
+            "brand": "Sweet Harvest",
+            "description": "Moist blueberry muffins bursting with real blueberries. Perfect with morning coffee.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 4",
+            "weight": "350g",
+            "organic": false,
+            "stock": 45,
+            "seller_id": "SLR-10",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 76, "rating": 5, "comment": "Loaded with real blueberries! So moist and delicious." },
+                { "user_id": 77, "rating": 5, "comment": "Perfect breakfast treat. Tastes homemade." },
+                { "user_id": 78, "rating": 4, "comment": "Great muffins, not too sweet. Real bakery quality." }
+            ]
+        },
+        {
+            "product_id": 53,
+            "name": "Cinnamon Raisin Bread",
+            "images": [
+                "https://images.unsplash.com/photo-1555951015-6da899b5c2cd?w=400",
+                "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400",
+                "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400",
+                "https://images.unsplash.com/photo-1555951015-6da899b5c2cd?w=400"
+            ],
+            "price": 4.49,
+            "oldPrice": 5.79,
+            "discount": 22,
+            "rating": 4,
+            "brand": "Golden Crust",
+            "description": "Soft cinnamon swirl bread studded with plump raisins. Makes amazing French toast and pairs perfectly with coffee.",
+            "category": "Bread & Bakery",
+            "unit": "Loaf",
+            "weight": "400g",
+            "organic": false,
+            "stock": 55,
+            "seller_id": "SLR-9",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 157, "rating": 5, "comment": "Makes the best French toast! Cinnamon flavor is perfect." },
+                { "user_id": 158, "rating": 4, "comment": "Soft and aromatic. Great toasted with butter." },
+                { "user_id": 159, "rating": 4, "comment": "Kids love this bread. Plump raisins in every slice." }
+            ]
+        },
+        {
+            "product_id": 54,
+            "name": "Chocolate Brownies",
+            "images": [
+                "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400",
+                "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=400",
+                "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400",
+                "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400"
+            ],
+            "price": 5.99,
+            "oldPrice": 7.49,
+            "discount": 20,
+            "rating": 5,
+            "brand": "Sweet Harvest",
+            "description": "Rich, fudgy chocolate brownies made with premium dark chocolate. Dense, moist, and intensely chocolatey.",
+            "category": "Bread & Bakery",
+            "unit": "Pack of 4",
+            "weight": "300g",
+            "organic": false,
+            "stock": 40,
+            "seller_id": "SLR-10",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 160, "rating": 5, "comment": "The fudgiest brownies ever! Pure chocolate heaven." },
+                { "user_id": 161, "rating": 5, "comment": "Better than homemade. Rich and decadent." },
+                { "user_id": 162, "rating": 4, "comment": "Perfect with ice cream. Deep chocolate flavor." }
+            ]
+        }
+    ],
+    "Beverages": [
+        {
+            "product_id": 27,
+            "name": "Cold Pressed Orange Juice",
+            "images": [
+                "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=400",
+                "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400",
+                "https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?w=400",
+                "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=400"
+            ],
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 5,
+            "brand": "Sunrise Juices",
+            "description": "100% pure cold-pressed orange juice with no added sugar. Fresh squeezed taste in every sip.",
+            "category": "Beverages",
+            "unit": "Bottle",
+            "weight": "1 Liter",
+            "organic": true,
+            "stock": 80,
+            "seller_id": "SLR-11",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 79, "rating": 5, "comment": "Tastes like freshly squeezed oranges! No added sugar is a big plus." },
+                { "user_id": 80, "rating": 5, "comment": "My morning isn't complete without this juice. So refreshing!" },
+                { "user_id": 81, "rating": 4, "comment": "Great natural flavor. Love that it's cold-pressed." }
+            ]
+        },
+        {
+            "product_id": 28,
+            "name": "Organic Green Tea Matcha",
+            "images": [
+                "https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=400",
+                "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=400",
+                "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400",
+                "https://images.unsplash.com/photo-1563822249366-3efb23b8e0c9?w=400"
+            ],
+            "price": 8.99,
+            "oldPrice": 11.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Zen Garden",
+            "description": "Premium ceremonial grade matcha green tea powder. Rich in antioxidants and natural energy.",
+            "category": "Beverages",
+            "unit": "Tin",
+            "weight": "100g",
+            "organic": true,
+            "stock": 45,
+            "seller_id": "SLR-11",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 82, "rating": 5, "comment": "Best matcha I've tried! Smooth with no bitterness at all." },
+                { "user_id": 83, "rating": 5, "comment": "Genuine ceremonial grade. Makes perfect lattes every time." },
+                { "user_id": 84, "rating": 4, "comment": "Great energy boost without the coffee jitters. Love it!" }
+            ]
+        },
+        {
+            "product_id": 29,
+            "name": "Sparkling Water Variety Pack",
+            "images": [
+                "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=400",
+                "https://images.unsplash.com/photo-1606168094336-48f205276929?w=400",
+                "https://images.unsplash.com/photo-1536939459926-301728717817?w=400",
+                "https://images.unsplash.com/photo-1559839914-17aae19cec71?w=400"
+            ],
+            "price": 6.99,
+            "oldPrice": 8.99,
+            "discount": 22,
+            "rating": 4,
+            "brand": "Crystal Springs",
+            "description": "Naturally flavored sparkling water in assorted flavors. Zero calories, zero sweeteners.",
+            "category": "Beverages",
+            "unit": "Pack of 6",
+            "weight": "6 × 330ml",
+            "organic": false,
+            "stock": 110,
+            "seller_id": "SLR-12",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 85, "rating": 4, "comment": "Refreshing flavors without the guilt. My soda replacement!" },
+                { "user_id": 86, "rating": 5, "comment": "Love the variety pack. Lime is my favorite flavor." },
+                { "user_id": 87, "rating": 4, "comment": "Clean taste with just the right amount of fizz." }
+            ]
+        },
+        {
+            "product_id": 30,
+            "name": "Organic Almond Milk",
+            "images": [
+                "https://th.bing.com/th/id/OIP.9qSrgEKkTxdc37hrgUm5XAHaHa?w=191&h=191&c=7&r=0&o=7&dpr=1.6&pid=1.7&rm=3",
+                "https://images.unsplash.com/photo-1550583724-b2692b85b150?w=400",
+                "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400",
+                "https://images.unsplash.com/photo-1523473827533-2a64d0d36748?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 5.29,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Green Pastures",
+            "description": "Creamy unsweetened almond milk, dairy-free and vegan. Great for smoothies and cereal.",
+            "category": "Beverages",
+            "unit": "Carton",
+            "weight": "1 Liter",
+            "organic": true,
+            "stock": 90,
+            "seller_id": "SLR-7",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 88, "rating": 5, "comment": "Creamiest almond milk I've found. Perfect in my coffee!" },
+                { "user_id": 89, "rating": 5, "comment": "No weird aftertaste like other brands. Simply delicious." },
+                { "user_id": 90, "rating": 4, "comment": "Great dairy-free option. Works perfectly for baking too." }
+            ]
+        },
+        {
+            "product_id": 31,
+            "name": "Herbal Chamomile Tea",
+            "images": [
+                "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=400",
+                "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400",
+                "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=400",
+                "https://images.unsplash.com/photo-1563822249366-3efb23b8e0c9?w=400"
+            ],
+            "price": 4.49,
+            "oldPrice": 5.99,
+            "discount": 25,
+            "rating": 4,
+            "brand": "Zen Garden",
+            "description": "Soothing organic chamomile tea bags. Perfect for relaxation before bedtime.",
+            "category": "Beverages",
+            "unit": "Box",
+            "weight": "20 Bags",
+            "organic": true,
+            "stock": 70,
+            "seller_id": "SLR-11",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 91, "rating": 5, "comment": "The most relaxing tea ever. Helps me sleep so well." },
+                { "user_id": 92, "rating": 4, "comment": "Gentle and calming flavor. A great bedtime ritual." },
+                { "user_id": 93, "rating": 4, "comment": "Love the organic quality. Mild and soothing taste." }
+            ]
+        },
+        {
+            "product_id": 32,
+            "name": "Fresh Coconut Water",
+            "images": [
+                "data:image/webp;base64,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",
+                "https://images.unsplash.com/photo-1525385133512-2f3bdd039054?w=400",
+                "https://images.unsplash.com/photo-1559839914-17aae19cec71?w=400",
+                "https://images.unsplash.com/photo-1606168094336-48f205276929?w=400"
+            ],
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Tropical Bliss",
+            "description": "100% pure coconut water with natural electrolytes. Hydrating and refreshing.",
+            "category": "Beverages",
+            "unit": "Bottle",
+            "weight": "500ml",
+            "organic": true,
+            "stock": 95,
+            "seller_id": "SLR-5",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 94, "rating": 5, "comment": "So refreshing after a workout! Natural hydration at its best." },
+                { "user_id": 95, "rating": 5, "comment": "Tastes like cracking open a fresh coconut. Pure and delicious." },
+                { "user_id": 96, "rating": 4, "comment": "Great natural alternative to sports drinks. Love it!" }
+            ]
+        },
+        {
+            "product_id": 55,
+            "name": "Organic Coffee Beans",
+            "images": [
+                "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400",
+                "https://images.unsplash.com/photo-1497888329096-51c27beff665?w=400",
+                "https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?w=400",
+                "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400"
+            ],
+            "price": 12.99,
+            "oldPrice": 16.99,
+            "discount": 24,
+            "rating": 5,
+            "brand": "Mountain Roast",
+            "description": "Single-origin organic Arabica coffee beans, medium roast. Rich, smooth, and aromatic with notes of chocolate and caramel.",
+            "category": "Beverages",
+            "unit": "Bag",
+            "weight": "500g",
+            "organic": true,
+            "stock": 55,
+            "seller_id": "SLR-11",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 163, "rating": 5, "comment": "Best coffee beans I've ever ground at home! So aromatic." },
+                { "user_id": 164, "rating": 5, "comment": "Smooth with rich chocolate notes. My morning essential." },
+                { "user_id": 165, "rating": 4, "comment": "Single-origin quality at a fair price. Highly recommend." }
+            ]
+        },
+        {
+            "product_id": 56,
+            "name": "Fresh Berry Smoothie Pack",
+            "images": [
+                "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=400",
+                "https://images.unsplash.com/photo-1505252585461-04db1eb84625?w=400",
+                "https://images.unsplash.com/photo-1502741224143-90386d7f8c82?w=400",
+                "https://images.unsplash.com/photo-1546173159-315724a31696?w=400"
+            ],
+            "price": 7.99,
+            "oldPrice": 9.99,
+            "discount": 20,
+            "rating": 4,
+            "brand": "Sunrise Juices",
+            "description": "Pre-portioned frozen berry mix for smoothies. Contains strawberries, blueberries, raspberries, and blackberries.",
+            "category": "Beverages",
+            "unit": "Pack",
+            "weight": "500g",
+            "organic": true,
+            "stock": 65,
+            "seller_id": "SLR-11",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 166, "rating": 5, "comment": "So convenient for morning smoothies! Great berry mix." },
+                { "user_id": 167, "rating": 4, "comment": "Pre-portioned is genius. Fresh frozen flavor." },
+                { "user_id": 168, "rating": 4, "comment": "Love the variety of berries. Makes colorful smoothies." }
+            ]
+        }
+    ],
+    "Snacks": [
+        {
+            "product_id": 57,
+            "name": "Organic Mixed Nuts",
+            "images": [
+                "https://tse1.mm.bing.net/th/id/OIP.lHdwJPlCRME4wGS33As2RgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3",
+                "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400",
+                "https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?w=400",
+                "https://images.unsplash.com/photo-1606567595334-d39972c85dbe?w=400"
+            ],
+            "price": 8.99,
+            "oldPrice": 11.49,
+            "discount": 22,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Premium mix of organic almonds, cashews, walnuts, and pecans. Lightly roasted with sea salt.",
+            "category": "Snacks",
+            "unit": "Bag",
+            "weight": "400g",
+            "organic": true,
+            "stock": 85,
+            "seller_id": "SLR-1",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 169, "rating": 5, "comment": "Best nut mix ever! Perfect roast and salt level." },
+                { "user_id": 170, "rating": 5, "comment": "Great for snacking and trail mix. Premium quality." },
+                { "user_id": 171, "rating": 4, "comment": "Healthy and satisfying. My go-to office snack." }
+            ]
+        },
+        {
+            "product_id": 58,
+            "name": "Dark Chocolate Bar 72%",
+            "images": [
+                "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400",
+                "https://images.unsplash.com/photo-1511381939415-e44015466834?w=400",
+                "https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=400",
+                "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 4.99,
+            "discount": 20,
+            "rating": 5,
+            "brand": "Cocoa Artisan",
+            "description": "Premium 72% dark chocolate bar made with single-origin cacao. Rich, intense, and smooth with fruity notes.",
+            "category": "Snacks",
+            "unit": "Bar",
+            "weight": "100g",
+            "organic": true,
+            "stock": 120,
+            "seller_id": "SLR-10",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 172, "rating": 5, "comment": "Smooth and rich! Best dark chocolate at this price point." },
+                { "user_id": 173, "rating": 5, "comment": "Love the fruity notes. Real single-origin quality." },
+                { "user_id": 174, "rating": 4, "comment": "Perfect bittersweet balance. My after-dinner treat." }
+            ]
+        },
+        {
+            "product_id": 59,
+            "name": "Organic Granola Bars",
+            "images": [
+                "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=400",
+                "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400",
+                "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400",
+                "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400"
+            ],
+            "price": 5.49,
+            "oldPrice": 6.99,
+            "discount": 21,
+            "rating": 4,
+            "brand": "Nature's Best",
+            "description": "Crunchy organic granola bars with honey, oats, almonds, and dried cranberries. No artificial sweeteners.",
+            "category": "Snacks",
+            "unit": "Box of 6",
+            "weight": "240g",
+            "organic": true,
+            "stock": 100,
+            "seller_id": "SLR-1",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 175, "rating": 4, "comment": "Crunchy and not too sweet. Great on-the-go snack." },
+                { "user_id": 176, "rating": 5, "comment": "Love the cranberry and almond combo. So satisfying." },
+                { "user_id": 177, "rating": 4, "comment": "Healthy snack for the whole family. Kids approved!" }
+            ]
+        },
+        {
+            "product_id": 60,
+            "name": "Dried Mango Slices",
+            "images": [
+                "https://th.bing.com/th/id/OIP.ye3OOBwxcvPyPqYvQZGelAHaHa?w=168&h=180&c=7&r=0&o=7&dpr=1.6&pid=1.7&rm=3",
+                "https://images.unsplash.com/photo-1553279768-865429fa0078?w=400",
+                "https://images.unsplash.com/photo-1591073113125-e46713c829ed?w=400",
+                "https://images.unsplash.com/photo-1605027990121-cbae9e0642df?w=400"
+            ],
+            "price": 4.99,
+            "oldPrice": 6.49,
+            "discount": 23,
+            "rating": 5,
+            "brand": "Tropical Bliss",
+            "description": "Naturally dried mango slices with no added sugar. Sweet, chewy, and packed with tropical flavor.",
+            "category": "Snacks",
+            "unit": "Bag",
+            "weight": "200g",
+            "organic": false,
+            "stock": 75,
+            "seller_id": "SLR-5",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 178, "rating": 5, "comment": "Like candy but healthy! Incredible mango flavor." },
+                { "user_id": 179, "rating": 5, "comment": "So chewy and sweet. Can't stop eating these." },
+                { "user_id": 180, "rating": 4, "comment": "Great natural snack. Love that there's no added sugar." }
+            ]
+        },
+        {
+            "product_id": 61,
+            "name": "Rice Cakes Sea Salt",
+            "images": [
+                "https://images.unsplash.com/photo-1587668178277-295251f900ce?w=400",
+                "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?w=400",
+                "https://images.unsplash.com/photo-1532499016263-f2c3e89de9cd?w=400",
+                "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400"
+            ],
+            "price": 2.99,
+            "oldPrice": 3.79,
+            "discount": 21,
+            "rating": 4,
+            "brand": "Nature's Best",
+            "description": "Light and crispy rice cakes with a touch of sea salt. A guilt-free snack, perfect with toppings.",
+            "category": "Snacks",
+            "unit": "Pack",
+            "weight": "150g",
+            "organic": true,
+            "stock": 130,
+            "seller_id": "SLR-1",
+            "dailySale": false,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 181, "rating": 4, "comment": "Love these with peanut butter on top!" },
+                { "user_id": 182, "rating": 5, "comment": "Crispy and light. Perfect guilt-free snack." },
+                { "user_id": 183, "rating": 4, "comment": "Great base for any topping. Low calorie and satisfying." }
+            ]
+        },
+        {
+            "product_id": 62,
+            "name": "Trail Mix Energy Blend",
+            "images": [
+                "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400",
+                "https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?w=400",
+                "https://images.unsplash.com/photo-1606567595334-d39972c85dbe?w=400",
+                "https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=400"
+            ],
+            "price": 6.49,
+            "oldPrice": 8.29,
+            "discount": 22,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Energizing trail mix with almonds, dark chocolate chips, dried cranberries, pumpkin seeds, and coconut flakes.",
+            "category": "Snacks",
+            "unit": "Bag",
+            "weight": "350g",
+            "organic": false,
+            "stock": 70,
+            "seller_id": "SLR-1",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 184, "rating": 5, "comment": "Perfect mix of sweet and savory! Great for hiking." },
+                { "user_id": 185, "rating": 5, "comment": "Love the dark chocolate chips in this blend." },
+                { "user_id": 186, "rating": 4, "comment": "Energizing and delicious. My gym bag essential." }
+            ]
+        },
+        {
+            "product_id": 69,
+            "name": "Classic Hummus",
+            "images": [
+                "https://th.bing.com/th/id/R.2ae26681987d82ea4ccb6475485e28ec?rik=l2eblgDeMjDObQ&riu=http%3a%2f%2f24shopping.shop%2fcdn%2fshop%2farticles%2fclassic-hummus-recipe-creamy-authentic-and-irresistible-548809_1200x1200.webp%3fv%3d1739320718&ehk=2l8LTjVQR7cWQtZIIFuhmA77dxFQiW%2fHaDqq0oUJZao%3d&risl=&pid=ImgRaw&r=0",
+                "https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?w=400",
+                "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400",
+                "https://images.unsplash.com/photo-1606567595334-d39972c85dbe?w=400"
+            ],
+            "price": 3.99,
+            "oldPrice": 5.29,
+            "discount": 25,
+            "rating": 5,
+            "brand": "Nature's Best",
+            "description": "Creamy classic hummus made with organic chickpeas, tahini, lemon, and garlic. Perfect with pita or veggies.",
+            "category": "Snacks",
+            "unit": "Tub",
+            "weight": "300g",
+            "organic": true,
+            "stock": 90,
+            "seller_id": "SLR-1",
+            "dailySale": true,
+            "monthSale": false,
+            "reviews": [
+                { "user_id": 205, "rating": 5, "comment": "Smoothest hummus I've ever had! So garlicky and good." },
+                { "user_id": 206, "rating": 5, "comment": "My go-to snack with veggies. Creamy perfection." },
+                { "user_id": 207, "rating": 4, "comment": "Great organic option. Fresh lemony taste." }
+            ]
+        },
+        {
+            "product_id": 70,
+            "name": "Gourmet Sea Salt Popcorn",
+            "images": [
+                "https://www.simpalosnacks.com/cdn/shop/files/poptime-seasalt_grande.jpg?v=1753890250",
+                "https://images.unsplash.com/photo-1574856344991-aaa31b6f4ce3?w=400",
+                "https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=400",
+                "https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=400"
+            ],
+            "price": 2.99,
+            "oldPrice": 3.99,
+            "discount": 25,
+            "rating": 4,
+            "brand": "Nature's Best",
+            "description": "Light and fluffy gourmet popcorn with just the right amount of sea salt. Air-popped with no artificial flavors.",
+            "category": "Snacks",
+            "unit": "Bag",
+            "weight": "200g",
+            "organic": false,
+            "stock": 110,
+            "seller_id": "SLR-1",
+            "dailySale": false,
+            "monthSale": true,
+            "reviews": [
+                { "user_id": 208, "rating": 5, "comment": "Perfect movie night snack! Light and crunchy." },
+                { "user_id": 209, "rating": 4, "comment": "Love the simple sea salt flavor. Not too salty." },
+                { "user_id": 210, "rating": 4, "comment": "Great air-popped popcorn. Guilt-free snacking." }
+            ]
+        }
+    ]
+}
