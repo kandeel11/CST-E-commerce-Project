@@ -2,11 +2,11 @@ const PRODUCTS_KEY = "products";
 const ORDERS_KEY = "orders";
 const USERS_KEY = "users";
 
-export function getCurrentUser(){
-    return JSON.parse(localStorage.getItem('currentUser'));
+export function getCurrentUser() {
+    return JSON.parse(sessionStorage.getItem('currentUser'));
 }
-export function getCurrentSeller(){
-    return JSON.parse(localStorage.getItem('currentSeller'));
+export function getCurrentSeller() {
+    return JSON.parse(sessionStorage.getItem('currentSeller'));
 }
 
 export function addProductToStorage(product) {
@@ -19,34 +19,34 @@ export function addProductToStorage(product) {
 export function getAllProducts() {
     return JSON.parse(localStorage.getItem(PRODUCTS_KEY)) || [];
 }
-export function getAllOrders(){
+export function getAllOrders() {
     return JSON.parse(localStorage.getItem(ORDERS_KEY)) || [];
 }
 export function getAllUsers() {
-  return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+    return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
 }
 function getUserEmailById(userId) {
-  const users = getAllUsers();
-  const u = users.find(x => String(x.id) === String(userId));
-  return u?.Email || "Unknown";
+    const users = getAllUsers();
+    const u = users.find(x => String(x.id) === String(userId));
+    return u?.Email || "Unknown";
 }
 
-export function getSellerOrders(sellerId){
+export function getSellerOrders(sellerId) {
     const allOrders = getAllOrders();
     let sellerProducts = allOrders.flatMap(order => {
-            return (order.products || []).filter(p =>
-                String(p.seller_id) === String(sellerId)
-            );
-        }
+        return (order.products || []).filter(p =>
+            String(p.seller_id) === String(sellerId)
+        );
+    }
     );
     return sellerProducts;
 }
-export function getSellerTotalRevenue(sellerId){
+export function getSellerTotalRevenue(sellerId) {
     const products = getSellerOrders(sellerId);
     let TotalRevenue = products.reduce((sum, p) => sum + (Number(p.price) * Number(p.quantity)), 0);
     return TotalRevenue.toFixed(2);
 }
-export function getSellerProducts(seller_id){
+export function getSellerProducts(seller_id) {
     let allProducts = getAllProducts();
     return allProducts.filter(p => p.seller_id === seller_id);
 }
@@ -99,24 +99,24 @@ export function loadOrdersForSeller() {
             buyerEmail,
             productName: p.name,
             quantity: p.quantity,
-            status: orderStatus,
+            status: p.status || orderStatus, // use product-level status if available, else order-level
             product_id: p.product_id,
             userid
         }));
     });
-  //console.log(rows);
-  renderOrdersTable(rows);
-  //return rows;
+    //console.log(rows);
+    renderOrdersTable(rows);
+    //return rows;
 }
 
 function renderOrdersTable(orders) {
-  const tableBody = document.getElementById("ordersTbody");
-  if (!tableBody) return;
+    const tableBody = document.getElementById("ordersTbody");
+    if (!tableBody) return;
 
-  tableBody.innerHTML = "";
+    tableBody.innerHTML = "";
 
-  if (!Array.isArray(orders) || orders.length === 0) {
-    tableBody.innerHTML = `
+    if (!Array.isArray(orders) || orders.length === 0) {
+        tableBody.innerHTML = `
       <tr>
         <td colspan="6" class="text-center text-muted py-5">
           <div class="d-flex flex-column align-items-center gap-2">
@@ -127,31 +127,32 @@ function renderOrdersTable(orders) {
         </td>
       </tr>
     `;
-    return;
-  }
+        return;
+    }
 
-  const statusBadgeClass = (status) => {
-    const s = String(status || "").toLowerCase();
-    if (s === "pending") return "badge bg-warning-subtle text-warning-emphasis border border-warning-subtle";
-    if (s === "completed" || s === "delivered") return "badge bg-success-subtle text-success-emphasis border border-success-subtle";
-    if (s === "processed" || s === "processed") return "badge bg-info-subtle text-info-emphasis border border-info-subtle";
-    return "badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle";
-  };
+    const statusBadgeClass = (status) => {
+        const s = String(status || "").toLowerCase();
+        if (s === "pending") return "badge bg-warning-subtle text-warning-emphasis border border-warning-subtle";
+        if (s === "completed" || s === "delivered") return "badge bg-success-subtle text-success-emphasis border border-success-subtle";
+        if (s === "processing" || s === "processed") return "badge bg-info-subtle text-info-emphasis border border-info-subtle";
+        if (s === "cancelled" || s === "usercancelled") return "badge bg-danger-subtle text-danger-emphasis border border-danger-subtle";
+        return "badge bg-secondary-subtle text-secondary-emphasis border border-secondary-subtle";
+    };
 
-  orders.forEach((order) => {
+    orders.forEach((order) => {
 
-    const productId = order.product_id;
-    const buyerEmail = order.buyerEmail ?? "Unknown";
-    const productName = order.productName ?? "-";
-    const quantity = Number(order.quantity ?? 0);
-    const orderStatus = order.orderStatus ?? order.status ?? "pending";
-    const orderDate = new Date(order.orderDate ?? order.createddate ?? Date.now()).toLocaleDateString();
+        const productId = order.product_id;
+        const buyerEmail = order.buyerEmail ?? "Unknown";
+        const productName = order.productName ?? "-";
+        const quantity = Number(order.quantity ?? 0);
+        const orderStatus = order.orderStatus ?? order.status ?? "pending";
+        const orderDate = new Date(order.orderDate ?? order.createddate ?? Date.now()).toLocaleDateString();
 
-    const row = document.createElement("tr");
-    row.classList.add("align-middle");
-    row.dataset.id = String(productId);
+        const row = document.createElement("tr");
+        row.classList.add("align-middle");
+        row.dataset.id = String(productId);
 
-    row.innerHTML = `
+        row.innerHTML = `
       <td class="text-muted small">${orderDate}</td>
 
       <td class="small">
@@ -176,96 +177,126 @@ function renderOrdersTable(orders) {
       </td>
 
       <td class="text-end d-none d-lg-table-cell">
-        ${
-            String(orderStatus).toLowerCase() === 'pending'
-            ?
-            `
-                <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
-                    <span class="small"><i class="fas fa-trash-alt me-1"></i>Cancel</span>
-                </button>
-            `
-            :
-            String(orderStatus).toLowerCase() === 'processed'
-            ?
-            `
+        ${(() => {
+                const s = String(orderStatus).toLowerCase();
+                if (s === 'completed' || s === 'cancelled' || s === 'usercancelled') return '';
+                if (s === 'processing' || s === 'processed') return `
                 <button type="button" class="btn btn-sm btn-outline-primary confirm-order-btn ms-1">
                     <span class="small"><i class="fas fa-check me-1"></i>Confirm</span>
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
                     <span class="small"><i class="fas fa-trash-alt me-1"></i>Cancel</span>
-                </button>
-            `
-            :
-            ""
-        }
+                </button>`;
+                // pending or any other status
+                return `
+                <button type="button" class="btn btn-sm btn-outline-danger cancel-order-btn">
+                    <span class="small"><i class="fas fa-trash-alt me-1"></i>Cancel</span>
+                </button>`;
+            })()}
       </td>
     `;
 
-    row.addEventListener("mouseenter", () => row.classList.add("table-active"));
-    row.addEventListener("mouseleave", () => row.classList.remove("table-active"));
-    const cancelBtn = row.querySelector(".cancel-order-btn");
-    if (cancelBtn) {
-      cancelBtn.addEventListener("click", () => {
-        if (!confirm("Cancel this item from the order?")) return;
+        row.addEventListener("mouseenter", () => row.classList.add("table-active"));
+        row.addEventListener("mouseleave", () => row.classList.remove("table-active"));
+        const cancelBtn = row.querySelector(".cancel-order-btn");
+        if (cancelBtn) {
+            cancelBtn.addEventListener("click", () => {
+                // Show modal instead of confirm()
+                const modalEl = document.getElementById("cancelOrderItemModal");
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
 
-        // restore stock 
-        const products = getAllProducts();
-        const idx = products.findIndex((p) => p.product_id === productId);
+                // Remove previous listener to avoid stacking
+                const confirmBtn = document.getElementById("confirmCancelOrderItemBtn");
+                const newConfirmBtn = confirmBtn.cloneNode(true);
+                confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
 
-        if (idx !== -1) {
-          const q = Number.isFinite(quantity) ? quantity : 0;
-          products[idx].stock = Number(products[idx].stock || 0) + q;
-          saveProducts(products);
+                newConfirmBtn.addEventListener("click", () => {
+                    modal.hide();
+
+                    // restore stock 
+                    const products = getAllProducts();
+                    const idx = products.findIndex((p) => p.product_id === productId);
+
+                    if (idx !== -1) {
+                        const q = Number.isFinite(quantity) ? quantity : 0;
+                        products[idx].stock = Number(products[idx].stock || 0) + q;
+                        saveProducts(products);
+                    }
+
+                    // Set product-level status to "cancelled" instead of removing
+                    let allOrders = getAllOrders();
+                    allOrders.forEach(o => {
+                        const sameBuyer = String(o.userid) === String(order.userid);
+                        const sameDate = String(o.createddate) === String(order.rawCreatedDate);
+                        if (!sameBuyer || !sameDate) return;
+
+                        (o.products || []).forEach(p => {
+                            if (String(p.product_id) === String(productId)) {
+                                p.status = "cancelled";
+                            }
+                        });
+
+                        // Recalculate overall order status based on all product statuses
+                        o.orderStatus = recalcOrderStatus(o.products);
+                    });
+                    saveOrders(allOrders);
+
+                    // Update UI
+                    const statusBadge = row.querySelector('.statusbadge');
+                    statusBadge.className = `${statusBadgeClass("cancelled")} px-3 py-2 text-capitalize statusbadge`;
+                    statusBadge.textContent = "cancelled";
+                    cancelBtn.remove();
+                    const confirmBtnInRow = row.querySelector('.confirm-order-btn');
+                    if (confirmBtnInRow) confirmBtnInRow.remove();
+                });
+            });
         }
 
-        let allOrders = getAllOrders();
-        allOrders = allOrders
-        .map(o => {
-            const sameBuyer = String(o.userid) === String(order.userid);
-            const sameDate  = String(o.createddate) === String(order.rawCreatedDate);
-            if (!sameBuyer || !sameDate) return o;
+        row.addEventListener('click', function (e) {
+            const confirmBtn = e.target.closest('.confirm-order-btn');
+            if (!confirmBtn) return;
 
-            const updatedProducts = (o.products || []).filter(p => p.product_id !== productId);
-            return { ...o, products: updatedProducts };
-        })
-        // if an order has no products left, remove the whole order object
-        .filter(o => (o.products || []).length > 0);
-        saveOrders(allOrders);
+            const productId = row.dataset.id;
+            const orders = getAllOrders();
 
-        row.remove();
-        if (tableBody.querySelectorAll("tr").length === 0) {
-          renderOrdersTable([]);
-        }
-      });
-    }
+            // Find the order containing this product and update product-level status
+            orders.forEach(o => {
+                const matchProduct = (o.products || []).find(p => String(p.product_id) === String(productId));
+                if (matchProduct) {
+                    matchProduct.status = "completed";
+                    // Recalculate overall order status
+                    o.orderStatus = recalcOrderStatus(o.products);
+                }
+            });
+            saveOrders(orders);
 
-    row.addEventListener('click', function (e) {
-        const confirmBtn = e.target.closest('.confirm-order-btn');
-        if (!confirmBtn) return;
+            const statusBadge = row.querySelector('.statusbadge');
+            statusBadge.className = `${statusBadgeClass("completed")} px-3 py-2 text-capitalize statusbadge`;
+            statusBadge.textContent = "Completed";
 
-        const productId = row.dataset.id;
-        const orders = getAllOrders();
-
-        // the order containing the product
-        const order = orders.find(o =>
-            o.products.some(p => String(p.product_id) === String(productId))
-        );
-
-        if (order) {
-            order.orderStatus = "completed";
-            localStorage.setItem("orders", JSON.stringify(orders));
-        }
-
-        const statusBadge = row.querySelector('.statusbadge');
-        statusBadge.className = `${statusBadgeClass("completed")} px-3 py-2`;
-        statusBadge.textContent = "Completed";
-
-        confirmBtn.remove();
-        const cancelBtn = row.querySelector('.cancel-order-btn');
-        if (cancelBtn) cancelBtn.remove();
+            confirmBtn.remove();
+            const cancelBtnInRow = row.querySelector('.cancel-order-btn');
+            if (cancelBtnInRow) cancelBtnInRow.remove();
+        });
+        tableBody.appendChild(row);
     });
-    tableBody.appendChild(row);
-  });
+}
+
+// Recalculate overall order status from product-level statuses
+function recalcOrderStatus(products) {
+    if (!products || products.length === 0) return "pending";
+
+    const statuses = products.map(p => (p.status || "processing").toLowerCase());
+    const allCompleted = statuses.every(s => s === "completed");
+    const allCancelled = statuses.every(s => s === "cancelled");
+    const hasCompleted = statuses.some(s => s === "completed");
+    const hasCancelled = statuses.some(s => s === "cancelled");
+
+    if (allCompleted) return "completed";
+    if (allCancelled) return "cancelled";
+    if (hasCompleted || hasCancelled) return "processing";
+    return "processing";
 }
 
 function renderProductsTable(products) {
@@ -284,8 +315,8 @@ function renderProductsTable(products) {
     }
 
     products.forEach(product => {
-        const img   = (product.images && product.images[0]) || "";
-        const name  = product.name  || "—";
+        const img = (product.images && product.images[0]) || "";
+        const name = product.name || "—";
         const price = parseFloat(product.price || 0).toFixed(2);
         const stock = product.stock ?? "—";
 
@@ -314,10 +345,23 @@ function renderProductsTable(products) {
         `;
 
         row.querySelector(".delete-btn").addEventListener("click", () => {
-            if (!confirm(`Delete "${name}"?`)) return;
-            removeProductFromStorage(product.product_id);
-            row.remove();
-            if (!tableBody.querySelector("tr[data-id]")) renderProductsTable([]);
+            // Show modal instead of confirm()
+            const deleteModalEl = document.getElementById("deleteProductModal");
+            const deleteModal = bootstrap.Modal.getOrCreateInstance(deleteModalEl);
+            document.getElementById("deleteProductName").textContent = name;
+            deleteModal.show();
+
+            // Remove previous listener to avoid stacking
+            const delConfirmBtn = document.getElementById("confirmDeleteProductBtn");
+            const newDelConfirmBtn = delConfirmBtn.cloneNode(true);
+            delConfirmBtn.parentNode.replaceChild(newDelConfirmBtn, delConfirmBtn);
+
+            newDelConfirmBtn.addEventListener("click", () => {
+                deleteModal.hide();
+                removeProductFromStorage(product.product_id);
+                row.remove();
+                if (!tableBody.querySelector("tr[data-id]")) renderProductsTable([]);
+            });
         });
 
         row.querySelector(".edit-btn").addEventListener("click", () => {
@@ -362,19 +406,22 @@ export function getWishlist() {
 }
 
 export function isInWishlist(product_id) {
+    if (!getCurrentUser()) return false;
     const wishlists = getWishlist();
-    let wishlist = wishlists[getCurrentUser().userid] || [];
+    let wishlist = wishlists[getCurrentUser().id] || [];
     return wishlist.some(item => item.product_id === product_id);
 }
 
 export function addToWishlist(product) {
+    if (!getCurrentUser()) return false;
     let wishlists = getWishlist();
-    let wishlist = wishlists[getCurrentUser().userid] || [];
+    let wishlist = wishlists[getCurrentUser().id] || [];
 
     if (!wishlist.some(item => item.product_id === product.product_id)) {
         wishlist.push(product);
-        wishlists[getCurrentUser().userid] = wishlist;
+        wishlists[getCurrentUser().id] = wishlist;
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlists));
+        localStorage.setItem("wishUpdated", Date.now());
         return true;
     }
     return false;
@@ -382,9 +429,10 @@ export function addToWishlist(product) {
 
 export function removeFromWishlist(product_id) {
     let wishlists = getWishlist();
-    let wishlist = wishlists[getCurrentUser().userid] || [];
-    wishlists[getCurrentUser().userid] = wishlist.filter(item => item.product_id !== product_id);
+    let wishlist = wishlists[getCurrentUser().id] || [];
+    wishlists[getCurrentUser().id] = wishlist.filter(item => item.product_id !== product_id);
     localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlists));
+    localStorage.setItem("wishUpdated", Date.now());
 }
 
 export function toggleWishlist(product) {
@@ -408,25 +456,44 @@ export function getCart() {
 export function getUserCart() {
     const user = getCurrentUser();
     if (!user) return null;
-    return getCart().find(e => e.userid === user.userid) || null;
+    return getCart().find(e => e.userid === user.id) || null;
 }
 
 /** Returns the items array for the current user. */
 export function getUserCartItems() {
     return getUserCart()?.items || [];
 }
+function getMyCart() {
+    const key = "MyCart";
+    const user = getCurrentUser();
+    if (!user) return null;
+    const cart = getCart();
+    let userCart = cart.find(e => e.userid === user.id);
+    if (!userCart) {
+        userCart = { "userid": user.id, "items": [] };
+        cart.push(userCart);
+        localStorage.setItem(key, JSON.stringify(userCart));
+    }
+    return userCart;
+}
+
 
 export function addToCart(product) {
     const user = getCurrentUser();
     if (!user) return false;
-
+    const myCart = getMyCart();
+    if (!myCart) return false; // should not happen, getMyCart creates it if missing
     const cart = getCart();
+    console.log(user);
+    console.log(cart);
 
-    let userCart = cart.find(e => e.userid === user.userid);
+    let userCart = cart.find(e => e.userid === user.id);
     if (!userCart) {
-        userCart = { userid: user.userid, items: [] };
+        userCart = { "userid": user.id, "items": [] };
+        console.log("Creating new cart for user:", user.id);
         cart.push(userCart);
     }
+
 
     const existing = userCart.items.find(item => item.product_id === product.product_id);
 
@@ -434,13 +501,18 @@ export function addToCart(product) {
         if ((existing.quantity || 0) >= (product.stock || Infinity)) {
             return false; // stock limit reached
         }
-        existing.quantity = (existing.quantity || 1) + 1;
+        existing.quantity = (existing.quantity || 1) + (product.quantity || 1);
     } else {
-        userCart.items.push({ ...product, quantity: 1 });
+        userCart.items.push({ ...product, quantity: product.quantity || 1 });
     }
-
+    myCart.items = userCart.items; // sync with getMyCart reference
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    sessionStorage.setItem("MyCart", JSON.stringify(myCart));
+    localStorage.setItem("cartUpdated", Date.now());
+    if (window.updateCartBadge) window.updateCartBadge();
+
     return true;
+
 }
 
 /** Removes a single item from the current user's cart by product_id. */
@@ -449,11 +521,13 @@ export function removeFromCart(product_id) {
     if (!user) return;
 
     const cart = getCart();
-    const userCart = cart.find(e => e.userid === user.userid);
+    const userCart = cart.find(e => e.userid === user.id);
     if (!userCart) return;
 
     userCart.items = userCart.items.filter(item => item.product_id !== product_id);
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    sessionStorage.setItem("MyCart", JSON.stringify(userCart));
+    localStorage.setItem("cartUpdated", Date.now());
 }
 
 /** Updates the quantity of an item; removes it if quantity reaches 0. */
@@ -462,7 +536,7 @@ export function updateCartItemQuantity(product_id, quantity) {
     if (!user) return;
 
     const cart = getCart();
-    const userCart = cart.find(e => e.userid === user.userid);
+    const userCart = cart.find(e => e.userid === user.id);
     if (!userCart) return;
 
     if (quantity <= 0) {
@@ -472,6 +546,8 @@ export function updateCartItemQuantity(product_id, quantity) {
         if (item) item.quantity = quantity;
     }
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    sessionStorage.setItem("MyCart", JSON.stringify(userCart));
+    localStorage.setItem("cartUpdated", Date.now());
 }
 
 /** Clears all items from the current user's cart. */
@@ -480,9 +556,11 @@ export function clearCart() {
     if (!user) return;
 
     const cart = getCart();
-    const userCart = cart.find(e => e.userid === user.userid);
+    const userCart = cart.find(e => e.userid === user.id);
     if (userCart) userCart.items = [];
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    sessionStorage.setItem("MyCart", JSON.stringify(userCart));
+    localStorage.setItem("cartUpdated", Date.now());
 }
 
 /** Total number of items (sum of quantities) in the current user's cart. */

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Ecobazar</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../Css/Home.css">
+    <style>
+        .about-section {
+            padding: 80px 0;
+        }
+
+        .about-heading {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon-box {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 178, 7, 0.1);
+            color: var(--primary-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-item h6 {
+            color: #1A1A1A;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .feature-item p {
+            font-size: 0.85rem;
+            color: #808080;
+            margin-bottom: 0;
+        }
+
+        .checkmark-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checkmark-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            color: #4D4D4D;
+        }
+
+        .checkmark-list li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--primary-green);
+            font-size: 1.1rem;
+        }
+
+        .team-card {
+            border: 1px solid #E6E6E6;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .team-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            border-color: transparent;
+        }
+
+        .team-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .team-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 280px;
+            background-color: rgba(0, 178, 7, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .team-card:hover .team-overlay {
+            opacity: 1;
+        }
+
+        .team-social-icon {
+            color: #fff;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .team-social-icon:hover {
+            color: #1a1a1a;
+        }
+
+        .brand-logo-item {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo-item:hover,
+        .brand-logo-item:hover * {
+            color: var(--primary-green) !important;
+        }
+
+        .brand-logo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .features-section {
+            position: relative;
+            padding: 80px 0;
+            background-color: #f2f2f2;
+        }
+
+        .features-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 55%;
+            background-image: url('https://ecobazar-24.web.app/assets/person1WithBackground-CZLmxac7.webp');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+
+        .features-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 991.98px) {
+            .features-bg {
+                width: 100%;
+            }
+
+            .features-content {
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(8px);
+                border-radius: 12px;
+                padding: 30px !important;
+                margin: 2rem 0;
+            }
+        }
+
+        .quote-icon {
+            color: rgba(0, 178, 7, 0.2);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .custom-indicators button {
+            width: 10px !important;
+            height: 10px !important;
+            border-radius: 50% !important;
+            background-color: #ddd !important;
+            opacity: 1 !important;
+            border: none !important;
+            margin: 0 5px !important;
+        }
+
+        .custom-indicators button.active {
+            background-color: var(--primary-green) !important;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+
+    <!-- Navbar Placeholder -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Section 1: Intro -->
+    <section class="about-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 pe-lg-5">
+                    <h2 class="about-heading">100% Trusted Organic Food Store</h2>
+                    <p class="text-muted lh-lg mb-0">Morbi porttitor ligula in nunc varius sagittis. Proin dui nisi,
+                        laoreet ut tempor ac, cursus vitae eros. Cras quis ultricies elit. Proin ac lectus arcu.
+                        Maecenas aliquet vel tellus at accumsan. Donec a eros non massa vulputate ornare. Vivamus ornare
+                        commodo ante, at commodo felis congue vitae.</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://ecobazar-24.web.app/assets/person2-DyI9xi0x.webp" alt="Farmer with vegetables"
+                        class="img-fluid rounded-4 shadow-sm w-100" style="height: 400px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Features -->
+    <section class="features-section">
+        <div class="features-bg"></div>
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 offset-lg-6 features-content ps-lg-5">
+                    <h2 class="about-heading" style="color: var(--primary-green);">100% Trusted Organic<br>Food Store
+                    </h2>
+                    <p class="text-muted mb-5">Pellentesque a ante vulputate leo porttitor luctus sed eget eros. Nulla
+                        et rhoncus neque. Duis non diam eget est luctus tincidunt a a mi. Nulla eu eros consequat tortor
+                        tincidunt feugiat.</p>
+
+                    <div class="row g-4">
+                        <div class="col-sm-6">
+                            <div class="feature-item d-flex align-items-center gap-3">
+                                <div class="feature-icon-box"><i class="fas fa-truck"></i></div>
+                                <div>
+                                    <h6>Free Shipping</h6>
+                                    <p>Free shipping on all your order</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item d-flex align-items-center gap-3">
+                                <div class="feature-icon-box"><i class="fas fa-headset"></i></div>
+                                <div>
+                                    <h6>Customer Support 24/7</h6>
+                                    <p>Instant access to Support</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item d-flex align-items-center gap-3">
+                                <div class="feature-icon-box"><i class="fas fa-shopping-bag"></i></div>
+                                <div>
+                                    <h6>100% Secure Payment</h6>
+                                    <p>We ensure your money is save</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item d-flex align-items-center gap-3">
+                                <div class="feature-icon-box"><i class="fas fa-box-open"></i></div>
+                                <div>
+                                    <h6>Money-Back Guarantee</h6>
+                                    <p>30 Days Money-Back Guarantee</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item d-flex align-items-center gap-3">
+                                <div class="feature-icon-box"><i class="fas fa-leaf"></i></div>
+                                <div>
+                                    <h6>100% Organic Food</h6>
+                                    <p>100% healthy & Fresh food</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="feature-item d-flex align-items-center gap-3">
+                                <div class="feature-icon-box"><i class="fas fa-star"></i></div>
+                                <div>
+                                    <h6>Customer Feedback</h6>
+                                    <p>Our happy customer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Delivery -->
+    <section class="about-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 pe-lg-5">
+                    <h2 class="about-heading mb-4">We Delivered, You<br>Enjoy Your Order.</h2>
+                    <p class="text-muted mb-4">Ut suscipit egestas suscipit. Sed posuere pellentesque nunc, ultrices
+                        consectetur velit dapibus eu. Mauris sollicitudin dignissim diam, ac mattis eros accumsan
+                        rhoncus. Curabitur auctor bibendum nunc eget elementum.</p>
+
+                    <ul class="checkmark-list mb-4">
+                        <li>Sed in metus pellentesque.</li>
+                        <li>Fusce et ex commodo, aliquam nulla efficitur, tempus lorem.</li>
+                        <li>Maecenas ut nunc fringilla erat varius.</li>
+                    </ul>
+
+                    <a href="Home.html" class="btn btn-green rounded-pill px-4"
+                        style="background-color: var(--primary-green); color: white; display: inline-flex; align-items: center; width: auto; font-weight: 500;">
+                        Shop now <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+                <div class="col-lg-7">
+                    <img src="https://images.unsplash.com/photo-1526367790999-0150786686a2?auto=format&fit=crop&q=80&w=800"
+                        alt="Delivery man with crate" class="img-fluid rounded-4 w-100"
+                        style="height: 450px; object-fit: contain;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Team Carousel -->
+    <section class="about-section bg-light">
+        <div class="container text-center">
+            <h2 class="about-heading mb-3">Our Awesome Team</h2>
+            <p class="text-muted mx-auto mb-5" style="max-width: 600px;">Pellentesque a ante vulputate leo porttitor
+                luctus sed eget eros. Nulla et rhoncus neque. Duis non diam eget est luctus tincidunt a a mi.</p>
+
+            <div id="teamCarousel" class="carousel slide pb-5" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- Slide 1 (Items 1, 2, 3) -->
+                    <div class="carousel-item active">
+                        <div class="row g-4 justify-content-center">
+                            <!-- Team Member 1 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="team-card bg-white h-100 position-relative">
+                                    <div class="position-relative overflow-hidden">
+                                        <img src="https://ui-avatars.com/api/?name=Mohamed+Khaled&background=00B207&color=fff&size=100"
+                                            alt="Mohamed Khaled" class="team-img">
+                                        <div class="team-overlay">
+                                            <a href="https://pinterest.com" class="team-social-icon"><i
+                                                    class="fab fa-pinterest-p"></i></a>
+                                            <a href="https://instagram.com" class="team-social-icon"><i
+                                                    class="fab fa-instagram"></i></a>
+                                            <a href="https://twitter.com" class="team-social-icon"><i
+                                                    class="fab fa-twitter"></i></a>
+                                            <a href="https://facebook.com" class="team-social-icon"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 text-start">
+                                        <h5 class="fw-bold mb-1">Mohamed Khaled</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Team Member 2 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="team-card bg-white h-100 position-relative">
+                                    <div class="position-relative overflow-hidden">
+                                        <img src="https://ui-avatars.com/api/?name=Mohamed+Khalifa&background=00B207&color=fff&size=100"
+                                            alt="Mohamed Khalifa" class="team-img">
+                                        <div class="team-overlay">
+                                            <a href="https://pinterest.com" class="team-social-icon"><i
+                                                    class="fab fa-pinterest-p"></i></a>
+                                            <a href="https://instagram.com" class="team-social-icon"><i
+                                                    class="fab fa-instagram"></i></a>
+                                            <a href="https://twitter.com" class="team-social-icon"><i
+                                                    class="fab fa-twitter"></i></a>
+                                            <a href="https://facebook.com" class="team-social-icon"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 text-start">
+                                        <h5 class="fw-bold mb-1">Mohamed Khalifa</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Team Member 3 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="team-card bg-white h-100 position-relative">
+                                    <div class="position-relative overflow-hidden">
+                                        <img src="https://ui-avatars.com/api/?name=Aya+Hatem&background=00B207&color=fff&size=100"
+                                            alt="Aya Hatem" class="team-img">
+                                        <div class="team-overlay">
+                                            <a href="https://pinterest.com" class="team-social-icon"><i
+                                                    class="fab fa-pinterest-p"></i></a>
+                                            <a href="https://instagram.com" class="team-social-icon"><i
+                                                    class="fab fa-instagram"></i></a>
+                                            <a href="https://twitter.com" class="team-social-icon"><i
+                                                    class="fab fa-twitter"></i></a>
+                                            <a href="https://facebook.com" class="team-social-icon"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 text-start">
+                                        <h5 class="fw-bold mb-1">Aya Hatem</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 (Items 4, 5) -->
+                    <div class="carousel-item">
+                        <div class="row g-4 justify-content-center">
+                            <!-- Team Member 4 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="team-card bg-white h-100 position-relative">
+                                    <div class="position-relative overflow-hidden">
+                                        <img src="https://ui-avatars.com/api/?name=Arwa+Alaa&background=00B207&color=fff&size=100"
+                                            alt="arwa alaa" class="team-img">
+                                        <div class="team-overlay">
+                                            <a href="https://pinterest.com" class="team-social-icon"><i
+                                                    class="fab fa-pinterest-p"></i></a>
+                                            <a href="https://instagram.com" class="team-social-icon"><i
+                                                    class="fab fa-instagram"></i></a>
+                                            <a href="https://twitter.com" class="team-social-icon"><i
+                                                    class="fab fa-twitter"></i></a>
+                                            <a href="https://facebook.com" class="team-social-icon"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 text-start">
+                                        <h5 class="fw-bold mb-1">Arwa Alaa </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Team Member 5 -->
+                            <div class="col-lg-4 col-md-6">
+                                <div class="team-card bg-white h-100 position-relative">
+                                    <div class="position-relative overflow-hidden">
+                                        <img src="https://ui-avatars.com/api/?name=Ahmed+shibl&background=00B207&color=fff&size=100"
+                                            alt="ahmed shibl" class="team-img">
+                                        <div class="team-overlay">
+                                            <a href="https://pinterest.com" class="team-social-icon"><i
+                                                    class="fab fa-pinterest-p"></i></a>
+                                            <a href="https://instagram.com" class="team-social-icon"><i
+                                                    class="fab fa-instagram"></i></a>
+                                            <a href="https://twitter.com" class="team-social-icon"><i
+                                                    class="fab fa-twitter"></i></a>
+                                            <a href="https://facebook.com" class="team-social-icon"><i
+                                                    class="fab fa-facebook-f"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 text-start">
+                                        <h5 class="fw-bold mb-1">Ahmed Shibl</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators custom-indicators" style="bottom: -20px;">
+                    <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#teamCarousel" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Logos Section -->
+    <section class="brand-logos-section py-5 bg-white border-top border-bottom">
+        <div class="container">
+            <div class="d-flex flex-wrap justify-content-around align-items-center gap-4 opacity-50">
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-bold text-secondary d-flex align-items-center" style="letter-spacing: 1px;">
+                        <span class="position-relative">
+                            FO<span class="position-absolute start-0 w-100"
+                                style="height:2px; background:currentColor; top:50%;"></span>
+                        </span>OD
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-bold text-secondary" style="letter-spacing: 2px;">
+                        BOOK<span class="align-middle mx-1" style="font-size: 0.5em;"><i
+                                class="fas fa-circle"></i></span>OFF
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-bold fst-italic text-secondary">
+                        <span class="fs-2">G</span><span class="fs-5 fw-normal ms-1">Series</span>
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fst-italic text-lowercase fw-semibold text-secondary">
+                        steps
+                    </h3>
+                </div>
+                <div class="text-center brand-logo-item">
+                    <h3 class="mb-0 fw-light text-secondary" style="letter-spacing: 3px; font-family: serif;">
+                        MANGO
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Placeholder -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Load Common Components and Testimonials -->
+    <script>
+        // Load Navbar
+        fetch('NavBar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-placeholder').innerHTML = data;
+
+                if (window.initNavBarAuth) window.initNavBarAuth();
+                if (window.initSearchAutoSuggest) window.initSearchAutoSuggest();
+                if (window.initMobileSearch) window.initMobileSearch();
+                if (window.updateCartBadge) window.updateCartBadge();
+            })
+            .catch(error => console.error('Error loading navbar:', error));
+
+        // Load Footer
+        fetch('Footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+
+                const footerScript = document.createElement('script');
+                footerScript.src = '../Js/Footer.js';
+                document.body.appendChild(footerScript);
+            })
+            .catch(error => console.error('Error loading footer:', error));
+
+        // Sync carousel indicators manually to ensure they update on slide
+        const teamCarousel = document.getElementById('teamCarousel');
+        if (teamCarousel) {
+            teamCarousel.addEventListener('slid.bs.carousel', function (event) {
+                const indicators = document.querySelectorAll('.custom-indicators button');
+                indicators.forEach((indicator, index) => {
+                    if (index === event.to) {
+                        indicator.classList.add('active');
+                    } else {
+                        indicator.classList.remove('active');
+                    }
+                });
+            });
+        }
+    </script>
+    <script type="module" src="../Js/NavBar.js"></script>
+
+</body>
+
+</html>
