@@ -443,13 +443,34 @@ export function getUserCartItems() {
 function getMyCart() {
     const key = "MyCart";
     const user = getCurrentUser();
-    if (!user) return null;
+    if (!user) {
+        console.warn("getMyCart called but no user is logged in.");
+    };
+
+    console.log("getMyCart called for user:", user);
+    // if (!user) return null;
     const cart = getCart();
+    // console.log("Full cart data:", cart);
+
+
+    if (!user) {
+        let myCart = JSON.parse(sessionStorage.getItem(key));
+        if (myCart) {
+            console.log("Found existing MyCart in sessionStorage for not logged in user.");
+            return myCart;
+        } else {
+            let userCart = { "userid": "notlogin", "items": [] };
+            return userCart;
+        }
+
+
+    }
     let userCart = cart.find(e => e.userid === user.id);
+    console.log("User cart found in main cart array:", userCart);
     if (!userCart) {
         userCart = { "userid": user.id, "items": [] };
         cart.push(userCart);
-        localStorage.setItem(key, JSON.stringify(userCart));
+        sessionStorage.setItem(key, JSON.stringify(userCart));
     }
     return userCart;
 }
@@ -457,37 +478,57 @@ function getMyCart() {
 
 export function addToCart(product) {
     const user = getCurrentUser();
-    if (!user) return false;
+    // if (!user) return false;
     const myCart = getMyCart();
-    if (!myCart) return false; // should not happen, getMyCart creates it if missing
+    // if (!myCart) return false; // should not happen, getMyCart creates it if missing
     const cart = getCart();
-    console.log(user);
+    // console.log(user);
     console.log(cart);
+    let userCart;
+    if (!user) {
+        userCart = myCart; // use session-based cart for not logged in users
+        const existing = userCart.items.find(item => item.product_id === product.product_id);
 
-    let userCart = cart.find(e => e.userid === user.id);
-    if (!userCart) {
-        userCart = { "userid": user.id, "items": [] };
-        console.log("Creating new cart for user:", user.id);
-        cart.push(userCart);
-    }
+        if (existing) {
+            if ((existing.quantity || 0) >= (product.stock || Infinity)) {
+                return false; // stock limit reached
+            }
+            existing.quantity = (existing.quantity || 1) + (product.quantity || 1);
+        } else {
+            userCart.items.push({ ...product, quantity: product.quantity || 1 });
 
-
-    const existing = userCart.items.find(item => item.product_id === product.product_id);
-
-    if (existing) {
-        if ((existing.quantity || 0) >= (product.stock || Infinity)) {
-            return false; // stock limit reached
         }
-        existing.quantity = (existing.quantity || 1) + (product.quantity || 1);
-    } else {
-        userCart.items.push({ ...product, quantity: product.quantity || 1 });
-    }
-    myCart.items = userCart.items; // sync with getMyCart reference
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    sessionStorage.setItem("MyCart", JSON.stringify(myCart));
-    localStorage.setItem("cartUpdated", Date.now());
-    if (window.updateCartBadge) window.updateCartBadge();
+        sessionStorage.setItem("MyCart", JSON.stringify(myCart));
+        return true;
 
+
+        // userCart = { "userid": "notlogin", "items": [] };
+        // sessionStorage.setItem("MyCart", JSON.stringify(userCart));
+    }
+    if (user) {
+        let userCart = cart.find(e => e.userid === user.id);
+        if (!userCart) {
+            userCart = { "userid": user.id, "items": [] };
+            console.log("Creating new cart for user:", user.id);
+            cart.push(userCart);
+        }
+
+        const existing = userCart.items.find(item => item.product_id === product.product_id);
+
+        if (existing) {
+            if ((existing.quantity || 0) >= (product.stock || Infinity)) {
+                return false; // stock limit reached
+            }
+            existing.quantity = (existing.quantity || 1) + (product.quantity || 1);
+        } else {
+            userCart.items.push({ ...product, quantity: product.quantity || 1 });
+        }
+        myCart.items = userCart.items; // sync with getMyCart reference
+        localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        sessionStorage.setItem("MyCart", JSON.stringify(myCart));
+        localStorage.setItem("cartUpdated", Date.now());
+        if (window.updateCartBadge) window.updateCartBadge();
+    }
     return true;
 
 }
