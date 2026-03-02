@@ -129,7 +129,7 @@ if(formselected){
     const city = document.getElementById("city");
     let nameRegex = /^[A-Za-z]+$/;
     let phoneRegex = /^01[0-9]{9}$/;
-    let emailRegex = /^[a-z]+@[a-z]+\.[a-z]+$/;
+    let emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
     let valid = true;
     if (!nameRegex.test(firstName.value.trim())) {
         firstName.classList.add("is-invalid");
