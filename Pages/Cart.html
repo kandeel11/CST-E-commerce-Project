@@ -100,7 +100,7 @@
         </div>
     </div>
     <div class="toast-container position-fixed top-0 end-0 p-3 mb-5">
-        <div id="myToast2" class="toast align-items-center text-bg-success border-0" role="alert">
+        <div id="myToast2" class="toast align-items-center text-bg-warning border-0" role="alert">
             <div class="d-flex">
                 <div class="toast-body">
                     You must be logged in!</div>
@@ -134,10 +134,12 @@
         (function () {
             var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
             if (!currentUser) {
-                document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("btnch").addEventListener("click", function (e) {
+                    e.preventDefault();
                     var loginModal = new bootstrap.Modal(document.getElementById("loginRequiredModal"));
                     loginModal.show();
                 });
+
             }
         })();
     </script>

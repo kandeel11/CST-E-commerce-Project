@@ -16,10 +16,35 @@ import {
 // ── State 
 let currentUser = null;   // { storeName, name, userID }
 let editingId = null;   // product id when editing, null when adding
+window.addEventListener("storage", function (e) {
+    if (e.key === "users" || e.key === "products" || e.key === "orders") {
+        this.sessionStorage.setItem("currentSeller", JSON.stringify(JSON.parse(localStorage.getItem("users")).find(u => u.id === currentUser.id)));
+        currentUser = getCurrentSeller();
+        if (currentUser.Active == false) {
+            document.getElementById("openAddProductModalBtn").disabled = true;
+            const toastEl = document.getElementById("inactiveToast");
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        } else
+            document.getElementById("openAddProductModalBtn").disabled = false;
+    }
+});
 
 window.addEventListener("DOMContentLoaded", () => {
     if (!sessionStorage.getItem("currentSeller"))
         window.location.href = "../Pages/Login.html";
+    currentUser = getCurrentSeller();
+    console.log("Current Seller:", currentUser);
+    if (JSON.parse(localStorage.getItem("users")).find(u => u.id === currentUser.id).Active == false) {
+        document.getElementById("openAddProductModalBtn").disabled = true;
+        const toastEl = document.getElementById("inactiveToast");
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    } else
+        document.getElementById("openAddProductModalBtn").disabled = false;
+
+
+
 
     initUser();
     initSidebar();

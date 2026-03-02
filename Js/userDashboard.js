@@ -115,6 +115,7 @@ window.addEventListener("storage", function (e) {
         if (ordersSection && !ordersSection.classList.contains("d-none")) {
             renderAllOrders();
         }
+        checkForNewlyCompletedOrders();
     }
 });
 
@@ -144,6 +145,13 @@ function createOrderRow(order) {
         ? `<button class="btn btn-outline-danger btn-sm rounded-pill ms-2 cancel-order-btn" onclick="confirmCancelOrder('${order.orderid}')"><i class="fas fa-times-circle me-1"></i>Cancel</button>`
         : '';
 
+    // Show Review button for completed orders
+    const isCompleted = order.orderStatus && order.orderStatus.toLowerCase() === 'completed';
+    const hasUnreviewedProducts = isCompleted && hasProductsToReview(order);
+    const reviewBtn = hasUnreviewedProducts
+        ? `<button class="btn btn-outline-success btn-sm rounded-pill ms-2 review-order-btn" onclick="openReviewModal('${order.orderid}')"><i class="fas fa-star me-1"></i>Review</button>`
+        : '';
+
     return `
         <tr>
             <td class="fw-semibold">#${order.orderid}</td>
@@ -153,6 +161,7 @@ function createOrderRow(order) {
             <td>
                 <a href="#" class="view-details-link" onclick="viewOrderDetail('${order.orderid}')">View Details</a>
                 ${cancelBtn}
+                ${reviewBtn}
             </td>
         </tr>
     `;
@@ -320,14 +329,14 @@ document.getElementById("accountForm").addEventListener("submit", function (e) {
     // Update currentUser name in localStorage
     currentUser.Fname = profile.firstName;
     currentUser.Lname = profile.lastName;
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
     // Also update in users array
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const userIdx = users.findIndex(u => u.Email === currentUser.Email);
     if (userIdx !== -1) {
         users[userIdx].Fname = profile.firstName;
         users[userIdx].Lname = profile.lastName;
-        localStorage.setItem("users", JSON.stringify(users));
+        sessionStorage.setItem("users", JSON.stringify(users));
     }
     initProfile();
     showToast("Account settings saved!");
@@ -376,7 +385,7 @@ document.getElementById("passwordForm").addEventListener("submit", function (e) 
 
     // Update password
     currentUser.password = newPw;
-    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
 
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const userIdx = users.findIndex(u => u.Email === currentUser.Email);
@@ -392,9 +401,158 @@ document.getElementById("passwordForm").addEventListener("submit", function (e) 
 // ---- Logout ----
 document.getElementById("logoutBtn").addEventListener("click", function (e) {
     e.preventDefault();
-    localStorage.removeItem("currentUser");
+    sessionStorage.removeItem("currentUser");
     window.location.href = "Login.html";
 });
+
+// ---- Product Review Helpers ----
+function hasProductsToReview(order) {
+    if (!order.products || order.products.length === 0) return false;
+    const allProducts = JSON.parse(localStorage.getItem("products")) || [];
+    return order.products.some(item => {
+        const prod = allProducts.find(p => p.product_id === item.product_id || p.product_id == item.product_id);
+        if (!prod) return false;
+        const reviews = prod.reviews || [];
+        return !reviews.some(r => r.user_id === currentUser.id);
+    });
+}
+
+// ---- Open Review Modal ----
+window.openReviewModal = function (orderId) {
+    const orders = getOrders();
+    const order = orders.find(o => o.orderid === Number(orderId));
+    if (!order || !order.products) return;
+
+    const container = document.getElementById("reviewOrderProducts");
+    const allProducts = JSON.parse(localStorage.getItem("products")) || [];
+    let html = '';
+
+    order.products.forEach(item => {
+        const prod = allProducts.find(p => p.product_id === item.product_id || p.product_id == item.product_id);
+        const existingReviews = prod ? (prod.reviews || []) : [];
+        const alreadyReviewed = existingReviews.some(r => r.user_id === currentUser.id);
+        const img = item.images && item.images[0] ? item.images[0] : '';
+
+        html += `
+            <div class="d-flex gap-3 mb-4 pb-3 border-bottom review-product-item" data-product-id="${item.product_id}">
+                <img src="${img}" alt="${item.name}" class="rounded" style="width:60px;height:60px;object-fit:cover;">
+                <div class="flex-grow-1">
+                    <h6 class="mb-1 fw-semibold">${item.name}</h6>
+                    <p class="text-muted small mb-2">Qty: ${item.quantity} × $${item.price.toFixed(2)}</p>
+                    ${alreadyReviewed
+                ? '<span class="badge bg-success-subtle text-success border border-success-subtle"><i class="fas fa-check me-1"></i>Already Reviewed</span>'
+                : `<div class="mb-2">
+                            <label class="form-label small fw-semibold mb-1">Rating</label>
+                            <div class="d-flex gap-1 review-stars" data-product-id="${item.product_id}">
+                                ${Array.from({ length: 5 }, (_, i) => `<i class="fas fa-star review-star-btn" data-rating="${i + 1}" style="color:#ddd;font-size:1.3rem;cursor:pointer;"></i>`).join('')}
+                            </div>
+                            <input type="hidden" class="review-rating-input" value="0">
+                        </div>
+                        <div>
+                            <textarea class="form-control form-control-sm review-comment-input" rows="2" placeholder="Write your review (optional)..."></textarea>
+                        </div>`
+            }
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+    container.dataset.orderId = orderId;
+
+    // Setup star interactions
+    container.querySelectorAll('.review-stars').forEach(starsDiv => {
+        const stars = starsDiv.querySelectorAll('.review-star-btn');
+        const ratingInput = starsDiv.parentElement.querySelector('.review-rating-input');
+        stars.forEach(star => {
+            star.addEventListener('mouseover', () => {
+                const r = parseInt(star.dataset.rating);
+                stars.forEach((s, i) => s.style.color = i < r ? '#FF8A00' : '#ddd');
+            });
+            star.addEventListener('mouseout', () => {
+                const cur = parseInt(ratingInput.value);
+                stars.forEach((s, i) => s.style.color = i < cur ? '#FF8A00' : '#ddd');
+            });
+            star.addEventListener('click', () => {
+                ratingInput.value = star.dataset.rating;
+                const r = parseInt(star.dataset.rating);
+                stars.forEach((s, i) => s.style.color = i < r ? '#FF8A00' : '#ddd');
+            });
+        });
+    });
+
+    const modal = new bootstrap.Modal(document.getElementById("reviewOrderModal"));
+    modal.show();
+};
+
+// ---- Submit Order Reviews ----
+document.getElementById("submitOrderReviewsBtn").addEventListener("click", function () {
+    const container = document.getElementById("reviewOrderProducts");
+    const items = container.querySelectorAll('.review-product-item');
+    let allProducts = JSON.parse(localStorage.getItem("products")) || [];
+    let reviewCount = 0;
+
+    items.forEach(item => {
+        const productId = item.dataset.productId;
+        const ratingInput = item.querySelector('.review-rating-input');
+        const commentInput = item.querySelector('.review-comment-input');
+        if (!ratingInput) return; // already reviewed
+
+        const rating = parseInt(ratingInput.value);
+        if (rating === 0) return; // user didn't rate this one
+
+        const comment = commentInput ? commentInput.value.trim() : '';
+        const prod = allProducts.find(p => String(p.product_id) === String(productId));
+        if (!prod) return;
+
+        if (!prod.reviews) prod.reviews = [];
+        // Prevent duplicate
+        if (prod.reviews.some(r => r.user_id === currentUser.id)) return;
+
+        prod.reviews.push({
+            user_id: currentUser.id,
+            rating: rating,
+            comment: comment || 'Great product!',
+            date: new Date().toISOString()
+        });
+        // Recalculate average rating
+        prod.rating = Math.round(prod.reviews.reduce((acc, r) => acc + r.rating, 0) / prod.reviews.length);
+        reviewCount++;
+    });
+
+    localStorage.setItem("products", JSON.stringify(allProducts));
+
+    const modalEl = document.getElementById("reviewOrderModal");
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    if (modal) modal.hide();
+
+    if (reviewCount > 0) {
+        showToast(`Thank you! ${reviewCount} review${reviewCount > 1 ? 's' : ''} submitted successfully!`);
+    } else {
+        showToast("No reviews submitted. You can review later from your orders.");
+    }
+
+    renderAllOrders();
+});
+
+// ---- Auto-detect newly completed orders and show review prompt ----
+function checkForNewlyCompletedOrders() {
+    const orders = getOrders();
+    const reviewedOrderIds = JSON.parse(localStorage.getItem("reviewPromptShown_" + currentUser.id)) || [];
+
+    for (const order of orders) {
+        if (order.orderStatus && order.orderStatus.toLowerCase() === 'completed'
+            && !reviewedOrderIds.includes(order.orderid)
+            && hasProductsToReview(order)) {
+            // Mark as prompted so we don't show again
+            reviewedOrderIds.push(order.orderid);
+            localStorage.setItem("reviewPromptShown_" + currentUser.id, JSON.stringify(reviewedOrderIds));
+            // Open review modal for this order
+            setTimeout(() => window.openReviewModal(String(order.orderid)), 800);
+            break; // show one at a time
+        }
+    }
+}
 
 // ---- Toast ----
 function showToast(message, isError = false) {
@@ -416,6 +574,7 @@ function showToast(message, isError = false) {
 window.addEventListener("load", function () {
     loadComponents();
     initProfile();
+    checkForNewlyCompletedOrders();
 });
 
 
