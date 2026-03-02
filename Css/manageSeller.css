@@ -1,0 +1,72 @@
+:root {
+    --eco-green:       #2e9e45;
+    --eco-green-dark:  #1f7a32;
+    --eco-green-light: #f0faf0;
+}
+
+body { background: #f4f6f9; }
+
+/* navbar */
+.eco-navbar { border-bottom: 2px solid var(--eco-green); }
+.eco-navbar .navbar-brand i { color: var(--eco-green); }
+
+/* page header */
+.page-header {
+    background: linear-gradient(135deg, #165a25 0%, #2e9e45 60%, #5cb85c 100%);
+    padding: 1.75rem 0 1.5rem;
+}
+.page-header h4   { color: #fff; }
+.page-header .lead { color: rgba(255,255,255,.75); font-size: .95rem; }
+
+/* kpi card */
+.kpi-card { border-left: 4px solid var(--eco-green); }
+.kpi-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--eco-green-light); color: var(--eco-green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+}
+
+/* table header */
+.table thead th {
+    background: var(--eco-green-light);
+    color: var(--eco-green-dark);
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    border-bottom: 2px solid var(--eco-green);
+    white-space: nowrap;
+}
+.table tbody tr { transition: background .12s; }
+.table tbody tr:hover { background: #f0faf0; }
+
+/* stars */
+.stars { color: #f5a623; letter-spacing: 1px; font-size: .82rem; }
+
+/* ── Avatar initials ── */
+.seller-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--eco-green-light); color: var(--eco-green-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: .75rem; flex-shrink: 0;
+}
+
+/* ── Badge pill ── */
+.action-badge {
+    font-size: .7rem; padding: .25rem .6rem;
+    border-radius: 20px; white-space: nowrap;
+}
+
+/* ── Action buttons: stack vertically on medium and below ── */
+.action-col { min-width: 120px; }
+.action-btns { display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; }
+
+@media (min-width: 1200px) {
+    .action-btns { flex-direction: row; }
+}
+
+/* ── Toolbar: search fills full width on xs ── */
+.toolbar-search { width: 220px; }
+@media (max-width: 575px) {
+    .toolbar-search { width: 100%; }
+}

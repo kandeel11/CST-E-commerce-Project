@@ -331,6 +331,29 @@ function renderProductsTable(products) {
     });
 }
 
+// Manage Sellers (Admin Page)
+export function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+export function toggleSellerActive(sellerId) {
+    const users = getAllUsers();
+    const idx   = users.findIndex(u => String(u.id) === String(sellerId));
+    if (idx === -1) return;
+    users[idx].Active = !users[idx].Active;
+    saveUsers(users);
+}
+
+export function deleteSellerAndProducts(sellerId) {
+    // Remove seller from users
+    const users = getAllUsers();
+    saveUsers(users.filter(u => String(u.id) !== String(sellerId)));
+
+    // Remove all products belonging to this seller
+    const products = getAllProducts();
+    saveProducts(products.filter(p => String(p.seller_id) !== String(sellerId)));
+}
+
 // ── Wishlist helpers
 const WISHLIST_KEY = "wishlists";
 
