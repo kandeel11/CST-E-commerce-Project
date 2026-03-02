@@ -105,12 +105,18 @@ function saveUserProfile(profile) {
 // ---- Orders ----
 function getOrders() {
     const allOrders = JSON.parse(localStorage.getItem("orders")) || [];
-    allOrders.find(o => o.userid === currentUser.id)
-    console.log("Current User:", currentUser);
-    console.log("All Orders from localStorage:");
-    allOrders.forEach(o => console.log(`Order ID: ${o.id}, UserID: ${o.userid}, Total: ${o.total}`));
     return allOrders.filter(o => o.userid === currentUser.id);
 }
+
+// ---- Auto-refresh orders when storage changes (from other tabs or pages) ----
+window.addEventListener("storage", function (e) {
+    if (e.key === "orders" || e.key === "order") {
+        const ordersSection = document.getElementById("section-orders");
+        if (ordersSection && !ordersSection.classList.contains("d-none")) {
+            renderAllOrders();
+        }
+    }
+});
 
 
 function renderAllOrders() {
@@ -133,25 +139,33 @@ function createOrderRow(order) {
     const statusClass = getStatusClass(order.orderStatus);
     const itemCount = order.products ? order.products.length : 0;
     const productText = itemCount === 1 ? "1 Product" : `${itemCount} Products`;
+    const isCancellable = order.orderStatus && !['completed', 'cancelled', 'usercancelled'].includes(order.orderStatus.toLowerCase());
+    const cancelBtn = isCancellable
+        ? `<button class="btn btn-outline-danger btn-sm rounded-pill ms-2 cancel-order-btn" onclick="confirmCancelOrder('${order.orderid}')"><i class="fas fa-times-circle me-1"></i>Cancel</button>`
+        : '';
 
     return `
         <tr>
-            <td class="fw-semibold">#${formatDate(order.createddate)}</td>
+            <td class="fw-semibold">#${order.orderid}</td>
             <td>${formatDate(order.createddate)}</td>
             <td>$${order.total.toFixed(2)} <span class="text-muted small">(${productText})</span></td>
             <td><span class="badge-status ${statusClass}">${order.orderStatus}</span></td>
-            <td><a href="#" class="view-details-link" onclick="viewOrderDetail('${formatDate(order.createddate)}')">View Details</a></td>
+            <td>
+                <a href="#" class="view-details-link" onclick="viewOrderDetail('${order.orderid}')">View Details</a>
+                ${cancelBtn}
+            </td>
         </tr>
     `;
 }
 
 function getStatusClass(status) {
     switch (status?.toLowerCase()) {
+        case "pending": return "badge-pending";
         case "processing": return "badge-processing";
-        case "on the way": return "badge-on-the-way";
         case "completed": return "badge-completed";
         case "cancelled": return "badge-cancelled";
-        default: return "badge-processing";
+        case "usercancelled": return "badge-user-cancelled";
+        default: return "badge-pending";
     }
 }
 
@@ -163,8 +177,11 @@ function formatDate(dateStr) {
 
 // ---- View Order Detail (Modal) ----
 window.viewOrderDetail = function (orderId) {
+    console.log("Viewing details for order ID:", orderId);
     const orders = getOrders();
-    const order = orders.find(o => formatDate(o.createddate) === orderId);
+    console.log("Found orders for user:", orders);
+    const order = orders.find(o => o.orderid === Number(orderId));
+    console.log("Found order:", order);
     if (!order) return;
 
     const body = document.getElementById("orderDetailBody");
@@ -172,6 +189,8 @@ window.viewOrderDetail = function (orderId) {
 
     if (order.products && order.products.length > 0) {
         order.products.forEach(item => {
+            const productStatus = item.status || order.orderStatus;
+            const productStatusClass = getStatusClass(productStatus);
             itemsHtml += `
                 <div class="order-detail-item">
                     <img src="${item.images[0]}" alt="${item.name}">
@@ -179,7 +198,10 @@ window.viewOrderDetail = function (orderId) {
                         <h6 class="mb-0 fw-semibold small">${item.name}</h6>
                         <p class="text-muted mb-0 small">Qty: ${item.quantity} × $${item.price.toFixed(2)}</p>
                     </div>
-                    <div class="fw-bold small">$${(item.quantity * item.price).toFixed(2)}</div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="badge-status ${productStatusClass}" style="font-size:0.72rem;">${productStatus}</span>
+                        <span class="fw-bold small">$${(item.quantity * item.price).toFixed(2)}</span>
+                    </div>
                 </div>
             `;
         });
@@ -189,7 +211,7 @@ window.viewOrderDetail = function (orderId) {
         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
             <div>
                 <p class="mb-1 small text-muted">Order ID</p>
-                <h6 class="fw-bold mb-0">#${formatDate(order.createddate)}</h6>
+                <h6 class="fw-bold mb-0">#${order.orderid}</h6>
             </div>
             <div class="text-end">
                 <p class="mb-1 small text-muted">Date</p>
@@ -213,6 +235,59 @@ window.viewOrderDetail = function (orderId) {
     modal.show();
 };
 
+
+// ---- Cancel Order ----
+let pendingCancelOrderId = null;
+
+window.confirmCancelOrder = function (orderId) {
+    pendingCancelOrderId = orderId;
+    const modal = new bootstrap.Modal(document.getElementById("cancelOrderModal"));
+    modal.show();
+};
+
+document.addEventListener("click", function (e) {
+    if (e.target && e.target.id === "confirmCancelBtn") {
+        if (pendingCancelOrderId) {
+            cancelOrder(pendingCancelOrderId);
+            pendingCancelOrderId = null;
+        }
+        const modalEl = document.getElementById("cancelOrderModal");
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+    }
+});
+
+function cancelOrder(orderId) {
+    // Update in "orders" key (used by dashboard)
+    let allOrders = JSON.parse(localStorage.getItem("orders")) || [];
+    const order = allOrders.find(o => o.orderid === Number(orderId) && o.userid === currentUser.id);
+    if (!order) {
+        showToast("Order not found!", true);
+        return;
+    }
+
+    order.orderStatus = "userCancelled";
+    localStorage.setItem("orders", JSON.stringify(allOrders));
+
+    // Restore product stock
+    if (order.products && order.products.length > 0) {
+        restoreProductStock(order.products);
+    }
+
+    renderAllOrders();
+    showToast("Order cancelled successfully!");
+}
+
+function restoreProductStock(products) {
+    let allProducts = JSON.parse(localStorage.getItem("products")) || [];
+    products.forEach(item => {
+        const product = allProducts.find(p => p.product_id === item.product_id || p.product_id == item.product_id);
+        if (product) {
+            product.stock = (product.stock || 0) + (item.quantity || 1);
+        }
+    });
+    localStorage.setItem("products", JSON.stringify(allProducts));
+}
 
 // ---- Settings ----
 function loadSettings() {

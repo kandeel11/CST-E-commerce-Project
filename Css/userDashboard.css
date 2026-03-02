@@ -142,14 +142,14 @@ body {
     font-weight: 500;
 }
 
+.badge-pending {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
 .badge-processing {
     background-color: #fff3e0;
     color: #e65100;
-}
-
-.badge-on-the-way {
-    background-color: #e3f2fd;
-    color: #1565c0;
 }
 
 .badge-completed {
@@ -160,6 +160,11 @@ body {
 .badge-cancelled {
     background-color: #fce4ec;
     color: #c62828;
+}
+
+.badge-user-cancelled {
+    background-color: #fff3e0;
+    color: #e65100;
 }
 
 /* ---- Links ---- */
@@ -246,6 +251,20 @@ a.text-success:hover {
 .btn-outline-success:hover {
     background-color: var(--primary);
     border-color: var(--primary);
+    color: #fff;
+}
+
+/* ---- Cancel Order Button ---- */
+.cancel-order-btn {
+    font-size: 0.78rem;
+    padding: 0.25rem 0.65rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.cancel-order-btn:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
     color: #fff;
 }
 

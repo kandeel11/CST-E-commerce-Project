@@ -128,7 +128,7 @@
                                                 <th class="text-uppercase small text-muted fw-semibold">Date</th>
                                                 <th class="text-uppercase small text-muted fw-semibold">Total</th>
                                                 <th class="text-uppercase small text-muted fw-semibold">Status</th>
-                                                <th class="text-uppercase small text-muted fw-semibold"></th>
+                                                <th class="text-uppercase small text-muted fw-semibold">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody id="allOrdersBody">
@@ -266,6 +266,31 @@
                 <div class="modal-footer border-top-0">
                     <button type="button" class="btn btn-outline-secondary rounded-pill px-4"
                         data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Order Confirmation Modal -->
+    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title fw-bold" id="cancelOrderModalLabel">
+                        <i class="fas fa-exclamation-triangle text-danger me-2"></i>Cancel Order
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Are you sure you want to cancel this order? This action cannot be undone and the
+                        order status will be changed to <strong>User Cancelled</strong>.</p>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4"
+                        data-bs-dismiss="modal">No, Keep Order</button>
+                    <button type="button" class="btn btn-danger rounded-pill px-4" id="confirmCancelBtn">Yes, Cancel
+                        Order</button>
                 </div>
             </div>
         </div>
