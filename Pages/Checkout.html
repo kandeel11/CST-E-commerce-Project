@@ -164,10 +164,7 @@
         (function () {
             var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
             if (!currentUser) {
-                document.addEventListener("DOMContentLoaded", function () {
-                    var loginModal = new bootstrap.Modal(document.getElementById("loginRequiredModal"));
-                    loginModal.show();
-                });
+                window.location.href = "Login.html";
             }
         })();
     </script>

@@ -147,9 +147,7 @@ function renderProductDetails(product) {
     `;
 
     // Render Reviews Tab
-    const reviewContainer = document.getElementById('reviews-container');
-    reviewContainer.innerHTML = '<p class="text-muted py-4">No feedback available yet.</p>';
-
+    renderReviews(product);
 
     setupQuantityAndCart();
 
@@ -157,6 +155,147 @@ function renderProductDetails(product) {
     if (window.isSellerOrAdmin && window.isSellerOrAdmin()) {
         const cartRow = document.getElementById('cart-quantity-row');
         if (cartRow) cartRow.style.display = 'none';
+    }
+}
+
+function renderReviews(product) {
+    const reviewContainer = document.getElementById('reviews-container');
+    if (!reviewContainer) return;
+
+    // Get fresh product data from localStorage (may have new reviews)
+    const products = getAllProducts();
+    const freshProduct = products.find(p => p.product_id === product.product_id) || product;
+    const reviews = freshProduct.reviews || [];
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+
+    let reviewsHtml = '';
+
+    if (reviews.length > 0) {
+        reviewsHtml += `<h6 class="fw-bold mb-3">${reviews.length} Review${reviews.length > 1 ? 's' : ''}</h6>`;
+        reviews.forEach(r => {
+            const reviewer = users.find(u => u.id === r.user_id);
+            const reviewerName = reviewer ? `${reviewer.Fname || ''} ${reviewer.Lname || ''}`.trim() : 'Anonymous';
+            const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(reviewerName)}&background=00B207&color=fff&size=40`;
+            const starsHtml = Array.from({ length: 5 }, (_, i) => `<i class="fas fa-star" style="color: ${i < r.rating ? '#FF8A00' : '#ddd'}; font-size: 0.8rem;"></i>`).join('');
+            const dateStr = r.date ? new Date(r.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+            reviewsHtml += `
+                <div class="d-flex gap-3 mb-3 pb-3 border-bottom">
+                    <img src="${avatarUrl}" alt="${reviewerName}" class="rounded-circle" style="width:40px;height:40px;object-fit:cover;">
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h6 class="mb-0 fw-semibold small">${reviewerName}</h6>
+                            <span class="text-muted" style="font-size:0.75rem;">${dateStr}</span>
+                        </div>
+                        <div class="mb-1">${starsHtml}</div>
+                        <p class="text-muted small mb-0">${r.comment}</p>
+                    </div>
+                </div>
+            `;
+        });
+    } else {
+        reviewsHtml += '<p class="text-muted py-2">No feedback available yet. Be the first to review!</p>';
+    }
+
+    // Add review form (only for logged-in customers)
+    if (currentUser && !window.isSellerOrAdmin()) {
+        // Check if user already reviewed this product
+        const alreadyReviewed = reviews.some(r => r.user_id === currentUser.id);
+        if (alreadyReviewed) {
+            reviewsHtml += `<div class="alert alert-success small mt-3"><i class="fas fa-check-circle me-2"></i>You have already reviewed this product.</div>`;
+        } else {
+            reviewsHtml += `
+                <div class="card border-0 shadow-sm mt-4">
+                    <div class="card-body">
+                        <h6 class="fw-bold mb-3"><i class="fas fa-pen me-2 text-success"></i>Write a Review</h6>
+                        <form id="reviewForm">
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Your Rating</label>
+                                <div id="reviewStars" class="d-flex gap-1" style="cursor:pointer;">
+                                    ${Array.from({ length: 5 }, (_, i) => `<i class="fas fa-star review-star" data-rating="${i + 1}" style="color:#ddd;font-size:1.5rem;"></i>`).join('')}
+                                </div>
+                                <input type="hidden" id="reviewRating" value="0">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-semibold">Your Review</label>
+                                <textarea class="form-control" id="reviewComment" rows="3" placeholder="Share your experience with this product..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success rounded-pill px-4">Submit Review</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+    } else if (!currentUser) {
+        reviewsHtml += `<div class="alert alert-info small mt-3"><i class="fas fa-info-circle me-2"></i>Please <a href="Login.html" class="fw-bold text-success">login</a> to write a review.</div>`;
+    }
+
+    reviewContainer.innerHTML = reviewsHtml;
+
+    // Setup star rating interaction
+    const reviewStarsContainer = document.getElementById('reviewStars');
+    if (reviewStarsContainer) {
+        const stars = reviewStarsContainer.querySelectorAll('.review-star');
+        stars.forEach(star => {
+            star.addEventListener('mouseover', () => {
+                const rating = parseInt(star.dataset.rating);
+                stars.forEach((s, i) => s.style.color = i < rating ? '#FF8A00' : '#ddd');
+            });
+            star.addEventListener('mouseout', () => {
+                const currentRating = parseInt(document.getElementById('reviewRating').value);
+                stars.forEach((s, i) => s.style.color = i < currentRating ? '#FF8A00' : '#ddd');
+            });
+            star.addEventListener('click', () => {
+                document.getElementById('reviewRating').value = star.dataset.rating;
+                const rating = parseInt(star.dataset.rating);
+                stars.forEach((s, i) => s.style.color = i < rating ? '#FF8A00' : '#ddd');
+            });
+        });
+    }
+
+    // Setup review form submission
+    const reviewForm = document.getElementById('reviewForm');
+    if (reviewForm) {
+        reviewForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const rating = parseInt(document.getElementById('reviewRating').value);
+            const comment = document.getElementById('reviewComment').value.trim();
+
+            if (rating === 0) {
+                window.showBootstrapToast('Please select a rating.', 'error');
+                return;
+            }
+            if (!comment) {
+                window.showBootstrapToast('Please write a review comment.', 'error');
+                return;
+            }
+
+            // Save review to localStorage products
+            const allProducts = JSON.parse(localStorage.getItem('products')) || [];
+            const prod = allProducts.find(p => p.product_id === product.product_id);
+            if (prod) {
+                if (!prod.reviews) prod.reviews = [];
+                prod.reviews.push({
+                    user_id: currentUser.id,
+                    rating: rating,
+                    comment: comment,
+                    date: new Date().toISOString()
+                });
+                // Recalculate average rating
+                prod.rating = Math.round(prod.reviews.reduce((acc, r) => acc + r.rating, 0) / prod.reviews.length);
+                localStorage.setItem('products', JSON.stringify(allProducts));
+
+                window.showBootstrapToast('Review submitted successfully!', 'success');
+
+                // Re-render reviews and update stars
+                renderReviews(prod);
+                // Update header stars
+                const avgRating = prod.rating;
+                const starsHtml = Array.from({ length: 5 }, (_, i) => `<i class="fas fa-star" style="color: ${i < avgRating ? '#FF8A00' : '#ddd'}"></i>`).join('');
+                document.getElementById('product-stars').innerHTML = starsHtml;
+                document.getElementById('review-count').textContent = prod.reviews.length;
+            }
+        });
     }
 }
 

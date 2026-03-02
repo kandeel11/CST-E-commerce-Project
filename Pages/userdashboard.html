@@ -296,6 +296,35 @@
         </div>
     </div>
 
+    <!-- Review Order Modal -->
+    <div class="modal fade" id="reviewOrderModal" tabindex="-1" aria-labelledby="reviewOrderModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="reviewOrderModalLabel">
+                        <i class="fas fa-star text-warning me-2"></i>Review Your Order
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-2">
+                    <p class="text-muted small mb-3">Your order has been completed! We'd love to hear your feedback on
+                        the products you purchased. This is optional.</p>
+                    <div id="reviewOrderProducts">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4"
+                        data-bs-dismiss="modal">Skip</button>
+                    <button type="button" class="btn btn-success rounded-pill px-4" id="submitOrderReviewsBtn">
+                        <i class="fas fa-paper-plane me-1"></i>Submit Reviews
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;">
         <div id="toastNotification" class="toast text-bg-success text-white" role="alert" aria-live="assertive"

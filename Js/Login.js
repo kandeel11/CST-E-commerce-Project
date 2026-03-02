@@ -119,11 +119,15 @@ LoginButton.addEventListener('click', function (event) {
                 }
                 let userCart = JSON.parse(localStorage.getItem("cart")) || [];
                 if (!userCart.some(c => c.userid === users[i].id)) {
-                    userCart.push({ userid: users[i].id, items: [] });
+                    userCart.push({ userid: users[i].id, items: JSON.parse(sessionStorage.getItem("MyCart"))?.items || [] });
                     localStorage.setItem("cart", JSON.stringify(userCart));
                     sessionStorage.setItem("MyCart", JSON.stringify(userCart[userCart.length - 1]));
                 } else {
-                    sessionStorage.setItem("MyCart", JSON.stringify(userCart.find(c => c.userid === users[i].id)));
+                    let existingCart = userCart.find(c => c.userid === users[i].id);
+                    let sessionCart = JSON.parse(sessionStorage.getItem("MyCart")) || { items: [] };
+                    existingCart.items = [...new Map([...existingCart.items, ...sessionCart.items].map(item => [item.product_id, item])).values()];
+                    localStorage.setItem("cart", JSON.stringify(userCart));
+                    sessionStorage.setItem("MyCart", JSON.stringify(existingCart));
                 }
                 window.location.href = `../Pages/Home.html`;
                 isUserFound = true;
