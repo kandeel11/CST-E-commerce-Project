@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="../Css/Admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Admin Page</title>
+</head>
+
+<body>
+    <div class="d-flex">
+        <div class="sidebar d-none d-sm-block d-md-block d-lg-block" id="sidebar">
+            <h4><i class="fa-solid fa-leaf" style="color:white; font-size:16px;"></i> Ecobazar</h4>
+            <span id="spa">Admin</span>
+            <ul id="navlist">
+                <li class="nav-item active"><a class="nav-link" data-section="section-overview" href="#"><i
+                            class="fa-solid fa-grip-vertical"></i>
+                        Overview</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="section-users" href="#"><i
+                            class="bi bi-people-fill"></i> Manage Users</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" data-section="section-sellers" href="#"><i
+                            class="fa-solid fa-store"></i> Manage Sellers</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" data-section="section-products" href="#"><i
+                            class="fa-solid fa-cubes"></i> Products</a></li>
+                <li class="nav-item"><a class="nav-link" data-section="section-orders" href="#"><i
+                            class="fa-solid fa-file-lines"></i> All Orders</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="all">
+            <div class="d-flex justify-content-between align-items-center firstnav">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-dark d-md-none me-2" id="menuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <h2 class="m-0">Dashboard Overview</h2>
+                </div>
+
+                <div class="dropdown d-flex align-items-center">
+                    <a href="./Home.html" style="color: black;"><i class="bi bi-house-fill fs-5 me-1"></i></a>
+
+                    <span class="dropdown-toggle" data-bs-toggle="dropdown" style="cursor:pointer;">
+                        <i class="fa-solid fa-user me-1"></i>
+                        <span id="adminName">Admin Name</span>
+                    </span>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="overlay"></div>
+            <!-- Overview Section -->
+            <section class="content-section" id="section-overview">
+                <section class="row g-3 mb-4 mt-2">
+                    <div class="col-sm-12 col-md-6 col-lg-3 ">
+                        <div class="box d-flex gap-2">
+                            <i class="bi bi-people" id="userssymbol"></i>
+                            <div class="d-flex flex-column">
+                                <span class="title">Total Users</span>
+                                <span class="num" id="totalUsers">1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-3 ">
+                        <div class="box d-flex gap-2">
+                            <i class="bi bi-shop" id="shopsymbol"></i>
+                            <div class="d-flex flex-column">
+                                <span class="title">Total Sellers</span>
+                                <span class="num" id="totalSellers">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-3 ">
+                        <div class="box d-flex gap-2">
+                            <i class="bi bi-cart" id="cartsymbol"></i>
+                            <div class="d-flex flex-column">
+                                <span class="title">Total Orders</span>
+                                <span class="num" id="totalOrders">2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-6 col-lg-3 ">
+                        <div class="box d-flex gap-2">
+                            <i class="bi bi-currency-dollar" id="dollarsymbol"></i>
+                            <div class="d-flex flex-column">
+                                <span class="title">Total Revenue</span>
+                                <span class="num" id="totalRevenue">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="row gap-4 mt-5" style="max-width: 100%;">
+                    <div class="boxs col-md-12 col-lg-8 ms-2 p-3 " id=" PopularProductsChart">
+                        <h6 class="fw-bold mb-3"><i class="fas fa-chart-bar text-success me-2"></i>Popular Products
+                            (By Quantity Sold)</h6>
+                        <canvas id="popularProductsChart"></canvas>
+
+                    </div>
+                    <div class="boxs col-md-12 col-lg-3 ms-md-2" id="UsersDistributionChart">
+                        <h6 class="fw-bold mb-3 text-center"><i class="fas fa-chart-pie text-primary me-2"></i>Users &
+                            Sellers</h6>
+                        <canvas id="usersSellersPieChart"></canvas>
+                    </div>
+                    <!-- Charts Section -->
+                    <div class="container my-4" style="max-width: 100%;">
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h6 class="fw-bold mb-3"><i
+                                                class="fas fa-chart-line text-primary me-2"></i>Orders Overview
+                                            (Total & Number of Products)</h6>
+                                        <div style="position: relative; ;">
+                                            <canvas id="ordersLineChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- Users Section -->
+            <section class="content-section d-none" id="section-users">
+                <div class="user-management-container py-5 mt-4">
+                    <div class="container bg-white shadow-sm rounded-4 p-4 overflow-hidden">
+                        <div
+                            class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-4">
+                            <h2 class="fw-bold mb-0 text-dark" style="font-size: 1.8rem;">Manage Users</h2>
+                            <div class="search-box position-relative w-100 w-sm-auto">
+                                <input type="text" id="userSearchInput"
+                                    class="form-control rounded-pill border-light-subtle ps-4"
+                                    placeholder="Search users..." style="max-width: 250px; background-color: #f8f9fa;">
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="usersTable">
+                                <thead class="bg-light text-muted small fw-semibold" style="letter-spacing: 0.5px;">
+                                    <tr>
+                                        <th scope="col" class="py-3 ps-3 border-0 rounded-start d-none d-lg-table-cell">
+                                            ID</th>
+                                        <th scope="col" class="py-3 border-0">NAME</th>
+                                        <th scope="col" class="py-3 border-0 d-none d-md-table-cell">EMAIL</th>
+                                        <th scope="col" class="py-3 border-0 d-none d-xl-table-cell">PHONE</th>
+                                        <th scope="col" class="py-3 border-0 d-none d-xl-table-cell">ADDRESS</th>
+                                        <th scope="col" class="py-3 border-0 d-none d-lg-table-cell">CREATED</th>
+                                        <th scope="col" class="py-3 border-0 text-center">STATUS</th>
+                                        <th scope="col" class="py-3 pe-3 border-0 rounded-end text-center">ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userTableBody" class="border-top-0">
+                                    <!-- Users will be populated here -->
+                                </tbody>
+                            </table>
+                            <div id="noUsersFound" class="text-center py-5 text-muted d-none">
+                                <i class="fas fa-users-slash fa-3x mb-3 opacity-50"></i>
+                                <h5>No users found</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- User Quick View Modal -->
+                <div class="modal fade" id="userQuickViewModal" tabindex="-1" aria-labelledby="userQuickViewModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 shadow-lg rounded-4">
+                            <div class="modal-header border-0 pb-0">
+                                <h5 class="modal-title fw-bold" id="userQuickViewModalLabel">User Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body p-4 text-center">
+                                <div class="mb-3">
+                                    <div class="avatar-circle mx-auto d-flex align-items-center justify-content-center text-white fw-bold fs-3 mb-3 shadow-sm"
+                                        style="width: 80px; height: 80px; border-radius: 50%; background-color: var(--primary-green);">
+                                        <span id="modalUserInitials">JD</span>
+                                    </div>
+                                    <h4 class="fw-bold mb-1" id="modalUserName">John Doe</h4>
+                                    <span class="badge bg-success-subtle text-success px-3 py-1 rounded-pill fw-medium"
+                                        id="modalUserRole">User</span>
+                                </div>
+
+                                <ul class="list-group list-group-flush text-start mt-4">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                        <span class="text-muted"><i class="far fa-envelope me-2"></i>Email</span>
+                                        <span class="fw-medium text-dark" id="modalUserEmail">john@example.com</span>
+                                    </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                        <span class="text-muted"><i class="fas fa-phone-alt me-2"></i>Phone</span>
+                                        <span class="fw-medium text-dark" id="modalUserPhone">01000000000</span>
+                                    </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                        <span class="text-muted"><i
+                                                class="fas fa-map-marker-alt me-2"></i>Address</span>
+                                        <span class="fw-medium text-dark text-end" id="modalUserAddress"
+                                            style="max-width: 60%">123
+                                            Street, City</span>
+                                    </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center px-0 py-3">
+                                        <span class="text-muted"><i class="far fa-calendar-alt me-2"></i>Joined</span>
+                                        <span class="fw-medium text-dark" id="modalUserDate">Feb 25, 2026</span>
+                                    </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center px-0 py-3 border-bottom-0">
+                                        <span class="text-muted"><i class="fas fa-toggle-on me-2"></i>Status</span>
+                                        <span class="fw-medium" id="modalUserStatus">Active</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="modal-footer border-0 pt-0 justify-content-center pb-4">
+                                <button type="button" class="btn btn-light rounded-pill px-4"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-danger rounded-pill px-4"
+                                    id="modalBtnDelete">Delete
+                                    User</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content border-0 shadow-lg rounded-4 text-center p-3">
+                            <div class="modal-body pb-0">
+                                <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle bg-danger-subtle text-danger"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fas fa-exclamation-triangle fs-3"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Delete User?</h5>
+                                <p class="text-muted small mb-0">Are you sure you want to delete this user? This action
+                                    cannot be
+                                    undone.</p>
+                            </div>
+                            <div class="modal-footer border-0 pt-4 justify-content-center">
+                                <button type="button" class="btn btn-light rounded-pill px-4"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger rounded-pill px-4"
+                                    id="confirmDeleteBtn">Yes,
+                                    Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reset Password Confirmation Modal -->
+                <div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-labelledby="resetPasswordModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-sm">
+                        <div class="modal-content border-0 shadow-lg rounded-4 text-center p-3">
+                            <div class="modal-body pb-0">
+                                <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle bg-warning-subtle text-warning"
+                                    style="width: 60px; height: 60px;">
+                                    <i class="fas fa-key fs-3"></i>
+                                </div>
+                                <h5 class="fw-bold mb-2">Reset Password?</h5>
+                                <p class="text-muted small mb-0">Are you sure you want to reset this user's password? It
+                                    will be set
+                                    to their email address.</p>
+                            </div>
+                            <div class="modal-footer border-0 pt-4 justify-content-center">
+                                <button type="button" class="btn btn-light rounded-pill px-4"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-warning text-white rounded-pill px-4"
+                                    id="confirmResetBtn">Yes,
+                                    Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sellers Section -->
+            <section class="content-section d-none" id="section-sellers">
+                <div class="container-fluid px-4 py-4">
+
+                    <!-- kpis row -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-md-3">
+                            <div class="card border-0 shadow-sm rounded-3 kpi-card">
+                                <div class="card-body d-flex align-items-center gap-3 py-3">
+                                    <div class="kpi-icon"><i class="fas fa-store"></i></div>
+                                    <div>
+                                        <div class="text-muted small">Total Sellers</div>
+                                        <div class="fs-5 fw-bold text-success" id="kpiTotal">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="card border-0 shadow-sm rounded-3 kpi-card">
+                                <div class="card-body d-flex align-items-center gap-3 py-3">
+                                    <div class="kpi-icon"><i class="fas fa-check-circle"></i></div>
+                                    <div>
+                                        <div class="text-muted small">Active</div>
+                                        <div class="fs-5 fw-bold text-success" id="kpiActive">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="card border-0 shadow-sm rounded-3 kpi-card">
+                                <div class="card-body d-flex align-items-center gap-3 py-3">
+                                    <div class="kpi-icon"><i class="fas fa-ban"></i></div>
+                                    <div>
+                                        <div class="text-muted small">Inactive</div>
+                                        <div class="fs-5 fw-bold text-success" id="kpiInactive">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="card border-0 shadow-sm rounded-3 kpi-card">
+                                <div class="card-body d-flex align-items-center gap-3 py-3">
+                                    <div class="kpi-icon"><i class="fas fa-box-open"></i></div>
+                                    <div>
+                                        <div class="text-muted small">Total Products</div>
+                                        <div class="fs-5 fw-bold text-success" id="kpiProducts">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- toolbalr -->
+                    <div class="card border-0 shadow-sm rounded-3 mb-3">
+                        <div class="card-body py-2 px-3">
+                            <div class="row g-2 align-items-center">
+                                <div class="col-12 col-sm-auto me-sm-auto">
+                                    <span class="small text-muted" id="resultsLabel">0 sellers</span>
+                                </div>
+                                <div class="col-12 col-sm-auto">
+                                    <select class="form-select form-select-sm w-100" id="statusFilter">
+                                        <option value="all">All Statuses</option>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-auto">
+                                    <div class="input-group input-group-sm toolbar-search">
+                                        <span class="input-group-text bg-white border-end-0">
+                                            <i class="fas fa-search text-muted small"></i>
+                                        </span>
+                                        <input type="text" class="form-control border-start-0 ps-0" id="searchInput"
+                                            placeholder="Search sellers…">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--table-->
+                    <div class="card border-0 shadow-sm rounded-3">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="d-none d-lg-table-cell">ID</th>
+                                        <th>Name</th>
+                                        <th class="d-none d-lg-table-cell">Email</th>
+                                        <th class="d-none d-xl-table-cell">Phone</th>
+                                        <th class="d-none d-md-table-cell">Rating</th>
+                                        <th>Products</th>
+                                        <th class="d-none d-lg-table-cell">Member Since</th>
+                                        <th>Status</th>
+                                        <th class="text-end action-col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sellersTbody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ── confirm delete -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content rounded-3 border-0 shadow">
+                            <div class="modal-header border-0 pb-0">
+                                <h6 class="modal-title fw-bold text-danger">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>Delete Seller
+                                </h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body pt-2">
+                                <p class="mb-1">You are about to permanently delete:</p>
+                                <p class="fw-semibold mb-0" id="deleteSellerName">—</p>
+                                <p class="text-muted small mb-3" id="deleteSellerEmail">—</p>
+                                <div class="alert alert-warning small py-2 mb-0">
+                                    <i class="fas fa-warning me-1"></i>
+                                    This will also remove all products listed by this seller.
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0 pt-0">
+                                <button type="button" class="btn btn-outline-secondary rounded-pill px-3"
+                                    data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger rounded-pill px-4"
+                                    id="confirmDeleteSellerBtn">
+                                    <i class="fas fa-trash-alt me-1"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section class="content-section d-none" id="section-products">
+                <div class="container-fluid">
+                    <div class="header-bar">
+                        <p>All Products</p>
+                        <div>
+                            <p><span id="number"></span> Products</p>
+                        </div>
+                        <div class="search-group">
+                            <label for="search">Search</label>
+                            <input type="text" id="search" placeholder="Search for a product">
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" id="cat_but" type="button"
+                                data-bs-toggle="dropdown">
+                                Categories
+                            </button>
+                            <ul class="dropdown-menu" id="cat_menu">
+                                <li><a class="dropdown-item" href="#" onclick="filter_cat(event)">All</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Table Header -->
+                    <div class="dismisser-table">
+                        <div class="dismisser-table-header  d-md-flex">
+                            <div class="col-id">ID</div>
+                            <div class="col-image">IMAGE</div>
+                            <div class="col-name">Name</div>
+                            <div class="col-category">Category</div>
+                            <div class="col-price">Price</div>
+                            <div class="col-stock">Stock</div>
+                            <div class="col-seller">Seller</div>
+                            <div class="col-rating">Rating</div>
+                            <div class="col-actions">Actions</div>
+                        </div>
+                        <section id="my_data">
+                            <div class="dismisser-row row" data-id="id">
+                                <div class="dismisser-col-id ">
+                                    <p>aa</p>
+                                </div>
+                                <div class="dismisser-col-img ">
+                                    <img src="../banana.jfif" alt="${product.name}" loading="lazy">
+                                </div>
+
+                                <div class="dismisser-col-name ">
+                                    <p>green banana</p>
+                                </div>
+
+                                <div class="dismisser-col-category ">
+                                    <p>fruits</p>
+                                </div>
+
+                                <div class="dismisser-col-price ">
+                                    <p>$5</p>
+                                </div>
+                                <div class="dismisser-col-stock ">
+
+                                    <p> 5</p>
+
+                                </div>
+
+                                <div class="dismisser-col-seller ">
+                                    <p> Ahmed Mohamed</p>
+                                </div>
+                                <div class="dismisser-col-rate ">
+                                    <p> 5</p>
+                                </div>
+                                <div class="dismisser-col-actions ">
+                                    <button class="btn-dismiss" onclick="delete(x)" title="Remove">
+                                        <i class="fa-solid fa-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="fw-bold">Are you sure you want to delete this product?</p>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <img id="modal_img" src="" alt="" id="prod_img" style="max-width: 100%;">
+                                        </div>
+                                        <div class="col-6 row flex-column">
+                                            <p id="prod_name_mod" class="align-center fw-bold"></p>
+                                            <p id="prod_des_mod" class="font-italic"></p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button id="db" type="button" class="btn btn-danger"
+                                        data-bs-dismiss="modal">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="pg_con">
+                        <button class="button" id="startBtn" disabled>
+                            <i class="fa-solid fa-angles-left"></i>
+                        </button>
+                        <button class="button prevNext" id="prev" disabled>
+                            <i class="fa-solid fa-angle-left"></i>
+                        </button>
+                        <div class="links">
+                        </div>
+                        <button class="button prevNext" id="next">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </button>
+                        <button class="button" id="endBtn">
+                            <i class="fa-solid fa-angles-right"></i>
+                        </button>
+                    </div>
+
+            </section>
+
+            <!-- Orders Section -->
+            <section class="content-section d-none" id="section-orders">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Order History</h5>
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-uppercase small text-muted fw-semibold">Order ID</th>
+                                        <th class="text-uppercase small text-muted fw-semibold">Date</th>
+                                        <th class="text-uppercase small text-muted fw-semibold">Total</th>
+                                        <th class="text-uppercase small text-muted fw-semibold">Status</th>
+                                        <th class="text-uppercase small text-muted fw-semibold">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allOrdersBody">
+                                    <!-- Filled by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <p id="noAllOrdersMsg" class="text-muted text-center py-3 d-none">No orders yet.</p>
+                        <!-- Pagination Controls -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <button id="prevPageBtn" class="btn btn-outline-success rounded-pill px-4" disabled>
+                                <i class="fas fa-chevron-left me-1"></i> Prev
+                            </button>
+                            <span id="pageInfo" class="fw-semibold text-muted small"></span>
+                            <button id="nextPageBtn" class="btn btn-outline-success rounded-pill px-4" disabled>
+                                Next <i class="fas fa-chevron-right ms-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <!-- Order Detail Modal -->
+        <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header border-bottom-0 pb-0">
+                        <h5 class="modal-title fw-bold" id="orderDetailModalLabel">
+                            <i class="fas fa-receipt text-success me-2"></i>Order Details
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body pt-2" id="orderDetailBody">
+                        <!-- Filled by JS -->
+                    </div>
+                    <div class="modal-footer border-top-0">
+                        <button type="button" class="btn btn-outline-secondary rounded-pill px-4"
+                            data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../Js/Admin.js" type="module" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+:root {
+    --primary-green: #00B207;
+    --gray-100: #F2F2F2;
+    --gray-400: #808080;
+    --gray-800: #333333;
+}
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.text-green {
+    color: var(--primary-green) !important;
+}
+
+.bg-green {
+    background-color: var(--primary-green) !important;
+}
+
+/* Share Icons */
+.share-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: var(--gray-800);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.share-icon:hover,
+.share-icon.active {
+    background-color: var(--primary-green);
+    color: white !important;
+}
+
+/* Tabs */
+.product-tabs .nav-link {
+    color: var(--gray-400);
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    padding: 0 0 1rem 0;
+    font-weight: 500;
+    font-size: 1.05rem;
+    transition: all 0.2s;
+    background: transparent !important;
+}
+
+.product-tabs .nav-link:hover {
+    color: var(--gray-800);
+}
+
+.product-tabs .nav-link.active {
+    color: var(--gray-800) !important;
+    border-bottom-color: var(--primary-green) !important;
+    font-weight: 600;
+}
+
+/* Gallery Hover Styles */
+.img-thumbnail-wrapper {
+    transition: all 0.2s ease-in-out;
+}
+
+.img-thumbnail-wrapper:hover {
+    opacity: 0.8;
+}
+
+.img-thumbnail-wrapper.active-thumb {
+    border: 1px solid var(--primary-green) !important;
+}
+
+/* Quantity input hide arrows */
+#qty-input::-webkit-outer-spin-button,
+#qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+#qty-input[type=number] {
+    -moz-appearance: textfield;
+    /* Firefox */
+    appearance: textfield;
+}
+
+/* Buttons */
+.qty-btn {
+    opacity: 0.6;
+}
+
+.qty-btn:hover {
+    opacity: 1;
+}
+
+.add-cart-btn {
+    transition: all 0.3s ease;
+}
+
+.add-cart-btn:hover {
+    background-color: #009906 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 178, 7, 0.2);
+}
+
+.wishlist-btn {
+    transition: all 0.3s ease;
+}
+
+.wishlist-btn:hover {
+    background-color: var(--primary-green) !important;
+    color: white !important;
+    border-color: var(--primary-green) !important;
+}
+
+.wishlist-btn:hover i {
+    color: white !important;
+}
+
+.feature-card {
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Stars Rating */
+#product-stars i {
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.image-zoom-container:hover .zoom-img {
+    transform: scale(1.2) !important;
+}
