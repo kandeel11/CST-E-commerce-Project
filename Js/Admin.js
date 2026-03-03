@@ -19,11 +19,11 @@ logoutBtn.addEventListener("click", function (e) {
 let popularChartInstance = null;
 
 if (!currentadmin) {
-    //window.location.href = "../Pages/Login.html";
+    window.location.href = "../Pages/Login.html";
     // For testing purposes, if no admin is logged in, we can set a default admin
 
 }
-//AdminName.textContent = `Welcome, ${currentadmin.Fname} ${currentadmin.Lname}`;
+AdminName.textContent = `Welcome, ${currentadmin.Fname} ${currentadmin.Lname}`;
 
 function renderPopularProductsChart() {
     const orders = getOrders();
