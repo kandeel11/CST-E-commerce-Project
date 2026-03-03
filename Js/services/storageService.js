@@ -397,7 +397,7 @@ export function deleteSellerAndProducts(sellerId) {
 }
 
 // ── Wishlist helpers
-const WISHLIST_KEY = "wishlists";
+const WISHLIST_KEY = "WishLists";
 
 export function getWishlist() {
     return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || {};

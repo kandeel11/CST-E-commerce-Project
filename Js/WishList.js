@@ -10,7 +10,6 @@ import { removeFromWishlist, addToCart } from ".//services/storageService.js";
 let current_user_Id = isGuest ? null : JSON.parse(sessionStorage.getItem('currentUser')).id;
 
 // WishLists is now an object: { "Us-1": [product, ...], "Us-2": [product, ...] }
-let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
 
 export function addToWishlist1(productId) {
     if (!sessionStorage.getItem('currentUser')) {
@@ -94,7 +93,7 @@ window.addEventListener('load', function () {
     loadComponents();
 
     let id = current_user_Id;
-    wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
+    let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
     Restore_data(id);
 
 

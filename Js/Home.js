@@ -100,7 +100,6 @@ function loadData() {
         renderCategories(data);
         renderProducts(data);
         renderHotDeals(data);
-        renderTestimonials(data);
     }
 
 }

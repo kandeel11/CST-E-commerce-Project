@@ -460,11 +460,11 @@ function renderAllOrders() {
 
     updatePaginationControls(totalPages);
 }
-
+const pageInfo = document.getElementById("pageInfo");
+const prevBtn = document.getElementById("prevPageBtn");
+const nextBtn = document.getElementById("nextPageBtn");
 function updatePaginationControls(totalPages) {
-    const pageInfo = document.getElementById("pageInfo");
-    const prevBtn = document.getElementById("prevPageBtn");
-    const nextBtn = document.getElementById("nextPageBtn");
+
 
     if (!pageInfo || !prevBtn || !nextBtn) return;
 
@@ -479,6 +479,14 @@ function updatePaginationControls(totalPages) {
     prevBtn.disabled = currentPage <= 1;
     nextBtn.disabled = currentPage >= totalPages;
 }
+nextBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    goToPage(1);
+});
+prevBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    goToPage(-1);
+});
 
 function goToPage(direction) {
     currentPage += direction;
