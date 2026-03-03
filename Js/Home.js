@@ -1,4 +1,36 @@
+import { User } from "../Js/Classes/User.js";
+
 document.addEventListener("DOMContentLoaded", () => {
+
+    if (!localStorage.getItem("users")) {
+        let users = [];
+        const defaultAdmin = new User("Default", "Admin", "Admin", "admin@example.com", "Admin123!");
+        users.push(defaultAdmin);
+        const defaultSeller = new User("Default", "Seller", "Seller", "seller@example.com", "Seller123!");
+        users.push(defaultSeller);
+        const defaultUser = new User("Default", "Customer", "User", "customer@example.com", "Customer123!");
+        users.push(defaultUser);
+        localStorage.setItem("users", JSON.stringify(users));
+    }
+    if (!localStorage.getItem("products")) {
+        fetch("../Data/ecobazar.json")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                const products = Object.values(data).flat();
+                localStorage.setItem('products', JSON.stringify(products));
+                window.location.reload(); // Reload to load products from localStorage
+                return products; // اختيارى إذا كنت ستحتاج البيانات لاحقاً
+            })
+            .catch(error => {
+                console.error("There was an error loading the data:", error);
+            });
+    }
+
     loadComponents();
     loadData();
     initCountdown();
@@ -9,6 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
             showWelcomeToast(`Welcome back ${currentUser.name} ${currentUser.Role || ''}!`);
         }
         sessionStorage.removeItem("showLoginToast");
+    }
+});
+
+window.addEventListener('storage', (event) => {
+    if (event.key === 'products') {
+        loadData();
     }
 });
 function showWelcomeToast(message) {
