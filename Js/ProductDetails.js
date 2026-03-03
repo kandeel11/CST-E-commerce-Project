@@ -61,7 +61,6 @@ function renderProductDetails(product) {
     document.title = `Ecobazar - ${product.name}`;
     document.getElementById('product-title').textContent = product.name;
 
-    // Breadcrumb Update
 
     // Formatting Tags
     let tagsArr = [];
