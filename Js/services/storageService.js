@@ -380,7 +380,7 @@ export function saveUsers(users) {
 
 export function toggleSellerActive(sellerId) {
     const users = getAllUsers();
-    const idx   = users.findIndex(u => String(u.id) === String(sellerId));
+    const idx = users.findIndex(u => String(u.id) === String(sellerId));
     if (idx === -1) return;
     users[idx].Active = !users[idx].Active;
     saveUsers(users);
