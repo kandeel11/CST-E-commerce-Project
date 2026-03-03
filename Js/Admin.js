@@ -19,11 +19,11 @@ logoutBtn.addEventListener("click", function (e) {
 let popularChartInstance = null;
 
 if (!currentadmin) {
-    window.location.href = "../Pages/Login.html";
+    //window.location.href = "../Pages/Login.html";
     // For testing purposes, if no admin is logged in, we can set a default admin
 
 }
-AdminName.textContent = `Welcome, ${currentadmin.Fname} ${currentadmin.Lname}`;
+//AdminName.textContent = `Welcome, ${currentadmin.Fname} ${currentadmin.Lname}`;
 
 function renderPopularProductsChart() {
     const orders = getOrders();
@@ -1799,4 +1799,16 @@ function starsHtml(rating) {
 
 
 
+const menuBtn = document.getElementById('menuBtn');
+const sidebarr = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
 
+menuBtn.addEventListener('click', () => {
+    sidebarr.classList.add('show');
+    overlay.classList.add('active');
+});
+
+overlay.addEventListener('click', () => {
+    sidebarr.classList.remove('show');
+    overlay.classList.remove('active');
+});
