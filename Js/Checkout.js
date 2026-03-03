@@ -1,5 +1,5 @@
 export class Order {
-  constructor(orderid,userid, orderStatus, products = [], total) {
+  constructor(orderid, userid, orderStatus, products = [], total) {
     this.orderid = orderid;
     this.userid = userid;
     this.products = products;
@@ -55,69 +55,69 @@ export class Order {
     var addressinp = document.querySelector("#street");
     addressinp.value = currentUser.address;
   }
-  static compelteOrder(){
-      var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
-      if (!currentUser) return;
-      var userId = currentUser.id;
+  static compelteOrder() {
+    var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    if (!currentUser) return;
+    var userId = currentUser.id;
 
-      var orders = JSON.parse(localStorage.getItem("orders")) || [];
-      var pendingOrder = orders.find((o) => o.userid === userId && o.orderStatus === "pending");
-      if (!pendingOrder) return;
-      pendingOrder.orderStatus = "Processing";
+    var orders = JSON.parse(localStorage.getItem("orders")) || [];
+    var pendingOrder = orders.find((o) => o.userid === userId && o.orderStatus === "pending");
+    if (!pendingOrder) return;
+    pendingOrder.orderStatus = "Processing";
 
-      var toastElement = document.getElementById("myToast33");
-      var toastBody = toastElement.querySelector(".toast-body");
-      var toast = new bootstrap.Toast(toastElement);
+    var toastElement = document.getElementById("myToast33");
+    var toastBody = toastElement.querySelector(".toast-body");
+    var toast = new bootstrap.Toast(toastElement);
 
-      var allProducts = JSON.parse(localStorage.getItem("products")) || [];
-      for (let item of pendingOrder.products) {
-        let realProduct = allProducts.find((p) => p.product_id == item.product_id);
-        if (!realProduct || realProduct.stock < item.quantity) {
-          toastBody.innerText = `Cannot Complete Order, ${item.name} is Out of Stock`;
-          toast.show();
-          return;
-        }
+    var allProducts = JSON.parse(localStorage.getItem("products")) || [];
+    for (let item of pendingOrder.products) {
+      let realProduct = allProducts.find((p) => p.product_id == item.product_id);
+      if (!realProduct || realProduct.stock < item.quantity) {
+        toastBody.innerText = `Cannot Complete Order, ${item.name} is Out of Stock`;
+        toast.show();
+        return;
       }
-      pendingOrder.products.forEach((item) => {
-        let realProduct = allProducts.find((p) => p.product_id == item.product_id);
-        if (realProduct) {
-          realProduct.stock -= item.quantity;
-        }
-      });
-      localStorage.setItem("products", JSON.stringify(allProducts));
-      localStorage.setItem("orders", JSON.stringify(orders));
-      var mycart = JSON.parse(sessionStorage.getItem("MyCart"));
-      if (mycart && mycart.userid == userId) {
-        mycart.items = [];
-        sessionStorage.setItem("MyCart", JSON.stringify(mycart));
+    }
+    pendingOrder.products.forEach((item) => {
+      let realProduct = allProducts.find((p) => p.product_id == item.product_id);
+      if (realProduct) {
+        realProduct.stock -= item.quantity;
       }
-      var carts = JSON.parse(localStorage.getItem("cart")) || [];
-      var userCart = carts.find((c) => c.userid == userId);
-      if (userCart) {
-        userCart.items = [];
-      }
-      localStorage.setItem("cart", JSON.stringify(carts));
-      var toasttEl = document.getElementById("myToast3");
-      var myToast3 = new bootstrap.Toast(toasttEl);
-      myToast3.show();
-      setTimeout(() => {
-        window.location.href = "../Pages/Home.html";
-      }, 1500);
-     
+    });
+    localStorage.setItem("products", JSON.stringify(allProducts));
+    localStorage.setItem("orders", JSON.stringify(orders));
+    var mycart = JSON.parse(sessionStorage.getItem("MyCart"));
+    if (mycart && mycart.userid == userId) {
+      mycart.items = [];
+      sessionStorage.setItem("MyCart", JSON.stringify(mycart));
+    }
+    var carts = JSON.parse(localStorage.getItem("cart")) || [];
+    var userCart = carts.find((c) => c.userid == userId);
+    if (userCart) {
+      userCart.items = [];
+    }
+    localStorage.setItem("cart", JSON.stringify(carts));
+    var toasttEl = document.getElementById("myToast3");
+    var myToast3 = new bootstrap.Toast(toasttEl);
+    myToast3.show();
+    setTimeout(() => {
+      window.location.href = "../Pages/Home.html";
+    }, 1500);
+
   }
 }
 var returntocart = document.querySelector("#returntocart");
-if(returntocart){
+if (returntocart) {
   returntocart.addEventListener("click", function () {
     window.location.href = "Cart.html";
   });
 }
 //form validation
 var formselected = document.querySelector("form");
-if(formselected){
+if (formselected) {
   formselected.addEventListener("submit", function (e) {
     e.preventDefault();
-  e.stopPropagation();
+    e.stopPropagation();
     const firstName = document.getElementById("firstName");
     const lastName = document.getElementById("lastName");
     const email = document.getElementById("email");
@@ -129,36 +129,36 @@ if(formselected){
     let emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
     let valid = true;
     if (!nameRegex.test(firstName.value.trim())) {
-        firstName.classList.add("is-invalid");
-        valid = false;
+      firstName.classList.add("is-invalid");
+      valid = false;
     } else {
-        firstName.classList.remove("is-invalid");
+      firstName.classList.remove("is-invalid");
     }
     if (!emailRegex.test(email.value.trim())) {
-        email.classList.add("is-invalid");
-        valid = false;
+      email.classList.add("is-invalid");
+      valid = false;
     } else {
-        email.classList.remove("is-invalid");
+      email.classList.remove("is-invalid");
     }
     if (!nameRegex.test(lastName.value.trim())) {
-        lastName.classList.add("is-invalid");
-        valid = false;
+      lastName.classList.add("is-invalid");
+      valid = false;
     } else {
-        lastName.classList.remove("is-invalid");
+      lastName.classList.remove("is-invalid");
     }
     if (!phoneRegex.test(phone.value.trim())) {
-        phone.classList.add("is-invalid");
-        valid = false;
+      phone.classList.add("is-invalid");
+      valid = false;
     } else {
-        phone.classList.remove("is-invalid");
+      phone.classList.remove("is-invalid");
     }
     if (street.value.trim() === "") {
-        street.classList.add("is-invalid");
-        valid = false;
+      street.classList.add("is-invalid");
+      valid = false;
     } else {
-        street.classList.remove("is-invalid");
+      street.classList.remove("is-invalid");
     }
-    if(city.value === ""){ 
+    if (city.value === "") {
       city.classList.add("is-invalid");
       valid = false;
     } else {
@@ -166,12 +166,13 @@ if(formselected){
     }
 
     if (!valid) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
+      e.preventDefault();
+      e.stopPropagation();
+      return;
     }
     Order.compelteOrder();
-});}
+  });
+}
 
 
 function loadComponents() {

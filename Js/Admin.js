@@ -1137,8 +1137,7 @@ search_field.addEventListener('input', function () {
                 let l = splitted_name.length; //length of product name
                 let ml = srch.split().length;
 
-                if (fullname.includes(srch))
-                {
+                if (fullname.includes(srch)) {
                     searched_prod = searched_prod.concat((prods[i]))
                 }
 
