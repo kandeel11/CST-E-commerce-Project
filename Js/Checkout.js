@@ -1,4 +1,3 @@
-//import { Cart } from "../Js/Cart.js";
 export class Order {
   constructor(orderid,userid, orderStatus, products = [], total) {
     this.orderid = orderid;
@@ -9,7 +8,6 @@ export class Order {
     this.total = total;
   }
   static AddSummaryOrder() {
-    //currentuser
     var currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
     if (!currentUser) return;
     var userid = currentUser.id;

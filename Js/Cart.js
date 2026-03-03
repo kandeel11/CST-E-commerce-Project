@@ -216,10 +216,6 @@ export class Cart {
         deletebtn.style.fontSize = "22px";
         deletebtn.style.border = "none";
 
-        //deletebtn.style.borderRadius = "50%";
-        // deletebtn.style.width = "28px";
-        //  deletebtn.style.fontSize = "18px";
-
         deletebtn.addEventListener("click", function (e) {
           var productid = deletebtn.dataset.productid;
           var finditem = mycart.items.findIndex(

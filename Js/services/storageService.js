@@ -77,7 +77,7 @@ export function loadProductsForSeller(sellerID) {
     const products = getAllProducts().filter(p => p.seller_id === sellerID);
     renderProductsTable(products);
 }
-/////////////New
+
 export function loadOrdersForSeller() {
     const sellerId = getCurrentSeller().id;
     getSellerTotalRevenue(sellerId);
@@ -513,8 +513,6 @@ export function addToCart(product) {
         return true;
 
 
-        // userCart = { "userid": "notlogin", "items": [] };
-        // sessionStorage.setItem("MyCart", JSON.stringify(userCart));
     }
     if (user) {
         let userCart = cart.find(e => e.userid === user.id);

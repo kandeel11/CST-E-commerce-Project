@@ -72,7 +72,6 @@ export class User {
                 users = users.map
                     (u => u.Role === "Admin" ? parseInt(u.id.split("-")[1]) : 0);
                 return `Admin-${Math.max(...users) + 1}`;
-                //
             }
             else if (Role === "User") {
                 users = users.map
@@ -94,8 +93,6 @@ let admin1 = new User("Mohamed", "Khaled", "Admin", "admin1@gmail.com", "Admin12
 let users1 = JSON.parse(localStorage.getItem("users")) || [];
 if (!users1.some(u => u.Email === admin1.Email)) {
     users1.push(admin1);
-    //----Once one Time Run 
-    // localStorage.setItem("users", JSON.stringify(users1));
 }
 
 

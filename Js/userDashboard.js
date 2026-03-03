@@ -531,24 +531,6 @@ document.getElementById("submitOrderReviewsBtn").addEventListener("click", funct
     renderAllOrders();
 });
 
-// ---- Auto-detect newly completed orders and show review prompt ----
-function checkForNewlyCompletedOrders() {
-    const orders = getOrders();
-    const reviewedOrderIds = JSON.parse(localStorage.getItem("reviewPromptShown_" + currentUser.id)) || [];
-
-    for (const order of orders) {
-        if (order.orderStatus && order.orderStatus.toLowerCase() === 'completed'
-            && !reviewedOrderIds.includes(order.orderid)
-            && hasProductsToReview(order)) {
-            // Mark as prompted so we don't show again
-            reviewedOrderIds.push(order.orderid);
-            localStorage.setItem("reviewPromptShown_" + currentUser.id, JSON.stringify(reviewedOrderIds));
-            // Open review modal for this order
-            setTimeout(() => window.openReviewModal(String(order.orderid)), 800);
-            break; // show one at a time
-        }
-    }
-}
 
 // ---- Toast ----
 function showToast(message, isError = false) {

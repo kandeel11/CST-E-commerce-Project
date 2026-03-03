@@ -306,7 +306,6 @@ function renderProducts(products) {
             if (!inStock) return;
             addToCart(product);
             if (window.updateCartBadge) window.updateCartBadge();
-
             showToast(`🛒 ${name} added to cart!`);
         });
 

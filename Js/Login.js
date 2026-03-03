@@ -139,7 +139,6 @@ LoginButton.addEventListener('click', function (event) {
                 break;
             }
         }
-        // document.querySelector('form').submit();
     }
     if (!isUserFound) {
         toastbody.textContent = "Invalid email or password. Please try again.";

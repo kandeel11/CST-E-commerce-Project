@@ -73,7 +73,6 @@ function initUser() {
     // simulate seller data after login
     currentUser = getCurrentSeller();
 
-    //sessionStorage.setItem("pageUser", JSON.stringify(currentUser));
     document.getElementById("storeName").textContent = "EcoBAZAAR"; //currentUser.storeName;
     document.getElementById("sellerName").textContent = `${currentUser.Fname} ${currentUser.Lname}`;
 }
@@ -261,9 +260,6 @@ function initProductModal() {
             else {
                 priceUpdate = { price };
             }
-            //const priceUpdate = !isNaN(newPrice) && newPrice > 0 
-            //    ? { price: newPrice, oldPrice: price }
-            //    : { price };                            // no sale: just update price, clear old oldPrice
             const updated = {
                 ...existing,
                 name,

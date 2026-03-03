@@ -83,7 +83,6 @@ async function fetchProducts() {
 
 window.addEventListener('load', function () {
 
-    // // If guest, show login modal and stop
     if (isGuest) {
         const loginModal = new bootstrap.Modal(document.getElementById('loginAlertModal'));
         loginModal.show();
@@ -158,37 +157,37 @@ function createProductCard(product) {
     </div>
     `;
 }
-document.getElementById('table_data').addEventListener('click', function (event) {
-    if (event.target.closest('.btn-add-cart')) {
-        const row = event.target.closest('.dismisser-row');
-        const productId = row.dataset.id;
+if (document.getElementById('table_data')) {
+    document.getElementById('table_data').addEventListener('click', function (event) {
+        if (event.target.closest('.btn-add-cart')) {
+            const row = event.target.closest('.dismisser-row');
+            const productId = row.dataset.id;
 
-        // Get product from current user's wishlist (already has all fields)
-        let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
-        let userProducts = wishlist_obj[current_user_Id] || [];
-        let product = userProducts.find(p => String(p.product_id) == String(productId));
+            // Get product from current user's wishlist (already has all fields)
+            let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
+            let userProducts = wishlist_obj[current_user_Id] || [];
+            let product = userProducts.find(p => String(p.product_id) == String(productId));
 
-        // Fallback: try localStorage "products" key
-        if (!product) {
-            let allProducts = JSON.parse(localStorage.getItem('products')) || [];
-            product = allProducts.find(p => String(p.product_id) == String(productId));
-        }
-
-        if (product && product.stock > 0) {
-            const result = addToCart(product);
-            if (result) {
-                if (window.updateCartBadge) window.updateCartBadge();
-                showToast(`🛒 ${product.name} added to cart!`);
-            } else {
-                showToast(`⚠️ Stock limit reached for ${product.name}`, 'warning');
+            // Fallback: try localStorage "products" key
+            if (!product) {
+                let allProducts = JSON.parse(localStorage.getItem('products')) || [];
+                product = allProducts.find(p => String(p.product_id) == String(productId));
             }
-        } else if (product) {
-            showToast(`❌ ${product.name} is out of stock`, 'error');
+
+            if (product && product.stock > 0) {
+                const result = addToCart(product);
+                if (result) {
+                    if (window.updateCartBadge) window.updateCartBadge();
+                    showToast(`🛒 ${product.name} added to cart!`);
+                } else {
+                    showToast(`⚠️ Stock limit reached for ${product.name}`, 'warning');
+                }
+            } else if (product) {
+                showToast(`❌ ${product.name} is out of stock`, 'error');
+            }
         }
-    }
-});
-
-
+    });
+}
 
 function getStockText(stock) {
     if (stock <= 0) return 'Out of Stock';
@@ -204,8 +203,7 @@ function delett(event) {
     }
     if (el && el.dataset.id) {
 
-        // const productId = Number(el.dataset.id);
-        const productId = el.dataset.id; // Keep as string for comparison in wishlist_obj);
+        const productId = el.dataset.id;
 
         // Remove from WishLists key in localStorage (use == for type safety)
         let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};

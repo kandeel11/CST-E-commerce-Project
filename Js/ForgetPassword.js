@@ -3,7 +3,6 @@ let users = []
 
 let input_fname = document.getElementById("fname")
 let input_lname = document.getElementById("lname")
-//input_pass=document.getElementById("fp-email")
 let input_email = document.getElementById("fp-email")
 let input_phone = document.getElementById("fp-phone")
 let current_user;
@@ -40,13 +39,11 @@ rest_btn.addEventListener('click', function (event) {
 
     }
     else if (!CheckData(current_user)) {
-        //data-bs-toggle="modal" data-bs-target="#exampleModal"
         document.getElementById("mod_res").innerHTML = "You entered the wrong data! \n please try again"
         document.getElementById("mod_res").style.color = "red"
         document.getElementsByClassName("modal-footer")[0].innerHTML = ` <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>`
 
         event.preventDefault();
-        //data-bs-toggle="modal" data-bs-target="#exampleModal"
     }
 
     else if (CheckData(current_user) == true) {
@@ -55,8 +52,6 @@ rest_btn.addEventListener('click', function (event) {
         document.getElementsByClassName("modal-footer")[0].innerHTML = ` <p class="fp-back">
                 <a href="Login.html"><i class="fas fa-arrow-left"></i> Back to Login</a>
             </p>`
-        // data-bs-backdrop="static" data-bs-keyboard="false"
-        //current_user.password=input_email.value;
         users = JSON.parse(localStorage.getItem('users'))
         user_index = users.indexOf(users.find(item => item.Email == input_email.value))
         users[user_index].password = input_email.value
