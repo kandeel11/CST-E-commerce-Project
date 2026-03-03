@@ -702,12 +702,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const tr = document.createElement("tr");
             tr.innerHTML = `
-                <td class="ps-3 user-td-id">${id}</td>
+                <td class="ps-3 user-td-id d-none d-lg-table-cell">${id}</td>
                 <td class="user-td-name">${name}</td>
-                <td>${email}</td>
-                <td>${phone}</td>
-                <td class="text-truncate" style="max-width: 200px;" title="${address}">${address}</td>
-                <td>${date}</td>
+                <td class="d-none d-md-table-cell">${email}</td>
+                <td class="d-none d-xl-table-cell">${phone}</td>
+                <td class="text-truncate d-none d-xl-table-cell" style="max-width: 200px;" title="${address}">${address}</td>
+                <td class="d-none d-lg-table-cell">${date}</td>
                 <td class="text-center">
                     <span class="user-status-badge ${statusClass}">${statusText}</span>
                 </td>

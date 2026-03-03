@@ -25,6 +25,41 @@ body{
 .all{
     flex: 1;
     padding: 20px;
+    overflow-x: hidden;
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* User management responsive */
+@media (max-width: 575px) {
+    #section-users .user-management-container {
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
+    }
+    #section-users .user-management-container .container {
+        padding: 0.75rem !important;
+    }
+    #section-users .search-box input {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    #section-users .action-btn {
+        width: 28px;
+        height: 28px;
+        margin: 0 1px;
+    }
+    #section-users .action-btn i {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 767px) {
+    #section-users .user-management-container .container {
+        padding: 1rem !important;
+    }
+    #section-users .search-box input {
+        max-width: 100% !important;
+    }
 }
 #userssymbol{
     border-radius: 10px;
