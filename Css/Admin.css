@@ -475,16 +475,19 @@ tr:last-child {
 .dismisser-col-price p {
     color: #27ae60;
     font-weight: bold;
+    text-align: center;
 }
 
 /* Stock */
 .dismisser-col-stock p {
     font-weight: bold;
+    text-align: center;
 }
 
 /* Rating */
 .dismisser-col-rate p {
     color: #f39c12;
+    text-align: center;
 }
 
 /* Actions button */
@@ -522,14 +525,16 @@ tr:last-child {
         width: 100%;
         text-align: left;
         margin-bottom: 8px;
+        text-align: center;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
     }
 
     .dismisser-row>div::before {
         font-weight: bold;
         color: #555;
         text-transform: capitalize;
+        text-align: center;
     }
 
     .dismisser-col-img img {
