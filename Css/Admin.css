@@ -502,6 +502,10 @@ tr:last-child {
     background: #c0392b;
 }
 
+.row>*{
+        padding: 5px !important;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .dismisser-table-header {
@@ -523,7 +527,6 @@ tr:last-child {
     }
 
     .dismisser-row>div::before {
-        content: attr(class);
         font-weight: bold;
         color: #555;
         text-transform: capitalize;
