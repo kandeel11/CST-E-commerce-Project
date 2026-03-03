@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(data => {
                 const products = Object.values(data).flat();
                 localStorage.setItem('products', JSON.stringify(products));
-                window.location.reload(); // Reload to load products from localStorage
-                return products; // اختيارى إذا كنت ستحتاج البيانات لاحقاً
+                window.location.reload();
             })
             .catch(error => {
                 console.error("There was an error loading the data:", error);
