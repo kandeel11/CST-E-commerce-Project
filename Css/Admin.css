@@ -542,7 +542,25 @@ tr:last-child {
         height: 70px;
     }
 }
+/***/
+.dismisser-table-header,
+.dismisser-row {
+    display: flex !important;
+    align-items: center;
+}
 
+.col-id { width: 50px; }
+.col-image { width: 80px; }
+.col-name { max-width: 180px; }
+.col-category { max-width: 180px; }
+.col-price { width: 80px; }
+.col-stock { width: 80px; }
+.col-seller { width: 100px; }
+.col-rating { width: 80px; }
+.col-actions { width: 80px; }
+
+
+/***/
 
 
 /* Header Bar */

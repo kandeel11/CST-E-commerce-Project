@@ -1124,10 +1124,10 @@ search_field.addEventListener('input', function () {
     if (srch.length != 0) {
         if (filtered_products.length > 0) { //filtered products then search
             for (let i = 0; i < filtered_products.length; i++) {
-                fullname = filtered_products[i].name.toLowerCase();
-                splitted_name = fullname.split(' ');
-                length = splitted_name.length; //length of product name
-                for (j = 0; j < length; j++) {
+                let fullname = filtered_products[i].name.toLowerCase();
+                let splitted_name = fullname.split(' ');
+                let length = splitted_name.length; //length of product name
+                for (let j = 0; j < length; j++) {
                     if (fullname.includes(srch)) //product is found
                     {
                         searched_prod = searched_prod.concat((filtered_products[i]))
@@ -1267,6 +1267,7 @@ function delete_prod(id) {
         document.getElementById("number").innerHTML = count;
         let lay_element = document.querySelectorAll(`[data-id="${id}"]`)[0]
         lay_element.remove();
+        window.location.reload();
     }
 }
 
