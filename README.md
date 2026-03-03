@@ -161,20 +161,6 @@ CST-E-commerce-Project/
 1. Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
 2. Right-click `Pages/Home.html` -> **Open with Live Server**
 
-**Option B -- Python HTTP Server:**
-
-```bash
-cd "CST-E-commerce-Project"
-python -m http.server 8080
-# Open http://localhost:8080/Pages/Home.html
-```
-
-**Option C -- Node.js:**
-
-```bash
-npx serve .
-# Open the provided URL + /Pages/Home.html
-```
 
 ### First-Time Setup
 
