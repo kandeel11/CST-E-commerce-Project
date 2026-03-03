@@ -48,7 +48,6 @@ passwordField.value = RemembertUser ? RemembertUser.password : '';
 
 users = JSON.parse(localStorage.getItem("users")) || [];
 localStorage.setItem("users", JSON.stringify(users));
-console.log(RemembertUser);
 Email.addEventListener("blur", function () {
 
     const emailValue = Email.value.trim();
@@ -100,7 +99,7 @@ LoginButton.addEventListener('click', function (event) {
         if (emailValue == users[i].Email && passwordValue == users[i].password) {
             if (users[i].Role === "Admin") {
                 sessionStorage.setItem("currentAdmin", JSON.stringify(users[i]));
-                window.location.href = `../Pages/AdminDashboard.html`;
+                window.location.href = `../Pages/Admin.html`;
                 isUserFound = true;
                 break;
             }
@@ -181,5 +180,4 @@ function validateEmail(email) {
 }
 window.addEventListener('DOMContentLoaded', function () {
     loadComponents();
-    console.log(document.querySelector(".navbar-topbar"));
 });

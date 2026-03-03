@@ -247,8 +247,6 @@ window.addToWishlistData = function (event, id) {
         }
         return;
     }
-
-    console.log('Toggling wishlist:', id);
     addToWishlist1(id);
 }
 

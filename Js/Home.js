@@ -243,7 +243,6 @@ function renderHotDeals(data) {
         const wl = JSON.parse(localStorage.getItem('WishLists')) || {};
         const userProducts = wl[user.id] || [];
         wishlistIds = userProducts.map(i => i.product_id);
-        console.log("Wishlist IDs for user:", wishlistIds);
     }
     // Helper: generate stars
     function starsHtml(rating) {

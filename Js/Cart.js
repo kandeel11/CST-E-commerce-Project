@@ -131,7 +131,6 @@ export class Cart {
             if (cart) {
               cart.items = mycart.items;
             }
-            console.log(cart);
             carts = carts.map((c) => (c.userid === mycart.userid ? cart : c));
             sessionStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
@@ -178,14 +177,12 @@ export class Cart {
           } else {
             innerqty++;
             qtySpan.innerText = innerqty;
-            console.log(finditem);
             finditem.quantity = innerqty;
             let carts = JSON.parse(localStorage.getItem("cart")) || [];
             let cart = carts.find((c) => c.userid === mycart.userid);
             if (cart) {
               cart.items = mycart.items;
             }
-            console.log(cart);
             carts = carts.map((c) => (c.userid === mycart.userid ? cart : c));
             sessionStorage.setItem("MyCart", JSON.stringify(mycart));
             localStorage.setItem("cart", JSON.stringify(carts));
@@ -288,7 +285,6 @@ if (returnbtn) {
 
 var orders = JSON.parse(localStorage.getItem("orders")) || [];
 var btntocheckout = document.getElementById("btnch");
-console.log(btntocheckout);
 btntocheckout.addEventListener("click", function () {
   var toasttEl = document.getElementById("myToast2");
   var toast2 = new bootstrap.Toast(toasttEl);

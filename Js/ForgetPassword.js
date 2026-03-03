@@ -17,7 +17,6 @@ let rest_btn = document.getElementById("rest_btn")
 rest_btn.addEventListener('click', function (event) {
     current_user = x = JSON.parse(localStorage.getItem('users')).find(item => item["Email"] == input_email.value);
 
-    console.log(x)
     document.getElementById("mod_res").style.color = "red"
 
     fields = document.getElementsByClassName("needs-validation")
@@ -41,7 +40,6 @@ rest_btn.addEventListener('click', function (event) {
 
     }
     else if (!CheckData(current_user)) {
-        console.log("you entered wrong data")
         //data-bs-toggle="modal" data-bs-target="#exampleModal"
         document.getElementById("mod_res").innerHTML = "You entered the wrong data! \n please try again"
         document.getElementById("mod_res").style.color = "red"
@@ -60,10 +58,7 @@ rest_btn.addEventListener('click', function (event) {
         // data-bs-backdrop="static" data-bs-keyboard="false"
         //current_user.password=input_email.value;
         users = JSON.parse(localStorage.getItem('users'))
-        console.log(users)
         user_index = users.indexOf(users.find(item => item.Email == input_email.value))
-        console.log(user_index)
-        console.log(users[user_index])
         users[user_index].password = input_email.value
         localStorage.setItem('users', JSON.stringify(users))
     }

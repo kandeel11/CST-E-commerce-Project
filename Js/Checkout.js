@@ -20,7 +20,6 @@ export class Order {
       (o) => o.userid == userid && o.orderStatus === "pending",
     );
     if (!myorder || !Array.isArray(myorder.products)) {
-      console.warn("No pending order found for user");
       return;
     }
     var products = myorder.products;

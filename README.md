@@ -1,6 +1,6 @@
-# Ecobazar — E-Commerce Platform
+# Ecobazar  E-Commerce Platform
 
-> A full-featured, client-side e-commerce web application built with **vanilla JavaScript**, **HTML5**, **CSS3**, and **Bootstrap 5**. All data is persisted in `localStorage` / `sessionStorage` — no backend required.
+> A full-featured, client-side e-commerce web application built with **vanilla JavaScript**, **HTML5**, **CSS3**, and **Bootstrap 5**. All data is persisted in `localStorage` / `sessionStorage`  no backend required.
 
 ---
 
@@ -14,21 +14,18 @@
 6. [Data Models (OOP)](#6-data-models-oop)
 7. [Storage Layer](#7-storage-layer)
 8. [Pages & Features](#8-pages--features)
-9. [JavaScript Modules Reference](#9-javascript-modules-reference)
-10. [Authentication & Authorization](#10-authentication--authorization)
-11. [Cart & Checkout Flow](#11-cart--checkout-flow)
-12. [Order Lifecycle](#12-order-lifecycle)
-13. [Product Reviews System](#13-product-reviews-system)
-14. [Wishlist System](#14-wishlist-system)
-15. [Seller Dashboard](#15-seller-dashboard)
-16. [Admin Dashboard](#16-admin-dashboard)
-17. [Customer Dashboard](#17-customer-dashboard)
-18. [Order Management (Seller)](#18-order-management-seller)
-19. [Search & Filtering](#19-search--filtering)
-20. [Responsive Design](#20-responsive-design)
-21. [JSON Seed Data](#21-json-seed-data)
-22. [Known Limitations](#22-known-limitations)
-23. [Contributors](#23-contributors)
+9. [Authentication & Authorization](#9-authentication--authorization)
+10. [Cart & Checkout Flow](#10-cart--checkout-flow)
+11. [Order Lifecycle](#11-order-lifecycle)
+12. [Product Reviews System](#12-product-reviews-system)
+13. [Wishlist System](#13-wishlist-system)
+14. [Seller Dashboard](#14-seller-dashboard)
+15. [Admin Dashboard](#15-admin-dashboard)
+16. [Customer Dashboard](#16-customer-dashboard)
+17. [Search & Filtering](#17-search--filtering)
+18. [Responsive Design](#18-responsive-design)
+19. [JSON Seed Data](#19-json-seed-data)
+20. [Contributors](#20-contributors)
 
 ---
 
@@ -40,9 +37,9 @@
 | ------------ | ------------------------------------------------------------------------------------ |
 | **Customer** | Browse products, add to cart/wishlist, place orders, review products, manage profile |
 | **Seller**   | List products, manage inventory, confirm/cancel orders, view revenue charts          |
-| **Admin**    | Manage all users, oversee all orders, platform-level controls                        |
+| **Admin**    | Manage all users & sellers, oversee all orders, analytics dashboard                  |
 
-The entire application runs in the browser with **no server or API** — all state is stored in `localStorage` and `sessionStorage`.
+The entire application runs in the browser  all state is stored in `localStorage` and `sessionStorage`, providing a seamless single-page experience.
 
 ---
 
@@ -54,8 +51,8 @@ The entire application runs in the browser with **no server or API** — all sta
 | Styling | CSS3, Bootstrap 5.3.8, Font Awesome 6, Bootstrap Icons         |
 | Logic   | Vanilla JavaScript (ES6 Modules), OOP with classes             |
 | Storage | `localStorage` (persistent), `sessionStorage` (session-scoped) |
-| Charts  | Chart.js (order management analytics)                          |
-| Fonts   | Google Fonts — Poppins                                         |
+| Charts  | Chart.js (analytics & dashboards)                              |
+| Fonts   | Google Fonts  Poppins                                         |
 | Avatars | ui-avatars.com API (auto-generated initials)                   |
 
 ---
@@ -64,94 +61,88 @@ The entire application runs in the browser with **no server or API** — all sta
 
 ```
 CST-E-commerce-Project/
-│
-├── README.md                  ← This file
-├── logic structure.txt        ← Original planning notes
-│
-├── Assets/
-│   └── Assest.text            ← Asset references
-│
-├── Css/                       ← Page-specific stylesheets
-│   ├── Admin.css
-│   ├── Cart.css
-│   ├── Checkout.css
-│   ├── Footer.css
-│   ├── Forgetpassword.css
-│   ├── Home.css               ← Global/shared styles + CSS variables
-│   ├── Login.css
-│   ├── NavBar.css
-│   ├── orderManagment.css
-│   ├── Product.css
-│   ├── ProductDetails.css
-│   ├── Register.css
-│   ├── Seller.css
-│   ├── userDashboard.css
-│   └── WishList.css
-│
-├── Data/
-│   ├── ecobazar.json          ← Seed product data (7 categories, 50+ products)
-│   └── Seller.json            ← Seller seed data
-│
-├── Js/
-│   ├── Cart.js                ← Cart page logic (table, quantity, totals, checkout)
-│   ├── Checkout.js            ← Order class, form validation, order completion
-│   ├── Footer.js              ← (empty — footer is static HTML)
-│   ├── ForgetPassword.js      ← Password reset by verifying user info
-│   ├── Home.js                ← Home page: load data, render sections, countdown
-│   ├── Login.js               ← Login form, remember-me, role-based redirect
-│   ├── NavBar.js              ← Navbar auth, search auto-suggest, cart badge, role hiding
-│   ├── orderManagment.js      ← Order management charts & table (seller view)
-│   ├── ProductDetails.js      ← Product detail page, reviews, related products
-│   ├── Register.js            ← Registration form with full validation
-│   ├── Toast.js               ← Global toast notification utility
-│   ├── userDashboard.js       ← Customer dashboard: orders, settings, reviews
-│   ├── WishList.js            ← Wishlist page: add/remove/display
-│   │
-│   ├── Classes/               ← Simplified class wrappers used by some pages
-│   │   ├── Product.js
-│   │   └── User.js
-│   │
-│   ├── controllers/           ← Page-level controllers
-│   │   ├── productController.js  ← Product listing: filters, sort, pagination
-│   │   └── sellerController.js   ← Seller dashboard controller
-│   │
-│   ├── models/                ← Domain models with private fields (OOP)
-│   │   ├── Admin.js
-│   │   ├── Cart.js
-│   │   ├── CartItem.js
-│   │   ├── Customer.js
-│   │   ├── idGenerator.js     ← UUID generator using crypto.randomUUID()
-│   │   ├── Order.js
-│   │   ├── OrderItem.js
-│   │   ├── Product.js
-│   │   ├── Seller.js
-│   │   └── User.js            ← Base class for all user types
-│   │
-│   └── services/              ← Shared service layer
-│       ├── authService.js     ← register() & login() logic
-│       ├── Login.js           ← Login form event binding
-│       ├── Register.js        ← Register form event binding
-│       └── storageService.js  ← Central CRUD for products, orders, cart, wishlist
-│
-└── Pages/                     ← HTML pages
-    ├── AboutUs.html
-    ├── Admin.html
-    ├── Cart.html
-    ├── Checkout.html
-    ├── ContactUs.html
-    ├── Customer.html
-    ├── Footer.html            ← Reusable footer component (loaded via fetch)
-    ├── Forgetpassword.html
-    ├── Home.html              ← Landing page
-    ├── Login.html
-    ├── NavBar.html            ← Reusable navbar component (loaded via fetch)
-    ├── orderManagment.html
-    ├── Product.html           ← Product catalog with filtering
-    ├── ProductDetails.html    ← Single product view with tabs
-    ├── Register.html
-    ├── Seller.html            ← Seller dashboard
-    ├── userdashboard.html     ← Customer dashboard
-    └── WishList.html
+|
+|-- README.md
+|
+|-- Css/                       <- Page-specific stylesheets
+|   |-- Admin.css
+|   |-- Cart.css
+|   |-- Checkout.css
+|   |-- Footer.css
+|   |-- Forgetpassword.css
+|   |-- Home.css               <- Global/shared styles + CSS variables
+|   |-- Login.css
+|   |-- manageSeller.css
+|   |-- NavBar.css
+|   |-- orderManagment.css
+|   |-- Product.css
+|   |-- ProductDetails.css
+|   |-- Register.css
+|   |-- Seller.css
+|   |-- userDashboard.css
+|   +-- WishList.css
+|
+|-- Data/
+|   |-- ecobazar.json          <- Seed product data (7 categories, 50+ products)
+|   +-- Seller.json            <- Seller seed data
+|
+|-- Js/
+|   |-- Cart.js                <- Cart page logic (table, quantity, totals)
+|   |-- Checkout.js            <- Order creation, form validation, stock management
+|   |-- ForgetPassword.js      <- Password reset by verifying user info
+|   |-- Home.js                <- Home page: load data, render sections, countdown
+|   |-- Login.js               <- Login form, remember-me, role-based redirect
+|   |-- NavBar.js              <- Navbar auth, search auto-suggest, cart badge
+|   |-- orderManagment.js      <- Order management charts & table
+|   |-- ProductDetails.js      <- Product detail page, reviews, related products
+|   |-- Register.js            <- Registration form with full validation
+|   |-- Toast.js               <- Global toast notification utility
+|   |-- userDashboard.js       <- Customer dashboard: orders, settings, reviews
+|   |-- WishList.js            <- Wishlist page: add/remove/add-to-cart
+|   |
+|   |-- controllers/           <- Page-level controllers
+|   |   |-- manageSellersController.js
+|   |   |-- productController.js  <- Product listing: filters, sort, pagination
+|   |   +-- sellerController.js   <- Seller dashboard controller
+|   |
+|   |-- models/                <- Domain models with private fields (OOP)
+|   |   |-- Admin.js
+|   |   |-- Cart.js
+|   |   |-- CartItem.js
+|   |   |-- Customer.js
+|   |   |-- idGenerator.js     <- UUID generator
+|   |   |-- Order.js
+|   |   |-- OrderItem.js
+|   |   |-- Product.js
+|   |   |-- Seller.js
+|   |   +-- User.js            <- Base class for all user types
+|   |
+|   +-- services/              <- Shared service layer
+|       |-- authService.js     <- register() & login() logic
+|       |-- Login.js           <- Login form event binding
+|       |-- Register.js        <- Register form event binding
+|       +-- storageService.js  <- Central CRUD for products, orders, cart, wishlist
+|
++-- Pages/                     <- HTML pages
+    |-- AboutUs.html
+    |-- Admin.html
+    |-- Cart.html
+    |-- Checkout.html
+    |-- ContactUs.html
+    |-- Customer.html
+    |-- Footer.html            <- Reusable footer component (loaded via fetch)
+    |-- Forgetpassword.html
+    |-- Home.html              <- Landing page
+    |-- Login.html
+    |-- manageSellers.html
+    |-- NavBar.html            <- Reusable navbar component (loaded via fetch)
+    |-- orderManagment.html
+    |-- Product.html           <- Product catalog with filtering
+    |-- ProductDetails.html    <- Single product view with tabs
+    |-- Register.html
+    |-- Seller.html            <- Seller dashboard
+    |-- userdashboard.html     <- Customer dashboard
+    +-- WishList.html
 ```
 
 ---
@@ -165,12 +156,12 @@ CST-E-commerce-Project/
 
 ### Running the Project
 
-**Option A — VS Code Live Server:**
+**Option A -- VS Code Live Server:**
 
 1. Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
-2. Right-click `Pages/Home.html` → **Open with Live Server**
+2. Right-click `Pages/Home.html` -> **Open with Live Server**
 
-**Option B — Python HTTP Server:**
+**Option B -- Python HTTP Server:**
 
 ```bash
 cd "CST-E-commerce-Project"
@@ -178,7 +169,7 @@ python -m http.server 8080
 # Open http://localhost:8080/Pages/Home.html
 ```
 
-**Option C — Node.js:**
+**Option C -- Node.js:**
 
 ```bash
 npx serve .
@@ -195,7 +186,7 @@ On first load, the app checks if `localStorage` has product data. If empty, it f
 
 ### Component-Based HTML Loading
 
-The Navbar and Footer are stored as separate HTML files (`NavBar.html`, `Footer.html`) and loaded dynamically via `fetch()` into placeholder `<div>` elements on each page. After loading, initialization functions are called:
+The Navbar and Footer are stored as separate HTML files and loaded dynamically via `fetch()` into placeholder `<div>` elements on each page:
 
 ```javascript
 fetch("NavBar.html")
@@ -219,16 +210,14 @@ JavaScript files use ES6 `import`/`export` syntax. Scripts are loaded with `type
 
 For cross-module communication, key functions are exposed on `window`:
 
-- `window.initNavBarAuth` — Refresh navbar auth state
-- `window.updateCartBadge` — Update cart count/total in navbar
-- `window.showBootstrapToast(message, type)` — Show global toast
-- `window.isSellerOrAdmin()` — Check if current user is seller/admin
-- `window.addToCartData(event, id, name, price, image)` — Add to cart from any page
-- `window.addToWishlistData(event, id)` — Toggle wishlist from any page
+- `window.initNavBarAuth` -- Refresh navbar auth state
+- `window.updateCartBadge` -- Update cart count/total in navbar
+- `window.showBootstrapToast(message, type)` -- Show global toast notification
+- `window.isSellerOrAdmin()` -- Check if current user is seller/admin
 
 ### Storage as Database
 
-Since there is no backend, `localStorage` acts as the database:
+`localStorage` acts as the persistent data store:
 
 - All CRUD operations go through `storageService.js`
 - `sessionStorage` holds the current user session
@@ -242,52 +231,48 @@ Since there is no backend, `localStorage` acts as the database:
 
 ```
 User (base)
-├── Customer
-├── Seller
-└── Admin
+|-- Customer
+|-- Seller
++-- Admin
 ```
 
-### User (Base Class) — `Js/models/User.js`
+### User (Base Class)
 
 | Field       | Type   | Access   | Description                            |
 | ----------- | ------ | -------- | -------------------------------------- |
 | `#id`       | string | readonly | UUID via `crypto.randomUUID()`         |
 | `#email`    | string | get/set  | User email address                     |
 | `#name`     | string | get/set  | Full name                              |
-| `#password` | string | get/set  | Plain-text password                    |
+| `#password` | string | get/set  | Password                               |
 | `#role`     | string | get/set  | `"customer"`, `"seller"`, or `"admin"` |
 | `#status`   | string | get/set  | `"active"` (default)                   |
 
-### Customer — `Js/models/Customer.js`
+### Customer
 
 Extends `User`. Adds:
-| Field | Type | Description |
-|----------------|---------|-------------|
-| `#orderHistory` | Array | List of past orders |
 
-**`toJSON()`** returns: `{ id, name, email, password, role, status, orderHistory }`
+| Field            | Type  | Description        |
+| ---------------- | ----- | ------------------ |
+| `#orderHistory`  | Array | List of past orders |
 
-### Seller — `Js/models/Seller.js`
+### Seller
 
 Extends `User`. Adds:
-| Field | Type | Description |
-|-------------------|--------|-------------|
-| `#sellerID` | string | Separate seller UUID |
-| `#storeName` | string | Defaults to `"NO STORE NAME"` |
-| `#storeDescription` | string | Store description |
-| `#products` | Array | Product IDs managed by seller |
-| `#salesHistory` | Array | Order IDs |
-| `#totalRevenue` | number | Running total |
 
-**`toJSON()`** returns: `{ id, name, email, password, role, status, sellerID, storeName, storeDescription, products, salesHistory, totalRevenue }`
+| Field               | Type   | Description                   |
+| ------------------- | ------ | ----------------------------- |
+| `#sellerID`         | string | Separate seller UUID          |
+| `#storeName`        | string | Store display name            |
+| `#storeDescription` | string | Store description             |
+| `#products`         | Array  | Product IDs managed by seller |
+| `#salesHistory`     | Array  | Order IDs                     |
+| `#totalRevenue`     | number | Running revenue total         |
 
-### Admin — `Js/models/Admin.js`
+### Admin
 
 Extends `User` with no additional fields.
 
-**`toJSON()`** returns: `{ id, name, email, password, role, status }`
-
-### Product — `Js/models/Product.js`
+### Product
 
 | Field                 | Type   | Description          |
 | --------------------- | ------ | -------------------- |
@@ -295,52 +280,20 @@ Extends `User` with no additional fields.
 | `#productName`        | string | Product name         |
 | `#procuctCategory`    | string | Category             |
 | `#productDescription` | string | Description          |
-| `#productPrice`       | number | Price in EGP         |
+| `#productPrice`       | number | Price                |
 | `#sellerID`           | string | Seller who listed it |
 | `#imageUrl`           | string | Product image URL    |
 | `#stockQuantity`      | number | Available stock      |
-| `#createdDate`        | Date   | When created         |
+| `#createdDate`        | Date   | Creation date        |
 
-### Cart — `Js/models/Cart.js`
+### Cart & Order Models
 
-| Field         | Type   | Description         |
-| ------------- | ------ | ------------------- |
-| `#cartID`     | string | UUID                |
-| `#customerID` | string | Owner               |
-| `#cartItems`  | Array  | Array of `CartItem` |
-
-### CartItem — `Js/models/CartItem.js`
-
-| Field        | Type   | Description       |
-| ------------ | ------ | ----------------- |
-| `#productId` | string | Product reference |
-| `#quantity`  | number | Quantity          |
-
-### Order — `Js/models/Order.js`
-
-| Field          | Type   | Description               |
-| -------------- | ------ | ------------------------- |
-| `#id`          | string | UUID                      |
-| `#customerId`  | string | Customer who placed order |
-| `#items`       | Array  | Array of `OrderItem`      |
-| `#totalPrice`  | number | Calculated total          |
-| `#createdDate` | Date   | Creation timestamp        |
-
-### OrderItem — `Js/models/OrderItem.js`
-
-| Field              | Type   | Description       |
-| ------------------ | ------ | ----------------- |
-| `#productId`       | string | Product reference |
-| `#quantity`        | number | Quantity ordered  |
-| `#priceAtPurchase` | number | Price snapshot    |
-
-### ID Generator — `Js/models/idGenerator.js`
-
-```javascript
-export function generateID() {
-  return crypto.randomUUID();
-}
-```
+| Model       | Key Fields                            | Description      |
+| ----------- | ------------------------------------- | ---------------- |
+| `Cart`      | cartID, customerID, cartItems[]       | Shopping cart     |
+| `CartItem`  | productId, quantity                   | Single cart item  |
+| `Order`     | id, customerId, items[], total        | Customer order    |
+| `OrderItem` | productId, quantity, priceAtPurchase  | Single order item |
 
 ---
 
@@ -348,18 +301,16 @@ export function generateID() {
 
 ### localStorage Keys
 
-| Key                          | Type                        | Description                                   |
-| ---------------------------- | --------------------------- | --------------------------------------------- |
-| `products`                   | `Array<Product>`            | All products in the platform                  |
-| `orders`                     | `Array<Order>`              | All orders from all users                     |
-| `users`                      | `Array<User>`               | All registered users                          |
-| `cart`                       | `Array<{userid, items[]}>`  | Shopping carts for all users                  |
-| `WishLists`                  | `Object<userId: Product[]>` | Wishlists keyed by user ID                    |
-| `currentUser`                | `Object`                    | Extended profile data (address, etc.)         |
-| `RememberedUser`             | `Object`                    | Remember-me login data                        |
-| `reviewPromptShown_<userId>` | `Array<orderId>`            | Tracks which orders have shown review prompts |
-| `cartUpdated`                | `timestamp`                 | Trigger for cart cross-tab sync               |
-| `wishUpdated`                | `timestamp`                 | Trigger for wishlist cross-tab sync           |
+| Key              | Type                        | Description                          |
+| ---------------- | --------------------------- | ------------------------------------ |
+| `products`       | `Array<Product>`            | All products in the platform         |
+| `orders`         | `Array<Order>`              | All orders from all users            |
+| `users`          | `Array<User>`               | All registered users                 |
+| `cart`           | `Array<{userid, items[]}>`  | Shopping carts for all users         |
+| `WishLists`      | `Object<userId: Product[]>` | Wishlists keyed by user ID           |
+| `RememberedUser` | `Object`                    | Remember-me login data               |
+| `cartUpdated`    | `timestamp`                 | Trigger for cart cross-tab sync      |
+| `wishUpdated`    | `timestamp`                 | Trigger for wishlist cross-tab sync  |
 
 ### sessionStorage Keys
 
@@ -369,504 +320,296 @@ export function generateID() {
 | `currentSeller`  | `Object` | Logged-in seller data              |
 | `currentAdmin`   | `Object` | Logged-in admin data               |
 | `MyCart`         | `Object` | Current user's cart (quick access) |
-| `showLoginToast` | `"true"` | Flag to show welcome toast on Home |
 
-### storageService.js — Exported Functions
+### storageService.js -- Key Functions
 
-| Function                                 | Description                        |
-| ---------------------------------------- | ---------------------------------- |
-| `getCurrentUser()`                       | Get current user from session      |
-| `getCurrentSeller()`                     | Get current seller from session    |
-| `getAllProducts()`                       | Get all products from localStorage |
-| `getAllOrders()`                         | Get all orders from localStorage   |
-| `getAllUsers()`                          | Get all users from localStorage    |
-| `getProductById(id)`                     | Find product by ID                 |
-| `addProductToStorage(product)`           | Add new product                    |
-| `updateProduct(product)`                 | Update existing product            |
-| `removeProductFromStorage(id)`           | Delete product                     |
-| `saveProducts(products)`                 | Overwrite products array           |
-| `saveOrders(orders)`                     | Overwrite orders array             |
-| `getSellerProducts(sellerId)`            | Get products for a seller          |
-| `getSellerOrders(sellerId)`              | Get order items for a seller       |
-| `getSellerTotalRevenue(sellerId)`        | Calculate seller revenue           |
-| `loadProductsForSeller(sellerId)`        | Render seller products table       |
-| `loadOrdersForSeller()`                  | Render seller orders table         |
-| `getWishlist()`                          | Get all wishlists                  |
-| `isInWishlist(productId)`                | Check if product is wishlisted     |
-| `addToWishlist(product)`                 | Add product to wishlist            |
-| `removeFromWishlist(productId)`          | Remove from wishlist               |
-| `toggleWishlist(product)`                | Toggle wishlist state              |
-| `getCart()`                              | Get all carts                      |
-| `getUserCart()`                          | Get current user's cart            |
-| `getUserCartItems()`                     | Get current user's cart items      |
-| `addToCart(product)`                     | Add product to cart                |
-| `removeFromCart(productId)`              | Remove from cart                   |
-| `updateCartItemQuantity(productId, qty)` | Update quantity                    |
-| `clearCart()`                            | Empty current user's cart          |
-| `getCartCount()`                         | Total item count in cart           |
+| Function                          | Description                   |
+| --------------------------------- | ----------------------------- |
+| `getCurrentUser()`                | Get current user from session |
+| `getAllProducts()`                | Get all products              |
+| `getAllOrders()`                  | Get all orders                |
+| `getAllUsers()`                   | Get all users                 |
+| `addProductToStorage(product)`    | Add new product               |
+| `updateProduct(product)`          | Update existing product       |
+| `removeProductFromStorage(id)`    | Delete product                |
+| `getSellerProducts(sellerId)`     | Get seller's products         |
+| `getSellerOrders(sellerId)`       | Get seller's order items      |
+| `getSellerTotalRevenue(sellerId)` | Calculate seller revenue      |
+| `addToCart(product)`              | Add product to cart           |
+| `removeFromCart(productId)`       | Remove from cart              |
+| `clearCart()`                     | Empty current user's cart     |
+| `toggleWishlist(product)`         | Toggle wishlist state         |
+| `getCartCount()`                  | Total item count in cart      |
 
 ---
 
 ## 8. Pages & Features
 
-### 8.1 Home Page (`Home.html` → `Home.js`)
+### 8.1 Home Page
 
 - **Hero Banner** with featured products
-- **Category Grid** — Browse by Fruits, Vegetables, Meat & Fish, Dairy, Bakery, Beverages, Snacks
-- **Featured Products** — Carousel/grid of top products
-- **Daily/Monthly Sales** — Countdown timer to end of month
-- **Popular & Top-Rated** sections
-- Auto-loads products from `localStorage` or seeds from `ecobazar.json`
+- **Category Grid** -- Fruits, Vegetables, Meat & Fish, Dairy, Bakery, Beverages, Snacks
+- **Featured Products** carousel/grid
+- **Daily/Monthly Sales** with countdown timer
+- **Popular & Top-Rated** product sections
+- Auto-seeds products from `ecobazar.json` on first load
 
-### 8.2 Product Catalog (`Product.html` → `productController.js`)
+### 8.2 Product Catalog
 
 - **Grid/List View** toggle
 - **Category Sidebar** with item counts
-- **Search** — Real-time text filter
-- **Filters** — Price range slider, Rating checkboxes, Organic toggle, In-Stock toggle
-- **Sorting** — Price (low/high), Name (A-Z/Z-A), Rating, Discount
-- **Pagination** — 9 products per page
-- **URL Params** — `?category=Fruits`, `?search=banana`
-- **Add to Cart / Wishlist** — Inline buttons per product card
+- **Real-time Search** filter
+- **Advanced Filters** -- Price range, rating, organic, in-stock
+- **Sorting** -- Price, name, rating, discount
+- **Pagination** -- 9 products per page
+- **URL Parameters** -- `?category=Fruits`, `?search=banana`
+- **Add to Cart / Wishlist** buttons per product card
 
-### 8.3 Product Details (`ProductDetails.html` → `ProductDetails.js`)
+### 8.3 Product Details
 
-- **Image Gallery** with main image display
-- **Product Info** — Name, price, old price, discount badge, stock status, SKU, brand, category, tags
-- **Quantity Selector** — +/- buttons with stock limit
-- **Add to Cart** button with visual success feedback
-- **Tabs:**
-  - **Descriptions** — Product description with feature list
-  - **Additional Information** — Weight, type, category, stock, tags
-  - **Customer Feedback** — Reviews with star ratings and review form
-- **Related Products** — Up to 4 products from same category
-- **Social Sharing** links
+- **Image Gallery** with thumbnails
+- **Product Info** -- Price, discount badge, stock status, brand, category
+- **Quantity Selector** with stock limit
+- **Tabbed Content:** Description, additional info, customer reviews
+- **Related Products** from same category
+- **Review System** -- Star rating + comment (customers only)
 
-### 8.4 Login (`Login.html` → `Login.js`)
+### 8.4 Login
 
-- Email & password fields
-- **Show/Hide Password** toggle
-- **Remember Me** checkbox (persists to localStorage)
-- Role-based redirect after login:
-  - Customer → `Home.html`
-  - Seller → `Seller.html`
-  - Admin → `Admin.html`
-- Toast notification for successful registration redirect
+- Email & password with show/hide toggle
+- **Remember Me** checkbox
+- Role-based redirect: Customer -> Home, Seller -> Dashboard, Admin -> Admin Panel
 
-### 8.5 Registration (`Register.html` → `Register.js`)
+### 8.5 Registration
 
-- Fields: First Name, Last Name, Email, Password, Confirm Password, Phone, Street, City, Country, Role
-- **Real-Time Validation**:
-  - Name: letters only
-  - Email: valid email format, uniqueness check
-  - Password: min 7 chars, 1 uppercase, 1 lowercase, 1 digit
-  - Phone: Egyptian format `01[0125]XXXXXXXX`
-- Creates `Customer` or `Seller` instance depending on role selection
-- Redirects to Login page with success toast
+- **Fields:** Name, Email, Password, Phone, Address, Role
+- **Real-Time Validation:** Email uniqueness, password strength, phone format
+- Creates Customer or Seller based on role
 
-### 8.6 Forget Password (`Forgetpassword.html` → `ForgetPassword.js`)
+### 8.6 Forgot Password
 
-- User provides: First Name, Last Name, Email, Phone
-- Verifies all 4 fields match stored user data
-- On success: resets password to the user's email value
-- Shows modal with result (success/failure)
+- Verify identity with name, email, and phone
+- Resets password on successful verification
 
-### 8.7 Shopping Cart (`Cart.html` → `Cart.js`)
+### 8.7 Shopping Cart
 
-- **Cart Table** — Product image, name, price, quantity (+/- buttons), subtotal, delete button
-- **Cart Summary** — Subtotal, shipping (free), total
-- **Proceed to Checkout** — Requires login (shows login modal if not authenticated)
-- **Return to Shop** button
-- **Toast Notifications** — Out of stock, minimum quantity, empty cart
-- Cart syncs between `localStorage` and `sessionStorage`
+- Product table with quantity controls
+- Cart summary with subtotal and total
+- **Proceed to Checkout** (login required)
+- Cross-session cart sync
 
-### 8.8 Checkout (`Checkout.html` → `Checkout.js`)
+### 8.8 Checkout
 
-- **Order Summary** — List of products with quantities and subtotals
-- **Billing Form** — First Name, Last Name, City, Country, Email, Phone, Street Address
-- **Form Validation** — All fields required with regex validation
-- **Auto-Fill** — Populates form from current user profile
-- **Login Guard** — Shows modal if not logged in
-- **Confirm Order** — Validates stock, decrements inventory, marks order as `Processing`, clears cart
-- **Return to Cart** button
+- Order summary with product details
+- Billing form with validation (auto-fills from profile)
+- Stock verification and inventory management
+- Redirects to Home after successful order
 
-### 8.9 Wishlist (`WishList.html` → `WishList.js`)
+### 8.9 Wishlist
 
-- **Product List** — Image, name, price, stock status
-- **Add to Cart** button per item
-- **Remove** button per item
-- **Empty State** — Message when wishlist is empty
-- **Login Guard** — Shows modal for guests
-- Cross-tab sync via `storage` event
+- Product list with stock status
+- **Add to Cart** and **Remove** buttons
+- Cross-tab sync via `storage` events
+- Login required for access
 
-### 8.10 Customer Dashboard (`userdashboard.html` → `userDashboard.js`)
+### 8.10 Customer Dashboard
 
-- **Sidebar Navigation:** Dashboard, Order History, Wishlist, Shopping Cart, Settings, Logout
-- **Dashboard Section:**
-  - Profile card with avatar, name, role
-  - Billing address card
-- **Order History Section:**
-  - Table with Order ID, Date, Total, Status, Actions
-  - **View Details** — Modal with order items, quantities, per-item status
-  - **Cancel Order** — Confirmation modal, restores product stock
-  - **Review Order** — Available for completed orders (see Reviews section)
-- **Settings Section:**
-  - Account Settings form (name, email, phone)
-  - Address form (street, city, country)
-  - Change Password form (current, new, confirm)
-- **Auto-detect completed orders** — Shows review modal prompt
+- **Profile** -- Avatar, name, billing address
+- **Order History** -- View details, cancel orders, review completed orders
+- **Settings** -- Edit account info, address, change password
+- **Auto Review Prompt** for completed orders
 
-### 8.11 Seller Dashboard (`Seller.html` → `sellerController.js` + `storageService.js`)
+### 8.11 Seller Dashboard
 
-- **Product Management** — Add, edit, delete products
-- **Orders Table** — View all orders for seller's products per-product
-- **Order Actions** — Confirm (mark completed), Cancel (restore stock)
-- **Revenue Tracking** — Total revenue from completed orders
-- **Delete Confirmation Modal** — Prevents accidental deletions
-- **Cancel Order Item Modal** — Confirm before cancelling
+- **Product Management** -- Add, edit, delete products
+- **Orders Table** -- View orders per product with status
+- **Order Actions** -- Confirm (complete) or cancel
+- **Revenue Tracking** -- Total revenue from completed sales
 
-### 8.12 Order Management (`orderManagment.html` → `orderManagment.js`)
+### 8.12 Order Management
 
-- **Line Chart** (Chart.js) — Order totals, product counts, completed products
-- **Orders Table** — All orders with pagination (10 per page)
-- **Order Status Badges** — Pending, Processing, Completed, Cancelled, User Cancelled
-- **Pagination Controls** — Prev/Next with page info
+- **Charts** (Chart.js): Orders overview line chart, popular products bar chart
+- **Orders Table** -- Paginated with status badges
 
-### 8.13 Admin Dashboard (`Admin.html`)
+### 8.13 Admin Dashboard
 
-- Admin-level user and order management interface
+- **Overview** -- Total Users, Sellers, Orders, Revenue stats
+- **Charts** -- Orders overview, popular products, users/sellers distribution
+- **Manage Users** -- View, search, toggle status, delete, reset password
+- **Manage Sellers** -- KPIs, filter, toggle active/inactive, delete
+- **Products** -- Browse all products with category filter, search, pagination
+- **All Orders** -- View all orders with detail modal, pagination
 
 ### 8.14 Static Pages
 
-- **About Us** (`AboutUs.html`) — Company information
-- **Contact Us** (`ContactUs.html`) — Contact form/details
+- **About Us** -- Company information and team
+- **Contact Us** -- Contact form and details
 
 ---
 
-## 9. JavaScript Modules Reference
-
-### Page Scripts (loaded directly by HTML pages)
-
-| Script              | Page                | Responsibility                                          |
-| ------------------- | ------------------- | ------------------------------------------------------- |
-| `Home.js`           | Home.html           | Load data, render categories/products, countdown timer  |
-| `Login.js`          | Login.html          | Login form handling, remember-me, redirects             |
-| `Register.js`       | Register.html       | Registration form validation & submission               |
-| `ForgetPassword.js` | Forgetpassword.html | Password reset verification                             |
-| `Cart.js`           | Cart.html           | Cart table rendering, quantity management, checkout     |
-| `Checkout.js`       | Checkout.html       | Order class, summary, form validation, order completion |
-| `ProductDetails.js` | ProductDetails.html | Product details rendering, reviews, related products    |
-| `WishList.js`       | WishList.html       | Wishlist display & management                           |
-| `userDashboard.js`  | userdashboard.html  | Customer dashboard: orders, settings, reviews           |
-| `orderManagment.js` | orderManagment.html | Charts & paginated order table                          |
-| `NavBar.js`         | All pages (module)  | Navbar auth, search, cart badge, role-based UI          |
-| `Toast.js`          | All pages           | Global toast notification system                        |
-| `Footer.js`         | —                   | Empty (footer is static)                                |
-
-### Service Layer (`Js/services/`)
-
-| Module              | Exports                 | Purpose                                      |
-| ------------------- | ----------------------- | -------------------------------------------- |
-| `storageService.js` | 30+ functions           | Central CRUD layer for all localStorage data |
-| `authService.js`    | `register()`, `login()` | User authentication logic                    |
-| `Login.js`          | —                       | Login form event binding                     |
-| `Register.js`       | —                       | Register form event binding                  |
-
-### Controllers (`Js/controllers/`)
-
-| Module                 | Purpose                                                         |
-| ---------------------- | --------------------------------------------------------------- |
-| `productController.js` | Product catalog page: filtering, sorting, pagination, rendering |
-| `sellerController.js`  | Seller dashboard: product CRUD, order management, revenue       |
-
-### Models (`Js/models/`)
-
-| Module           | Class          | Description                             |
-| ---------------- | -------------- | --------------------------------------- |
-| `User.js`        | `User`         | Base user class with private fields     |
-| `Customer.js`    | `Customer`     | Extends User, adds order history        |
-| `Seller.js`      | `Seller`       | Extends User, adds store info & revenue |
-| `Admin.js`       | `Admin`        | Extends User                            |
-| `Product.js`     | `Product`      | Product with private fields             |
-| `Cart.js`        | `Cart`         | Cart container                          |
-| `CartItem.js`    | `CartItem`     | Single cart item                        |
-| `Order.js`       | `Order`        | Order container                         |
-| `OrderItem.js`   | `OrderItem`    | Single order item                       |
-| `idGenerator.js` | `generateID()` | UUID generation                         |
-
----
-
-## 10. Authentication & Authorization
+## 9. Authentication & Authorization
 
 ### Registration Flow
 
 ```
-Register.html → Register.js
-   ↓ validate all fields
-   ↓ check email uniqueness against localStorage["users"]
-   ↓ create Customer or Seller instance
-   ↓ save to localStorage["users"] via .toJSON()
-   ↓ redirect to Login.html?registered=true
+Register Page
+  -> Validate all fields (format, uniqueness)
+  -> Create Customer or Seller instance
+  -> Save to localStorage
+  -> Redirect to Login
 ```
 
 ### Login Flow
 
 ```
-Login.html → Login.js
-   ↓ find user by email + password in localStorage["users"]
-   ↓ store in sessionStorage:
-      • currentUser (customer)
-      • currentSeller (seller)
-      • currentAdmin (admin)
-   ↓ set showLoginToast flag
-   ↓ redirect by role:
-      • customer → Home.html
-      • seller  → Seller.html
-      • admin   → Admin.html
+Login Page
+  -> Find user by email + password
+  -> Store in sessionStorage
+  -> Redirect by role
 ```
 
 ### Session Management
 
-- **Login:** User object stored in `sessionStorage` (cleared on tab close)
-- **Remember Me:** Stores credentials in `localStorage["RememberedUser"]`
-- **Logout:** Clears all `sessionStorage` keys, reloads page
-- **Auth Guards:** Pages like `userdashboard.html` redirect to `Login.html` if no session
+- **Login:** User stored in `sessionStorage` (cleared on tab close)
+- **Remember Me:** Credentials persisted in `localStorage`
+- **Logout:** Clears session, reloads page
+- **Auth Guards:** Protected pages redirect to Login if no session
 
 ### Role-Based UI
 
-- `window.isSellerOrAdmin()` — Returns `true` if seller or admin is logged in
-- Navbar hides cart/wishlist buttons for sellers and admins
-- Product cards hide "Add to Cart" and "Wishlist" buttons for sellers/admins
-- Footer hides cart/wishlist links for sellers/admins
+- Navbar hides cart/wishlist for sellers and admins
+- Product cards hide "Add to Cart" / "Wishlist" for sellers/admins
+- Admin pages are restricted to admin role
 
 ---
 
-## 11. Cart & Checkout Flow
+## 10. Cart & Checkout Flow
 
 ### Adding to Cart
 
 ```
-User clicks "Add to Cart" (Product page / Catalog / Home)
-   ↓ storageService.addToCart(product)
-   ↓ finds user's cart in localStorage["cart"] array
-   ↓ if product exists → increment quantity (respects stock limit)
-   ↓ if new → push product with quantity
-   ↓ sync to localStorage["cart"] + sessionStorage["MyCart"]
-   ↓ fire cartUpdated event → navbar badge updates
+User clicks "Add to Cart"
+  -> Find/create user's cart in localStorage
+  -> If product exists -> increment quantity (respects stock)
+  -> If new -> add product with quantity 1
+  -> Sync localStorage + sessionStorage
+  -> Update navbar cart badge
 ```
-
-### Cart Page Behavior
-
-- Renders cart items from `sessionStorage["MyCart"]`
-- Quantity buttons sync to both `localStorage` and `sessionStorage`
-- Delete button removes item and reloads
-- Total is calculated from all subtotals
-- **"Proceed to Checkout"** checks login:
-  - If not logged in → shows login required modal
-  - If cart empty → shows empty cart toast
-  - If OK → creates/updates pending Order in `localStorage["orders"]` → redirects to `Checkout.html`
 
 ### Checkout Completion
 
 ```
-User fills billing form → clicks "Confirm Order"
-   ↓ form validated (name, email, phone, city, street)
-   ↓ Order.compelteOrder() called:
-      ↓ find pending order for user
-      ↓ verify stock for each product
-      ↓ if any out of stock → show error toast, abort
-      ↓ decrement stock in localStorage["products"]
-      ↓ set order status to "Processing"
-      ↓ clear cart in session + localStorage
-      ↓ show success toast
-      ↓ redirect to Home.html after 1.5s
+User fills billing form -> Confirm Order
+  -> Validate form fields
+  -> Verify stock for each product
+  -> Decrement stock in localStorage
+  -> Set order status to "Processing"
+  -> Clear cart
+  -> Redirect to Home
 ```
 
 ---
 
-## 12. Order Lifecycle
+## 11. Order Lifecycle
 
 ```
-┌─────────┐     ┌────────────┐     ┌───────────┐     ┌───────────┐
-│ Pending  │ ──► │ Processing │ ──► │ Completed │     │ Cancelled │
-└─────────┘     └────────────┘     └───────────┘     └───────────┘
-    │                  │                                    ▲
-    │                  │         (seller cancels)           │
-    │                  └────────────────────────────────────┘
-    │                                                       ▲
-    │              (user cancels)                           │
-    └──────────────────────────────────────────────────────┘
++---------+     +------------+     +-----------+
+| Pending | --> | Processing | --> | Completed |
++---------+     +------------+     +-----------+
+    |                  |
+    | (user cancels)   | (seller cancels)
+    v                  v
++----------------+  +-----------+
+| User Cancelled |  | Cancelled |
++----------------+  +-----------+
 ```
 
-### Status Definitions
+| Status          | Set By   | Meaning                              |
+| --------------- | -------- | ------------------------------------ |
+| `Pending`       | System   | Order created, awaiting checkout     |
+| `Processing`    | System   | Checkout completed, awaiting seller  |
+| `Completed`     | Seller   | Seller confirmed delivery            |
+| `Cancelled`     | Seller   | Seller cancelled the order           |
+| `UserCancelled` | Customer | Customer cancelled before completion |
 
-| Status          | Set By   | Meaning                                          |
-| --------------- | -------- | ------------------------------------------------ |
-| `pending`       | System   | Order created, awaiting checkout completion      |
-| `Processing`    | System   | Checkout completed, awaiting seller confirmation |
-| `completed`     | Seller   | Seller confirmed delivery                        |
-| `cancelled`     | Seller   | Seller cancelled the order                       |
-| `userCancelled` | Customer | Customer cancelled before completion             |
-
-### Product-Level Status
-
-Each product within an order can have its own status, allowing partial fulfillment. The overall order status is recalculated:
-
-- All products completed → `completed`
-- All products cancelled → `cancelled`
-- Mixed → `processing`
-
-### Stock Management
-
-- **On Order Completion:** Stock decremented for each product
-- **On Cancellation (user or seller):** Stock restored for cancelled items
+Each product within an order can have its own status, enabling partial fulfillment. Stock is restored automatically on cancellation.
 
 ---
 
-## 13. Product Reviews System
+## 12. Product Reviews System
 
-### Data Structure
-
-Reviews are stored inside each product object in `localStorage["products"]`:
-
-```json
-{
-  "product_id": 1,
-  "name": "Fresh Organic Bananas",
-  "reviews": [
-    {
-      "user_id": "USR-123",
-      "rating": 5,
-      "comment": "Always fresh and perfectly ripe!",
-      "date": "2026-03-01T12:00:00.000Z"
-    }
-  ],
-  "rating": 5
-}
-```
-
-### Review Features
-
-- **Product Details Page** — Displays all reviews with reviewer name, avatar, stars, comment, and date
-- **Review Form** — Logged-in customers can submit star rating (1-5) and comment
-- **Duplicate Prevention** — Users can only review a product once
-- **Auto-Recalculation** — Average rating updates when new review is submitted
-- **Guest Prompt** — Non-logged-in users see "Please login to write a review"
-- **Role Restriction** — Sellers/admins cannot write reviews
-
-### Review from Dashboard
-
-Completed orders show a **"Review" button** in the user dashboard:
-
-- Opens modal with all order products
-- Each product has interactive star selector + comment textarea
-- Products already reviewed show "Already Reviewed" badge
-- Reviews saved to product data in localStorage
-- Auto-prompt: on dashboard load, if any completed order has unreviewed products, the review modal opens automatically
+- Star rating (1-5) with comment for each product
+- One review per user per product
+- Average rating auto-recalculates on new review
+- Reviews displayed on product detail page with reviewer info
+- Completed orders prompt review from customer dashboard
+- Only customers can write reviews
 
 ---
 
-## 14. Wishlist System
+## 13. Wishlist System
 
-### Storage
-
-Wishlists are stored as an object keyed by user ID:
-
-```json
-{
-    "USR-123": [ { product_id: 1, name: "...", ... }, ... ],
-    "USR-456": [ ... ]
-}
-```
-
-### Features
-
-- **Add/Remove Toggle** — Click heart icon on product card to toggle
-- **Wishlist Page** — Full list with product details, stock status, add-to-cart
-- **Cross-Page Sync** — Heart icon updates across all pages via `wishlistChanged` custom event
-- **Cross-Tab Sync** — `storage` event listener triggers page reload
-- **Login Required** — Guest users see a login modal
-- **Role Hidden** — Sellers/admins don't see wishlist UI
+- **Toggle** -- Click heart icon on any product card to add/remove
+- **Wishlist Page** -- Full product list with stock status and add-to-cart
+- **Cross-Page Sync** -- Heart icons update via custom events
+- **Cross-Tab Sync** -- Automatic updates via `storage` events
+- **Login Required** -- Guest users see a login prompt
 
 ---
 
-## 15. Seller Dashboard
+## 14. Seller Dashboard
 
 ### Product Management
 
-- **Add Product Form** — Name, category, description, price, stock, image URL
-- **Edit Product** — Click edit button → form pre-fills with product data
-- **Delete Product** — Confirmation modal → removes from localStorage
-- **Products Table** — Image, name, price, stock badge, edit/delete actions
+- **Add/Edit Product** -- Name, category, description, price, stock, image URL
+- **Delete Product** -- Confirmation modal before removal
+- **Products Table** -- Image, name, price, stock with edit/delete actions
 
 ### Order Management
 
-- **Orders Table** — Date, buyer email, product name, quantity, status, actions
-- **Confirm Order** — Sets product status to `completed`, recalculates order status
-- **Cancel Order** — Confirmation modal, sets product status to `cancelled`, restores stock
-- **Status Badges** — Color-coded: pending (warning), processing (info), completed (success), cancelled (danger)
+- **Orders Table** -- Buyer, product, quantity, status, actions
+- **Confirm** -- Marks product as completed
+- **Cancel** -- Restores stock, updates status
+- **Status Badges** -- Color-coded by status
 
 ---
 
-## 16. Admin Dashboard
+## 15. Admin Dashboard
 
-The admin dashboard (`Admin.html`) provides platform-level management capabilities for overseeing all users, orders, and system operations.
+### Overview
 
----
+- **Stats Cards** -- Total Users, Sellers, Orders, Revenue
+- **Charts:** Orders overview (line), popular products (bar), users/sellers (doughnut)
 
-## 17. Customer Dashboard
+### Management Sections
 
-### Sections
-
-| Section           | Features                                                              |
-| ----------------- | --------------------------------------------------------------------- |
-| **Dashboard**     | Profile card, billing address, quick links                            |
-| **Order History** | All orders table, view details, cancel order, review completed orders |
-| **Wishlist**      | Redirects to dedicated wishlist page                                  |
-| **Shopping Cart** | Link to cart page                                                     |
-| **Settings**      | Account info, address, password change                                |
-
-### Order Detail Modal
-
-Clicking "View Details" shows a comprehensive modal with:
-
-- Order ID, date, overall status
-- Each product with image, name, quantity, price, per-product status
-- Order total
-
-### Order Cancellation
-
-- Confirmation modal with warning text
-- Sets status to `userCancelled`
-- Restores product stock
-- Updates order list immediately
+| Section            | Features                                                             |
+| ------------------ | -------------------------------------------------------------------- |
+| **Manage Users**   | Search, view details, toggle active/inactive, delete, reset password |
+| **Manage Sellers** | KPI cards, status filter, search, toggle active, delete              |
+| **Products**       | Browse all products, category filter, search, pagination             |
+| **All Orders**     | View all orders, order detail modal, pagination                      |
 
 ---
 
-## 18. Order Management (Seller)
+## 16. Customer Dashboard
 
-### Analytics Chart (Chart.js)
-
-- **Line 1** — Order Total (completed products only) in EGP
-- **Line 2** — Total products per order
-- **Line 3** — Completed products per order
-
-### Orders Table
-
-- Paginated (10 per page)
-- Prev/Next navigation
-- All orders displayed regardless of status
+| Section           | Features                                                            |
+| ----------------- | ------------------------------------------------------------------- |
+| **Dashboard**     | Profile card, billing address                                       |
+| **Order History** | All orders with view details, cancel order, review completed orders |
+| **Settings**      | Edit account info, address, change password                         |
 
 ---
 
-## 19. Search & Filtering
+## 17. Search & Filtering
 
-### Navbar Search (All Pages)
+### Navbar Search
 
-- **Auto-Suggest Dropdown** — Shows top 5 matching products by name or category
-- Each suggestion shows: image, name, price
-- Enter key or Search button → redirects to `Product.html?search=query`
-- **Mobile Search** — Collapsible search row for mobile devices
+- **Auto-Suggest** -- Top 5 matching products by name or category
+- Each suggestion shows image, name, and price
+- Redirects to Product page with search query
+- **Mobile Search** -- Collapsible search row
 
 ### Product Catalog Filters
 
@@ -876,43 +619,36 @@ Clicking "View Details" shows a comprehensive modal with:
 | Search      | Text input     | Filters by name and description |
 | Price Range | Slider         | Max price filter                |
 | Rating      | Radio buttons  | Minimum star rating             |
-| Organic     | Checkbox       | Show only organic products      |
-| In Stock    | Checkbox       | Show only in-stock items        |
+| Organic     | Checkbox       | Organic products only           |
+| In Stock    | Checkbox       | In-stock items only             |
 | Sort        | Dropdown       | Price, name, rating, discount   |
-
-### URL Parameters
-
-- `Product.html?category=Fruits` — Pre-select category
-- `Product.html?search=banana` — Pre-fill search
-- `ProductDetails.html?id=1` — View specific product
 
 ---
 
-## 20. Responsive Design
+## 18. Responsive Design
 
-The application uses **Bootstrap 5's grid system** with custom CSS for full responsiveness:
+Built with **Bootstrap 5's grid system** and custom media queries:
 
-| Breakpoint                 | Layout                                                             |
-| -------------------------- | ------------------------------------------------------------------ |
-| **Mobile** (< 768px)       | Single column, hamburger menu, mobile search toggle, stacked cards |
-| **Tablet** (768px - 992px) | Two-column grids, collapsible sidebar                              |
-| **Desktop** (> 992px)      | Full multi-column layout, mega menu, side-by-side panels           |
+| Breakpoint             | Layout                                        |
+| ---------------------- | --------------------------------------------- |
+| **Mobile** (< 768px)   | Single column, hamburger menu, stacked cards  |
+| **Tablet** (768-992px)  | Two-column grids, collapsible sidebar         |
+| **Desktop** (> 992px)  | Full multi-column layout, side-by-side panels |
 
-### Key Responsive Features
+### Key Features
 
 - Navbar collapses to hamburger menu on mobile
-- Search bar moves to a toggleable row on mobile
-- Product grid adapts: 1 col (mobile) → 2 cols (tablet) → 3–4 cols (desktop)
-- Cart/checkout forms stack vertically on small screens
+- Product grid adapts: 1 col -> 2 cols -> 3-4 cols
+- Cart and checkout forms stack on small screens
 - Dashboard sidebar becomes full-width on mobile
 
 ---
 
-## 21. JSON Seed Data
+## 19. JSON Seed Data
 
 ### `Data/ecobazar.json`
 
-Contains initial product data organized by category:
+Product data organized by 7 categories:
 
 ```json
 {
@@ -926,7 +662,7 @@ Contains initial product data organized by category:
 }
 ```
 
-### Product Object Shape
+### Product Shape
 
 ```json
 {
@@ -945,35 +681,17 @@ Contains initial product data organized by category:
   "organic": true,
   "stock": 150,
   "seller_id": "SLR-1",
-  "dailySale": true,
-  "monthSale": false,
   "reviews": [
-    { "user_id": 1, "rating": 5, "comment": "Always fresh!" },
-    { "user_id": 2, "rating": 4, "comment": "Great quality." }
+    { "user_id": 1, "rating": 5, "comment": "Always fresh!" }
   ]
 }
 ```
 
 ---
 
-## 22. Known Limitations
+## 20. Contributors
 
-| Area             | Limitation                                                         |
-| ---------------- | ------------------------------------------------------------------ |
-| **Security**     | Passwords stored in plain text in localStorage (client-side only)  |
-| **Storage**      | localStorage has a ~5-10MB limit per origin                        |
-| **Multi-device** | Data is local to the browser — no cloud sync                       |
-| **Images**       | Products use external URLs (Unsplash, etc.) — require internet     |
-| **Payments**     | No real payment integration — order completes on form submit       |
-| **Email**        | No email notifications for orders or password reset                |
-| **Concurrency**  | No locking mechanism — simultaneous tabs may cause race conditions |
-| **SEO**          | Single-page dynamic content is not crawlable                       |
-
----
-
-## 23. Contributors
-
-This project was developed as part of the **ITI (Information Technology Institute) 4-Month Program — Client-Side Technologies (CST)** track.
+This project was developed as part of the **ITI (Information Technology Institute) 4-Month Program -- Client-Side Technologies (CST)** track.
 
 ---
 

@@ -44,7 +44,6 @@ const PAGE_SIZE = 9;
 // ── Init ───────────────────────────────────────────────────────────────────────
 window.addEventListener("DOMContentLoaded", () => {
     allProducts = getAllProducts();
-    console.log("Products loaded from storage:", allProducts);
 
     // Read ?category= from URL (e.g. Product.html?category=MeatFish)
     const urlParams = new URLSearchParams(window.location.search);
@@ -306,7 +305,8 @@ function renderProducts(products) {
             e.stopPropagation();
             if (!inStock) return;
             addToCart(product);
-            updateCartBadge();
+            if (window.updateCartBadge) window.updateCartBadge();
+
             showToast(`🛒 ${name} added to cart!`);
         });
 

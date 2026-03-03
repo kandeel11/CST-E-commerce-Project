@@ -104,9 +104,7 @@ export function loadOrdersForSeller() {
             userid
         }));
     });
-    //console.log(rows);
     renderOrdersTable(rows);
-    //return rows;
 }
 
 function renderOrdersTable(orders) {
@@ -469,17 +467,12 @@ function getMyCart() {
     if (!user) {
         console.warn("getMyCart called but no user is logged in.");
     };
-
-    console.log("getMyCart called for user:", user);
-    // if (!user) return null;
     const cart = getCart();
-    // console.log("Full cart data:", cart);
 
 
     if (!user) {
         let myCart = JSON.parse(sessionStorage.getItem(key));
         if (myCart) {
-            console.log("Found existing MyCart in sessionStorage for not logged in user.");
             return myCart;
         } else {
             let userCart = { "userid": "notlogin", "items": [] };
@@ -489,7 +482,6 @@ function getMyCart() {
 
     }
     let userCart = cart.find(e => e.userid === user.id);
-    console.log("User cart found in main cart array:", userCart);
     if (!userCart) {
         userCart = { "userid": user.id, "items": [] };
         cart.push(userCart);
@@ -501,12 +493,8 @@ function getMyCart() {
 
 export function addToCart(product) {
     const user = getCurrentUser();
-    // if (!user) return false;
     const myCart = getMyCart();
-    // if (!myCart) return false; // should not happen, getMyCart creates it if missing
     const cart = getCart();
-    // console.log(user);
-    console.log(cart);
     let userCart;
     if (!user) {
         userCart = myCart; // use session-based cart for not logged in users
@@ -532,7 +520,6 @@ export function addToCart(product) {
         let userCart = cart.find(e => e.userid === user.id);
         if (!userCart) {
             userCart = { "userid": user.id, "items": [] };
-            console.log("Creating new cart for user:", user.id);
             cart.push(userCart);
         }
 

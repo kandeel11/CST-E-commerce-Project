@@ -330,7 +330,6 @@ function setupQuantityAndCart() {
         let userId = current_user ? current_user.id : null;
         let cart = carts.find(c => c.userid === userId)?.items || [];
         let products = JSON.parse(localStorage.getItem('products')) || [];
-        console.log(currentProductData);
         addToCart(currentProductData);
         // Update cart badge in navbar
         if (window.updateCartBadge) window.updateCartBadge();

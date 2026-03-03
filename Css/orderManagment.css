@@ -54,13 +54,18 @@
     background-color: #ff9800;
 }
 .status.shipped {
-    background-color: #2196f3;
+    background-color: #ff9800;
 }
-.status.delivered {
-    background-color: #4caf50;
+.badge-completed{
+    background-color: #2196f3 !important ;
+    color: white !important;
 }
 .status.cancelled {
     background-color: #f44336;
+}
+.view-details-link {
+    color: #2196f3 !important;
+    text-decoration: none;
 }
 
 

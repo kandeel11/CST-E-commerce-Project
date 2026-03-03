@@ -122,7 +122,6 @@ window.addEventListener("storage", function (e) {
 
 function renderAllOrders() {
     const orders = getOrders();
-    console.log("Orders for current user:", orders);
     allOrdersBody.innerHTML = "";
 
     if (orders.length === 0) {
@@ -186,11 +185,8 @@ function formatDate(dateStr) {
 
 // ---- View Order Detail (Modal) ----
 window.viewOrderDetail = function (orderId) {
-    console.log("Viewing details for order ID:", orderId);
     const orders = getOrders();
-    console.log("Found orders for user:", orders);
     const order = orders.find(o => o.orderid === Number(orderId));
-    console.log("Found order:", order);
     if (!order) return;
 
     const body = document.getElementById("orderDetailBody");

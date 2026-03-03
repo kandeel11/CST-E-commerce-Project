@@ -5,7 +5,7 @@ if (!sessionStorage.getItem('currentUser')) {
     isGuest = true;
 }
 
-import { removeFromWishlist } from ".//services/storageService.js";
+import { removeFromWishlist, addToCart } from ".//services/storageService.js";
 
 let current_user_Id = isGuest ? null : JSON.parse(sessionStorage.getItem('currentUser')).id;
 
@@ -96,9 +96,6 @@ window.addEventListener('load', function () {
 
     let id = current_user_Id;
     wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
-    console.log(id);
-    console.log(wishlist_obj[id]);
-
     Restore_data(id);
 
 
@@ -136,8 +133,6 @@ function createProductCard(product) {
     const mainImg = product.images && product.images.length > 0 ? product.images[0] : '';
     const stockText = getStockText(product.stock);
     const isOutOfStock = product.stock <= 0;
-    console.log('Creating product card for:', product);
-
     return `
      <div class="dismisser-row" data-id="${product.product_id}">
         <div class="dismisser-col-product">
@@ -153,7 +148,7 @@ function createProductCard(product) {
             </span>
         </div>
         <div class="dismisser-col-actions">
-            <button class="btn-add-cart" onclick="addToCart(${product.product_id})" ${isOutOfStock ? 'disabled' : ''}>
+            <button class="btn-add-cart" id="btn-add-cart-${product.product_id}" ${isOutOfStock ? 'disabled' : ''} title="${isOutOfStock ? 'Out of Stock' : 'Add to Cart'}">
                 <i class="fas fa-shopping-cart"></i> ${isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
             </button>
             <button class="btn-dismiss" onclick="delett(event)" title="Remove">
@@ -163,6 +158,36 @@ function createProductCard(product) {
     </div>
     `;
 }
+document.getElementById('table_data').addEventListener('click', function (event) {
+    if (event.target.closest('.btn-add-cart')) {
+        const row = event.target.closest('.dismisser-row');
+        const productId = row.dataset.id;
+
+        // Get product from current user's wishlist (already has all fields)
+        let wishlist_obj = JSON.parse(localStorage.getItem('WishLists')) || {};
+        let userProducts = wishlist_obj[current_user_Id] || [];
+        let product = userProducts.find(p => String(p.product_id) == String(productId));
+
+        // Fallback: try localStorage "products" key
+        if (!product) {
+            let allProducts = JSON.parse(localStorage.getItem('products')) || [];
+            product = allProducts.find(p => String(p.product_id) == String(productId));
+        }
+
+        if (product && product.stock > 0) {
+            const result = addToCart(product);
+            if (result) {
+                if (window.updateCartBadge) window.updateCartBadge();
+                showToast(`🛒 ${product.name} added to cart!`);
+            } else {
+                showToast(`⚠️ Stock limit reached for ${product.name}`, 'warning');
+            }
+        } else if (product) {
+            showToast(`❌ ${product.name} is out of stock`, 'error');
+        }
+    }
+});
+
 
 
 function getStockText(stock) {
@@ -174,7 +199,6 @@ function getStockText(stock) {
 
 function delett(event) {
     let el = event.target;
-    console.log('Clicked delete for element:', el.dataset.id || el.closest('.dismisser-row')?.dataset.id);
     while (el && !el.dataset.id) {
         el = el.parentElement;
     }
@@ -189,8 +213,6 @@ function delett(event) {
         wishlist_obj[current_user_Id] = userProducts.filter(p => p.product_id != productId);
         localStorage.setItem('WishLists', JSON.stringify(wishlist_obj));
         localStorage.setItem("wishUpdated", Date.now());
-        console.log('Removed productId from wishlist_obj:', productId);
-
         // Also remove via storageService (wrapped in try-catch to not block DOM removal)
         try {
             removeFromWishlist(productId);

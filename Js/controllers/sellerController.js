@@ -34,7 +34,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (!sessionStorage.getItem("currentSeller"))
         window.location.href = "../Pages/Login.html";
     currentUser = getCurrentSeller();
-    console.log("Current Seller:", currentUser);
     if (JSON.parse(localStorage.getItem("users")).find(u => u.id === currentUser.id).Active == false) {
         document.getElementById("openAddProductModalBtn").disabled = true;
         const toastEl = document.getElementById("inactiveToast");
