@@ -1382,7 +1382,7 @@ function display_pgn(arr) {
 
     html = ''
     for (let i = 0; i < num_pages; i++) {
-        if (i == 0) { html += `<a class='link active'>${i + 1}</a>` }
+        if (i == 0) { html += `<a class='link Active'>${i + 1}</a>` }
         else {
             html += `<a class='link'>${i + 1}</a>`
         }
@@ -1456,8 +1456,8 @@ function activate_button(i) {
     i--;
     numbers = document.querySelectorAll(".link");
 
-    document.querySelector(".active").classList.remove("active");
-    numbers[i].classList.add("active");
+    document.querySelector(".Active").classList.remove("Active");
+    numbers[i].classList.add("Active");
 
 
 }
