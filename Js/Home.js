@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let users = [];
         const defaultAdmin = new User("Default", "Admin", "Admin", "admin@example.com", "Admin123!");
         users.push(defaultAdmin);
-        const defaultSeller = new User("Default", "Seller", "Seller", "seller@example.com", "Seller123!");
+        const defaultSeller = new User("Default", "Seller", "Seller", "seller@example.com", "   ");
         users.push(defaultSeller);
         const defaultUser = new User("Default", "Customer", "User", "customer@example.com", "Customer123!");
         users.push(defaultUser);
@@ -143,6 +143,8 @@ function loadData() {
 
 
 
+
+
 // ========== CATEGORIES ==========
 const categoryMeta = {
     Fruits: { name: "Fruits", icon: "fa-apple-alt" },
@@ -250,7 +252,8 @@ function renderProducts(data) {
                                 ${oldPriceHtml}
                                 <div class="small">${starsHtml}</div>
                             </div>
-                            ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="add-btn-circle" onclick="window.addToCartData(event, ${product.product_id || 0}, '${encodeURIComponent(name).replace(/'/g, "%27")}', ${price}, '${imgSrc}')"><i class="fas fa-shopping-bag"></i></button>`}
+                            
+                            ${window.isSellerOrAdmin && window.isSellerOrAdmin() || window.isOutOfStock(product.product_id || 0) ? '' : `<button class="add-btn-circle" onclick="window.addToCartData(event, ${product.product_id || 0}, '${encodeURIComponent(name).replace(/'/g, "%27")}', ${price}, '${imgSrc}')"><i class="fas fa-shopping-bag"></i></button>`}
                         </div>
                     </div>
                 </div>
@@ -302,7 +305,7 @@ function renderHotDeals(data) {
                     </a>
                     <div class="d-flex align-items-center gap-2 mt-3">
                         ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="btn btn-outline-secondary btn-sm rounded-circle" style="width:36px;height:36px;" onclick="window.addToWishlistData(event, ${featured.product_id || 0})"><i class="${wishlistIds.includes(featured.product_id || 0) ? 'fas fa-heart text-success' : 'far fa-heart'}"></i></button>`}
-                        ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;" onclick="window.addToCartData(event, ${featured.product_id || 0}, '${encodeURIComponent(featured.name).replace(/'/g, "%27")}', ${featured.price}, '${featImg}')">
+                        ${window.isSellerOrAdmin && window.isSellerOrAdmin() || window.isOutOfStock(featured.product_id || 0) ? '' : `<a href="#" class="btn btn-sm rounded-pill flex-grow-1 fw-semibold py-2" style="background:var(--primary-green);color:#fff;" onclick="window.addToCartData(event, ${featured.product_id || 0}, '${encodeURIComponent(featured.name).replace(/'/g, "%27")}', ${featured.price}, '${featImg}')">
                             <i class="fas fa-shopping-bag me-1"></i> Add to Cart
                         </a>`}
                         <a href="ProductDetails.html?id=${featured.product_id || 0}" class="btn btn-outline-secondary btn-sm rounded-circle d-flex justify-content-center align-items-center text-decoration-none" style="width:36px;height:36px;"><i class="far fa-eye"></i></a>
@@ -358,7 +361,7 @@ function renderHotDeals(data) {
                             <div>
                                 <span class="fw-bold small">EGP ${p.price.toFixed(2)}</span> ${oldPriceHtml}
                             </div>
-                            ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>`}
+                            ${(window.isSellerOrAdmin && window.isSellerOrAdmin()) || window.isOutOfStock(p.product_id || 0) ? '' : `<button class="add-btn-circle" style="width:28px;height:28px;font-size:0.65rem;" onclick="window.addToCartData(event, ${p.product_id || 0}, '${encodeURIComponent(p.name).replace(/'/g, "%27")}', ${p.price}, '${img}')"><i class="fas fa-shopping-bag"></i></button>`}
                         </div>
                         <div>${starsHtml(p.rating)}</div>
                     </div>

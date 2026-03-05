@@ -6,6 +6,11 @@ window.isSellerOrAdmin = function () {
     return !!(sessionStorage.getItem('currentSeller') || sessionStorage.getItem('currentAdmin'));
 };
 
+window.isOutOfStock = function (productId) {
+    console.log(JSON.parse(localStorage.getItem('products') || '[]').find(p => p.product_id == productId)?.stock === 0);
+    return JSON.parse(localStorage.getItem('products') || '[]').find(p => p.product_id == productId)?.stock === 0;
+};
+
 // Ensure globally available UI helpers
 window.showBootstrapToast = function (message, type = 'success') {
     let toastContainer = document.querySelector('.toast-container');

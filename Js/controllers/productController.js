@@ -270,7 +270,7 @@ function renderProducts(products) {
                 ? `<br><small class="text-muted text-decoration-line-through">EGP ${product.oldPrice.toFixed(2)}</small>`
                 : ""}
                     </div>
-                    ${window.isSellerOrAdmin && window.isSellerOrAdmin() ? '' : `<button class="btn btn-success btn-sm add-cart-btn ${!inStock ? "disabled" : ""}"
+                    ${window.isSellerOrAdmin && window.isSellerOrAdmin() || window.isOutOfStock(product.product_id || 0) ? '' : `<button class="btn btn-success btn-sm add-cart-btn ${!inStock ? "disabled" : ""}"
                             ${!inStock ? "disabled" : ""}>
                         <i class="fas fa-cart-plus me-1"></i>
                         <span class="d-none d-md-inline">Add</span>

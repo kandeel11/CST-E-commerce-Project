@@ -19,7 +19,7 @@
             "unit": "Bunch",
             "weight": "1 kg",
             "organic": true,
-            "stock": 150,
+            "stock": 2,
             "seller_id": "SLR-1",
             "dailySale": true,
             "monthSale": false,

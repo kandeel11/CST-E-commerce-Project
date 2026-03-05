@@ -507,12 +507,9 @@ export function addToCart(product) {
             existing.quantity = (existing.quantity || 1) + (product.quantity || 1);
         } else {
             userCart.items.push({ ...product, quantity: product.quantity || 1 });
-
         }
         sessionStorage.setItem("MyCart", JSON.stringify(myCart));
         return true;
-
-
     }
     if (user) {
         let userCart = cart.find(e => e.userid === user.id);
@@ -522,7 +519,10 @@ export function addToCart(product) {
         }
 
         const existing = userCart.items.find(item => item.product_id === product.product_id);
-
+        if (product.stock === 0) {
+            alert("Sorry, this item is currently out of stock and cannot be added to your cart.");
+            return false; // cannot add out of stock item
+        }
         if (existing) {
             if ((existing.quantity || 0) >= (product.stock || Infinity)) {
                 return false; // stock limit reached
