@@ -89,10 +89,10 @@ export class User {
 }
 
 
-let admin1 = new User("Mohamed", "Khaled", "Admin", "admin1@gmail.com", "Admin123456", "Street 1", "City 1", "Country 1", "0123456789");
-let users1 = JSON.parse(localStorage.getItem("users")) || [];
-if (!users1.some(u => u.Email === admin1.Email)) {
-    users1.push(admin1);
-}
+// let admin1 = new User("Mohamed", "Khaled", "Admin", "admin1@gmail.com", "Admin123456", "Street 1", "City 1", "Country 1", "0123456789");
+// let users1 = JSON.parse(localStorage.getItem("users")) || [];
+// if (!users1.some(u => u.Email === admin1.Email)) {
+//     users1.push(admin1);
+// }
 
 

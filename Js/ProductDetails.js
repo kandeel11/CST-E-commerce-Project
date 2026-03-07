@@ -149,6 +149,11 @@ function renderProductDetails(product) {
     renderReviews(product);
 
     setupQuantityAndCart();
+    if (window.isOutOfStock(product.product_id || 0)) {
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        addToCartBtn.textContent = 'Out of Stock';
+        addToCartBtn.disabled = true;
+    }
 
     // Hide add-to-cart and quantity for sellers/admins
     if (window.isSellerOrAdmin && window.isSellerOrAdmin()) {
