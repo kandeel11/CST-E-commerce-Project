@@ -6,10 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
         let users = [];
         const defaultAdmin = new User("Default", "Admin", "Admin", "admin@example.com", "Admin123!");
         users.push(defaultAdmin);
-        const defaultSeller = new User("Default", "Seller", "Seller", "seller@example.com", "   ");
-        users.push(defaultSeller);
         const defaultUser = new User("Default", "Customer", "User", "customer@example.com", "Customer123!");
         users.push(defaultUser);
+        const defaultSeller = new User("Default", "Seller", "Seller", "seller@example.com", "Seller123!");
+        users.push(defaultSeller);
         localStorage.setItem("users", JSON.stringify(users));
     }
     if (!localStorage.getItem("products")) {

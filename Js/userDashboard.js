@@ -111,6 +111,7 @@ function getOrders() {
 // ---- Auto-refresh orders when storage changes (from other tabs or pages) ----
 window.addEventListener("storage", function (e) {
     if (e.key === "orders" || e.key === "order") {
+
         const ordersSection = document.getElementById("section-orders");
         if (ordersSection && !ordersSection.classList.contains("d-none")) {
             renderAllOrders();
@@ -139,6 +140,27 @@ function createOrderRow(order) {
     const statusClass = getStatusClass(order.orderStatus);
     const itemCount = order.products ? order.products.length : 0;
     const productText = itemCount === 1 ? "1 Product" : `${itemCount} Products`;
+    const CancelledProducts = order.products ? order.products.filter(p => p.status && p.status.toLowerCase() === "cancelled").length : 0;
+    const UserCancelledProducts = order.products ? order.products.filter(p => p.status && p.status.toLowerCase() === "usercancelled").length : 0;
+    console.log(order.products ? order.products.filter(p => p.status && p.status.toLowerCase() === "usercancelled").length : 0);
+    console.log(UserCancelledProducts);
+    if (CancelledProducts === itemCount) {
+        order.orderStatus = "cancelled";
+    }
+    else if (UserCancelledProducts > 0) {
+        order.orderStatus = "usercancelled";
+    }
+    else if (CancelledProducts > 0) {
+        order.orderStatus = "partially cancelled";
+    }
+
+    order.total = 0; // Initialize total before calculation
+    const totalAmount = order.products.forEach(item => {
+        if (item.status === "completed") {
+
+            order.total += (item.quantity * item.price);
+        }
+    });
     const isCancellable = order.orderStatus && !['completed', 'cancelled', 'usercancelled'].includes(order.orderStatus.toLowerCase());
     const cancelBtn = isCancellable
         ? `<button class="btn btn-outline-danger btn-sm rounded-pill ms-2 cancel-order-btn" onclick="confirmCancelOrder('${order.orderid}')"><i class="fas fa-times-circle me-1"></i>Cancel</button>`
@@ -191,6 +213,12 @@ window.viewOrderDetail = function (orderId) {
 
     const body = document.getElementById("orderDetailBody");
     let itemsHtml = "";
+    order.total = 0; // Reset total before recalculating
+    order.products.forEach(item => {
+        if (item.status === "completed") {
+            order.total += (item.quantity * item.price);
+        }
+    });
 
     if (order.products && order.products.length > 0) {
         order.products.forEach(item => {
@@ -211,6 +239,7 @@ window.viewOrderDetail = function (orderId) {
             `;
         });
     }
+
 
     body.innerHTML = `
         <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
@@ -270,6 +299,11 @@ function cancelOrder(orderId) {
         showToast("Order not found!", true);
         return;
     }
+    order.products.forEach(item => {
+        if (!(item.status) || item.status.toLowerCase() === "processing") {
+            item.status = "userCancelled";
+        }
+    });
 
     order.orderStatus = "userCancelled";
     localStorage.setItem("orders", JSON.stringify(allOrders));
