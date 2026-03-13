@@ -294,3 +294,76 @@ body {
         text-align: right;
     }
 }
+
+/* ── Test Credentials Card ────────────────────────────────────── */
+.test-credentials-card {
+    margin-top: 20px;
+    border: 1.5px dashed #00B207;
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: left;
+    background: #f6fff6;
+}
+
+.test-credentials-header {
+    background: #00B207;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 14px;
+    letter-spacing: 0.3px;
+}
+
+.test-credentials-body {
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.credential-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 7px 10px;
+    border: 1px solid #e5f5e5;
+}
+
+.credential-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    white-space: nowrap;
+    min-width: 62px;
+    text-align: center;
+}
+
+.badge-customer { background: #d1ecf1; color: #0c5460; }
+.badge-seller   { background: #fff3cd; color: #856404; }
+.badge-admin    { background: #f8d7da; color: #721c24; }
+
+.credential-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex: 1;
+    min-width: 0;
+}
+
+.credential-email {
+    font-size: 12px;
+    color: #333;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.credential-pass {
+    font-size: 11px;
+    color: #777;
+    font-family: "Courier New", monospace;
+}

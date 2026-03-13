@@ -62,6 +62,9 @@ The entire application runs in the browser  all state is stored in `localStorage
 ```
 CST-E-commerce-Project/
 |
+|-- index.html                 <- Root entry point (auto-redirects to Home)
+|
+|-- index.html                 <- Root entry point (auto-redirects to Home)
 |-- README.md
 |
 |-- Css/                       <- Page-specific stylesheets
@@ -96,6 +99,7 @@ CST-E-commerce-Project/
 |   |-- orderManagment.js      <- Order management charts & table
 |   |-- ProductDetails.js      <- Product detail page, reviews, related products
 |   |-- Register.js            <- Registration form with full validation
+|   |-- seedData.js            <- Default users / sellers seed (runs once)
 |   |-- Toast.js               <- Global toast notification utility
 |   |-- userDashboard.js       <- Customer dashboard: orders, settings, reviews
 |   |-- WishList.js            <- Wishlist page: add/remove/add-to-cart
@@ -156,15 +160,62 @@ CST-E-commerce-Project/
 
 ### Running the Project
 
-**Option A -- VS Code Live Server:**
+**Option A -- VS Code Live Server (recommended):**
 
 1. Install the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension
-2. Right-click `Pages/Home.html` -> **Open with Live Server**
+2. Right-click **`index.html`** (in the project root) -> **Open with Live Server**
+3. The app will automatically redirect to the Home page
 
+**Option B -- Open directly:**
+
+1. Open `index.html` in your browser (note: ES6 modules require a local server)
 
 ### First-Time Setup
 
-On first load, the app checks if `localStorage` has product data. If empty, it fetches from `Data/ecobazar.json` and seeds `localStorage`. You can register a new account or use any seeded user data.
+On first load, `Home.js` automatically seeds `localStorage` with:
+- **16 default accounts** (1 admin, 3 customers, 12 sellers — see table below)
+- **50+ products** fetched from `Data/ecobazar.json`
+
+You can also register a new account manually.
+
+---
+
+### Default Test Accounts
+
+These accounts are seeded automatically on first run and can be used to test each role:
+
+#### Admin
+
+| Email | Password |
+| ----- | -------- |
+| `admin@ecobazar.com` | `Admin@1234` |
+
+#### Customers
+
+| Email | Password |
+| ----- | -------- |
+| `customer1@ecobazar.com` | `Customer@1234` |
+| `customer2@ecobazar.com` | `Customer@1234` |
+| `customer3@ecobazar.com` | `Customer@1234` |
+
+#### Sellers (IDs: SLR-001 through SLR-012)
+
+| Email | Password |
+| ----- | -------- |
+| `seller01@ecobazar.com` | `Seller@1234` |
+| `seller02@ecobazar.com` | `Seller@1234` |
+| `seller03@ecobazar.com` | `Seller@1234` |
+| `seller04@ecobazar.com` | `Seller@1234` |
+| `seller05@ecobazar.com` | `Seller@1234` |
+| `seller06@ecobazar.com` | `Seller@1234` |
+| `seller07@ecobazar.com` | `Seller@1234` |
+| `seller08@ecobazar.com` | `Seller@1234` |
+| `seller09@ecobazar.com` | `Seller@1234` |
+| `seller10@ecobazar.com` | `Seller@1234` |
+| `seller11@ecobazar.com` | `Seller@1234` |
+| `seller12@ecobazar.com` | `Seller@1234` |
+
+> **Tip:** The Login page shows a quick reference panel with sample credentials for each role.
 
 ---
 

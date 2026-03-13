@@ -53,7 +53,7 @@ Email.addEventListener("blur", function () {
     const emailValue = Email.value.trim();
     const emailError = document.getElementById('emailError');
     if (emailValue === '' || !validateEmail(emailValue)) {
-        Email.focus();
+        // Email.focus();
         Email.classList.remove('is-valid');
         Email.classList.add('is-invalid');
         emailError.textContent = 'Please enter a valid email address.';
@@ -76,7 +76,7 @@ passwordField.addEventListener("blur", function () {
     if (passwordValue === '' || passwordValue.length < 6) {
         passwordField.classList.remove('is-valid');
         passwordField.classList.add('is-invalid');
-        passwordField.focus();
+        // passwordField.focus();
         passwordError.textContent = 'Please enter your password (minimum 6 characters).';
         passwordError.style.display = 'block';
     } else {

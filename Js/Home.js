@@ -1,17 +1,8 @@
-import { User } from "../Js/Classes/User.js";
+import { seedDefaultUsers } from "../Js/seedData.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    if (!localStorage.getItem("users")) {
-        let users = [];
-        const defaultAdmin = new User("Default", "Admin", "Admin", "admin@example.com", "Admin123!");
-        users.push(defaultAdmin);
-        const defaultUser = new User("Default", "Customer", "User", "customer@example.com", "Customer123!");
-        users.push(defaultUser);
-        const defaultSeller = new User("Default", "Seller", "Seller", "seller@example.com", "Seller123!");
-        users.push(defaultSeller);
-        localStorage.setItem("users", JSON.stringify(users));
-    }
+    seedDefaultUsers();
     if (!localStorage.getItem("products")) {
         fetch("../Data/ecobazar.json")
             .then(response => {

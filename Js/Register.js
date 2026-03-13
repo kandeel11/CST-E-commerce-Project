@@ -24,7 +24,7 @@ FnameInput.addEventListener("blur", function () {
     if (nameValue === '') {
         FnameInput.classList.remove('is-valid');
         FnameInput.classList.add('is-invalid');
-        FnameInput.focus();
+        // FnameInput.focus();
 
     } else {
         FnameInput.classList.remove('is-invalid');
@@ -42,7 +42,7 @@ cityInput.addEventListener("blur", function () {
     if (nameValue === '') {
         cityInput.classList.remove('is-valid');
         cityInput.classList.add('is-invalid');
-        cityInput.focus();
+        // cityInput.focus();
     } else {
         cityInput.classList.remove('is-invalid');
         cityInput.classList.add('is-valid');
@@ -57,7 +57,7 @@ streetInput.addEventListener("blur", function () {
     if (nameValue === '') {
         streetInput.classList.remove('is-valid');
         streetInput.classList.add('is-invalid');
-        streetInput.focus();
+        // streetInput.focus();
     }
     else {
         streetInput.classList.remove('is-invalid');
@@ -73,7 +73,7 @@ phoneInput.addEventListener("blur", function () {
     if (nameValue === '' || !isValidPhone(nameValue)) {
         phoneInput.classList.remove('is-valid');
         phoneInput.classList.add('is-invalid');
-        phoneInput.focus();
+        // phoneInput.focus();
     } else {
         phoneInput.classList.remove('is-invalid');
         phoneInput.classList.add('is-valid');
@@ -89,7 +89,7 @@ countryInput.addEventListener("blur", function () {
     if (nameValue === '') {
         countryInput.classList.remove('is-valid');
         countryInput.classList.add('is-invalid');
-        countryInput.focus();
+        // countryInput.focus();
     } else {
         countryInput.classList.remove('is-invalid');
         countryInput.classList.add('is-valid');
@@ -105,7 +105,7 @@ LnameInput.addEventListener("blur", function () {
     if (nameValue === '') {
         LnameInput.classList.remove('is-valid');
         LnameInput.classList.add('is-invalid');
-        LnameInput.focus();
+        // LnameInput.focus();
     } else {
         LnameInput.classList.remove('is-invalid');
         LnameInput.classList.add('is-valid');
@@ -121,7 +121,7 @@ emailInput.addEventListener("blur", function () {
     if (emailValue === '' || !isValidEmail(emailValue)) {
         emailInput.classList.remove('is-valid');
         emailInput.classList.add('is-invalid');
-        emailInput.focus();
+        // emailInput.focus();
         emailError.textContent = 'Please enter a valid email address.';
         emailError.style.display = 'block';
     } else {
@@ -142,7 +142,7 @@ roleInput.addEventListener("blur", function () {
     if (roleValue === '') {
         roleInput.classList.remove('is-valid');
         roleInput.classList.add('is-invalid');
-        roleInput.focus();
+        // roleInput.focus();
         roleError.textContent = 'Please select a role.';
         roleError.style.display = 'block';
     } else {
@@ -157,7 +157,7 @@ passwordInput.addEventListener("blur", function () {
     if (passwordValue === '' || passwordValue.length < 6 || !IsValidPassword(passwordValue)) {
         passwordInput.classList.remove('is-valid');
         passwordInput.classList.add('is-invalid');
-        passwordInput.focus();
+        // passwordInput.focus();
 
     }
     else {
@@ -180,7 +180,7 @@ confirmPasswordInput.addEventListener("blur", function () {
     if (confirmPasswordValue === '' || confirmPasswordValue !== passwordValue) {
         confirmPasswordInput.classList.remove('is-valid');
         confirmPasswordInput.classList.add('is-invalid');
-        confirmPasswordInput.focus();
+        // confirmPasswordInput.focus();
 
     }
     else {

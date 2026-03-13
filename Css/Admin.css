@@ -30,6 +30,107 @@ body{
     min-width: 0;
 }
 
+/* ============================================================
+   MOBILE / RESPONSIVE LAYOUT
+   ============================================================ */
+
+/* Overlay backdrop (existing #overlay element in Admin.html) */
+#overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1040;
+}
+
+#overlay.active {
+    display: block;
+}
+
+/* Sidebar overlay on mobile (xs < 576px) */
+@media (max-width: 575.98px) {
+
+    /* Content area takes full width */
+    .d-flex > .all {
+        width: 100% !important;
+        padding: 10px !important;
+    }
+
+    /* Sidebar becomes a slide-in fixed overlay */
+    .sidebar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 260px !important;
+        z-index: 1050;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        /* Override Bootstrap d-none so it is in DOM but off-screen */
+        display: block !important;
+    }
+
+    /* JS adds .show → slides sidebar in */
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    /* Stack stats cards full width */
+    .row.g-3 .col-sm-12 {
+        width: 100% !important;
+    }
+
+    /* Charts stack vertically */
+    .boxs {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    /* Top nav bar wraps on very small screens */
+    .firstnav {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .firstnav h2 {
+        font-size: 1.1rem !important;
+    }
+
+    /* Tables scroll horizontally on mobile */
+    .user-management-container .table-responsive,
+    .dismisser-table {
+        overflow-x: auto !important;
+    }
+
+    /* Tighten table cells */
+    .user-management-container td,
+    .user-management-container th {
+        padding: 6px 8px !important;
+        font-size: 0.8rem !important;
+    }
+}
+
+/* Tablet: sm–md (576px–767.98px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+    .sidebar {
+        width: 200px !important;
+    }
+
+    .all {
+        padding: 12px !important;
+    }
+
+    .firstnav h2 {
+        font-size: 1.2rem;
+    }
+
+    .boxs {
+        margin-left: 0 !important;
+    }
+}
+
 /* User management responsive */
 @media (max-width: 575px) {
     #section-users .user-management-container {
