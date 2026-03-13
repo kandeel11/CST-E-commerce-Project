@@ -330,7 +330,7 @@ btntocheckout.addEventListener("click", function () {
   }
 
   localStorage.setItem("orders", JSON.stringify(orders));
-  window.location.href = "checkout.html";
+  window.location.href = "Checkout.html";
 });
 
 function loadComponents() {

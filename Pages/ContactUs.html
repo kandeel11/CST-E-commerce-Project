@@ -169,11 +169,6 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('footer-placeholder').innerHTML = data;
-
-                // Only load Footer.js logic AFTER HTML is injected, to avoid null errors
-                const footerScript = document.createElement('script');
-                footerScript.src = '../Js/Footer.js';
-                document.body.appendChild(footerScript);
             })
             .catch(error => console.error('Error loading footer:', error));
     </script>

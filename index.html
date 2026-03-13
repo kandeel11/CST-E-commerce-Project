@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoBazar Router</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #f4fff5, #eef7ff);
+            color: #1b2a1f;
+        }
+
+        .card {
+            width: min(700px, 92vw);
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: 1.45rem;
+        }
+
+        p {
+            margin: 0 0 16px;
+            line-height: 1.5;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 18px;
+            columns: 2;
+            column-gap: 24px;
+        }
+
+        li {
+            margin: 0 0 8px;
+        }
+
+        a {
+            color: #0a7f2e;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        code {
+            background: #eef3f7;
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card">
+        <!-- <h1>EcoBazar Index Router</h1>
+        <p>
+            Use <code>?route=home</code> (or any route below) to navigate. If no route is provided,
+            this page automatically opens <code>Pages/Home.html</code>.
+        </p>
+        <ul>
+            <li><a href="?route=home">home</a></li>
+            <li><a href="?route=product">product</a></li>
+            <li><a href="?route=productdetails">productdetails</a></li>
+            <li><a href="?route=cart">cart</a></li>
+            <li><a href="?route=checkout">checkout</a></li>
+            <li><a href="?route=login">login</a></li>
+            <li><a href="?route=register">register</a></li>
+            <li><a href="?route=forgetpassword">forgetpassword</a></li>
+            <li><a href="?route=wishlist">wishlist</a></li>
+            <li><a href="?route=userdashboard">userdashboard</a></li>
+            <li><a href="?route=seller">seller</a></li>
+            <li><a href="?route=admin">admin</a></li>
+            <li><a href="?route=aboutus">aboutus</a></li>
+            <li><a href="?route=contactus">contactus</a></li>
+            <li><a href="?route=customer">customer</a></li>
+        </ul> -->
+    </main>
+
+    <script>
+        (function () {
+            const routes = {
+                home: "Pages/Home.html",
+                aboutus: "Pages/AboutUs.html",
+                admin: "Pages/Admin.html",
+                cart: "Pages/Cart.html",
+                checkout: "Pages/Checkout.html",
+                contactus: "Pages/ContactUs.html",
+                customer: "Pages/Customer.html",
+                forgetpassword: "Pages/Forgetpassword.html",
+                login: "Pages/Login.html",
+                product: "Pages/Product.html",
+                productdetails: "Pages/ProductDetails.html",
+                register: "Pages/Register.html",
+                seller: "Pages/Seller.html",
+                userdashboard: "Pages/userdashboard.html",
+                wishlist: "Pages/WishList.html",
+                navbar: "Pages/NavBar.html",
+                footer: "Pages/Footer.html"
+            };
+
+            const params = new URLSearchParams(window.location.search);
+            const raw = (params.get("route") || params.get("page") || "").trim().toLowerCase();
+
+            if (!raw) {
+                window.location.replace(routes.home);
+                return;
+            }
+            const route = raw.endsWith(".html") ? raw.slice(0, -5) : raw;
+            const target = routes[route];
+
+            if (target) {
+                window.location.replace(target);
+            }
+        })();
+    </script>
+</body>
+
+</html>

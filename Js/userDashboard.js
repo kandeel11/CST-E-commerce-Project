@@ -51,7 +51,7 @@ function switchSection(sectionName) {
 
     // Load data for certain sections
     if (sectionName === "orders") renderAllOrders();
-    if (sectionName === "wishlist") window.location.href = "wishlist.html"; // Redirect to wishlist page
+    if (sectionName === "wishlist") window.location.href = "WishList.html"; // Redirect to wishlist page
     if (sectionName === "settings") loadSettings();
 }
 

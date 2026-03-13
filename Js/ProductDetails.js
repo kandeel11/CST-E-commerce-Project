@@ -71,7 +71,7 @@ function renderProductDetails(product) {
         if (product.organic) tagsArr.push("Healthy");
     }
 
-    const renderTags = (tags) => tags.filter(Boolean).map(t => `<a href="Shop.html?category=${encodeURIComponent(t)}" class="text-dark text-decoration-none" onmouseover="this.style.color='var(--primary-green)'" onmouseout="this.style.color=''">${t}</a>`).join(', ');
+    const renderTags = (tags) => tags.filter(Boolean).map(t => `<a href="Product.html?category=${encodeURIComponent(t)}" class="text-dark text-decoration-none" onmouseover="this.style.color='var(--primary-green)'" onmouseout="this.style.color=''">${t}</a>`).join(', ');
 
     document.getElementById('product-category').textContent = product.category;
     document.getElementById('product-tags').innerHTML = renderTags(tagsArr);

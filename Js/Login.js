@@ -29,7 +29,7 @@ if (CurrentSeller) {
     window.location.href = `../Pages/Seller.html`;
 }
 if (CurrentAdmin) {
-    window.location.href = `../Pages/AdminDashboard.html`;
+    window.location.href = `../Pages/Admin.html`;
 }
 
 togglePassword.addEventListener('click', function () {
