@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             {
                 id: "SLR-12",
-                Fname: "Crystal Springs", Lname: "Water Co.",
+                Fname: "Crystal Springs", Lname: "Water",
                 Role: "Seller",
                 Email: "seller12@ecobazar.com",
                 password: "Seller012!",
