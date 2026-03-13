@@ -141,6 +141,7 @@ body{
     background-color: #27273b;
     color: white;
     padding: 20px;
+    flex-shrink: 0;
 }
 .sidebar h2 {
     text-align: center;
@@ -828,16 +829,16 @@ body { background: #f4f6f9; }
 }
 @media (max-width: 768px) {
     .sidebar {
-        position: fixed;     
-        left: -250px;      
+        position: fixed;
+        left: -250px;
         top: 0;
         width: 240px;
         height: 100vh;
-        z-index: 1050;       
+        z-index: 1050;
         transition: 0.3s;
     }
     .sidebar.show {
-        left: 0;    
+        left: 0;
     }
     #overlay {
         display: none;
@@ -849,11 +850,145 @@ body { background: #f4f6f9; }
         background: rgba(0,0,0,0.4);
         z-index: 1040;
     }
-
     #overlay.active {
         display: block;
     }
+    /* Stack KPI cards in 2-column grid on tablets */
+    .row > [class*="col-sm-12"] {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+    /* Allow horizontal scroll on wide tables */
+    .table-responsive-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }
+
+/* ── Extra-small screens (phones < 480px) ── */
+@media (max-width: 479px) {
+    /* Full-width KPI cards */
+    .box {
+        padding: 10px 12px;
+    }
+    .num {
+        font-size: 18px;
+    }
+    .title {
+        font-size: 10px;
+    }
+
+    /* Single-column KPI cards */
+    .row > [class*="col-sm-12"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    /* Charts */
+    .boxs {
+        height: auto;
+        min-height: 220px;
+        border-radius: 16px;
+    }
+
+    /* Compress the top navbar row */
+    .firstnav h2 {
+        font-size: 16px;
+    }
+    .firstnav {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 8px 10px !important;
+    }
+
+    /* Header bar wraps items */
+    .header-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 12px;
+        gap: 8px;
+    }
+    .header-bar > p {
+        font-size: 15px;
+    }
+    .search-group {
+        width: 100%;
+        max-width: 100%;
+    }
+    .dropdown {
+        width: 100%;
+    }
+    #cat_but {
+        width: 100%;
+    }
+
+    /* Pagination */
+    .pg_con {
+        flex-wrap: wrap;
+        gap: 6px;
+        padding: 12px;
+    }
+    .button, .link {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+
+    /* User management table */
+    #section-users .action-btn {
+        width: 26px;
+        height: 26px;
+    }
+
+    /* Sellers table: allow horizontal scroll */
+    #section-sellers .table-responsive {
+        font-size: .75rem;
+    }
+    #section-sellers .table td,
+    #section-sellers .table th {
+        font-size: .7rem;
+        padding: .35rem .4rem;
+    }
+    .seller-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: .65rem;
+    }
+
+    /* Products table */
+    .col-name  { max-width: 110px; }
+    .col-price,
+    .col-stock,
+    .col-rating { width: 60px; }
+
+    /* Orders table */
+    .dismisser-row > div {
+        font-size: .75rem;
+    }
+
+    /* Menu button always visible */
+    #menuBtn {
+        display: inline-flex !important;
+    }
+}
+
+/* ── Tiny screens (< 360px, e.g. Galaxy S5) ── */
+@media (max-width: 359px) {
+    .firstnav h2 {
+        font-size: 14px;
+    }
+    #adminName {
+        display: none;
+    }
+    .num {
+        font-size: 16px;
+    }
+    .action-btns .btn {
+        padding: .2rem .3rem;
+        font-size: .6rem;
+    }
+}
+
 #menuBtn{
     border: none;
     background-color: transparent;

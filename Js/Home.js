@@ -3,14 +3,237 @@ import { User } from "../Js/Classes/User.js";
 document.addEventListener("DOMContentLoaded", () => {
 
     if (!localStorage.getItem("users")) {
-        let users = [];
-        const defaultAdmin = new User("Default", "Admin", "Admin", "admin@example.com", "Admin123!");
-        users.push(defaultAdmin);
-        const defaultUser = new User("Default", "Customer", "User", "customer@example.com", "Customer123!");
-        users.push(defaultUser);
-        const defaultSeller = new User("Default", "Seller", "Seller", "seller@example.com", "Seller123!");
-        users.push(defaultSeller);
-        localStorage.setItem("users", JSON.stringify(users));
+        const now = new Date().toISOString();
+        const defaultUsers = [
+            // ── Admin ──────────────────────────────────────────────
+            {
+                id: "Admin-1",
+                Fname: "Mohamed", Lname: "Admin",
+                Role: "Admin",
+                Email: "admin@ecobazar.com",
+                password: "Admin123!",
+                address: "1 Admin St, Cairo, Egypt",
+                Phone: "0100000001",
+                Active: true,
+                dateCreated: now
+            },
+            // ── Default Customers ──────────────────────────────────
+            {
+                id: "Us-1",
+                Fname: "Alice", Lname: "Johnson",
+                Role: "User",
+                Email: "alice@ecobazar.com",
+                password: "Customer1!",
+                address: "10 Oak Ave, New York, USA",
+                Phone: "0111111111",
+                Active: true,
+                dateCreated: now
+            },
+            {
+                id: "Us-2",
+                Fname: "Bob", Lname: "Smith",
+                Role: "User",
+                Email: "bob@ecobazar.com",
+                password: "Customer2!",
+                address: "22 Pine Rd, London, UK",
+                Phone: "0122222222",
+                Active: true,
+                dateCreated: now
+            },
+            {
+                id: "Us-3",
+                Fname: "Carol", Lname: "Williams",
+                Role: "User",
+                Email: "carol@ecobazar.com",
+                password: "Customer3!",
+                address: "5 Maple Blvd, Toronto, Canada",
+                Phone: "0133333333",
+                Active: true,
+                dateCreated: now
+            },
+            // ── Default Sellers (SLR-1 … SLR-12) ──────────────────
+            {
+                id: "SLR-1",
+                Fname: "Nature's Best", Lname: "Organics",
+                Role: "Seller",
+                Email: "seller1@ecobazar.com",
+                password: "Seller001!",
+                address: "100 Farm Lane, California, USA",
+                Phone: "0141414141",
+                Active: true,
+                dateCreated: now,
+                rating: 4.8,
+                location: "California, USA",
+                totalProducts: 12,
+                description: "Certified organic produce and natural foods since 2010."
+            },
+            {
+                id: "SLR-2",
+                Fname: "Green Valley", Lname: "Farms",
+                Role: "Seller",
+                Email: "seller2@ecobazar.com",
+                password: "Seller002!",
+                address: "200 Valley Rd, Oregon, USA",
+                Phone: "0142424242",
+                Active: true,
+                dateCreated: now,
+                rating: 4.7,
+                location: "Oregon, USA",
+                totalProducts: 15,
+                description: "Family-owned farm delivering fresh vegetables and produce daily."
+            },
+            {
+                id: "SLR-3",
+                Fname: "Berry Fields", Lname: "Co.",
+                Role: "Seller",
+                Email: "seller3@ecobazar.com",
+                password: "Seller003!",
+                address: "300 Berry St, Washington, USA",
+                Phone: "0143434343",
+                Active: true,
+                dateCreated: now,
+                rating: 4.9,
+                location: "Washington, USA",
+                totalProducts: 8,
+                description: "Specializing in premium organic berries and small fruits."
+            },
+            {
+                id: "SLR-4",
+                Fname: "Prairie Ranch", Lname: "Meats",
+                Role: "Seller",
+                Email: "seller4@ecobazar.com",
+                password: "Seller004!",
+                address: "400 Ranch Rd, Texas, USA",
+                Phone: "0144444444",
+                Active: true,
+                dateCreated: now,
+                rating: 4.8,
+                location: "Texas, USA",
+                totalProducts: 10,
+                description: "Grass-fed, free-range meats from sustainable ranch operations."
+            },
+            {
+                id: "SLR-5",
+                Fname: "Tropical Bliss", Lname: "Imports",
+                Role: "Seller",
+                Email: "seller5@ecobazar.com",
+                password: "Seller005!",
+                address: "500 Palm Ave, Florida, USA",
+                Phone: "0145454545",
+                Active: true,
+                dateCreated: now,
+                rating: 4.6,
+                location: "Florida, USA",
+                totalProducts: 7,
+                description: "Importing the finest tropical fruits and coconut products."
+            },
+            {
+                id: "SLR-6",
+                Fname: "Ocean Fresh", Lname: "Seafood",
+                Role: "Seller",
+                Email: "seller6@ecobazar.com",
+                password: "Seller006!",
+                address: "600 Harbor Rd, Maine, USA",
+                Phone: "0146464646",
+                Active: true,
+                dateCreated: now,
+                rating: 4.9,
+                location: "Maine, USA",
+                totalProducts: 9,
+                description: "Wild-caught sustainable seafood, fresh from the Atlantic coast."
+            },
+            {
+                id: "SLR-7",
+                Fname: "Green Pastures", Lname: "Dairy",
+                Role: "Seller",
+                Email: "seller7@ecobazar.com",
+                password: "Seller007!",
+                address: "700 Dairy Ln, Vermont, USA",
+                Phone: "0147474747",
+                Active: true,
+                dateCreated: now,
+                rating: 4.7,
+                location: "Vermont, USA",
+                totalProducts: 11,
+                description: "Organic dairy from pasture-raised, grass-fed cows."
+            },
+            {
+                id: "SLR-8",
+                Fname: "Countryside Dairy", Lname: "Artisans",
+                Role: "Seller",
+                Email: "seller8@ecobazar.com",
+                password: "Seller008!",
+                address: "800 Cheese Way, Wisconsin, USA",
+                Phone: "0148484848",
+                Active: true,
+                dateCreated: now,
+                rating: 4.8,
+                location: "Wisconsin, USA",
+                totalProducts: 8,
+                description: "Handcrafted artisan cheeses using traditional European methods."
+            },
+            {
+                id: "SLR-9",
+                Fname: "Golden Crust", Lname: "Bakery",
+                Role: "Seller",
+                Email: "seller9@ecobazar.com",
+                password: "Seller009!",
+                address: "900 Bakery Ave, New York, USA",
+                Phone: "0149494949",
+                Active: true,
+                dateCreated: now,
+                rating: 4.9,
+                location: "New York, USA",
+                totalProducts: 10,
+                description: "Artisan bread and bakery goods made with organic ingredients."
+            },
+            {
+                id: "SLR-10",
+                Fname: "Sweet Harvest", Lname: "Treats",
+                Role: "Seller",
+                Email: "seller10@ecobazar.com",
+                password: "Seller010!",
+                address: "1000 Sweet St, Pennsylvania, USA",
+                Phone: "0150505050",
+                Active: true,
+                dateCreated: now,
+                rating: 4.7,
+                location: "Pennsylvania, USA",
+                totalProducts: 9,
+                description: "Premium baked goods and chocolate treats made with real ingredients."
+            },
+            {
+                id: "SLR-11",
+                Fname: "Sunrise Beverages", Lname: "Co.",
+                Role: "Seller",
+                Email: "seller11@ecobazar.com",
+                password: "Seller011!",
+                address: "1100 Sunrise Blvd, Georgia, USA",
+                Phone: "0151515151",
+                Active: true,
+                dateCreated: now,
+                rating: 4.8,
+                location: "Georgia, USA",
+                totalProducts: 12,
+                description: "Cold-pressed juices, organic teas, and specialty coffee roasters."
+            },
+            {
+                id: "SLR-12",
+                Fname: "Crystal Springs", Lname: "Water",
+                Role: "Seller",
+                Email: "seller12@ecobazar.com",
+                password: "Seller012!",
+                address: "1200 Spring Rd, Colorado, USA",
+                Phone: "0152525252",
+                Active: true,
+                dateCreated: now,
+                rating: 4.5,
+                location: "Colorado, USA",
+                totalProducts: 5,
+                description: "Natural spring water and sparkling beverages from mountain sources."
+            }
+        ];
+        localStorage.setItem("users", JSON.stringify(defaultUsers));
     }
     if (!localStorage.getItem("products")) {
         fetch("../Data/ecobazar.json")
