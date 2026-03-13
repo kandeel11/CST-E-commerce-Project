@@ -164,7 +164,30 @@ CST-E-commerce-Project/
 
 ### First-Time Setup
 
-On first load, the app checks if `localStorage` has product data. If empty, it fetches from `Data/ecobazar.json` and seeds `localStorage`. You can register a new account or use any seeded user data.
+On first load, the app checks if `localStorage` has product data. If empty, it fetches from `Data/ecobazar.json` and seeds `localStorage`. It also seeds **16 default accounts** (1 admin + 3 customers + 12 sellers) so you can log in immediately without registering.
+
+#### Default Test Accounts
+
+| Role       | Email                    | Password      | Notes                          |
+| ---------- | ------------------------ | ------------- | ------------------------------ |
+| **Admin**  | admin@ecobazar.com       | Admin123!     | Full admin dashboard access    |
+| **Customer** | alice@ecobazar.com     | Customer1!    | Default customer account 1     |
+| **Customer** | bob@ecobazar.com       | Customer2!    | Default customer account 2     |
+| **Customer** | carol@ecobazar.com     | Customer3!    | Default customer account 3     |
+| **Seller** | seller1@ecobazar.com     | Seller001!    | SLR-1 · Nature's Best Organics |
+| **Seller** | seller2@ecobazar.com     | Seller002!    | SLR-2 · Green Valley Farms     |
+| **Seller** | seller3@ecobazar.com     | Seller003!    | SLR-3 · Berry Fields Co.       |
+| **Seller** | seller4@ecobazar.com     | Seller004!    | SLR-4 · Prairie Ranch Meats    |
+| **Seller** | seller5@ecobazar.com     | Seller005!    | SLR-5 · Tropical Bliss Imports |
+| **Seller** | seller6@ecobazar.com     | Seller006!    | SLR-6 · Ocean Fresh Seafood    |
+| **Seller** | seller7@ecobazar.com     | Seller007!    | SLR-7 · Green Pastures Dairy   |
+| **Seller** | seller8@ecobazar.com     | Seller008!    | SLR-8 · Countryside Dairy Artisans |
+| **Seller** | seller9@ecobazar.com     | Seller009!    | SLR-9 · Golden Crust Bakery    |
+| **Seller** | seller10@ecobazar.com    | Seller010!    | SLR-10 · Sweet Harvest Treats  |
+| **Seller** | seller11@ecobazar.com    | Seller011!    | SLR-11 · Sunrise Beverages Co. |
+| **Seller** | seller12@ecobazar.com    | Seller012!    | SLR-12 · Crystal Springs Water |
+
+> **Tip:** The Login page displays a collapsible "Test Accounts" panel with the key demo credentials so you can get started quickly.
 
 ---
 
@@ -615,18 +638,24 @@ Each product within an order can have its own status, enabling partial fulfillme
 
 Built with **Bootstrap 5's grid system** and custom media queries:
 
-| Breakpoint             | Layout                                        |
-| ---------------------- | --------------------------------------------- |
-| **Mobile** (< 768px)   | Single column, hamburger menu, stacked cards  |
-| **Tablet** (768-992px)  | Two-column grids, collapsible sidebar         |
-| **Desktop** (> 992px)  | Full multi-column layout, side-by-side panels |
+| Breakpoint               | Layout                                                     |
+| ------------------------ | ---------------------------------------------------------- |
+| **Tiny** (< 360px)       | Single column, icon-only buttons, admin name hidden        |
+| **Mobile** (360–479px)   | Single column, full-width sidebar drawer, scrollable tables |
+| **Mobile** (480–767px)   | Single column, hamburger menu, stacked cards               |
+| **Tablet** (768–991px)   | Two-column grids, collapsible sidebar drawer               |
+| **Desktop** (≥ 992px)    | Full multi-column layout, persistent sidebar               |
 
-### Key Features
+### Key Responsive Features
 
 - Navbar collapses to hamburger menu on mobile
-- Product grid adapts: 1 col -> 2 cols -> 3-4 cols
+- Product grid adapts: 1 col → 2 cols → 3–4 cols
 - Cart and checkout forms stack on small screens
-- Dashboard sidebar becomes full-width on mobile
+- **Admin dashboard sidebar** slides in from the left on mobile (hamburger toggle); hidden by default on screens < 768px
+- **Admin KPI cards** stack to single column on phones (< 480px)
+- **Admin tables** scroll horizontally on small screens
+- Action button labels hidden on tablets; icon-only on small screens
+- **Login page** adapts padding and font sizes, credentials panel wraps cleanly
 
 ---
 
