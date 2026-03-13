@@ -1,6 +1,6 @@
-# Ecobazar  E-Commerce Platform
+# Ecobazar E-Commerce Platform
 
-> A full-featured, client-side e-commerce web application built with **vanilla JavaScript**, **HTML5**, **CSS3**, and **Bootstrap 5**. All data is persisted in `localStorage` / `sessionStorage`  no backend required.
+> A full-featured, client-side e-commerce web application built with **vanilla JavaScript**, **HTML5**, **CSS3**, and **Bootstrap 5**. All data is persisted in `localStorage` / `sessionStorage` no backend required.
 
 ---
 
@@ -39,7 +39,7 @@
 | **Seller**   | List products, manage inventory, confirm/cancel orders, view revenue charts          |
 | **Admin**    | Manage all users & sellers, oversee all orders, analytics dashboard                  |
 
-The entire application runs in the browser  all state is stored in `localStorage` and `sessionStorage`, providing a seamless single-page experience.
+The entire application runs in the browser all state is stored in `localStorage` and `sessionStorage`, providing a seamless single-page experience.
 
 ---
 
@@ -52,7 +52,7 @@ The entire application runs in the browser  all state is stored in `localStorage
 | Logic   | Vanilla JavaScript (ES6 Modules), OOP with classes             |
 | Storage | `localStorage` (persistent), `sessionStorage` (session-scoped) |
 | Charts  | Chart.js (analytics & dashboards)                              |
-| Fonts   | Google Fonts  Poppins                                         |
+| Fonts   | Google Fonts Poppins                                           |
 | Avatars | ui-avatars.com API (auto-generated initials)                   |
 
 ---
@@ -173,6 +173,7 @@ CST-E-commerce-Project/
 ### First-Time Setup
 
 On first load, `Home.js` automatically seeds `localStorage` with:
+
 - **16 default accounts** (1 admin, 3 customers, 12 sellers — see table below)
 - **50+ products** fetched from `Data/ecobazar.json`
 
@@ -186,22 +187,22 @@ These accounts are seeded automatically on first run and can be used to test eac
 
 #### Admin
 
-| Email | Password |
-| ----- | -------- |
+| Email                | Password     |
+| -------------------- | ------------ |
 | `admin@ecobazar.com` | `Admin@1234` |
 
 #### Customers
 
-| Email | Password |
-| ----- | -------- |
+| Email                    | Password        |
+| ------------------------ | --------------- |
 | `customer1@ecobazar.com` | `Customer@1234` |
 | `customer2@ecobazar.com` | `Customer@1234` |
 | `customer3@ecobazar.com` | `Customer@1234` |
 
 #### Sellers (IDs: SLR-001 through SLR-012)
 
-| Email | Password |
-| ----- | -------- |
+| Email                   | Password      |
+| ----------------------- | ------------- |
 | `seller01@ecobazar.com` | `Seller@1234` |
 | `seller02@ecobazar.com` | `Seller@1234` |
 | `seller03@ecobazar.com` | `Seller@1234` |
@@ -288,9 +289,9 @@ User (base)
 
 Extends `User`. Adds:
 
-| Field            | Type  | Description        |
-| ---------------- | ----- | ------------------ |
-| `#orderHistory`  | Array | List of past orders |
+| Field           | Type  | Description         |
+| --------------- | ----- | ------------------- |
+| `#orderHistory` | Array | List of past orders |
 
 ### Seller
 
@@ -325,12 +326,12 @@ Extends `User` with no additional fields.
 
 ### Cart & Order Models
 
-| Model       | Key Fields                            | Description      |
-| ----------- | ------------------------------------- | ---------------- |
-| `Cart`      | cartID, customerID, cartItems[]       | Shopping cart     |
-| `CartItem`  | productId, quantity                   | Single cart item  |
-| `Order`     | id, customerId, items[], total        | Customer order    |
-| `OrderItem` | productId, quantity, priceAtPurchase  | Single order item |
+| Model       | Key Fields                           | Description       |
+| ----------- | ------------------------------------ | ----------------- |
+| `Cart`      | cartID, customerID, cartItems[]      | Shopping cart     |
+| `CartItem`  | productId, quantity                  | Single cart item  |
+| `Order`     | id, customerId, items[], total       | Customer order    |
+| `OrderItem` | productId, quantity, priceAtPurchase | Single order item |
 
 ---
 
@@ -338,25 +339,25 @@ Extends `User` with no additional fields.
 
 ### localStorage Keys
 
-| Key              | Type                        | Description                          |
-| ---------------- | --------------------------- | ------------------------------------ |
-| `products`       | `Array<Product>`            | All products in the platform         |
-| `orders`         | `Array<Order>`              | All orders from all users            |
-| `users`          | `Array<User>`               | All registered users                 |
-| `cart`           | `Array<{userid, items[]}>`  | Shopping carts for all users         |
-| `WishLists`      | `Object<userId: Product[]>` | Wishlists keyed by user ID           |
-| `RememberedUser` | `Object`                    | Remember-me login data               |
-| `cartUpdated`    | `timestamp`                 | Trigger for cart cross-tab sync      |
-| `wishUpdated`    | `timestamp`                 | Trigger for wishlist cross-tab sync  |
+| Key              | Type                        | Description                         |
+| ---------------- | --------------------------- | ----------------------------------- |
+| `products`       | `Array<Product>`            | All products in the platform        |
+| `orders`         | `Array<Order>`              | All orders from all users           |
+| `users`          | `Array<User>`               | All registered users                |
+| `cart`           | `Array<{userid, items[]}>`  | Shopping carts for all users        |
+| `WishLists`      | `Object<userId: Product[]>` | Wishlists keyed by user ID          |
+| `RememberedUser` | `Object`                    | Remember-me login data              |
+| `cartUpdated`    | `timestamp`                 | Trigger for cart cross-tab sync     |
+| `wishUpdated`    | `timestamp`                 | Trigger for wishlist cross-tab sync |
 
 ### sessionStorage Keys
 
-| Key              | Type     | Description                        |
-| ---------------- | -------- | ---------------------------------- |
-| `currentUser`    | `Object` | Logged-in customer data            |
-| `currentSeller`  | `Object` | Logged-in seller data              |
-| `currentAdmin`   | `Object` | Logged-in admin data               |
-| `MyCart`         | `Object` | Current user's cart (quick access) |
+| Key             | Type     | Description                        |
+| --------------- | -------- | ---------------------------------- |
+| `currentUser`   | `Object` | Logged-in customer data            |
+| `currentSeller` | `Object` | Logged-in seller data              |
+| `currentAdmin`  | `Object` | Logged-in admin data               |
+| `MyCart`        | `Object` | Current user's cart (quick access) |
 
 ### storageService.js -- Key Functions
 
@@ -669,7 +670,7 @@ Built with **Bootstrap 5's grid system** and custom media queries:
 | Breakpoint             | Layout                                        |
 | ---------------------- | --------------------------------------------- |
 | **Mobile** (< 768px)   | Single column, hamburger menu, stacked cards  |
-| **Tablet** (768-992px)  | Two-column grids, collapsible sidebar         |
+| **Tablet** (768-992px) | Two-column grids, collapsible sidebar         |
 | **Desktop** (> 992px)  | Full multi-column layout, side-by-side panels |
 
 ### Key Features
@@ -718,9 +719,7 @@ Product data organized by 7 categories:
   "organic": true,
   "stock": 150,
   "seller_id": "SLR-1",
-  "reviews": [
-    { "user_id": 1, "rating": 5, "comment": "Always fresh!" }
-  ]
+  "reviews": [{ "user_id": 1, "rating": 5, "comment": "Always fresh!" }]
 }
 ```
 
