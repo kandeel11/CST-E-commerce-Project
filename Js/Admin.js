@@ -726,9 +726,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="action-btn btn-toggle" title="Toggle Status" onclick="window.manageUsers.toggleStatus('${id}')">
                         <i class="fas ${isActive ? 'fa-pause' : 'fa-play'}"></i>
                     </button>
-                    <button class="action-btn btn-view" title="Reset Password" onclick="window.manageUsers.resetPassword('${id}')">
+                    ${isActive ? `<button class="action-btn btn-view" title="Reset Password" onclick="window.manageUsers.resetPassword('${id}')">
                         <i class="fas fa-key"></i>
-                    </button>
+                    </button>` : ''}
 
                     <button class="action-btn btn-delete" title="Delete" onclick="window.manageUsers.deleteUser('${id}')">
                         <i class="far fa-trash-alt"></i>
@@ -865,8 +865,7 @@ window.addEventListener('load', function () {
     data_section = document.getElementById("my_data");
     allData = JSON.parse(localStorage.getItem('products'))
     if (allData) {
-        prods = Object.values(allData).flat();
-        for (let n in allData) { if (n != 'Sellers') { cat.push(n); } }
+        prods = Array.isArray(allData) ? allData : Object.values(allData).flat();
         count = prods.length;
         this.document.getElementById("number").innerHTML = count;
         fill_categories();

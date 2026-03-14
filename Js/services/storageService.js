@@ -42,8 +42,18 @@ export function getSellerOrders(sellerId) {
     return sellerProducts;
 }
 export function getSellerTotalRevenue(sellerId) {
-    const products = getSellerOrders(sellerId);
-    let TotalRevenue = products.reduce((sum, p) => sum + (Number(p.price) * Number(p.quantity)), 0);
+    const allOrders = getAllOrders();
+    let TotalRevenue = 0;
+    allOrders.forEach(order => {
+        (order.products || []).forEach(p => {
+            if (String(p.seller_id) === String(sellerId)) {
+                const status = (p.status || order.orderStatus || "").toLowerCase();
+                if (status === "completed") {
+                    TotalRevenue += Number(p.price) * Number(p.quantity);
+                }
+            }
+        });
+    });
     return TotalRevenue.toFixed(2);
 }
 export function getSellerProducts(seller_id) {
@@ -332,12 +342,12 @@ function renderProductsTable(products) {
                     ${stock > 0 ? stock + " in stock" : "Out of stock"}
                 </span>
             </td>
-            <td class="text-end d-none d-lg-table-cell">
-                <button class="btn btn-sm btn-outline-success me-1 edit-btn">
-                    <i class="fas fa-pen me-1"></i>Edit
+            <td class="text-end">
+                <button class="btn btn-sm btn-outline-success me-1 edit-btn" title="Edit">
+                    <i class="fas fa-pen"></i><span class="d-none d-md-inline ms-1">Edit</span>
                 </button>
-                <button class="btn btn-sm btn-outline-danger delete-btn">
-                    <i class="fas fa-trash-alt me-1"></i>Delete
+                <button class="btn btn-sm btn-outline-danger delete-btn" title="Delete">
+                    <i class="fas fa-trash-alt"></i><span class="d-none d-md-inline ms-1">Delete</span>
                 </button>
             </td>
         `;
