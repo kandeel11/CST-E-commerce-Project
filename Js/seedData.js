@@ -28,8 +28,8 @@ export function seedDefaultUsers() {
         // ── Customers ──────────────────────────────────────────────────
         {
             id: "Us-1",
-            Fname: "Alice",
-            Lname: "Walker",
+            Fname: "mohamed",
+            Lname: "Khaled",
             Role: "User",
             Email: "customer1@ecobazar.com",
             password: "Customer@1234",
@@ -40,8 +40,8 @@ export function seedDefaultUsers() {
         },
         {
             id: "Us-2",
-            Fname: "Bob",
-            Lname: "Smith",
+            Fname: "Mohamed",
+            Lname: "Kandeel",
             Role: "User",
             Email: "customer2@ecobazar.com",
             password: "Customer@1234",
@@ -52,8 +52,8 @@ export function seedDefaultUsers() {
         },
         {
             id: "Us-3",
-            Lname: "Jones",
-            Fname: "Carol",
+            Lname: "Mohamed",
+            Fname: "Elsayed",
             Role: "User",
             Email: "customer3@ecobazar.com",
             password: "Customer@1234",
