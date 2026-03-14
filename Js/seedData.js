@@ -52,8 +52,8 @@ export function seedDefaultUsers() {
         },
         {
             id: "Us-3",
-            Fname: "Carol",
             Lname: "Jones",
+            Fname: "Carol",
             Role: "User",
             Email: "customer3@ecobazar.com",
             password: "Customer@1234",
@@ -63,9 +63,9 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
 
-        // ── Sellers (SLR-001 … SLR-012) ────────────────────────────────
+        // ── Sellers (SLR-1 … SLR-12) ────────────────────────────────
         {
-            id: "SLR-001",
+            id: "SLR-1",
             Fname: "Ahmed",
             Lname: "Hassan",
             Role: "Seller",
@@ -81,7 +81,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-002",
+            id: "SLR-2",
             Fname: "Mona",
             Lname: "Ali",
             Role: "Seller",
@@ -97,7 +97,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-003",
+            id: "SLR-3",
             Fname: "Omar",
             Lname: "Khaled",
             Role: "Seller",
@@ -113,7 +113,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-004",
+            id: "SLR-4",
             Fname: "Sara",
             Lname: "Mahmoud",
             Role: "Seller",
@@ -129,7 +129,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-005",
+            id: "SLR-5",
             Fname: "Karim",
             Lname: "Nasser",
             Role: "Seller",
@@ -145,7 +145,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-006",
+            id: "SLR-6",
             Fname: "Nadia",
             Lname: "Ibrahim",
             Role: "Seller",
@@ -161,9 +161,9 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-007",
-            Fname: "Yasser",
-            Lname: "Farouk",
+            id: "SLR-7",
+            Fname: "Hana",
+            Lname: "Mostafa",
             Role: "Seller",
             Email: "seller07@ecobazar.com",
             password: "Seller@1234",
@@ -177,7 +177,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-008",
+            id: "SLR-8",
             Fname: "Hana",
             Lname: "Mostafa",
             Role: "Seller",
@@ -193,7 +193,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-009",
+            id: "SLR-9",
             Fname: "Tarek",
             Lname: "Saleh",
             Role: "Seller",
@@ -209,7 +209,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-010",
+            id: "SLR-10",
             Fname: "Layla",
             Lname: "Adel",
             Role: "Seller",
@@ -225,7 +225,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-011",
+            id: "SLR-11",
             Fname: "Rami",
             Lname: "Sabry",
             Role: "Seller",
@@ -241,7 +241,7 @@ export function seedDefaultUsers() {
             dateCreated: now
         },
         {
-            id: "SLR-012",
+            id: "SLR-12",
             Fname: "Dina",
             Lname: "Gamal",
             Role: "Seller",
